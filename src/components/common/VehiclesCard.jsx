@@ -1,0 +1,86 @@
+import React from 'react';
+import { Heart, Gauge, Droplets, Settings, ArrowUpRight } from 'lucide-react';
+import { AutomaticIcon, FireIcon, FuelIcon, MilageIcon } from './SVGicons/MySvg';
+
+const VehiclesCard = ({
+  imageUrl,
+  title,
+  subtitle,
+  mileage,
+  fuelType,
+  transmission,
+  price,
+  isNew,
+  onViewDetails,
+  onFavorite
+}) => {
+  return (
+    <div className="rounded-2xl shadow-lg overflow-hidden">
+      {/* Image */}
+      <div className="relative">
+        <img 
+          src={imageUrl} 
+          alt={title}
+          className="w-full h-58 object-cover"
+        />
+        {/* Favorite Button */}
+        <button 
+          onClick={onFavorite}
+          className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
+        >
+          <Heart className="w-5 h-5 text-gray-600" />
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="p-6">
+        {/* Title & Badge */}
+        <div className="flex items-start justify-between mb-2">
+          <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
+          {
+            isNew && (
+              <span className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center"> <FireIcon className="w-6 h-6" /></span>
+            )
+          }
+         
+        </div>
+
+        {/* Subtitle */}
+        <p className="text-gray-600 text-sm  leading-relaxed">
+          {subtitle}
+        </p>
+
+        {/* Features */}
+        <div className="flex justify-between items-center my-3 py-3 border-t border-b border-gray-200 ">
+          <Feature icon={<MilageIcon />} label={mileage} />
+          <Feature icon={<FuelIcon />} label={fuelType} />
+          <Feature icon={<AutomaticIcon />} label={transmission} />
+        </div>
+
+        {/* Price & Button */}
+        <div className="flex items-center justify-between">
+          <span className="text-2xl font-bold text-gray-900">{price}</span>
+          <button 
+            onClick={onViewDetails}
+            className="flex items-center text-custom-primary font-medium hover:text-blue-700 transition-colors"
+          >
+            <span className="mr-2">View Details</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// small reusable feature component
+const Feature = ({ icon, label }) => (
+  <div className="flex flex-col items-center">
+    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-2">
+      {React.cloneElement(icon, { className: "w-5 h-5 text-gray-600" })}
+    </div>
+    <span className="text-sm text-gray-700 font-medium">{label}</span>
+  </div>
+);
+
+export default VehiclesCard;

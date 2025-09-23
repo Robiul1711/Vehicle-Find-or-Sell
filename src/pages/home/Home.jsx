@@ -1,8 +1,19 @@
+import Banner from '@/components/HomeComponents/Banner'
+import FeaturedListings from '@/components/HomeComponents/FeaturedListings'
+import Hero from '@/components/HomeComponents/Hero'
+import UserReviews from '@/components/HomeComponents/UserReviews'
+import WhyChooseUs from '@/components/HomeComponents/WhyChooseUs'
 import React from 'react'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div className=''>
+      <Banner/>
+      <Hero/>
+      <WhyChooseUs/>
+      <FeaturedListings/>
+      <UserReviews/>
+    </div>
   )
 }
 

@@ -8,6 +8,7 @@ import NewPassword from "@/pages/auth/NewPassword";
 import ResetSuccessful from "@/pages/auth/ResetSuccessful";
 import VerifyOTP from "@/pages/auth/VerifyOTP";
 import Home from "@/pages/home/Home";
+import BrouseListing from "@/pages/ListingsPges/BrouseListing";
 
 
 import { createBrowserRouter } from "react-router-dom";
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/listings",
+        element: <BrouseListing />,
       },
 
     ],
