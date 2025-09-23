@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { CustomEmail } from '@/utils/IconProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeClosed } from 'lucide-react';
 
 const NewPassword = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const navigate = useNavigate();
 
     const {
         register,
@@ -19,6 +20,7 @@ const NewPassword = () => {
 
     const onSubmit = (data) => {
         console.log(data)
+        navigate('/auth/reset-successful-password')
     }
     return (
         <div className="flex flex-col min-h-full">

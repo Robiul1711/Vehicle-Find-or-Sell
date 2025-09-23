@@ -41,9 +41,8 @@ const Navbar = () => {
 
   return (
     <>
-      <header className={`w-full transition-all duration-300 fixed top-0 left-0 z-40 ${
-        isScrolled ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-lg' : 'bg-white/90 dark:bg-gray-900/80 backdrop-blur-md'
-      } border-b border-gray-200 dark:border-gray-800`}>
+      <header className={`w-full transition-all duration-300 fixed top-0 left-0 z-40 ${isScrolled ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-lg' : 'bg-white/90 dark:bg-gray-900/80 backdrop-blur-md'
+        } border-b border-gray-200 dark:border-gray-800`}>
         <div className="section-padding-x">
           <div className="flex h-14 sm:h-16 lg:h-20 items-center justify-between">
             {/* Logo */}
@@ -54,9 +53,9 @@ const Navbar = () => {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 xl:space-x-8">
               {navLinks.map(link => (
-                <Link 
-                  key={link.text} 
-                  to={link.to} 
+                <Link
+                  key={link.text}
+                  to={link.to}
                   className="text-sm lg:text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
                 >
                   {link.text}
@@ -67,8 +66,12 @@ const Navbar = () => {
 
             {/* Desktop Buttons */}
             <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
-              <CommonButton>Sign In</CommonButton>
-              <CommonButton>Sign Up</CommonButton>
+              <Link to="/auth">
+                <CommonButton>Sign In</CommonButton>
+              </Link>
+              <Link to="/auth">
+                <CommonButton>Sign Up</CommonButton>
+              </Link>
               <CommonButton variant="primary" className="group">
                 <CompareIcon className="text-custom-primary group-hover:text-white" />
               </CommonButton>
@@ -76,22 +79,22 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center space-x-2 md:hidden">
-         <CommonButton 
-              variant="primary" 
-              
-              className="group px-2  "
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <CompareIcon className="text-custom-primary group-hover:text-white  size-4" />
-            
-            </CommonButton>
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)} 
-              className=" p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 rounded-md transition-colors" 
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
-            </button>
+              <CommonButton
+                variant="primary"
+
+                className="group px-2  "
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <CompareIcon className="text-custom-primary group-hover:text-white  size-4" />
+
+              </CommonButton>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className=" p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 rounded-md transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
+              </button>
             </div>
           </div>
         </div>
@@ -103,11 +106,11 @@ const Navbar = () => {
         ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
       `}>
         {/* Backdrop */}
-        <div 
+        <div
           className="absolute inset-0 bg-black/50 backdrop-blur-sm"
           onClick={() => setIsMenuOpen(false)}
         />
-        
+
         {/* Mobile Menu Panel */}
         <div className={`
           absolute top-0 left-0 h-full w-80 max-w-full bg-white  shadow-xl transform transition-transform duration-300 ease-in-out
@@ -118,8 +121,8 @@ const Navbar = () => {
             <Link to="/" onClick={() => setIsMenuOpen(false)}>
               <img src={logo} alt="Logo" className="h-8" />
             </Link>
-            <button 
-              onClick={() => setIsMenuOpen(false)} 
+            <button
+              onClick={() => setIsMenuOpen(false)}
               className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100  rounded-md"
               aria-label="Close menu"
             >
@@ -132,8 +135,8 @@ const Navbar = () => {
             <ul className="">
               {navLinks.map(link => (
                 <li key={link.text}>
-                  <Link 
-                    to={link.to} 
+                  <Link
+                    to={link.to}
                     onClick={() => setIsMenuOpen(false)}
                     className="block py-3 px-4 text-lg font-medium text-gray-700  hover:bg-gray-100 rounded-lg transition-colors duration-200"
                   >
@@ -146,19 +149,25 @@ const Navbar = () => {
 
           {/* Mobile Buttons */}
           <div className="absolute bottom-6 left-6 right-6 space-y-3">
-            <CommonButton 
-              fullWidth 
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Sign In
-            </CommonButton>
-            <CommonButton 
-              fullWidth 
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Sign Up
-            </CommonButton>
-   
+            <Link to="/auth">
+              <CommonButton
+                fullWidth
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Sign In
+              </CommonButton>
+            </Link>
+
+            <Link to="/auth">
+              <CommonButton
+                fullWidth
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Sign Up
+              </CommonButton>
+            </Link>
+
+
           </div>
         </div>
       </div>
