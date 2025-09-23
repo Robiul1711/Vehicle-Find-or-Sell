@@ -33,15 +33,15 @@ const RegisterForm = () => {
                         <input
                             {...register("type", { required: true })}
                             type="radio"
-                            value={"individual"}
+                            value={"Professionals Seller"}
                         />
-                        <span className='text-sm lg:text-xl'>Individual</span>
+                        <span className='text-sm lg:text-xl'>Professionals Seller</span>
                         <input
                             {...register("type", { required: true })}
                             type="radio"
-                            value={"dealer"}
+                            value={"Private Sellers"}
                         />
-                        <span className='text-sm lg:text-xl'>Dealer</span>
+                        <span className='text-sm lg:text-xl'>Private Sellers</span>
                     </div>
                     {errors.type && <span className="text-red-500">Type is required</span>}
                 </div>
