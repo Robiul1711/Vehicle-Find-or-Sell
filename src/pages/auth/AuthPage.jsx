@@ -4,16 +4,9 @@ import React from 'react';
 
 const AuthPage = () => {
     return (
-        <div className="min-h-screen border flex items-center  justify-center gap-10 bg-gray-100 p-6">
-            <div className="flex flex-col-reverse lg:flex-row gap-5">
-                <div className="w-full hidden md:block lg:w-1/2">
-                    <img src={ImageProvider.authImage} alt="" className='w-full' />
-                </div>
-                <div className="w-full lg:w-1/2 rounded-xl border p-6 shadow">
-                    <AuthTabs />
-                </div>
-            </div>
-        </div>
+        <>
+            <AuthTabs />
+        </>
     );
 };
 
