@@ -1,6 +1,7 @@
 import Dashboard from "@/components/admin/Dashboard";
 import AdminLayout from "@/layout/AdminLayout";
 import Layout from "@/layout/Layout";
+import AuthPage from "@/pages/auth/AuthPage";
 import Home from "@/pages/home/Home";
 
 
@@ -18,6 +19,13 @@ const router = createBrowserRouter([
 
     ],
   },
+
+  // auth related pages 
+  {
+    path: "/auth",
+    element: <AuthPage />
+  },
+
   // Admin routes
   {
     path: "/dashboard",
