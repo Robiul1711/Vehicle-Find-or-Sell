@@ -30,10 +30,13 @@ const LoginForm = () => {
                         <CustomEmail />
                         <input
                             type="email"
+                            {...register("email", { required: true })}
                             placeholder="yourname@gmail.com"
                             className="w-full border-none outline-none bg-transparent"
                         />
+
                     </div>
+                    {errors.email && <span className="text-red-500">Email is required</span>}
                 </div>
 
                 <div className="space-y-4">
@@ -41,6 +44,7 @@ const LoginForm = () => {
                     <div className="border flex items-center gap-2 p-3 rounded-[10px]">
 
                         <input
+                            {...register("password", { required: true })}
                             type={showPassword ? "text" : "password"}
                             placeholder="yourname@gmail.com"
                             className="w-full border-none outline-none bg-transparent"
@@ -54,6 +58,7 @@ const LoginForm = () => {
 
                         }
                     </div>
+                    {errors.password && <span className="text-red-500">Password is required</span>}
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
@@ -68,7 +73,7 @@ const LoginForm = () => {
                 <Button className="w-full !h-12 text-lg bg-custom-primary ">Sign In</Button>
             </form>
 
-            <p className="mt-10 text-center">Already have an account?
+            <p className="mt-10 text-center">Do not have an account?
                 <span className="font-bold"> Sign Up</span>
             </p>
         </div>
