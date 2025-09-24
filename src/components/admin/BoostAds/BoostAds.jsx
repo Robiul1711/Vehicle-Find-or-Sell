@@ -60,7 +60,6 @@ export default function BoostAds() {
               <Search size={18} />
             </button>
           </div>
-
           {/* Category Dropdown */}
           <div className="relative">
             <select
