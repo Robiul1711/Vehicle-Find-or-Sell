@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.10",
     "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.13",
     "@tailwindcss/vite": "^4.1.5",
@@ -21,6 +22,8 @@
     "axios": "^1.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.23.19",
+    "gsap": "^3.13.0",
     "lucide-react": "^0.507.0",
     "motion": "^12.16.0",
     "otp-input-react": "^0.3.0",

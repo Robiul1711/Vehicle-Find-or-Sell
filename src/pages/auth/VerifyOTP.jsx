@@ -6,12 +6,14 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import OTPInput from "otp-input-react";
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const VerifyOTP = () => {
     const [OTP, setOTP] = useState("");
+    const navigate = useNavigate();
     const handleVerify = () => {
         console.log("OTP Submitted:", OTP);
+        navigate('/auth/set-new-password');
     };
     return (
         <div className="flex flex-col min-h-full">

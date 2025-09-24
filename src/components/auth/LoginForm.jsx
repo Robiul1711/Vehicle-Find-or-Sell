@@ -66,7 +66,7 @@ const LoginForm = () => {
                         <input type="checkbox" className="rounded" />
                         <span className='text-sm lg:text-xl'>Remember me</span>
                     </label>
-                    <Link className="text-theme-primary text-sm lg:text-xl hover:underline">
+                    <Link to={'/auth/forgot-password'} className="text-theme-primary text-sm lg:text-xl hover:underline">
                         Forgot Password?
                     </Link>
                 </div>
