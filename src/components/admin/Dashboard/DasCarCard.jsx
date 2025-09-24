@@ -1,0 +1,81 @@
+import {
+  AutomaticIcon,
+  Bumpcon,
+  FuelIcon,
+  MilageIcon,
+  NewIcon,
+  ProfetionalIcon,
+  VideoIcon,
+} from "@/components/common/SVGicons/MySvg";
+
+const DasCarCard = ({ car }) => {
+  return (
+    <div className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
+      {/* Image */}
+      <div className="w-full h-64 overflow-hidden">
+        <img
+          src={car.image}
+          alt={car.title}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="p-4 space-y-2">
+        {/* Title + Subtitle */}
+        <div>
+          <div className="flex  justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">{car.title}</h2>
+            <div className="flex items-center gap-2 ">
+              <Bumpcon />
+              <VideoIcon />
+              <ProfetionalIcon />
+            </div>
+          </div>
+          <p className="text-gray-500 text-sm truncate">{car.subtitle}</p>
+        </div>
+
+        {/* Features */}
+        <div className="flex items-center justify-between text-gray-700 text-sm mt-3 border-t pt-3 border-b pb-3">
+          <div className="flex flex-col items-center gap-1">
+            <MilageIcon />
+            <span>{car.miles}</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <FuelIcon />
+            <span>{car.fuel}</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <AutomaticIcon />
+            <span>{car.transmission}</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <NewIcon />
+            <span>{car.condition}</span>
+          </div>
+        </div>
+
+        {/* Price */}
+        <p className="text-2xl font-bold text-gray-900 mt-3">{car.price}</p>
+
+        {/* Buttons */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+          <button className="bg-gray-900 text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800">
+            View Details
+          </button>
+          <button className="bg-gray-900 text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800">
+            Edit
+          </button>
+          <button className="bg-gray-900 text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800">
+            Pause Ad
+          </button>
+          <button className="bg-gray-900 text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DasCarCard;

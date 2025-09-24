@@ -3,7 +3,7 @@ import React from "react";
 import Title from "../common/Title";
 import Tabs from "../common/Tabs";
 
-import { bikes, cars, Parts, Scoter, trucks } from "@/lib/Cardata";
+import { bikes, cars, Parts, Scoter, trucks } from "@/lib/cardata";
 import VehiclesCardDemo from "../common/VehiclesCardDemo";
 
 const tabData = [

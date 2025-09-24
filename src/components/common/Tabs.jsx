@@ -31,10 +31,10 @@ export default function Tabs({
       initial="hidden"
       animate="visible"
       variants={tabVariants}
-      className={`bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-100/50 overflow-hidden w-full ${className}`}
+      className={`bg-white/60 backdrop-blur-sm rounded-2xl overflow-hidden w-full ${className}`}
     >
       {/* Tabs */}
-      <div className='flex border-b border-gray-100/60 bg-gray-50/50 backdrop-blur-sm'>
+      <div className='flex border-b border-gray-100 bg-gray-50/50 backdrop-blur-sm'>
         {items.map(tab => (
           <motion.button
             key={tab.id}
@@ -70,7 +70,7 @@ export default function Tabs({
           <motion.div
             key={activeTab}
             role='tabpanel'
-            className='p-8 bg-white/60 backdrop-blur-sm text-slate-700'
+            className='p-8'
             variants={contentVariants}
             initial="hidden"
             animate="visible"
