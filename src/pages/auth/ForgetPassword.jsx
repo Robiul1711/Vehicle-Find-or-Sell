@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { CustomEmail } from '@/utils/IconProvider';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ForgetPassword = () => {
     const {
@@ -13,9 +13,11 @@ const ForgetPassword = () => {
         watch,
         formState: { errors },
     } = useForm()
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
         console.log(data)
+        navigate('/auth/verify-otp');
     }
     return (
         <div className="flex flex-col min-h-full">
@@ -38,13 +40,13 @@ const ForgetPassword = () => {
                             />
 
                         </div>
-                        {errors.email && <span className="text-red-500">Email is required</span>}
                     </div>
+                    {errors.email && <span className="text-red-500">Email is required</span>}
 
-                    
+
 
                     <div className="flex items-center justify-end text-sm">
-                        
+
                         <Link to="/auth" className="text-theme-primary text-sm lg:text-base hover:underline">
                             Go back to Sign In
                         </Link>

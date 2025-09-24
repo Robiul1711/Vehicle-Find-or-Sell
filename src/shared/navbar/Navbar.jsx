@@ -184,9 +184,26 @@ const Navbar = () => {
           </nav>
 
           {/* Mobile Buttons */}
-          <div className="absolute bottom-6 left-6 flex items-center gap-4">
-            <CommonButton>Sign In</CommonButton>
-            <LanguageArea />
+          <div className="absolute bottom-6 left-6 right-6 space-y-3">
+            <Link to="/auth">
+              <CommonButton
+                fullWidth
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Sign In
+              </CommonButton>
+            </Link>
+
+            <Link to="/auth">
+              <CommonButton
+                fullWidth
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Sign Up
+              </CommonButton>
+            </Link>
+
+
           </div>
         </div>
       </div>
