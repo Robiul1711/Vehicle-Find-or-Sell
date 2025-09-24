@@ -1,40 +1,80 @@
+
+import { BoostAddsIcon, DashboardIcon, FavouriteIcon, MessageIcon, MyAddsIcon, SettingIcon, SubscriptionIcon, SupportIcon } from "@/components/common/SVGicons/DashboardIcon";
+
+
 import CommonNavbar from "@/pages/admin/CommonNavbar";
 import SideBar from "@/pages/admin/SideBar";
 
 import React, { useEffect, useState } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
+
 const AdminLayout = () => {
   const [Open, setOpen] = useState(false);
 
   const sideBar = [
     {
-        id: 1,
-        icon: <MdDashboard />,
-        text: "Dashboard",
-        path: "/dashboard", // main path (optional, if you still want to keep it)
-        activePaths: ["/dashboard", "/dashboard/settings", "/dashboard/analytics"], // all paths that should make this item active
-        sublink: false,
-      }
-      ,
+      id: 1,
+      icon: <DashboardIcon className=" hover:text-red-500" />,
+      text: "Dashboard",
+      path: "/dashboard",
+      activePaths: ["/dashboard"],
+      sublink: false,
+    },
     {
-      id:2,
-      icon:<MdDashboard />,
-      text:"Admin Management",
-      path:"/dashboard/admin-list",
-      sublink:[
-        {
-          id:1,
-          text:"Admin List",
-          path:"/dashboard/admin-list",
-        },
-        {
-          id:1,
-          text:"Add New Admin",
-          path:"/dashboard/asdasd"
-        },
-      ]
+      id: 2,
+      icon: <MyAddsIcon className=" hover:text-primaryColor" />,
+      text: "My Ads",
+      path: "/dashboard/my-adds",
+      activePaths: ["/dashboard/my-adds"],
+      sublink: false,
+    },
+    {
+      id: 3,
+      icon: <BoostAddsIcon className=" hover:text-primaryColor" />,
+      text: "Boost Ads ",
+      path: "/dashboard/boost-ads",
+      activePaths: ["/dashboard/boost-ads"],
+      sublink: false,
+    },
+    {
+      id: 4,
+      icon: <FavouriteIcon className=" hover:text-primaryColor" />,
+      text: "My Favorites",
+      path: "/dashboard/my-favorites",
+      activePaths: ["/dashboard/my-favorites"],
+      sublink: false,
+    },
+    {
+      id: 5,
+      icon: <MessageIcon className=" hover:text-primaryColor" />,
+      text: "Messages",
+      path: "/dashboard/message",
+      activePaths: ["/dashboard/message"],
+      sublink: false,
+    },
+    {
+      id: 6,
+      icon: <SubscriptionIcon className=" hover:text-primaryColor" />,
+      text: "Subscription",
+      path: "/dashboard/subscription",
+      activePaths: ["/dashboard/subscription"],
+      sublink: false,
+    },
+    {
+      id: 7,
+      icon: <SupportIcon className=" hover:text-primaryColor" />,
+      text: "Support & Help",
+      path: "/dashboard/support-and-help",
+      activePaths: ["/dashboard/support-and-help"],
+      sublink: false,
+    },
+    {
+      id: 8,
+      icon: <SettingIcon className=" hover:text-primaryColor" />,
+      text: "Settings",
+      path: "/dashboard/settings",
+      activePaths: ["/dashboard/settings"],
+      sublink: false,
     },
   ];
   const location = useLocation();
@@ -49,10 +89,12 @@ const AdminLayout = () => {
       <ScrollRestoration />
       <div className="flex  h-screen min-h-screen w-full">
         <SideBar open={Open} setOpen={setOpen} sidebar={sideBar} />
-        <div className="flex-1 bg-dark text-white flex flex-col overflow-auto custom-scrollbar">
-          <div className=" flex flex-col lg:gap-10 gap-5 lg:py-6 py-3 lg:px-[30px] px-2.5 sm:px-5">
+        <div className="flex-1 bg-dark bg-[#F8F8F8]   flex flex-col overflow-auto custom-scrollbar">
+          <div className=" flex flex-col  ">
             <CommonNavbar open={Open} setOpen={setOpen} />
-            <Outlet />
+            <div className="p-4 sm:p-6 md:p-9  ">
+              <Outlet />
+            </div>
           </div>
         </div>
       </div>

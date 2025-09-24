@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FaReact } from "react-icons/fa6";
+import logo from "@/assets/images/logo.png";
 const SideBar = ({ sidebar, open, setOpen }) => {
   const location = useLocation();
   const [activeParentIndex, setActiveParentIndex] = useState(null);
@@ -52,15 +53,12 @@ const SideBar = ({ sidebar, open, setOpen }) => {
             ? "left-0 top-0 w-[320px] z-[220] shadow-lg bg-[#1F3C37] overflow-y-auto"
             : "-left-full xl:w-[350px] w-[320px]"
         }
-        bg-[#ddd] backdrop-blur-md lg:px-8 px-4 flex flex-col gap-8 shadow-md xlg:static fixed transition-all duration-300`}
+        bg-[#ffff] backdrop-blur-md lg:px-8 px-4 flex flex-col gap-8 shadow-md xlg:static fixed transition-all duration-300`}
       >
         {/* Logo */}
         <Link to={"/"}>
           <div className="flex justify-center items-center">
-            {/* <img src={} alt="Safe" className="h-24 object-contain" /> */}
-            <span>
-              <FaReact size={40} color=" black" />
-            </span>
+        <img src={logo} alt="" />
           </div>
         </Link>
 
@@ -78,8 +76,8 @@ const SideBar = ({ sidebar, open, setOpen }) => {
                 }}
                 className={`flex items-center gap-3 px-4 py-2 rounded-lg text-base font-medium transition-colors duration-200 ${
                   isActive(item?.activePaths)
-                    ? "bg-[#FFF] text-[#3F6534]"
-                    : "text-[#FFF] hover:bg-[#466b55] hover:text-[#ffffff]"
+                    ? "bg-custom-primary text-[#ffff]"
+                    : "text-[#7F879E] hover:bg-custom-primary hover:text-[#ffffff]"
                 }`}
               >
                 <span className="text-lg">{item?.icon}</span>
@@ -92,7 +90,7 @@ const SideBar = ({ sidebar, open, setOpen }) => {
                   className={`flex items-center justify-between px-4 py-2 cursor-pointer w-full rounded-lg transition-all duration-200 ${
                     parentActive
                       ? "bg-[#253E8E] text-white"
-                      : "text-gray-700 hover:bg-[#E3ECFF] hover:text-[#253E8E]"
+                      : "text-gray-700 hover:bg-cus hover:text-[#253E8E]"
                   }`}
                   onClick={() => toggleSubmenu(index)}
                 >
