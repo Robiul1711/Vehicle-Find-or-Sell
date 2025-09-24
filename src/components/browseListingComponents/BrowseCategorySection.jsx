@@ -1,4 +1,8 @@
+import { CustomBike, CustomCar, CustomPart, CustomScoter, CustomTruck } from '@/utils/IconProvider';
 import React, { useState } from 'react';
+import CarListing from './CarListing';
+import { bikeData, carData, partData, scooterData, truckData } from '@/utils/data';
+import PartListing from './PartListing';
 
 const BrowseCategorySection = () => {
     const [activeTab, setActiveTab] = useState('cars');
@@ -8,32 +12,32 @@ const BrowseCategorySection = () => {
         {
             id: 'cars',
             label: 'Car',
-            icon: '🚗',
-            content: <p className='text-5xl'>Hello</p>
+            icon: <CustomCar />,
+            content: <CarListing items={carData} />
         },
         {
             id: 'trucks',
             label: 'Utility Trucks',
-            icon: '🚚',
-            content: 'Utility truck listings and content will be displayed here. Commercial vehicles and work trucks.'
+            icon: <CustomTruck />,
+            content: <CarListing items={truckData} />
         },
         {
             id: 'motorcycle',
             label: 'Motorcycle',
-            icon: '🏍️',
-            content: 'Motorcycle listings and content will be displayed here. Sports bikes, cruisers, and touring bikes.'
+            icon: <CustomBike />,
+            content: <CarListing items={bikeData} />
         },
         {
             id: 'scooter',
             label: 'Scooter',
-            icon: '🛵',
-            content: 'Scooter listings and content will be displayed here. Electric and gas scooters for city commuting.'
+            icon: <CustomScoter />,
+            content: <CarListing items={scooterData} />
         },
         {
             id: 'parts',
             label: 'Parts',
-            icon: '🔧',
-            content: 'Auto parts and accessories will be displayed here. Engine parts, body parts, and accessories.'
+            icon: <CustomPart />,
+            content: <PartListing items={partData} />
         }
     ];
 
@@ -50,7 +54,7 @@ const BrowseCategorySection = () => {
             <h2 className="text-2xl font-semibold mb-6 text-gray-900">Browse Categories</h2>
 
             {/* Custom Tab Navigation */}
-            <div className="grid grid-cols-5 gap-4 mb-8 pb-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-4 mb-8 pb-2">
                 {categories.map((category) => (
                     <button
                         key={category.id}
@@ -65,8 +69,8 @@ const BrowseCategorySection = () => {
                             }
                         `}
                     >
-                        <span className="text-2xl">{category.icon}</span>
-                        <span className={`text-sm font-medium text-center ${activeTab === category.id ? 'text-orange-700' : 'text-gray-700'
+                        <span className="text-2xl text-gray-500">{category.icon}</span>
+                        <span className={` lg:text-2xl font-medium text-center ${activeTab === category.id ? 'text-orange-700' : 'text-gray-700'
                             }`}>
                             {category.label}
                         </span>
@@ -76,15 +80,15 @@ const BrowseCategorySection = () => {
 
             {/* Tab Content */}
             <div className="bg-white border border-gray-200 rounded-xl p-8 min-h-[300px]">
-               
+
                 <div className="leading-relaxed">
                     {getActiveContent()}
                 </div>
 
-               
+
             </div>
 
-            
+
         </div>
     );
 };
