@@ -7,7 +7,7 @@ const variants = {
   primary:
     "px-4 py-2 sm:px-5 sm:py-2 md:px-7 border border-custom-primary rounded-md text-black hover:text-white text-sm sm:text-base hover:bg-custom-primary ",
   secondary:
-    "bg-Secondary-light hover:bg-Secondary/80 text-white border rounded-md px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base md:px-7 md:py-3 md:text-base",
+    "bg-Secondary-light hover:bg-Secondary/80 hover:text-white hover:border hover:bg-transparent bg-white text-black  border rounded-md px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base md:px-7 md:py-3 md:text-base",
   danger: "bg-red-500 hover:bg-red-600 text-white",
 };
 

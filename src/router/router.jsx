@@ -1,4 +1,12 @@
-import Dashboard from "@/components/admin/Dashboard";
+import BoostAds from "@/components/admin/BoostAds/BoostAds";
+import Dashboard from "@/components/admin/Dashboard/Dashboard";
+import Message from "@/components/admin/Message/Message";
+import MyAdds from "@/components/admin/MyAdds/MyAdds";
+import MyFavorites from "@/components/admin/MyFavorites/MyFavorites";
+import Settings from "@/components/admin/Settings/Settings";
+import Subscription from "@/components/admin/Subscription/Subscription";
+import SupportAndHelp from "@/components/admin/SupportAndHelp/SupportAndHelp";
+import { SubscriptionIcon } from "@/components/common/SVGicons/DashboardIcon";
 import AdminLayout from "@/layout/AdminLayout";
 import AuthLayout from "@/layout/AuthLayout";
 import Layout from "@/layout/Layout";
@@ -66,7 +74,35 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <Dashboard />, // ✅ Fixed typo
+        element: <Dashboard />
+      },
+      {
+        path: "/dashboard/my-adds",
+        element: <MyAdds />
+      },
+      {
+        path: "/dashboard/boost-ads",
+        element: <BoostAds />
+      },
+      {
+        path: "/dashboard/my-favorites",
+        element: <MyFavorites />
+      },
+      {
+        path: "/dashboard/message",
+        element: <Message />
+      },
+      {
+        path: "/dashboard/subscription",
+        element: <Subscription />
+      },
+      {
+        path: "/dashboard/support-and-help",
+        element: <SupportAndHelp />
+      },
+      {
+        path: "/dashboard/settings",
+        element: <Settings />
       },
     ],
   },
