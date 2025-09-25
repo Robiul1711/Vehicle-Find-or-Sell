@@ -157,3 +157,11 @@ export const CustomCalendar = () => {
         </svg>
     );
 };
+
+export const CustomArrow = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+            <path d="M1 13C1 13 6.99999 8.5811 7 7C7.00001 5.4188 1 1 1 1" stroke="#141414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    );
+};

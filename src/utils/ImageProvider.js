@@ -8,8 +8,10 @@ import truck from '@/assets/images/truck.png';
 import bike from '@/assets/images/bike.png';
 import scooter from '@/assets/images/scooter.png';
 import partImg from '@/assets/images/partImg.png';
+import blogDetails from '@/assets/images/blogDetails.png';
 
 export const ImageProvider = {
+    blogDetails,
     partImg,
     scooter,
     bike,

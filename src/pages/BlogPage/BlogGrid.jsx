@@ -1,5 +1,8 @@
 import { CustomAdmin, CustomCalendar } from "@/utils/IconProvider";
-import React, { useState } from "react";
+import gsap from "gsap";
+import React, { useEffect, useRef, useState } from "react";
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Link } from "react-router-dom";
 
 const dummyData = {
     totalPages: 6,
@@ -82,10 +85,32 @@ const BlogGrid = () => {
 
     const totalPages = Math.ceil(36 / blogsPerPage);
 
+    const blogGridRef = useRef(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.fromTo(
+            blogGridRef.current,
+            { opacity: 0, y: 200 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: blogGridRef.current,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none',
+                    markers: false
+                }
+            });
+
+    }, []);
+
     return (
-        <div className="p-6">
+        <div className="p-6 border" ref={blogGridRef}>
             {/* Blog Grid */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div  className="grid md:grid-cols-3 gap-6">
                 {blogs.map((blog) => (
                     <div key={blog.id} className="rounded-xl overflow-hidden  hover:shadow-lg transition ">
                         <img src={blog.image} alt={blog.title} className="w-full rounded-xl h-80 object-cover" />
@@ -95,9 +120,9 @@ const BlogGrid = () => {
                                 <span className="flex items-center gap-2"><CustomCalendar /> {blog.date}</span>
                             </div>
                             <h3 className="font-semibold text-xl mb-2">{blog.title}</h3>
-                            <a href={blog.link} className=" hover:underline text-lg flex items-center gap-1">
+                            <Link to={`/blogDetails/${blog.id}`} className=" hover:underline text-lg flex items-center gap-1">
                                 Read More ↗
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 ))}
