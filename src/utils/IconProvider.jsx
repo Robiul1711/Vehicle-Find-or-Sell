@@ -135,3 +135,25 @@ export const CustomFilter = () => {
         </svg>
     );
 };
+
+
+export const CustomAdmin = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M17 8.5C17 5.73858 14.7614 3.5 12 3.5C9.23858 3.5 7 5.73858 7 8.5C7 11.2614 9.23858 13.5 12 13.5C14.7614 13.5 17 11.2614 17 8.5Z" stroke="#141414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M19 20.5C19 16.634 15.866 13.5 12 13.5C8.13401 13.5 5 16.634 5 20.5" stroke="#141414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    );
+};
+
+
+export const CustomCalendar = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M16 2.00037V6.00037M8 2.00037V6.00037" stroke="#141414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M13 3.99963H11C7.22876 3.99963 5.34315 3.99963 4.17157 5.1712C3 6.34278 3 8.22839 3 11.9996V13.9996C3 17.7708 3 19.6565 4.17157 20.828C5.34315 21.9996 7.22876 21.9996 11 21.9996H13C16.7712 21.9996 18.6569 21.9996 19.8284 20.828C21 19.6565 21 17.7708 21 13.9996V11.9996C21 8.22839 21 6.34278 19.8284 5.1712C18.6569 3.99963 16.7712 3.99963 13 3.99963Z" stroke="#141414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M3 9.99963H21" stroke="#141414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M11.9955 14.0004H12.0045M11.9955 18.0004H12.0045M15.991 14.0004H16M8 14.0004H8.00897M8 18.0004H8.00897" stroke="#141414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    );
+};
