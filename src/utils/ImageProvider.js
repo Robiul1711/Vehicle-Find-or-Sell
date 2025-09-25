@@ -10,8 +10,22 @@ import scooter from '@/assets/images/scooter.png';
 import partImg from '@/assets/images/partImg.png';
 import blogDetails from '@/assets/images/blogDetails.png';
 import avatar1 from '@/assets/images/avatar1.png';
+import Maintenance1 from '@/assets/images/Maintenance1.png';
+import Maintenance2 from '@/assets/images/Maintenance2.png';
+import Maintenance3 from '@/assets/images/Maintenance3.png';
+import Maintenance4 from '@/assets/images/Maintenance4.png';
+import Maintenance5 from '@/assets/images/Maintenance5.png';
+import Maintenance6 from '@/assets/images/Maintenance6.png';
+import Maintenance7 from '@/assets/images/Maintenance7.png';
 
 export const ImageProvider = {
+    Maintenance1,
+    Maintenance2,
+    Maintenance3,
+    Maintenance4,
+    Maintenance5,
+    Maintenance6,
+    Maintenance7,
     avatar1,
     blogDetails,
     partImg,
