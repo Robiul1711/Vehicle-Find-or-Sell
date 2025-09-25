@@ -9,8 +9,10 @@ import bike from '@/assets/images/bike.png';
 import scooter from '@/assets/images/scooter.png';
 import partImg from '@/assets/images/partImg.png';
 import blogDetails from '@/assets/images/blogDetails.png';
+import avatar1 from '@/assets/images/avatar1.png';
 
 export const ImageProvider = {
+    avatar1,
     blogDetails,
     partImg,
     scooter,

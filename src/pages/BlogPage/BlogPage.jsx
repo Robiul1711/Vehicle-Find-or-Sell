@@ -5,6 +5,7 @@ import BlogGrid from './BlogGrid'
 import { CommonPageWrapper } from '@/components/common/CommonPageWrapper'
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import gsap from 'gsap'
+import { ScrollRestoration } from 'react-router-dom'
 
 const BlogPage = () => {
   const LookingRef = useRef(null);
@@ -28,6 +29,7 @@ const BlogPage = () => {
   }, [])
   return (
     <div className='mt-20'>
+      <ScrollRestoration />
       <BlogBanner />
       <CommonPageWrapper>
         <BlogGrid />

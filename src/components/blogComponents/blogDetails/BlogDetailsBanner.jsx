@@ -1,14 +1,25 @@
 import { CustomAdmin, CustomArrow, CustomCalendar } from '@/utils/IconProvider';
 import { ImageProvider } from '@/utils/ImageProvider';
-import React from 'react';
+import gsap from 'gsap';
+import React, { useEffect, useRef } from 'react';
 
 const BlogDetailsBanner = ({ title = "Top 10 Tips for Maintaining Your Car in Perfect Condition" }) => {
+
+    const bannerImgRef = useRef(null);
+    useEffect(() => {
+        gsap.fromTo(
+            bannerImgRef.current,
+            { scale: 1.1, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1.5, ease: 'power3.out', immediateRender: false }
+        );
+    }, [])
+
     return (
         <div>
             <div className="space-y-4">
                 <p className='flex items-center gap-2'>Blog <CustomArrow /> Blog Details</p>
                 <h1 className='text-3xl font-semibold'>{title}</h1>
-                <div className="">
+                <div ref={bannerImgRef} className="">
                     <img src={ImageProvider.blogDetails} className='w-full lg:h-[70vh]' alt="" />
                 </div>
                 <div className="flex items-center gap-3  mb-2">

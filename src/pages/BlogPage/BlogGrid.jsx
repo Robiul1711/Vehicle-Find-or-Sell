@@ -4,67 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from "react-router-dom";
 
-const dummyData = {
-    totalPages: 6,
-    perPage: 6,
-    totalItems: 36,
-    blogs: [
-        {
-            id: 13,
-            title: "Safety Tips and Driving Techniques for Every Journey",
-            author: "Admin",
-            date: "2025-08-05",
-            image: "https://picsum.photos/id/1018/600/400",
-            excerpt: "Essential driving safety tips and techniques for smoother and safer journeys.",
-            link: "/blog/13"
-        },
-        {
-            id: 14,
-            title: "Why Regular Inspections and Fluid Checks Matter",
-            author: "Admin",
-            date: "2025-08-05",
-            image: "https://picsum.photos/id/1020/600/400",
-            excerpt: "Routine inspections and fluid checks help prevent costly repairs and ensure safety.",
-            link: "/blog/14"
-        },
-        {
-            id: 15,
-            title: "Safety Tips and Driving Techniques for Every Journey",
-            author: "Admin",
-            date: "2025-08-05",
-            image: "https://picsum.photos/id/1025/600/400",
-            excerpt: "Learn advanced driving techniques to enhance road safety and comfort.",
-            link: "/blog/15"
-        },
-        {
-            id: 16,
-            title: "Why Regular Inspections and Fluid Checks Matter",
-            author: "Admin",
-            date: "2025-08-05",
-            image: "https://picsum.photos/id/1045/600/400",
-            excerpt: "Regular car check-ups keep your vehicle running longer and safer.",
-            link: "/blog/16"
-        },
-        {
-            id: 17,
-            title: "Safety Tips and Driving Techniques for Every Journey",
-            author: "Admin",
-            date: "2025-08-05",
-            image: "https://picsum.photos/id/1050/600/400",
-            excerpt: "Practical safety tips for long trips and challenging roads.",
-            link: "/blog/17"
-        },
-        {
-            id: 18,
-            title: "Safety Tips and Driving Techniques for Every Journey",
-            author: "Admin",
-            date: "2025-08-05",
-            image: "https://picsum.photos/id/1062/600/400",
-            excerpt: "Drive confidently with these expert safety insights and tricks.",
-            link: "/blog/18"
-        }
-    ]
-};
 
 const BlogGrid = () => {
     const [currentPage, setCurrentPage] = useState(3); // default same as screenshot
@@ -108,7 +47,7 @@ const BlogGrid = () => {
     }, []);
 
     return (
-        <div className="p-6 border" ref={blogGridRef}>
+        <div className="" ref={blogGridRef}>
             {/* Blog Grid */}
             <div  className="grid md:grid-cols-3 gap-6">
                 {blogs.map((blog) => (
