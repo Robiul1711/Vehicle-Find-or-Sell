@@ -5,7 +5,7 @@ import { FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import profile from "@/assets/images/avatar.png";
+import profile from "@/assets/images/dummy.png";
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -95,7 +95,7 @@ const UserDropdown = () => {
         onClick={toggleDropdown}
         className="flex items-center gap-2 text-white text-lg"
       >
-     <img className="w-12 h-12 rounded-full" src={profile} alt="image" />
+     <img className="w-10 h-10 rounded-full" src={profile} alt="image" />
       </button>
 
       {isOpen && (
