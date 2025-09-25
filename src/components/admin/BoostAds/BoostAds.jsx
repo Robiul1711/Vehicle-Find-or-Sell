@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Search, ChevronDown, Plus } from "lucide-react";
 import DasCarCard from "../Dashboard/DasCarCard";
+import VechleBoostCard from "./VechleBoostCard";
 const cars = [
   {
     id: 1,
@@ -36,13 +37,12 @@ export default function BoostAds() {
         <div className="flex justify-between items-start mb-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
-             Manage & Boost Your Ads
+              Manage & Boost Your Ads
             </h1>
             <p className="text-gray-600">
               Quickly find your listings, check status, and give them a boost.
             </p>
           </div>
-
         </div>
 
         {/* Search and Filter Section */}
@@ -119,7 +119,7 @@ export default function BoostAds() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {cars.map((car) => (
-          <DasCarCard key={car.id} car={car} />
+          <VechleBoostCard key={car.id} car={car} />
         ))}
       </div>
     </div>

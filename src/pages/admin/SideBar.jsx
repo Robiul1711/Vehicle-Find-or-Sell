@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
-import { FaReact } from "react-icons/fa6";
+import { matchPath } from "react-router-dom";
+
 import logo from "@/assets/images/logo.png";
 const SideBar = ({ sidebar, open, setOpen }) => {
   const location = useLocation();
@@ -21,11 +22,12 @@ const SideBar = ({ sidebar, open, setOpen }) => {
     });
   }, [location.pathname, sidebar]);
 
-  const isActive = (paths) => {
-    if (!paths) return false;
-    const pathArray = Array.isArray(paths) ? paths : [paths];
-    return pathArray.includes(location.pathname);
-  };
+const isActive = (paths) => {
+  if (!paths) return false;
+  const pathArray = Array.isArray(paths) ? paths : [paths];
+
+  return pathArray.some((p) => matchPath({ path: p, end: true }, location.pathname));
+};
 
   const isParentActive = (item) => {
     if (!item.sublink) return isActive(item.path);

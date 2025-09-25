@@ -1,7 +1,10 @@
 import BoostAds from "@/components/admin/BoostAds/BoostAds";
+import BoostYourAdVisibility from "@/components/admin/BoostAds/BoostYourAdVisibility";
+import CarDetailsPage from "@/components/admin/CarDetails/CarDetailsPage";
 import Dashboard from "@/components/admin/Dashboard/Dashboard";
 import Message from "@/components/admin/Message/Message";
 import MyAdds from "@/components/admin/MyAdds/MyAdds";
+import ViewAnalytics from "@/components/admin/CarDetails/ViewAnalytics";
 import MyFavorites from "@/components/admin/MyFavorites/MyFavorites";
 import Settings from "@/components/admin/Settings/Settings";
 import Subscription from "@/components/admin/Subscription/Subscription";
@@ -142,8 +145,20 @@ const router = createBrowserRouter([
         element: <MyAdds />
       },
       {
+        path: "/dashboard/car-details/:id",
+        element: <CarDetailsPage />
+      },
+      {
+        path: "/dashboard/view-analytics/:id",
+        element: <ViewAnalytics />
+      },
+      {
         path: "/dashboard/boost-ads",
         element: <BoostAds />
+      },
+      {
+        path: "/dashboard/boost-your-ad-visibility/:id",
+        element: <BoostYourAdVisibility />
       },
       {
         path: "/dashboard/my-favorites",

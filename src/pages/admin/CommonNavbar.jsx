@@ -3,6 +3,8 @@ import { CgProfile } from "react-icons/cg";
 import React, { use } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useLocation } from "react-router-dom";
+import NotificationDropdown from "@/shared/navbar/NotificationDropdown";
+import UserDropdown from "@/shared/navbar/UserDropdown";
 
 const CommonNavbar = ({ open, setOpen }) => {
   const { pathname } = useLocation();
@@ -20,13 +22,9 @@ const CommonNavbar = ({ open, setOpen }) => {
         </div>
       </div>
 
-      <div className="flex items-start md:gap-4 gap-2">
-        <span>
-          <IoIosNotifications color="black" size={24} />
-        </span>
-        <span>
-          <CgProfile color="black" size={24} />
-        </span>
+      <div className="flex items-center md:gap-4 gap-2">
+    <NotificationDropdown />
+        <UserDropdown />
       </div>
     </div>
   );
