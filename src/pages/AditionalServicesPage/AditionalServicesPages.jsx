@@ -1,8 +1,11 @@
+import AdditionalServiceBanner from '@/components/additionalServicesComponent/AdditionalServiceBanner'
 import React from 'react'
 
 const AditionalServicesPages = () => {
   return (
-    <div>AditionalServicesPages</div>
+    <div className='mt-20'>
+      <AdditionalServiceBanner />
+    </div>
   )
 }
 

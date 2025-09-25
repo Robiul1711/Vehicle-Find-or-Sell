@@ -56,7 +56,7 @@ const router = createBrowserRouter([
       },
       // All aditionals services page
       {
-        path: "/aditionalservices",
+        path: "/services",
         element: <AditionalServicesPages />,
       },
       {
