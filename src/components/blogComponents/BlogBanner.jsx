@@ -20,7 +20,7 @@ const BlogBanner = () => {
     }, [])
 
     return (
-        <div className='bg-[#E9F2FF] min-h-[40vh] flex flex-col justify-center items-center gap-4 text-black '>
+        <div className='bg-[#E9F2FF] min-h-[40vh] flex flex-col justify-center items-center text-center gap-4 text-black '>
             <p ref={titleRef} className="text-2xl md:text-5xl text-black font-bold">Our Latest Automotive Insights</p>
             <p ref={subTextRef} className="text-xl">Stay updated with tips, trends, and news from the world of cars, bikes, vans, and spare parts.</p>
         </div>
