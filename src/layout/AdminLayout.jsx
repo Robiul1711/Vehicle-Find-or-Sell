@@ -1,6 +1,13 @@
-
-import { BoostAddsIcon, DashboardIcon, FavouriteIcon, MessageIcon, MyAddsIcon, SettingIcon, SubscriptionIcon, SupportIcon } from "@/components/common/SVGicons/DashboardIcon";
-
+import {
+  BoostAddsIcon,
+  DashboardIcon,
+  FavouriteIcon,
+  MessageIcon,
+  MyAddsIcon,
+  SettingIcon,
+  SubscriptionIcon,
+  SupportIcon,
+} from "@/components/common/SVGicons/DashboardIcon";
 
 import CommonNavbar from "@/pages/admin/CommonNavbar";
 import SideBar from "@/pages/admin/SideBar";
@@ -25,7 +32,7 @@ const AdminLayout = () => {
       icon: <MyAddsIcon className=" hover:text-primaryColor" />,
       text: "My Ads",
       path: "/dashboard/my-adds",
-      activePaths: ["/dashboard/my-adds"],
+      activePaths: ["/dashboard/my-adds", "/dashboard/car-details/:id", "/dashboard/view-analytics/:id"],
       sublink: false,
     },
     {
@@ -33,7 +40,7 @@ const AdminLayout = () => {
       icon: <BoostAddsIcon className=" hover:text-primaryColor" />,
       text: "Boost Ads ",
       path: "/dashboard/boost-ads",
-      activePaths: ["/dashboard/boost-ads"],
+      activePaths: ["/dashboard/boost-ads", "/dashboard/boost-your-ad-visibility/:id"],
       sublink: false,
     },
     {
