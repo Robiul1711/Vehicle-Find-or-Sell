@@ -1,8 +1,17 @@
+import VehicleMaintenanceBanner from '@/components/additionalServicesComponent/VehicleMaintenance/VehicleMaintenanceBanner'
+import VehicleMaintenanceKeypoints from '@/components/additionalServicesComponent/VehicleMaintenance/VehicleMaintenanceKeypoints'
+import { CommonPageWrapper } from '@/components/common/CommonPageWrapper'
 import React from 'react'
 
 const VehicleMaintenanceHistory = () => {
   return (
-    <div>VehicleMaintenanceHistory</div>
+    <div className='mt-20'>
+      <VehicleMaintenanceBanner />
+      <CommonPageWrapper>
+        <VehicleMaintenanceKeypoints />
+      </CommonPageWrapper>
+
+    </div>
   )
 }
 

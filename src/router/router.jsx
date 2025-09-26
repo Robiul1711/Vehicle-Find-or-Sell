@@ -54,12 +54,12 @@ const router = createBrowserRouter([
         element: <BlogPage />,
       },
       {
-        path: "/blogdetails/:id",
+        path: "/blogDetails/:id",
         element: <BlogDetailsPage />,
       },
       // All aditionals services page
       {
-        path: "/aditionalservices",
+        path: "/services",
         element: <AditionalServicesPages />,
       },
       {
