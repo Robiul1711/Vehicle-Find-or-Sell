@@ -20,11 +20,15 @@ import Maintenance7 from '@/assets/images/Maintenance7.png';
 import purchase1 from '@/assets/images/purchase1.png';
 import purchase2 from '@/assets/images/purchase2.png';
 import purchase3 from '@/assets/images/purchase3.png';
+import purchase4 from '@/assets/images/purchase4.png';
+import purchase5 from '@/assets/images/purchase5.png';
 
 export const ImageProvider = {
     purchase1,
     purchase2,
     purchase3,
+    purchase4,
+    purchase5,
     Maintenance1,
     Maintenance2,
     Maintenance3,

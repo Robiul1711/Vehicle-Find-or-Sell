@@ -4,7 +4,7 @@ import React from 'react';
 
 const VehiclePurchaseKeypoints = () => {
     return (
-        <div className='lg:space-y-20'>
+        <div className='lg:space-y-20 mx-auto'>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold">
