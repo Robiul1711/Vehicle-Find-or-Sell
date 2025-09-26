@@ -1,8 +1,20 @@
+import VehicleRegistrationBanner from '@/components/additionalServicesComponent/vehicleRegistration/VehicleRegistrationBanner'
+import VehicleRegistrationFAQ from '@/components/additionalServicesComponent/vehicleRegistration/VehicleRegistrationFAQ'
+import VehicleRegistrationKeypoints from '@/components/additionalServicesComponent/vehicleRegistration/VehicleRegistrationKeypoints'
+import { CommonPageWrapper } from '@/components/common/CommonPageWrapper'
 import React from 'react'
 
 const RegistrationServices = () => {
   return (
-    <div>RegistrationServices</div>
+    <div className='mt-20'>
+      <VehicleRegistrationBanner />
+      <CommonPageWrapper>
+
+        <VehicleRegistrationFAQ />
+        <VehicleRegistrationKeypoints />
+
+      </CommonPageWrapper>
+    </div>
   )
 }
 
