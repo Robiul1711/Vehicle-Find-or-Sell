@@ -37,7 +37,7 @@ export default function SupportAndHelp() {
       {}
       <div className="flex flex-col sm:flex-row gap-6 rounded-xl overflow-hidden">
         {}
-        <div className="sm:w-56 flex sm:flex-col rounded-xl bg-white  backdrop-filter backdrop-blur-lg">
+        <div className="sm:w-72 flex sm:flex-col rounded-xl bg-white  backdrop-filter backdrop-blur-lg">
           {tabs.map((tab) => (
             <button
               key={tab.id}

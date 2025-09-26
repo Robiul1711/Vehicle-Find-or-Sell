@@ -1,9 +1,21 @@
-import React from 'react'
+import React from "react";
+import ChatList from "./ChatList";
+import MessageInbox from "./MessageInbox";
 
 const Message = () => {
   return (
-    <div>Message</div>
-  )
-}
+    <div className="flex gap-6">
+      {/* Sidebar */}
+      <div className="w-1/4 ">
+        <ChatList />
+      </div>
 
-export default Message
+      {/* Main Chat */}
+      <div className="flex-1">
+        <MessageInbox />
+      </div>
+    </div>
+  );
+};
+
+export default Message;
