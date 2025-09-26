@@ -8,19 +8,23 @@ import {
 
 const faqs = [
   {
-    question: "Is it accessible?",
-    answer: "Yes. It adheres to the WAI-ARIA design pattern and is screen-reader friendly.",
+    question: "Do I need an account to browse listings?",
+    answer: "No, you can browse freely. An account is only required to post ads or contact sellers.",
   },
   {
-    question: "Can I use it in my project?",
-    answer: "Absolutely! You can use it in both personal and commercial projects.",
+    question: "Are the listings verified?",
+    answer: "Yes, we encourage verified sellers and professional dealers, but private users can also post.",
   },
   {
-    question: "Is it mobile responsive?",
-    answer: "Yes, it works perfectly across desktop, tablet, and mobile devices.",
+    question: "Can I compare vehicles?",
+    answer: "Yes, you can select up to 2 listings and compare their details side by side.",
   },
   {
-    question: "How do I customize the styles?",
+    question: "What kind of vehicles can I list?",
+    answer: "You can easily apply your own Tailwind CSS classes to match your project’s design.",
+  },
+  {
+    question: "Can I edit my ad after publishing?",
     answer: "You can easily apply your own Tailwind CSS classes to match your project’s design.",
   },
 ];

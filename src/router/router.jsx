@@ -35,6 +35,7 @@ import BrouseListing from "@/pages/ListingsPges/BrouseListing";
 
 
 import { createBrowserRouter } from "react-router-dom";
+import CreateAds from "@/components/admin/CreateAdsComponents/CreateAds";
 
 const router = createBrowserRouter([
   {
@@ -143,6 +144,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/my-adds",
         element: <MyAdds />
+      },
+      {
+        path: "/dashboard/create-ads",
+        element: <CreateAds />
       },
       {
         path: "/dashboard/car-details/:id",

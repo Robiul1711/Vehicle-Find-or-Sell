@@ -76,7 +76,7 @@ const isActive = (paths) => {
                   setActiveParentIndex(null);
                   setOpen(false);
                 }}
-                className={`flex items-center gap-3 px-4 py-2 rounded-lg text-base font-medium transition-colors duration-200 ${
+                className={`flex items-center gap-3 px-4 py-2 xl:px-6 xl:py-4 rounded-lg text-base font-medium transition-colors duration-200 ${
                   isActive(item?.activePaths)
                     ? "bg-custom-primary text-[#ffff]"
                     : "text-[#7F879E] hover:bg-custom-primary hover:text-[#ffffff]"

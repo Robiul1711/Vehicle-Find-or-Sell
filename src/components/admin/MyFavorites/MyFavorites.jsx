@@ -44,10 +44,10 @@ export default function MyFavorites() {
               easily.
             </p>
           </div>
-          <button className="bg-custom-primary hover:bg-blue-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+          {/* <button className="bg-custom-primary hover:bg-blue-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
             <Plus size={16} />
             Post New Ad
-          </button>
+          </button> */}
         </div>
 
         {/* Search and Filter Section */}
