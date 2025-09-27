@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Search, ChevronDown, Plus } from "lucide-react";
 import DasCarCard from "../Dashboard/DasCarCard";
+import { Link } from "react-router-dom";
 const cars = [
   {
     id: 1,
@@ -43,10 +44,10 @@ export default function AdsOverview() {
               easily.
             </p>
           </div>
-          <button className="bg-custom-primary hover:bg-blue-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+          <Link to="/dashboard/create-ads" className="bg-custom-primary hover:bg-blue-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
             <Plus size={16} />
             Post New Ad
-          </button>
+          </Link>
         </div>
 
         {/* Search and Filter Section */}

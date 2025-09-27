@@ -32,7 +32,7 @@ const AdminLayout = () => {
       icon: <MyAddsIcon className=" hover:text-primaryColor" />,
       text: "My Ads",
       path: "/dashboard/my-adds",
-      activePaths: ["/dashboard/my-adds", "/dashboard/car-details/:id", "/dashboard/view-analytics/:id"],
+      activePaths: ["/dashboard/my-adds", "/dashboard/car-details/:id", "/dashboard/view-analytics/:id", "/dashboard/create-ads"],
       sublink: false,
     },
     {
