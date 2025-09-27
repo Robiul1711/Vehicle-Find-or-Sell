@@ -7,6 +7,7 @@ import React from 'react';
 const VehicleMaintenanceKeypoints = () => {
     return (
         <div className='space-y-10'>
+            {/* What is a Maintenance History? */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 container">
                 <div className="space-y-4">
                     <p className="lg:text-3xl font-bold">
@@ -24,6 +25,7 @@ const VehicleMaintenanceKeypoints = () => {
                 </div>
             </div>
 
+            {/* Why is Maintenance History Essential? */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4  py-10 lg:py-20">
                 <div className="">
                     <img src={ImageProvider.Maintenance2} alt="" />
@@ -208,16 +210,16 @@ const VehicleMaintenanceKeypoints = () => {
                     <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         Autoviza
                     </button>
-                     <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         Carfax
                     </button>
-                     <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         CarVertical
                     </button>
-                     <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         Auto Origin
                     </button>
-                     <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         Histovec
                     </button>
                 </div>
