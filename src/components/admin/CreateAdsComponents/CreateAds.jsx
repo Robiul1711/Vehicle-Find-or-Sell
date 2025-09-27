@@ -18,7 +18,11 @@ const steps = [
   { id: 1, label: "Registration Number", component: RegistrationNumber },
   { id: 2, label: "Basic Details", component: BasicDetails },
   { id: 3, label: "Features", component: SelectFeatures },
-  { id: 4, label: "Engine & Transmission", component: EngineTransmissionSpaces },
+  {
+    id: 4,
+    label: "Engine & Transmission",
+    component: EngineTransmissionSpaces,
+  },
   { id: 5, label: "Upload Media", component: UploadMedia },
   { id: 6, label: "Seller Address", component: SellerAddress },
   { id: 7, label: "Contact Info", component: ContactInformation },
@@ -101,6 +105,7 @@ const CreateAds = () => {
                 type="button"
                 onClick={methods.handleSubmit((data) => {
                   console.log("Submitted at Contact Info:", data);
+
                   nextStep(); // go to Preview step
                 })}
                 className="px-4 py-2 bg-custom-primary text-white rounded"

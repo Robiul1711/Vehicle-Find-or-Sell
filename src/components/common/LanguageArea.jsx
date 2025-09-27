@@ -74,10 +74,10 @@ const LanguageArea = () => {
         className="appearance-none bg-white border border-custom-primary rounded-md px-3 py-2 hover:bg-custom-primary hover:text-white pr-8 shadow-md "
       >
         <option value="en">
-          🇬🇧 English
+         English
         </option>
         <option value="fr">
-          fr Franch
+         Franch
         </option>
       </select>
 

@@ -2,5 +2,7 @@
 import { createContext } from "react";
 
 const AuthContext = createContext();
+const EmailContext = createContext();
+const OtpContext = createContext();
 
-export { AuthContext };
+export { AuthContext, EmailContext, OtpContext };
