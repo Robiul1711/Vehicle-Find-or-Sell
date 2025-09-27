@@ -20,11 +20,35 @@ import Maintenance7 from '@/assets/images/Maintenance7.png';
 import purchase1 from '@/assets/images/purchase1.png';
 import purchase2 from '@/assets/images/purchase2.png';
 import purchase3 from '@/assets/images/purchase3.png';
+import purchase4 from '@/assets/images/purchase4.png';
+import purchase5 from '@/assets/images/purchase5.png';
+import carInsurance1 from '@/assets/images/carInsurance1.png';
+import carInsurance2 from '@/assets/images/carInsurance2.png';
+import carInsurance3 from '@/assets/images/carInsurance3.png';
+import carInsurance4 from '@/assets/images/carInsurance4.png';
+import carInsurance5 from '@/assets/images/carInsurance5.png';
+import registration1 from '@/assets/images/registration1.png';
+import registration2 from '@/assets/images/registration2.png';
+import warrenty1 from '@/assets/images/warrenty1.png';
+import warrenty2 from '@/assets/images/warrenty2.png';
+import warrenty3 from '@/assets/images/warrenty3.png';
 
 export const ImageProvider = {
+    warrenty1,
+    warrenty2,
+    warrenty3,
+    registration1,
+    registration2,
     purchase1,
     purchase2,
     purchase3,
+    purchase4,
+    purchase5,
+    carInsurance1,
+    carInsurance2,
+    carInsurance3,
+    carInsurance4,
+    carInsurance5,
     Maintenance1,
     Maintenance2,
     Maintenance3,
