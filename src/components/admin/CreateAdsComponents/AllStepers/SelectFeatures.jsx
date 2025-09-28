@@ -65,7 +65,7 @@ export const SelectFeatures = () => {
       ],
     },
     {
-      title: "Comfort & Convenience",
+      title: "Comfort Convenience",
       features: [
         "Keyless entry system",
         "Bluetooth",
@@ -94,7 +94,7 @@ export const SelectFeatures = () => {
             {section.features.map((feature, featureIndex) => {
               const fieldName = `${section.title
                 .toLowerCase()
-                .replace(/[^a-z0-9]/g, "_")}_${featureIndex}`;
+                .replace(/[^a-z0-9]/g, "_")}${featureIndex}`;
 
               return (
                 <Controller

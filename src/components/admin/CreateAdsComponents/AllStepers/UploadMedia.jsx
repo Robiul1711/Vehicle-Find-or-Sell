@@ -1,82 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import { useForm, FormProvider, useFormContext } from 'react-hook-form';
-import { Upload, AlertCircle, X } from 'lucide-react';
+import React, { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { UploadCloud, File, X } from "lucide-react";
 
-// Upload Field Component
-const UploadField = ({ title, fieldName, accept, multiple = false, warningMessage, previewImages = false }) => {
-  const { register, setValue, watch, formState: { errors } } = useFormContext();
-  const watchedFiles = watch(fieldName) || (multiple ? [] : null);
-  const [preview, setPreview] = useState([]);
+const UploadMedia = () => {
+  const { register, setValue, watch } = useFormContext();
 
-  // Update previews for images
-  useEffect(() => {
-    if (!previewImages) return;
+  // Watch fields from react-hook-form
+  const images = watch("images") || [];
+  const video = watch("video") || null;
+  const document = watch("document") || null;
 
-    if (multiple && Array.isArray(watchedFiles)) {
-      const urls = watchedFiles.map(file => URL.createObjectURL(file));
-      setPreview(urls);
-      return () => urls.forEach(url => URL.revokeObjectURL(url));
-    } else if (watchedFiles && watchedFiles instanceof File) {
-      const url = URL.createObjectURL(watchedFiles);
-      setPreview([url]);
-      return () => URL.revokeObjectURL(url);
-    } else {
-      setPreview([]);
-    }
-  }, [watchedFiles, multiple, previewImages]);
-
-  const handleChange = (e) => {
-    if (!e.target.files) return;
-    const files = multiple ? Array.from(e.target.files) : e.target.files[0];
-    setValue(fieldName, files);
+  // Handle Images
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const updated = [...images, ...files];
+    setValue("images", updated, { shouldValidate: true });
   };
 
   const removeImage = (index) => {
-    if (!multiple) {
-      setValue(fieldName, null);
-      setPreview([]);
-    } else {
-      const newFiles = [...watchedFiles];
-      newFiles.splice(index, 1);
-      setValue(fieldName, newFiles);
-    }
+    const updated = [...images];
+    updated.splice(index, 1);
+    setValue("images", updated);
+  };
+
+  // Handle Video
+  const handleVideoChange = (e) => {
+    setValue("video", e.target.files[0]);
+  };
+
+  // Handle Document
+  const handleDocChange = (e) => {
+    setValue("document", e.target.files[0]);
   };
 
   return (
-    <div className="mb-6">
-      <label className="block text-gray-900 font-medium mb-2">{title}</label>
+    <div className="space-y-6">
+      <h2 className="text-xl font-semibold">Upload Media</h2>
 
-      <div className="relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-gray-400">
-        <input
-          type="file"
-          {...register(fieldName)}
-          accept={accept}
-          multiple={multiple}
-          onChange={handleChange}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-        />
-        <div className="flex flex-col items-center">
-          <Upload className="w-8 h-8 text-gray-400 mb-2" />
-          <p className="text-gray-500 text-sm mb-2">Drag & drop files here or</p>
-          <span
-            className="text-blue-600 hover:text-blue-700 underline text-sm font-medium"
-            onClick={() => document.querySelector(`input[name="${fieldName}"]`).click()}
-          >
-            browse
-          </span>
-        </div>
+      {/* Image Upload */}
+      <div>
+        <h3 className="font-medium mb-2">Image</h3>
+        <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary">
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={handleImageChange}
+          />
+          <UploadCloud className="w-6 h-6 text-gray-400" />
+          <p className="text-sm text-gray-500">
+            Drag & drop your car, bike, or part photos here, or{" "}
+            <span className="text-custom-primary">click to browse</span>
+          </p>
+        </label>
 
-        {preview.length > 0 && previewImages && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {preview.map((url, idx) => (
-              <div key={idx} className="relative w-24 h-24 rounded overflow-hidden border">
-                <img src={url} alt={`preview-${idx}`} className="w-full h-full object-cover" />
+        {/* Image Preview */}
+        {images.length > 0 && (
+          <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
+            {images.map((file, idx) => (
+              <div key={idx} className="relative">
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt="preview"
+                  className="w-full h-24 object-cover rounded-md border"
+                />
                 <button
                   type="button"
+                  className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1"
                   onClick={() => removeImage(idx)}
-                  className="absolute top-1 right-1 bg-white rounded-full p-1 hover:bg-red-100"
                 >
-                  <X className="w-4 h-4 text-red-500" />
+                  <X size={14} />
                 </button>
               </div>
             ))}
@@ -84,64 +78,58 @@ const UploadField = ({ title, fieldName, accept, multiple = false, warningMessag
         )}
       </div>
 
-      {warningMessage && (
-        <div className="flex items-center gap-2 mt-2 text-sm text-orange-600">
-          <AlertCircle className="w-4 h-4" />
-          {warningMessage}
-        </div>
-      )}
-
-      {errors[fieldName] && (
-        <p className="mt-2 text-sm text-red-600">{errors[fieldName].message}</p>
-      )}
-    </div>
-  );
-};
-
-// Main Upload Media Component
-const UploadMedia = () => {
-  const methods = useForm({
-    defaultValues: {
-      images: [],
-      video: null,
-      document: null,
-    }
-  });
-
-  const onSubmit = (data) => console.log('Form Data:', data);
-
-  return (
-    <div className="md:p-6">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-6">Upload Media</h1>
-
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <UploadField
-            title="Images"
-            fieldName="images"
-            accept="image/*"
-            multiple={true}
-            previewImages={true}
-          />
-
-          <UploadField
-            title="Video"
-            fieldName="video"
+      {/* Video Upload */}
+      <div>
+        <h3 className="font-medium mb-2">Video</h3>
+        <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary">
+          <input
+            type="file"
             accept="video/*"
-            multiple={false}
-            warningMessage="Your video will be published after add-on purchase."
+            className="hidden"
+            onChange={handleVideoChange}
           />
+          <UploadCloud className="w-6 h-6 text-gray-400" />
+          <p className="text-sm text-gray-500">
+            Drag & drop your car, bike, or part video here, or{" "}
+            <span className="text-custom-primary">click to browse</span>
+          </p>
+        </label>
 
-          <UploadField
-            title="Documents"
-            fieldName="document"
-            accept=".pdf,.doc,.docx,.txt"
-            multiple={true}
-          />
+        {video && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            <video
+              controls
+              className="mt-3 w-full h-40 rounded-md border object-cover"
+              src={URL.createObjectURL(video)}
+            />
+          </div>
+        )}
+        <p className="mt-2 text-xs text-orange-500 flex items-center gap-1">
+          <File size={14} /> Upload your video now. It will be published after
+          the add-on purchase.
+        </p>
+      </div>
 
+      {/* Document Upload */}
+      <div>
+        <h3 className="font-medium mb-2">Document</h3>
+        <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary">
+          <input type="file" className="hidden" onChange={handleDocChange} />
+          <UploadCloud className="w-6 h-6 text-gray-400" />
+          <p className="text-sm text-gray-500">
+            Attach important documents (e.g., registration papers, service
+            history, warranty) or{" "}
+            <span className="text-custom-primary">click to browse</span>
+          </p>
+        </label>
 
-        </form>
-      </FormProvider>
+        {document && (
+          <div className="mt-3 flex items-center gap-2 text-sm text-gray-700 border p-2 rounded-md">
+            <File className="w-5 h-5 text-gray-500" />
+            {document.name}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -58,21 +58,19 @@ const CarListing = ({ items }) => {
           <div className="flex space-x-2 bg-gray-200 p-1.5 rounded-lg">
             <button
               onClick={() => setIsGrid(true)}
-              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${
-                isGrid
+              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${isGrid
                   ? "bg-custom-primary text-white shadow-sm"
                   : "text-black hover:bg-gray-300"
-              }`}
+                }`}
             >
               <IoGrid />
             </button>
             <button
               onClick={() => setIsGrid(false)}
-              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${
-                !isGrid
+              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${!isGrid
                   ? "bg-custom-primary text-white shadow-sm"
                   : "text-black hover:bg-gray-300"
-              }`}
+                }`}
             >
               <FaList />
             </button>
@@ -104,11 +102,10 @@ const CarListing = ({ items }) => {
                     <div key={index}>
                       <p
                         onClick={() => handleSelect(option)}
-                        className={`hover:text-[#1B1B1B] cursor-pointer ${
-                          selectedOption === option
+                        className={`hover:text-[#1B1B1B] cursor-pointer ${selectedOption === option
                             ? "text-Primary font-medium"
                             : ""
-                        }`}
+                          }`}
                       >
                         {option}
                       </p>
@@ -130,11 +127,10 @@ const CarListing = ({ items }) => {
         </div>
         <div className="flex-1 w-full md:w-3/4">
           <div
-            className={`${
-              isGrid
+            className={`${isGrid
                 ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
-                : "space-y-6"
-            }`}
+                : "space-y-6 w-1/2"
+              }`}
           >
             {items.map((item, i) => {
               const waveDelay = isGrid
@@ -156,17 +152,15 @@ const CarListing = ({ items }) => {
                       delay: waveDelay,
                     },
                   }}
-                  className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${
-                    isGrid ? "max-w-sm mx-auto" : ""
-                  }`}
+                  className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${isGrid ? "max-w-sm mx-auto" : ""
+                    }`}
                 >
                   <motion.div
                     layout
-                    className={`${
-                      isGrid
+                    className={`${isGrid
                         ? "p-5"
                         : "p-4 flex flex-col lg:flex-row items-center"
-                    }`}
+                      }`}
                     transition={{
                       type: "spring",
                       stiffness: 300,
@@ -178,18 +172,16 @@ const CarListing = ({ items }) => {
                       layout
                       src={item.image}
                       alt={item.name}
-                      className={`rounded-lg object-cover ${
-                        isGrid
+                      className={`rounded-lg object-cover ${isGrid
                           ? "w-full h-[200px] mb-5"
                           : "w-44 h-44 mr-4 flex-shrink-0"
-                      }`}
+                        }`}
                     />
                     <div className={`${isGrid ? "w-full" : "flex-1"}`}>
                       <motion.h3
                         layout
-                        className={`${
-                          isGrid ? "text-xl" : "text-[1.1rem]"
-                        } text-gray-800 dark:text-[#d2e5f5]`}
+                        className={`${isGrid ? "text-xl" : "text-[1.1rem]"
+                          } text-gray-800 dark:text-[#d2e5f5]`}
                       >
                         {item.name}
                       </motion.h3>
@@ -233,17 +225,15 @@ const CarListing = ({ items }) => {
                       <motion.div layout className="flex justify-between">
                         <motion.p
                           layout
-                          className={`${
-                            isGrid ? "text-xl" : "text-[1.1rem]"
-                          } font-semibold text-gray-900 text-center`}
+                          className={`${isGrid ? "text-xl" : "text-[1.1rem]"
+                            } font-semibold text-gray-900 text-center`}
                         >
                           ${item?.price}
                         </motion.p>
                         <motion.p
                           layout
-                          className={`${
-                            isGrid ? "text-xl" : "text-[1.1rem]"
-                          } flex items-center gap-3 font-semibold text-gray-900 text-center`}
+                          className={`${isGrid ? "text-xl" : "text-[1.1rem]"
+                            } flex items-center gap-3 font-semibold text-gray-900 text-center`}
                         >
                           View Details <ArrowUpRight size={26} />
                         </motion.p>
