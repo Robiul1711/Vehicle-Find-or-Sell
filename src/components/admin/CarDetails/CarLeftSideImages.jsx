@@ -6,11 +6,13 @@ import car1 from "@/assets/images/car1.png";
 import car2 from "@/assets/images/car2.png";
 import Title from "@/components/common/Title";
 import { PdfIcon } from "@/components/common/SVGicons/DashboardIcon";
+import { useLocation } from "react-router-dom";
 
 const carImages = [car1, car2, car1, car2, car1, car2, car1, car2, car1, car2, car1];
 
 const CarLeftSideImages = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const location =useLocation();
 
   return (
     <div className="w-full flex flex-col justify-between h-full ">
@@ -47,10 +49,14 @@ const CarLeftSideImages = () => {
       </div>
 
         </div>
-        <div>
+
+        {
+            location.pathname.startsWith("/dashboard/car-details/") && <div>
             <Title level="title20" className="mb-4">Document</Title>
            <button className="flex items-center gap-2 text-custom-primary bg-custom-primary/10 py-2 px-4 rounded-lg"><PdfIcon />Car-Brochure.pdf</button>
         </div>
+        }
+       
     </div>
   );
 };

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { ProfetionalIcon, VideoIcon } from "@/components/common/SVGicons/MySvg";
 import { Link, useParams } from 'react-router-dom';
+
 const specs = [
     { icon: Car, label: "Body", value: "Sedan" },
     { icon: Gauge, label: "Mileage", value: "250 km" },
