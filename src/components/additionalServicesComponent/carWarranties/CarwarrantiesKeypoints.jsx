@@ -84,6 +84,7 @@ const InsuranceEssentials = [
 const CarwarrantiesKeypoints = () => {
     return (
         <div className='space-y-20 mx-auto'>
+            {/* Legal Warranty (Mandatory Protection) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
                 <div className="space-y-4">
                     <p className="lg:text-3xl font-bold">
@@ -115,7 +116,7 @@ const CarwarrantiesKeypoints = () => {
                     <img src={ImageProvider.warrenty1} className='w-full' alt="" />
                 </div>
             </div>
-
+            {/* Contractual Warranty (Extra Seller/Manufacturer Coverage) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
                 <div className="">
                     <img src={ImageProvider.warrenty2} className='w-full' alt="" />

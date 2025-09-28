@@ -43,9 +43,25 @@ import valuation4 from '@/assets/images/valuation4.png';
 import valuation5 from '@/assets/images/valuation5.png';
 import valuation6 from '@/assets/images/valuation6.png';
 import delivery1 from '@/assets/images/delivery1.png';
+import delivery2 from '@/assets/images/delivery2.png';
+import delivery3 from '@/assets/images/delivery3.png';
+import delivery4 from '@/assets/images/delivery4.png';
+import delivery5 from '@/assets/images/delivery5.png';
+import showroom1 from '@/assets/images/showroom1.png';
+import showroom2 from '@/assets/images/showroom2.png';
+import showroom3 from '@/assets/images/showroom3.png';
+import showroom4 from '@/assets/images/showroom4.png';
 
 export const ImageProvider = {
+    showroom1,
+    showroom2,
+    showroom3,
+    showroom4,
     delivery1,
+    delivery2,
+    delivery3,
+    delivery4,
+    delivery5,
     valuation1,
     valuation2,
     valuation3,

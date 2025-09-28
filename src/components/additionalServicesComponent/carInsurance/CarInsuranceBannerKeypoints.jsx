@@ -94,12 +94,13 @@ const InsuranceEssentials = [
         title: "Important",
         desc: "Deductible, Exclusions, Eervices"
     }
-   
+
 ]
 
 const CarInsuranceBannerKeypoints = () => {
     return (
         <div className='lg:space-y-20 mx-auto'>
+            {/* Car Insurance: A Legal Requirement */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold">
@@ -136,6 +137,7 @@ const CarInsuranceBannerKeypoints = () => {
                 </div>
             </div>
 
+            {/* Levels of Coverage */}
             <div className=" mx-auto">
                 <div className="space-y-4 lg:space-y-5">
                     <p className="lg:text-3xl font-bold">
@@ -192,7 +194,7 @@ const CarInsuranceBannerKeypoints = () => {
 
             </div>
 
-
+            {/* Who Provides Car Insurance? */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold">
@@ -266,7 +268,7 @@ const CarInsuranceBannerKeypoints = () => {
                     <img className='w-full' src={ImageProvider.carInsurance2} alt="" />
                 </div>
             </div>
-
+            {/* Choosing the Right Insurance Type */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold">
@@ -325,7 +327,7 @@ const CarInsuranceBannerKeypoints = () => {
                 </div>
             </div>
 
-
+            {/* Important Policy Details */}
             <div className="lg:space-y-5">
                 <p className="lg:text-3xl font-bold">
                     Important Policy Details
@@ -374,6 +376,8 @@ const CarInsuranceBannerKeypoints = () => {
                 </div>
             </div>
 
+
+            {/* Selecting the Right Insurance */}
             <div className=" mx-auto">
                 <div className="space-y-4 lg:space-y-5">
                     <p className="lg:text-3xl font-bold">
@@ -408,6 +412,7 @@ const CarInsuranceBannerKeypoints = () => {
 
             </div>
 
+            {/* Car Insurance Essentials */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold">
