@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-export default function BasicDetails() {
+export default function BasicDetails({steps}) {
   const { register, formState: { errors } } = useFormContext();
 
   return (

@@ -11,11 +11,9 @@ import {
 } from "@/components/common/SVGicons/ProgressBarIcons";
 import { ContactIcon } from "lucide-react";
 import { DashboardIcon } from "@/components/common/SVGicons/DashboardIcon";
-
-const StepProgressBar = ({ steps, currentStep }) => {
+const StepProgressBar = ({ steps, currentStep, onStepClick }) => {
   // Map icons for each step index
   const stepIcons = [
-    
     <DashboardIcon key="cat" />,
     <RegistrationIcon key="reg" />,
     <BasicDetailsIcon key="basic" />,
@@ -35,59 +33,61 @@ const StepProgressBar = ({ steps, currentStep }) => {
         const isLastStep = index === steps.length - 1;
 
         return (
-          <div key={index} className="flex-1 flex flex-col items-center relative">
-            {/* Connector Line - before each step except the first */}
-            {index !== 0 && (
-              <div className="absolute top-6 left-0 right-1/2 h-0.5">
-                <div
-                  className={clsx(
-                    "h-full w-full",
-                    isCompleted || isActive ? "bg-custom-primary" : "bg-gray-300"
-                  )}
-                />
-              </div>
-            )}
+     <div key={index} className="flex-1 flex flex-col items-center relative">
+  {/* Connector Line - before each step except the first */}
+  {index !== 0 && (
+    <div className="absolute top-6 left-0 right-1/2 h-0.5">
+      <div
+        className={clsx(
+          "h-full w-full",
+          isCompleted || isActive ? "bg-custom-primary" : "bg-gray-300"
+        )}
+      />
+    </div>
+  )}
 
-            {/* Connector Line - after each step except the last */}
-            {!isLastStep && (
-              <div className="absolute top-6 left-1/2 right-0 h-0.5">
-                <div
-                  className={clsx(
-                    "h-full w-full",
-                    isCompleted ? "bg-custom-primary" : "bg-gray-300"
-                  )}
-                />
-              </div>
-            )}
+  {/* Connector Line - after each step except the last */}
+  {!isLastStep && (
+    <div className="absolute top-6 left-1/2 right-0 h-0.5">
+      <div
+        className={clsx(
+          "h-full w-full",
+          isCompleted ? "bg-custom-primary" : "bg-gray-300"
+        )}
+      />
+    </div>
+  )}
 
-            {/* Step Circle with Icon */}
-            <div
-              className={clsx(
-                "z-10 w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300",
-                isActive
-                  ? "border-2 border-custom-primary bg-custom-primary text-white shadow-lg shadow-custom-primary/40"
-                  : isCompleted
-                  ? "border-2 border-dashed border-custom-primary text-custom-primary bg-white"
-                  : "border border-gray-300 bg-white text-gray-400"
-              )}
-            >
-              {stepIcons[index]}
-            </div>
+  {/* Step Circle with Icon (clickable) */}
+  <div
+    onClick={() => onStepClick && onStepClick(index)} // ✅ only icon is clickable
+    className={clsx(
+      "z-10 w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 cursor-pointer",
+      isActive
+        ? "border-2 border-custom-primary bg-custom-primary text-white shadow-lg shadow-custom-primary/40"
+        : isCompleted
+        ? "border-2 border-dashed border-custom-primary text-custom-primary bg-white"
+        : "border border-gray-300 bg-white text-gray-400"
+    )}
+  >
+    {stepIcons[index]}
+  </div>
 
-            {/* Step Label */}
-            <div
-              className={clsx(
-                "text-xs text-center mt-2 px-2 font-medium whitespace-nowrap",
-                isActive
-                  ? "text-custom-primary"
-                  : isCompleted
-                  ? "text-custom-primary"
-                  : "text-gray-400"
-              )}
-            >
-              {step}
-            </div>
-          </div>
+  {/* Step Label */}
+  <div
+    className={clsx(
+      "text-xs text-center mt-2 px-2 font-medium whitespace-nowrap",
+      isActive
+        ? "text-custom-primary"
+        : isCompleted
+        ? "text-custom-primary"
+        : "text-gray-400"
+    )}
+  >
+    {step}
+  </div>
+</div>
+
         );
       })}
     </div>
