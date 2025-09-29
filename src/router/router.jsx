@@ -39,6 +39,7 @@ import CreateAds from "@/components/admin/CreateAdsComponents/CreateAds";
 import DetailsPage from "@/pages/detailsPage/DetailsPage";
 import DealerPage from "@/pages/dealerPage/DealerPage";
 import DealerProfile from "@/pages/dealerPage/DealerProfile";
+import ContactPage from "@/pages/contactPage/ContactPage";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
         path: "/dealer-profile",
         element: <DealerProfile />
       },
+      {
+        path: "/contact",
+        element: <ContactPage />
+      },
       // All aditionals services page
       {
         path: "/services",
@@ -76,7 +81,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/details/:id",
-        element: <DetailsPage/>,
+        element: <DetailsPage />,
       },
       {
         path: "/aditionalservices/vehicle-maintenance-history",
