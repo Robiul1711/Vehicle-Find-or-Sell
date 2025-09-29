@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pencil } from "lucide-react";
+import { RiEdit2Fill } from "react-icons/ri";
 import { useFormContext } from "react-hook-form";
 
 // Reusable Section component
@@ -7,10 +7,14 @@ const Section = ({ title, content, sectionKey, onEdit }) => (
   <div className="mb-6">
     <div className="flex justify-between items-center mb-2">
       <h2 className="text-lg font-medium text-gray-700">{title}</h2>
-      <Pencil
-        className="w-5 h-5 text-gray-500 hover:text-blue-600 cursor-pointer"
-        onClick={() => onEdit(sectionKey)}
+      <button  onClick={() => onEdit(sectionKey)} className="flex items-center gap-1 font-bold text-gray-500 hover:text-blue-600 ">
+
+      <RiEdit2Fill
+        className="w-5 h-5 "
+       
       />
+      Edit
+      </button>
     </div>
     <div className="text-gray-900">{content}</div>
   </div>
@@ -41,7 +45,7 @@ const Preview = ({ goToStep }) => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Basic Details */}
       <Section
         title="Basic Details"

@@ -62,12 +62,12 @@ export default function SimpleDropdown() {
         trigger={(isOpen) => (
           <CommonButton
             variant={isOpen ? "secondary" : "primary"} // 👈 change style when open
-            className={`group ${isOpen ? "bg-custom-primary text-white" : ""}`}
+            className={`group ${isOpen ? "bg-custom-primary text-white hover:bg-custom-primary" : ""}`}
           >
             <CompareIcon
               className={`size-5.5 ${
                 isOpen
-                  ? "text-white"
+                  ? ""
                   : "text-custom-primary group-hover:text-white"
               }`}
             />
