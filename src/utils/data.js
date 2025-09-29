@@ -370,3 +370,64 @@ export const partData = [
         price: "18,900"
     },
 ];
+
+export const dealerProfileData = [
+    {
+        id: "1",
+        name: "Honda Accord Sport",
+        description: "3.5 D5 PowerPulse Momentum 5dr AW…",
+        location: "4525 Saints Alley, Plant City, FL 33564",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer1,
+        price: "18,900"
+    },
+
+    {
+        id: "2",
+        name: "Honda Accord Sport",
+        description: "3.5 D5 PowerPulse Momentum 5dr AW…",
+        location: "4525 Saints Alley, Plant City, FL 33564",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer2,
+        price: "18,900"
+    },
+
+    {
+        id: "3",
+        name: "Honda Accord Sport",
+        description: "3.5 D5 PowerPulse Momentum 5dr AW…",
+        location: "4525 Saints Alley, Plant City, FL 33564",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer3,
+        price: "18,900"
+    },
+    {
+        id: "4",
+        name: "Honda Accord Sport",
+        description: "3.5 D5 PowerPulse Momentum 5dr AW…",
+        location: "4525 Saints Alley, Plant City, FL 33564",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer1,
+        price: "18,900"
+    },
+
+    {
+        id: "5",
+        name: "Honda Accord Sport",
+        description: "3.5 D5 PowerPulse Momentum 5dr AW…",
+        location: "4525 Saints Alley, Plant City, FL 33564",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer2,
+        price: "18,900"
+    },
+];
