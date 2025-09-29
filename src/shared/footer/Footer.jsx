@@ -58,7 +58,11 @@ const Footer = () => {
               Terms and Conditions
             </Link>
           </li>
-          <li className="hover:text-white cursor-pointer">Legal Notices</li>
+          <li className="hover:text-white cursor-pointer">
+            <Link to={'/legal-notice'}>
+              Legal Notices
+            </Link>
+          </li>
           <li className="hover:text-white cursor-pointer">Cookie Policy</li>
           <li className="hover:text-white cursor-pointer">
             Personal Data Protection Policy

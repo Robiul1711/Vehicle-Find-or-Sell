@@ -41,6 +41,7 @@ import DealerPage from "@/pages/dealerPage/DealerPage";
 import DealerProfile from "@/pages/dealerPage/DealerProfile";
 import ContactPage from "@/pages/contactPage/ContactPage";
 import TermAndCondition from "@/pages/termAndCondition/TermAndCondition";
+import LegalNotice from "@/pages/legalNotice/LegalNotice";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: "/term-and-conditions",
         element: <TermAndCondition />
+      },
+      {
+        path: "/legal-notice",
+        element: <LegalNotice />
       },
       // All aditionals services page
       {
