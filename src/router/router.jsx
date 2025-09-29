@@ -40,6 +40,7 @@ import DetailsPage from "@/pages/detailsPage/DetailsPage";
 import DealerPage from "@/pages/dealerPage/DealerPage";
 import DealerProfile from "@/pages/dealerPage/DealerProfile";
 import ContactPage from "@/pages/contactPage/ContactPage";
+import TermAndCondition from "@/pages/termAndCondition/TermAndCondition";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactPage />
+      },
+      {
+        path: "/term-and-conditions",
+        element: <TermAndCondition />
       },
       // All aditionals services page
       {
