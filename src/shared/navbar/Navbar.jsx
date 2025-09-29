@@ -95,7 +95,7 @@ const Navbar = () => {
 
             {/* Desktop Buttons */}
             <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
-              <CommonButton>Sign In</CommonButton>
+              <CommonButton link="/auth">Sign In</CommonButton>
               <LanguageArea />
               <SimpleDropdown />
             </div>
