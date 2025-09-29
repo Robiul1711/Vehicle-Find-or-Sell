@@ -42,6 +42,10 @@ import DealerProfile from "@/pages/dealerPage/DealerProfile";
 import ContactPage from "@/pages/contactPage/ContactPage";
 import TermAndCondition from "@/pages/termAndCondition/TermAndCondition";
 import LegalNotice from "@/pages/legalNotice/LegalNotice";
+import CookiePolicy from "@/pages/cookiePolicy/CookiePolicy";
+import PersonalData from "@/pages/personalData/PersonalData";
+import TermOfUse from "@/pages/tou/TermOfUse";
+import ProductComparison from "@/pages/comparePage/ProductComparison";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +87,22 @@ const router = createBrowserRouter([
       {
         path: "/legal-notice",
         element: <LegalNotice />
+      },
+      {
+        path: "/cookie-policy",
+        element: <CookiePolicy />
+      },
+      {
+        path: "/personal-data-protection-policy",
+        element: <PersonalData />
+      },
+      {
+        path: "/term-of-use",
+        element: <TermOfUse />
+      },
+      {
+        path: "/compare",
+        element: <ProductComparison />
       },
       // All aditionals services page
       {

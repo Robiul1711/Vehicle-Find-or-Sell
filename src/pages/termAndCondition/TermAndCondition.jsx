@@ -1,10 +1,12 @@
 import { CommonPageWrapper } from '@/components/common/CommonPageWrapper';
 import Title from '@/components/common/Title';
 import React from 'react';
+import { ScrollRestoration } from 'react-router-dom';
 
 const TermAndCondition = () => {
     return (
         <div className='mt-20'>
+            <ScrollRestoration />
             <div className='section-padding-x section-padding-y flex flex-col  gap-[45px] xmd:gap-[40px]'>
                 <div className="space-y-2">
                     <Title level="title32">TERMS AND CONDITIONS OF SALE – labonneroute.fr</Title>

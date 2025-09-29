@@ -57,8 +57,14 @@ import profileImg from '@/assets/images/profileImg.png';
 import dealer1 from '@/assets/images/dealer1.png';
 import dealer2 from '@/assets/images/dealer2.png';
 import dealer3 from '@/assets/images/dealer3.png';
+import compare1 from '@/assets/images/compare1.png';
+import compare2 from '@/assets/images/compare2.png';
+import compare3 from '@/assets/images/compare3.png';
 
 export const ImageProvider = {
+    compare1,
+    compare2,
+    compare3,
     dealer1,
     dealer2,
     dealer3,

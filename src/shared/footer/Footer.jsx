@@ -63,11 +63,21 @@ const Footer = () => {
               Legal Notices
             </Link>
           </li>
-          <li className="hover:text-white cursor-pointer">Cookie Policy</li>
           <li className="hover:text-white cursor-pointer">
-            Personal Data Protection Policy
+            <Link to={'/cookie-policy'}>
+              Cookie Policy
+            </Link>
           </li>
-          <li className="hover:text-white cursor-pointer">TOU</li>
+          <li className="hover:text-white cursor-pointer">
+            <Link to={'/personal-data-protection-policy'}>
+              Personal Data Protection Policy
+            </Link>
+          </li>
+          <li className="hover:text-white cursor-pointer">
+            <Link to='/term-of-use'>
+              TOU
+            </Link>
+          </li>
         </ul>
         <p className="text-center lg:text-right">
           © 2025 labonneroute.fr. All rights reserved.
