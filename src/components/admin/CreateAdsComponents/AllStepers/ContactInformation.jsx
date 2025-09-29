@@ -5,7 +5,7 @@ const ContactInformation = () => {
   const { register, formState: { errors } } = useFormContext();
 
   return (
-    <div className="md:p-6">
+    <div className="">
       <style jsx>{`
         .focus-primary:focus {
           outline: none;

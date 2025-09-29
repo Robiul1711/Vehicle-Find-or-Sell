@@ -5,7 +5,7 @@ const EngineTransmissionSpaces = () => {
   const { register, formState: { errors } } = useFormContext();
 
   return (
-    <div className="md:p-6 ">
+    <div className="">
       <h1 className="text-2xl font-semibold text-gray-900 mb-8">
         Engine & Transmission Spaces
       </h1>

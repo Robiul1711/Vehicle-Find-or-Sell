@@ -23,7 +23,7 @@ export default function SelectCategory() {
   const selectedCategory = watch("category") || "Car"; // default to "Car"
 
   return (
-    <div>
+    <div className="">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-gray-900 mb-2">
           Post Your Ad
