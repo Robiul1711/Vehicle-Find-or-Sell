@@ -7,7 +7,7 @@ import { IoGitCompareOutline } from "react-icons/io5";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import VehiclePriceDealer from "./VehiclePriceDealer";
 
-const DetailsRowOne = () => {
+const DetailsRowOne = ({details}) => {
   const carInfo = [
     {
       id: 1,
@@ -32,8 +32,8 @@ const DetailsRowOne = () => {
     },
   ];
   return (
-    <div className=" flex  w-full gap-5 mt-14">
-      <div className="w-[70%] flex flex-col gap-5">
+    <div className=" flex  w-full xmd:flex-row flex-col gap-5 mt-14">
+      <div className="xmd:w-[70%] w-full flex flex-col gap-5">
         <div className=" flex flex-col gap-4">
           <Title level="title40" className=" !font-bold">
             Toyota Corolla 2020
@@ -62,10 +62,10 @@ const DetailsRowOne = () => {
           </div>
 
         </div>
-        <CarLeftSideImages />
+        <CarLeftSideImages details={details} />
       </div>
 
-      <div className=" w-[30%]">
+      <div className=" xmd:w-[30%] w-full">
         <VehiclePriceDealer/>
 
       </div>
