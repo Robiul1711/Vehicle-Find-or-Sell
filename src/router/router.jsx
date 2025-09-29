@@ -39,6 +39,13 @@ import CreateAds from "@/components/admin/CreateAdsComponents/CreateAds";
 import DetailsPage from "@/pages/detailsPage/DetailsPage";
 import DealerPage from "@/pages/dealerPage/DealerPage";
 import DealerProfile from "@/pages/dealerPage/DealerProfile";
+import ContactPage from "@/pages/contactPage/ContactPage";
+import TermAndCondition from "@/pages/termAndCondition/TermAndCondition";
+import LegalNotice from "@/pages/legalNotice/LegalNotice";
+import CookiePolicy from "@/pages/cookiePolicy/CookiePolicy";
+import PersonalData from "@/pages/personalData/PersonalData";
+import TermOfUse from "@/pages/tou/TermOfUse";
+import ProductComparison from "@/pages/comparePage/ProductComparison";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +76,34 @@ const router = createBrowserRouter([
         path: "/dealer-profile",
         element: <DealerProfile />
       },
+      {
+        path: "/contact",
+        element: <ContactPage />
+      },
+      {
+        path: "/term-and-conditions",
+        element: <TermAndCondition />
+      },
+      {
+        path: "/legal-notice",
+        element: <LegalNotice />
+      },
+      {
+        path: "/cookie-policy",
+        element: <CookiePolicy />
+      },
+      {
+        path: "/personal-data-protection-policy",
+        element: <PersonalData />
+      },
+      {
+        path: "/term-of-use",
+        element: <TermOfUse />
+      },
+      {
+        path: "/compare",
+        element: <ProductComparison />
+      },
       // All aditionals services page
       {
         path: "/services",
@@ -76,7 +111,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/details/:id",
-        element: <DetailsPage/>,
+        element: <DetailsPage />,
       },
       {
         path: "/aditionalservices/vehicle-maintenance-history",

@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "@/assets/images/logo.png";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -51,13 +52,32 @@ const Footer = () => {
       {/* Bottom Section */}
       <div className="flex flex-col lg:flex-row justify-between items-center pt-6 gap-6 text-sm text-gray-400">
         <ul className="flex flex-wrap gap-4 justify-center">
-          <li className="hover:text-white cursor-pointer">Terms and Conditions</li>
-          <li className="hover:text-white cursor-pointer">Legal Notices</li>
-          <li className="hover:text-white cursor-pointer">Cookie Policy</li>
+
           <li className="hover:text-white cursor-pointer">
-            Personal Data Protection Policy
+            <Link to={'/term-and-conditions'}>
+              Terms and Conditions
+            </Link>
           </li>
-          <li className="hover:text-white cursor-pointer">TOU</li>
+          <li className="hover:text-white cursor-pointer">
+            <Link to={'/legal-notice'}>
+              Legal Notices
+            </Link>
+          </li>
+          <li className="hover:text-white cursor-pointer">
+            <Link to={'/cookie-policy'}>
+              Cookie Policy
+            </Link>
+          </li>
+          <li className="hover:text-white cursor-pointer">
+            <Link to={'/personal-data-protection-policy'}>
+              Personal Data Protection Policy
+            </Link>
+          </li>
+          <li className="hover:text-white cursor-pointer">
+            <Link to='/term-of-use'>
+              TOU
+            </Link>
+          </li>
         </ul>
         <p className="text-center lg:text-right">
           © 2025 labonneroute.fr. All rights reserved.
