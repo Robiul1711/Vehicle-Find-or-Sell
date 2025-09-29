@@ -32,11 +32,55 @@ import registration2 from '@/assets/images/registration2.png';
 import warrenty1 from '@/assets/images/warrenty1.png';
 import warrenty2 from '@/assets/images/warrenty2.png';
 import warrenty3 from '@/assets/images/warrenty3.png';
+import warrenty4 from '@/assets/images/warrenty4.png';
+import warrenty5 from '@/assets/images/warrenty5.png';
+import warrenty6 from '@/assets/images/warrenty6.png';
+import warrenty7 from '@/assets/images/warrenty7.png';
+import valuation1 from '@/assets/images/valuation1.png';
+import valuation2 from '@/assets/images/valuation2.png';
+import valuation3 from '@/assets/images/valuation3.png';
+import valuation4 from '@/assets/images/valuation4.png';
+import valuation5 from '@/assets/images/valuation5.png';
+import valuation6 from '@/assets/images/valuation6.png';
+import delivery1 from '@/assets/images/delivery1.png';
+import delivery2 from '@/assets/images/delivery2.png';
+import delivery3 from '@/assets/images/delivery3.png';
+import delivery4 from '@/assets/images/delivery4.png';
+import delivery5 from '@/assets/images/delivery5.png';
+import showroom1 from '@/assets/images/showroom1.png';
+import showroom2 from '@/assets/images/showroom2.png';
+import showroom3 from '@/assets/images/showroom3.png';
+import showroom4 from '@/assets/images/showroom4.png';
+import dealer from '@/assets/images/dealer.png';
+import profile from '@/assets/images/profile.png';
+import profileImg from '@/assets/images/profileImg.png';
 
 export const ImageProvider = {
+    profileImg,
+    profile,
+    dealer,
+    showroom1,
+    showroom2,
+    showroom3,
+    showroom4,
+    delivery1,
+    delivery2,
+    delivery3,
+    delivery4,
+    delivery5,
+    valuation1,
+    valuation2,
+    valuation3,
+    valuation4,
+    valuation5,
+    valuation6,
     warrenty1,
     warrenty2,
     warrenty3,
+    warrenty4,
+    warrenty5,
+    warrenty6,
+    warrenty7,
     registration1,
     registration2,
     purchase1,

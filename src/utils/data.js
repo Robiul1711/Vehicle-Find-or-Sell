@@ -2,6 +2,68 @@
 
 import { ImageProvider } from "./ImageProvider";
 
+export const dealerData = [
+    {
+        id: "1",
+        name: "Auto World Motors",
+        description: "Professional Seller",
+        location: "2323 Dancing Dove Lane, Long Island City, NY 11101",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer,
+        price: "18,900"
+    },
+
+    {
+        id: "2",
+        name: "Auto World Motors",
+        description: "Professional Seller",
+        location: "2323 Dancing Dove Lane, Long Island City, NY 11101",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer,
+        price: "18,900"
+    },
+
+    {
+        id: "3",
+        name: "Auto World Motors",
+        description: "Professional Seller",
+        location: "2323 Dancing Dove Lane, Long Island City, NY 11101",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer,
+        price: "18,900"
+    },
+    {
+        id: "4",
+        name: "Auto World Motors",
+        description: "Professional Seller",
+        location: "2323 Dancing Dove Lane, Long Island City, NY 11101",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer,
+        price: "18,900"
+    },
+
+    {
+        id: "5",
+        name: "Auto World Motors",
+        description: "Professional Seller",
+        location: "2323 Dancing Dove Lane, Long Island City, NY 11101",
+        mileage: "43 Miles",
+        fuelType: "Petrol",
+        transmission: "Automatic",
+        image: ImageProvider.dealer,
+        price: "18,900"
+    },
+];
+
+
 export const carData = [
     {
         id: "1",
