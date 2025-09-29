@@ -1,6 +1,7 @@
 import React from 'react';
 import { Heart, Gauge, Droplets, Settings, ArrowUpRight } from 'lucide-react';
 import { AutomaticIcon, FireIcon, FuelIcon, MilageIcon } from './SVGicons/MySvg';
+import { Link } from 'react-router-dom';
 
 const VehiclesCard = ({
   imageUrl,
@@ -12,8 +13,11 @@ const VehiclesCard = ({
   price,
   isNew,
   onViewDetails,
-  onFavorite
+  onFavorite,
+  path
 }) => {
+
+  console.log(path)
   return (
     <div className="rounded-2xl shadow-lg overflow-hidden">
       {/* Image */}
@@ -60,13 +64,14 @@ const VehiclesCard = ({
         {/* Price & Button */}
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-gray-900">{price}</span>
-          <button 
+          <Link
+          to={`/details/1`}
             onClick={onViewDetails}
             className="flex items-center text-custom-primary font-medium hover:text-blue-700 transition-colors"
           >
             <span className="mr-2">View Details</span>
             <ArrowUpRight className="w-4 h-4" />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

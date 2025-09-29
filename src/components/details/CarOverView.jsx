@@ -1,14 +1,14 @@
 import React from "react";
 import Title from "../common/Title";
-import { 
-  Car, 
-  Gauge, 
-  Fuel, 
-  Calendar, 
-  Settings, 
-  Wind, 
-  Shield, 
-  Zap, 
+import {
+  Car,
+  Gauge,
+  Fuel,
+  Calendar,
+  Settings,
+  Wind,
+  Shield,
+  Zap,
   FileText,
   User,
   Wrench,
@@ -17,8 +17,8 @@ import {
   Hash,
   Leaf,
   Users,
-  Activity
-} from 'lucide-react';
+  Activity,
+} from "lucide-react";
 
 const specs = [
   { icon: Car, label: "Body", value: "Sedan" },
@@ -43,13 +43,13 @@ const rightSpecs = [
   { icon: Activity, label: "Horsepower (DIN)", value: "368 DIN hp" },
 ];
 
-const CarOverView = () => {
+const CarOverView = ({details}) => {
   return (
     <div className=" flex flex-col gap-6">
-        <Title level="title40" className=" !font-bold">
-                   Car Overview
-                  </Title>
-      <div className=" flex flex-row gap-20 gap-y-4 mb-8">
+      <Title level="title40" className=" !font-bold capitalize">
+        {details} Overview
+      </Title>
+      <div className=" grid md:grid-cols-2 gap-x-8 gap-y-4">
         {/* Left Column */}
         <div className="space-y-4">
           {specs.map((spec, index) => (

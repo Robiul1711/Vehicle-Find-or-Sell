@@ -7,12 +7,38 @@ import car2 from "@/assets/images/car2.png";
 import Title from "@/components/common/Title";
 import { PdfIcon } from "@/components/common/SVGicons/DashboardIcon";
 import { useLocation } from "react-router-dom";
+import truck from "@/assets/images/truck.png";
+import bike from "@/assets/images/bike.png";
+import scooter from "@/assets/images/scooter.png";
+import part from "@/assets/images/part.png";
 
 const carImages = [car1, car2, car1, car2, car1, car2, car1, car2, car1, car2, car1];
+const truckImage = [truck, truck, truck, truck, truck, truck, truck, truck, truck];
+const bikeImages =[ bike, bike, bike, bike, bike, bike, bike, bike, bike];
+const scooterImages =[ scooter, scooter, scooter, scooter, scooter, scooter, scooter, scooter, scooter];
+const partImages =[ part, part, part, part, part, part, part, part, part];
 
-const CarLeftSideImages = () => {
+const getImagesByDetails = (details) => {
+  switch(details) {
+    case 'car':
+      return carImages;
+    case 'truck':
+      return truckImage;
+    case 'bike':
+      return bikeImages;
+    case 'scooter':
+      return scooterImages;
+    case 'parts':
+      return partImages;
+    default:
+      return carImages;
+  }
+};
+
+const CarLeftSideImages = ({images=[],details}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location =useLocation();
+
 
   return (
     <div className="w-full flex flex-col justify-between h-full ">
@@ -20,7 +46,7 @@ const CarLeftSideImages = () => {
       {/* Main Image */}
       <div className="rounded-xl overflow-hidden">
         <img
-          src={carImages[selectedIndex]}
+          src={getImagesByDetails(details)[selectedIndex]}
           alt="Car"
           className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover rounded-xl"
         />
@@ -33,7 +59,7 @@ const CarLeftSideImages = () => {
           slidesPerView={5} // number of thumbnails to show
           className="pb-2"
         >
-          {carImages.map((img, idx) => (
+          {getImagesByDetails(details).map((img, idx) => (
             <SwiperSlide key={idx} className="!w-auto">
               <img
                 src={img}
