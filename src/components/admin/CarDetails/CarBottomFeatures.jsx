@@ -62,7 +62,7 @@ const CarBottomFeatures = () => {
 
       {/* === Seller Address === */}
       <div className="">
-        <Title level="title20" className="mb-4">
+        <Title level="title20" className="mb-3">
           Seller Address
         </Title>
         <div>
@@ -77,10 +77,10 @@ const CarBottomFeatures = () => {
 
       {/* === Contact Info === */}
       <div className="">
-        <Title level="title20" className="mb-6">
+        <Title level="title20" className=" mb-3 md:mb-6">
           Contact Information
         </Title>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           <div>
             <Title level="title14" className="text-gray-500">
               Name

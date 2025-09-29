@@ -48,7 +48,7 @@ const CarLeftSideImages = ({images=[],details}) => {
         <img
           src={getImagesByDetails(details)[selectedIndex]}
           alt="Car"
-          className="w-full h-[450px] object-cover rounded-xl"
+          className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover rounded-xl"
         />
       </div>
 
@@ -64,7 +64,7 @@ const CarLeftSideImages = ({images=[],details}) => {
               <img
                 src={img}
                 onClick={() => setSelectedIndex(idx)}
-                className={`w-28 h-30 rounded-lg cursor-pointer object-cover border-2 transition ${
+                className={`md:w-28 w-24 md:h-30 h-20 rounded-lg cursor-pointer object-cover border-2 transition ${
                   selectedIndex === idx ? "border-blue-500" : "border-gray-200"
                 }`}
                 alt={`Car Thumbnail ${idx + 1}`}

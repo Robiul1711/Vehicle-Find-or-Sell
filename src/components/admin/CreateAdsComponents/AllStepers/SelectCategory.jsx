@@ -9,18 +9,18 @@ import {
   CustomTruck,
 } from "@/utils/IconProvider";
 
-export default function SelectCategory() {
-  const { control, watch } = useFormContext();
+export default function SelectCategory({ onCategorySelect }) {
+  const { control, watch, reset } = useFormContext();
 
   const categories = [
-    { id: "Car", label: "Car", icon: CustomCar },
+    { id: "car", label: "Car", icon: CustomCar },
     { id: "UtilityTrucks", label: "Utility Trucks", icon: CustomTruck },
     { id: "Motorcycle", label: "Motorcycle", icon: CustomBike },
-    { id: "Scooter", label: "Scooter", icon: CustomScoter },
+    { id: "Scoter", label: "Scooter", icon: CustomScoter },
     { id: "Parts", label: "Parts", icon: CustomPart },
   ];
 
-  const selectedCategory = watch("category") || "Car"; // default to "Car"
+  const selectedCategory = watch("category") || null;
 
   return (
     <div className="">
@@ -29,7 +29,7 @@ export default function SelectCategory() {
           Post Your Ad
         </h1>
         <p className="text-gray-600">
-          List your car, utility Trucks, motorcycle, scooter or spare parts in
+          List your car, utility trucks, motorcycle, scooter or spare parts in
           just a few clicks and reach thousands of buyers instantly.
         </p>
       </div>
@@ -42,9 +42,8 @@ export default function SelectCategory() {
         <Controller
           name="category"
           control={control}
-          defaultValue="Car"
           render={({ field }) => (
-            <div className="grid grid-cols-5 gap-4">
+            <div className="grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {categories.map((category) => {
                 const IconComponent = category.icon;
                 const isSelected = field.value === category.id;
@@ -53,33 +52,38 @@ export default function SelectCategory() {
                   <button
                     key={category.id}
                     type="button"
-                    onClick={() => field.onChange(category.id)}
+                    onClick={() => {
+                      field.onChange(category.id);
+                      onCategorySelect?.(category.id);
+                      reset({ category: category.id }); // ✅ Keep selected category
+                    }}
                     className={`
-                      relative flex flex-col items-center justify-center p-6 rounded-lg border-2 transition-all duration-200 hover:shadow-md
-                      ${
-                        isSelected
-                          ? "border-orange-400 bg-orange-50 shadow-sm"
-                          : "border-gray-200 bg-white hover:border-gray-300"
-                      }
-                    `}
+    relative flex flex-col items-center justify-center 
+    p-6 rounded-lg border-2 transition-all duration-200 
+    ${
+      isSelected
+        ? "border-orange-500 bg-orange-100 shadow-md"
+        : "border-gray-200 bg-white hover:border-orange-300 hover:bg-orange-50"
+    }
+  `}
                   >
                     <div
                       className={`
-                      mb-3 p-3 rounded-full
-                      ${
-                        isSelected
-                          ? "bg-orange-100 text-orange-600"
-                          : "bg-gray-100 text-gray-600"
-                      }
-                    `}
+      mb-3 p-3 rounded-full 
+      ${
+        isSelected
+          ? "bg-orange-200 text-orange-700"
+          : "bg-gray-100 text-gray-600"
+      }
+    `}
                     >
                       <IconComponent size={24} />
                     </div>
                     <span
                       className={`
-                      text-sm font-medium
-                      ${isSelected ? "text-orange-700" : "text-gray-700"}
-                    `}
+      text-sm font-medium
+      ${isSelected ? "text-orange-800" : "text-gray-700"}
+    `}
                     >
                       {category.label}
                     </span>

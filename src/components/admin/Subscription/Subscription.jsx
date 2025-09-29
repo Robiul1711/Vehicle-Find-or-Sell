@@ -109,17 +109,17 @@ const Subscription = () => {
     <div className="w-full relative overflow-hidden">
       <div className="relative z-10 min-h-screen">
         <div className="w-full">
-          <div>
-            <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
-              Choose Your Professional Subscription Plan
-            </h1>
-            <p className="mt-4 text-lg text-gray-600">
-              Access advanced tools, statistics, and premium ad packs to grow your visibility and sales.
-            </p>
-          </div>
+    <div className="text-center sm:text-left max-w-3xl mx-auto sm:mx-0 px-4 sm:px-0">
+  <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-snug sm:leading-tight">
+    Choose Your Professional Subscription Plan
+  </h1>
+  <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
+    Access advanced tools, statistics, and premium ad packs to grow your visibility and sales.
+  </p>
+</div>
 
           {/* Toggle Buttons */}
-          <div className="mt-10 flex justify-center">
+          <div className=" mt-5 md:mt-10 flex justify-center">
             <div className="relative flex items-center p-1 rounded-lg border border-gray-300 bg-[#E6EAEE] backdrop-blur-md">
               <button
                 ref={monthlyButtonRef}
@@ -153,7 +153,7 @@ const Subscription = () => {
 
           {/* Pricing Cards */}
           <motion.div
-            className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 xlg:grid-cols-3 xl:grid-cols-4"
+            className="mt-8 md:mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 xlg:grid-cols-3 xl:grid-cols-4"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
