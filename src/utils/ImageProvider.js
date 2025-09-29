@@ -52,8 +52,12 @@ import showroom2 from '@/assets/images/showroom2.png';
 import showroom3 from '@/assets/images/showroom3.png';
 import showroom4 from '@/assets/images/showroom4.png';
 import dealer from '@/assets/images/dealer.png';
+import profile from '@/assets/images/profile.png';
+import profileImg from '@/assets/images/profileImg.png';
 
 export const ImageProvider = {
+    profileImg,
+    profile,
     dealer,
     showroom1,
     showroom2,

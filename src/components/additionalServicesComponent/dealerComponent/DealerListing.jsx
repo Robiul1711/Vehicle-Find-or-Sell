@@ -13,6 +13,7 @@ import {
 import FilterSection from "@/components/browseListingComponents/FilterSection";
 import DealerFilter from "./DealerFilter";
 import { carData, dealerData } from "@/utils/data";
+import { Link } from "react-router-dom";
 
 const options = [
     "Newest",
@@ -204,11 +205,13 @@ const DealerListing = () => {
                                                 layout
                                                 className=" my-2 "
                                             >
-                                                <button className="py-4 border border-black rounded-lg w-full">View Dealer Profile</button>
+                                                <Link to={'/dealer-profile'}>   
+                                                    <button className="py-4 border border-black rounded-lg w-full">View Dealer Profile</button>
+                                                </Link>
                                             </motion.div>
-                                            
-                                            
-                                            
+
+
+
                                         </div>
                                     </motion.div>
                                 </motion.div>

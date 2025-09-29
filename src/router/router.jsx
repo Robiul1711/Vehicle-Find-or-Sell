@@ -37,6 +37,7 @@ import BrouseListing from "@/pages/ListingsPges/BrouseListing";
 import { createBrowserRouter } from "react-router-dom";
 import CreateAds from "@/components/admin/CreateAdsComponents/CreateAds";
 import DealerPage from "@/pages/dealerPage/DealerPage";
+import DealerProfile from "@/pages/dealerPage/DealerProfile";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/dealers",
         element: <DealerPage />
+      },
+      {
+        path: "/dealer-profile",
+        element: <DealerProfile />
       },
       // All aditionals services page
       {
