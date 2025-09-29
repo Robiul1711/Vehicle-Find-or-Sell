@@ -5,7 +5,7 @@ import { CustomEmail } from '@/utils/IconProvider';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import OTPInput from "otp-input-react";
-
+import logo from '../../assets/images/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 
 const VerifyOTP = () => {
@@ -17,6 +17,9 @@ const VerifyOTP = () => {
     };
     return (
         <div className="flex flex-col min-h-full">
+                  <Link to="/" className="flex items-center justify-center">
+                <img src={logo} alt="" className="w-20 h-20" />
+            </Link>
             {/* Header Section */}
             <div className="text-center mb-6 py-10 space-y-5">
                 <h1 className="text-2xl lg:text-4xl font-bold mb-2">Verify Your Account</h1>
