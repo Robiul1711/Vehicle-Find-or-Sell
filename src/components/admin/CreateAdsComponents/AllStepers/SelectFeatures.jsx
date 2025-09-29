@@ -79,13 +79,13 @@ export const SelectFeatures = () => {
   ];
 
   return (
-    <div className="md:p-6">
+    <div className="">
       <h1 className="text-2xl font-semibold text-gray-800 mb-8">
         Select Features
       </h1>
 
       {featureSections.map((section, sectionIndex) => (
-        <div key={section.title} className="mb-8">
+        <div key={sectionIndex} className="mb-8">
           <h2 className="text-lg font-medium text-gray-700 mb-4">
             {section.title}
           </h2>
@@ -97,29 +97,34 @@ export const SelectFeatures = () => {
                 .replace(/[^a-z0-9]/g, "_")}${featureIndex}`;
 
               return (
-                <Controller
-                  key={fieldName}
-                  name={fieldName}
-                  control={control}
-                  render={({ field }) => (
-                    <label className="flex items-center space-x-2 cursor-pointer">
-                      <Checkbox
-                        {...field}
-                        checked={field.value || false}
-                        onCheckedChange={(val) => field.onChange(val)}
-                        className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
-                      />
-                      <span className="text-sm text-gray-700 select-none">
-                        {feature}
-                      </span>
-                    </label>
-                  )}
-                />
+               
+                  <Controller
+                    key={fieldName}
+                    name={fieldName}
+                    control={control}
+                    render={({ field }) => (
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <Checkbox
+                          {...field}
+                          checked={field.value || false}
+                          onCheckedChange={(val) => field.onChange(val)}
+                          className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
+                        />
+                        <span className="text-sm text-gray-700 select-none">
+                          {feature}
+                        </span>
+                      </label>
+                    )}
+                  />
+
+                
               );
             })}
           </div>
         </div>
       ))}
+
+
     </div>
   );
 };

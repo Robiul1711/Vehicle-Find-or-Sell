@@ -13,6 +13,10 @@ import Preview from "./AllStepers/Preview";
 import StepProgressBar from "./StepProgressBar";
 import { SelectFeatures } from "./AllStepers/SelectFeatures";
 
+// Modal
+import ScheduleLaterModal from "./AllStepers/ScheduleLaterModal";
+import PostImmediately from "./AllStepers/PostImmediately";
+
 const steps = [
   { id: 0, label: "Category", component: SelectCategory },
   { id: 1, label: "Registration Number", component: RegistrationNumber },
@@ -30,29 +34,24 @@ const steps = [
 ];
 
 const CreateAds = () => {
-  const methods = useForm({
-    mode: "onChange",
-  });
-
   const [currentStep, setCurrentStep] = useState(0);
-  const activeStep = currentStep;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+
+  const methods = useForm({ mode: "onChange" });
   const CurrentComponent = steps[currentStep].component;
 
   const nextStep = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep((prev) => prev + 1);
-    }
+    if (currentStep < steps.length - 1) setCurrentStep((prev) => prev + 1);
   };
 
   const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
-    }
+    if (currentStep > 0) setCurrentStep((prev) => prev - 1);
   };
 
   const onSubmit = (data) => {
     console.log("Final form data:", data);
-    // send data to backend
+    // Send data to backend
   };
 
   return (
@@ -61,80 +60,87 @@ const CreateAds = () => {
         {/* Step Progress */}
         <StepProgressBar
           steps={steps.map((s) => s.label)}
-          currentStep={activeStep + 1}
+          currentStep={currentStep + 1}
           onStepClick={(index) => setCurrentStep(index)}
         />
 
         {/* Step Component */}
-        <CurrentComponent goToStep={setCurrentStep} />
-
-        {/* Navigation */}
-        <div className="flex justify-between mt-6">
-          {/* Back button */}
-          {currentStep > 0 && (
-            <button
-              type="button"
-              onClick={prevStep}
-              className="px-4 py-2 bg-gray-300 rounded"
-            >
-              Back
-            </button>
-          )}
-
-          {/* Right side buttons */}
-          <div className="ml-auto flex gap-2">
-            {currentStep === 0 ? (
+        <div className="xl:px-14 ">
+          <CurrentComponent goToStep={setCurrentStep} />
+          {/* Navigation */}
+          <div className="flex justify-between mt-6">
+            {/* Back button */}
+            {currentStep > 0 && (
               <button
                 type="button"
-                onClick={nextStep}
-                className="px-4 py-2 bg-custom-primary text-white rounded"
+                onClick={prevStep}
+                className="px-4 py-2 bg-gray-300 rounded"
               >
-                Continue
+                Back
               </button>
-            ) : currentStep < steps.length - 2 ? (
-              <button
-                type="button"
-                onClick={nextStep}
-                className="px-4 py-2 bg-custom-primary text-white rounded"
-              >
-                Next
-              </button>
-            ) : currentStep === steps.length - 2 ? (
-              // Contact Info step -> Submit & go Preview
-              <button
-                type="button"
-                onClick={methods.handleSubmit((data) => {
-                  console.log("Submitted at Contact Info:", data);
+            )}
 
-                  nextStep(); // go to Preview step
-                })}
-                className="px-4 py-2 bg-custom-primary text-white rounded"
-              >
-                Submit
-              </button>
-            ) : (
-              // Preview step -> two buttons
-              <>
+            {/* Right side buttons */}
+            <div className="ml-auto flex gap-2">
+              {/* Continue / Next / Submit / Preview buttons */}
+              {currentStep === 0 ? (
                 <button
                   type="button"
-                  onClick={() =>
-                    methods.handleSubmit((data) => {
-                      console.log("Scheduled for later:", data);
-                      // Call backend API with "scheduled" flag
-                    })()
-                  }
-                  className="px-4 py-2 bg-custom-secondary text-white rounded"
-                >
-                  Schedule for Later
-                </button>
-                <button
-                  type="submit"
+                  onClick={nextStep}
                   className="px-4 py-2 bg-custom-primary text-white rounded"
                 >
-                  Post Immediately
+                  Continue
                 </button>
-              </>
-            )}
+              ) : currentStep < steps.length - 2 ? (
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className="px-4 py-2 bg-custom-primary text-white rounded"
+                >
+                  Next
+                </button>
+              ) : currentStep === steps.length - 2 ? (
+                // Contact Info step -> Submit & go to Preview
+                <button
+                  type="button"
+                  onClick={methods.handleSubmit((data) => {
+                    console.log("Submitted at Contact Info:", data);
+                    nextStep();
+                  })}
+                  className="px-4 py-2 bg-custom-primary text-white rounded"
+                >
+                  Submit
+                </button>
+              ) : (
+                // Preview step -> Schedule or Post
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(true)} // Open modal
+                    className="px-4 py-2 bg-custom-secondary text-white rounded"
+                  >
+                    Schedule for Later
+                  </button>
+
+                  <ScheduleLaterModal
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
+                  />
+
+                  <button
+                    onClick={() => setIsPostModalOpen(true)}
+                    type="submit"
+                    className="px-4 py-2 bg-custom-primary text-white rounded"
+                  >
+                    Post Immediately
+                  </button>
+                  <PostImmediately
+                    isModalOpen={isPostModalOpen}
+                    setIsModalOpen={setIsPostModalOpen}
+                  />
+                </>
+              )}
+            </div>
           </div>
         </div>
       </form>

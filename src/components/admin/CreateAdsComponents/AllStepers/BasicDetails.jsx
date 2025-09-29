@@ -4,7 +4,7 @@ export default function BasicDetails({steps}) {
   const { register, formState: { errors } } = useFormContext();
 
   return (
-    <div className="md:p-6">
+    <div className="">
       <h2 className="text-xl font-medium text-gray-800 mb-6">Basic Details</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

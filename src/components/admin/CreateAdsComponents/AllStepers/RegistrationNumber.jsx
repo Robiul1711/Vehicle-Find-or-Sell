@@ -60,7 +60,7 @@ export default function RegistrationNumber() {
   };
 
   return (
-    <div className="md:p-6">
+    <div className="">
       <div className="space-y-6">
         {/* Input Fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
