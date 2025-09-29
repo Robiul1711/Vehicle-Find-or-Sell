@@ -20,7 +20,7 @@ const TestimonialCard = () => {
       name: "Sarah Johnson",
       role: "Car Buyer",
       testimonial: "Found my dream car within hours of browsing. The detailed listings and direct communication with sellers made the entire process smooth and transparent. Will definitely use again!",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b3c5?w=400&h=400&fit=crop&crop=face"
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face"
     },
     {
       id: 3,
