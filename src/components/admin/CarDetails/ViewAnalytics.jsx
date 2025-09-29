@@ -51,11 +51,11 @@ const ViewAnalytics = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 mb-8">
         <div className="bg-white rounded-lg p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="w-10 h-10 md:w-12 md:h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-              <ViewIcon />
+              <ViewIcon className={"size-6 md:size-auto"} />
             </div>
           </div>
           <div className="text-3xl font-bold text-gray-900 mb-1">860</div>
@@ -65,7 +65,7 @@ const ViewAnalytics = () => {
         <div className="bg-white rounded-lg p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="w-10 h-10 md:w-12 md:h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <LoveIcon />
+              <LoveIcon className={"size-5 md:size-auto"}/>
             </div>
           </div>
           <div className="text-3xl font-bold text-gray-900 mb-1">10</div>
@@ -75,7 +75,7 @@ const ViewAnalytics = () => {
         <div className="bg-white rounded-lg p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-              <Message2Icon />
+              <Message2Icon className={"size-5 md:size-auto"}/>
             </div>
           </div>
           <div className="text-3xl font-bold text-gray-900 mb-1">04</div>

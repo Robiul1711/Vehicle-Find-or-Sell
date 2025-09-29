@@ -20,11 +20,11 @@ const Section = ({ title, content, sectionKey, onEdit }) => (
   </div>
 );
 
-const Preview = ({ goToStep }) => {
+const UtilityTrucksPreview = ({ goToStep }) => {
   const [editingSection, setEditingSection] = useState(null);
   const { watch } = useFormContext();
   const formData = watch();
-console.log(formData);
+
   // ✅ Convert checkbox-style features into arrays
   const getFeatures = (prefix) => {
     return Object.keys(formData)
@@ -46,42 +46,22 @@ console.log(formData);
 
   return (
     <div className="space-y-6">
-{/* Basic Details */}
-<Section
-  title="Basic Details"
-  sectionKey="basicDetails"
-  onEdit={handleEdit}
-  content={
-    <div className="grid grid-cols-2 gap-4">
-      <div><strong>Brand:</strong> {formData.brand}</div>
-      <div><strong>Model:</strong> {formData.model}</div>
-      <div><strong>Body:</strong> {formData.body}</div>
-      <div><strong>Door:</strong> {formData.door}</div>
-      <div><strong>Original Price:</strong> {formData.originalPrice}</div>
-      <div><strong>Discount Price:</strong> {formData.discountPrice}</div>
-      <div><strong>Mileage:</strong> {formData.mileage}</div>
-      <div><strong>Fuel Type:</strong> {formData.fuelType}</div>
-      <div><strong>Engine Size/Type:</strong> {formData.engineSize}</div>
-      <div><strong>Transmission:</strong> {formData.transmission}</div>
-      <div><strong>Exact Date:</strong> {formData.exactDate}</div>
-      <div><strong>Condition:</strong> {formData.condition}</div>
-      <div><strong>CO₂ Emissions (g/km):</strong> {formData.co2Emissions}</div>
-      <div><strong>Air Criteria / Emission Standard:</strong> {formData.emissionStandard}</div>
-      <div><strong>Warranty Duration:</strong> {formData.warrantyDuration}</div>
-      <div><strong>Number of Previous Owners:</strong> {formData.previousOwners}</div>
-      <div><strong>Horsepower (CV):</strong> {formData.horsepowerCV}</div>
-      <div><strong>Horsepower (DIN):</strong> {formData.horsepowerDIN}</div>
-      <div><strong>Color:</strong> {formData.color}</div>
-      <div><strong>Deductible VAT:</strong> {formData.deductibleVAT}</div>
-      <div><strong>Deductible Percentage (%):</strong> {formData.deductiblePercentage}</div>
-      <div className="col-span-2">
-        <strong>Description:</strong> {formData.description}
-      </div>
-    </div>
-  }
-/>
-
-
+      {/* Basic Details */}
+      <Section
+        title="Basic Details"
+        sectionKey="basicDetails"
+        onEdit={handleEdit}
+        content={
+          <div className="grid grid-cols-2 gap-4">
+            <div><strong>Brand:</strong> {formData.brand}</div>
+            <div><strong>Model:</strong> {formData.model}</div>
+            <div><strong>Price:</strong> {formData.originalPrice}</div>
+            <div><strong>Discount Price:</strong> {formData.discountPrice}</div>
+            <div><strong>Color:</strong> {formData.color}</div>
+            <div><strong>Registration Number:</strong> {formData.registrationNumber}</div>
+          </div>
+        }
+      />
 
       {/* Features */}
       <Section
@@ -196,4 +176,4 @@ console.log(formData);
   );
 };
 
-export default Preview;
+export default UtilityTrucksPreview;

@@ -97,34 +97,29 @@ export const SelectFeatures = () => {
                 .replace(/[^a-z0-9]/g, "_")}${featureIndex}`;
 
               return (
-               
-                  <Controller
-                    key={fieldName}
-                    name={fieldName}
-                    control={control}
-                    render={({ field }) => (
-                      <label className="flex items-center space-x-2 cursor-pointer">
-                        <Checkbox
-                          {...field}
-                          checked={field.value || false}
-                          onCheckedChange={(val) => field.onChange(val)}
-                          className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
-                        />
-                        <span className="text-sm text-gray-700 select-none">
-                          {feature}
-                        </span>
-                      </label>
-                    )}
-                  />
-
-                
+                <Controller
+                  key={fieldName}
+                  name={fieldName}
+                  control={control}
+                  render={({ field }) => (
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <Checkbox
+                        {...field}
+                        checked={field.value || false}
+                        onCheckedChange={(val) => field.onChange(val)}
+                        className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
+                      />
+                      <span className="text-sm text-gray-700 select-none">
+                        {feature}
+                      </span>
+                    </label>
+                  )}
+                />
               );
             })}
           </div>
         </div>
       ))}
-
-
     </div>
   );
 };

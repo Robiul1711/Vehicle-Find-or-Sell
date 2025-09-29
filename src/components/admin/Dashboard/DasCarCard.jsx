@@ -60,7 +60,7 @@ const DasCarCard = ({ car }) => {
         <p className="text-2xl font-bold text-gray-900 mt-3">{car.price}</p>
 
         {/* Buttons */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+        <div className="grid grid-cols-2  gap-2 mt-3">
           <Link to={`/dashboard/car-details/${car.id}`} className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800">
             View Details
           </Link>
