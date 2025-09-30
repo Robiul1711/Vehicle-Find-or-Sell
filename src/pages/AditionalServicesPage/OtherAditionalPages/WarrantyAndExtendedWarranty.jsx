@@ -6,7 +6,7 @@ import { ScrollRestoration } from 'react-router-dom'
 
 const WarrantyAndExtendedWarranty = () => {
   return (
-    <div className='mt-20'>
+    <div >
       <ScrollRestoration />
       <CarWarrantiesBanner />
       <CommonPageWrapper>

@@ -5,7 +5,7 @@ import React from 'react'
 
 const VehicleMaintenanceHistory = () => {
   return (
-    <div className='mt-20'>
+    <div >
       <VehicleMaintenanceBanner />
       <CommonPageWrapper>
         <VehicleMaintenanceKeypoints />

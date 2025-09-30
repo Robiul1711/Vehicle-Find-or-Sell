@@ -5,7 +5,7 @@ import React from 'react'
 
 const CarInsurance = () => {
   return (
-    <div className='mt-20'>
+    <div >
       <CarInsuranceBanner />
       <CommonPageWrapper>
         <CarInsuranceBannerKeypoints />

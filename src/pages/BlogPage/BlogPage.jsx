@@ -28,7 +28,7 @@ const BlogPage = () => {
 
   }, [])
   return (
-    <div className='mt-20'>
+    <div >
       <ScrollRestoration />
       <BlogBanner />
       <CommonPageWrapper>

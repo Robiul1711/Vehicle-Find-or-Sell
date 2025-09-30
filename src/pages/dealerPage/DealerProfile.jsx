@@ -6,7 +6,7 @@ import DealerProfileListing from './DealerProfileListing';
 
 const DealerProfile = () => {
     return (
-        <div className='mt-20'>
+        <div >
             <CommonPageWrapper>
                 <DealerSection />
                 <DealerProfileListing />

@@ -5,7 +5,7 @@ import React from 'react';
 
 const DealerPage = () => {
     return (
-        <div className='mt-20'>
+        <div >
             <DealerBanner />
             <CommonPageWrapper>
                 <DealerListing items={[]} />

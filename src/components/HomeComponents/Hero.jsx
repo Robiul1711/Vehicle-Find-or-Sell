@@ -9,13 +9,13 @@ const heroData = [
     id: 1,
     title: "Looking for a Car, Bike, Van, or Spare Parts?",
     desc: "Browse verified listings from private sellers and trusted professionals near you.",
-    icon: <CarOneIcon className="" />,
+    icon: <CarOneIcon className="size-10 sm:size-12 lg:size-16 xl:size-auto" />,
   },
   {
     id: 2,
     title: "Want to Sell Your Car, Bike, Van, or Parts?",
     desc: "Create your listing in minutes and connect with thousands of potential buyers.",
-  icon: <CarOneIcon className="" />,
+  icon: <CarOneIcon className="size-10 sm:size-12 lg:size-16 xl:size-auto" />,
   },
 ];
 const Hero = () => {

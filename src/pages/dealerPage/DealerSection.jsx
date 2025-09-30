@@ -123,9 +123,9 @@ const DealerSection = () => {
             </div>
             <div className="lg:w-1/4">
                 <div className="border shadow-lg rounded-xl p-5 flex flex-col gap-5">
-                    <button className="flex w-full py-5 text-sm xlg:text-2xl items-center justify-center gap-2 bg-blue-100 text-custom-primary px-4 rounded-lg  font-medium border-2 border-custom-primary transition-colors ">Message Dealer <MoveUpRight />  </button>
+                    <button className="flex w-full py-3   xl:py-5 text-sm lg:text-xl xl:text-2xl items-center justify-center gap-2 bg-blue-100 text-custom-primary px-4 rounded-lg  font-medium border-2 border-custom-primary transition-colors ">Message Dealer <MoveUpRight />  </button>
 
-                    <button className="flex w-full py-5 text-sm xlg:text-2xl items-center justify-center gap-2 bg-green-100 text-green-500 px-4 rounded-lg  font-medium border-2 border-custom-primary transition-colors ">Chat Via WhatsApp <MoveUpRight />  </button>
+                    <button className="flex w-full py-3   xl:py-5 text-sm lg:text-xl xl:text-2xl items-center justify-center gap-2 bg-green-100 text-green-500 px-4 rounded-lg  font-medium border-2 border-custom-primary transition-colors ">Chat Via WhatsApp <MoveUpRight />  </button>
                 </div>
             </div>
         </div>

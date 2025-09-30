@@ -6,7 +6,7 @@ import React from 'react'
 
 const RegistrationServices = () => {
   return (
-    <div className='mt-20'>
+    <div >
       <VehicleRegistrationBanner />
       <CommonPageWrapper>
 

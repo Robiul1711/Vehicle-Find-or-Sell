@@ -4,7 +4,7 @@ import { ScrollRestoration } from 'react-router-dom';
 
 const CookiePolicy = () => {
     return (
-        <div className='mt-20'>
+        <div >
             <ScrollRestoration />
             <div className='section-padding-x section-padding-y flex flex-col  gap-[45px] xmd:gap-[40px]'>
                 <div className="space-y-2">

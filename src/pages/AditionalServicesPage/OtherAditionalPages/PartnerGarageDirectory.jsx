@@ -4,7 +4,7 @@ import React from 'react'
 
 const PartnerGarageDirectory = () => {
   return (
-    <div className='mt-20'>
+    <div >
       <PartnerGarageBanner />
       <CommonPageWrapper>
 

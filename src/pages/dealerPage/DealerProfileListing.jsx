@@ -132,7 +132,7 @@ const DealerProfileListing = ({ items = dealerProfileData }) => {
                     <div
                         className={`${isGrid
                             ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
-                            : "space-y-6 md:w-1/2"
+                            : "space-y-6 md:w-[75%]"
                             }`}
                     >
                         {items.map((item, i) => {
@@ -155,7 +155,7 @@ const DealerProfileListing = ({ items = dealerProfileData }) => {
                                             delay: waveDelay,
                                         },
                                     }}
-                                    className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${isGrid ? "max-w-sm mx-auto" : ""
+                                    className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${isGrid ? "w-full mx-auto" : ""
                                         }`}
                                 >
                                     <motion.div
@@ -177,10 +177,10 @@ const DealerProfileListing = ({ items = dealerProfileData }) => {
                                             alt={item.name}
                                             className={`rounded-lg object-cover ${isGrid
                                                 ? "w-full h-[200px] mb-5"
-                                                : "w-44 h-44 mr-4 flex-shrink-0"
+                                                : "sm:w-58 sm:h-44 mr-4 flex-shrink-0"
                                                 }`}
                                         />
-                                        <div className={`${isGrid ? "w-full" : "flex-1"}`}>
+                                        <div className={`${isGrid ? "w-full" : "flex-1 pt-4"}`}>
                                             <motion.h3
                                                 layout
                                                 className={`${isGrid ? "text-xl" : "text-[1.1rem]"

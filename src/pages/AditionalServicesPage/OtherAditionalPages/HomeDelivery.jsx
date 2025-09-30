@@ -5,7 +5,7 @@ import React from 'react'
 
 const HomeDelivery = () => {
   return (
-    <div className='mt-20'>
+    <div >
       <VehicleDeliveryBanner />
       <CommonPageWrapper>
         <VehicleDeliveryKeypoints />
