@@ -63,7 +63,7 @@ export default function Settings() {
   <div className="w-full">
   <div className="flex flex-col sm:flex-row gap-4 md:gap-6 rounded-xl overflow-hidden">
     {/* Sidebar Tabs */}
-    <div className="flex sm:flex-col overflow-x-auto sm:overflow-visible bg-white rounded-xl shadow-sm">
+    <div className="flex sm:w-72 sm:flex-col overflow-x-auto sm:overflow-visible bg-white rounded-xl shadow-sm">
       {tabs.map((tab) => (
         <button
           key={tab.id}

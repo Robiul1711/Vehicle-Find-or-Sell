@@ -84,7 +84,7 @@ const Message = () => {
       <div
         className={`${
           selectedConversation ? "hidden md:flex" : "flex"
-        } flex-col w-full md:w-1/4 p-4 border rounded-lg bg-white`}
+        } flex-col w-full md:w-1/3 p-4 border rounded-lg bg-white`}
       >
         {/* Search box */}
         <div className="relative mb-4">
