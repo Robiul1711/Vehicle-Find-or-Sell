@@ -129,7 +129,7 @@ const CarListing = ({ items }) => {
           <div
             className={`${isGrid
                 ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
-                : "space-y-6 w-1/2"
+                : "space-y-6 md:w-1/2"
               }`}
           >
             {items.map((item, i) => {
