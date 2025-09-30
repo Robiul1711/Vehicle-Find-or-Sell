@@ -77,15 +77,13 @@ const Navbar = () => {
                     className={`text-sm lg:text-base font-medium transition-colors relative group ${
                       isActive
                         ? "text-gray-900 font-semibold"
-                        : "text-gray-500 hover:text-gray-900"
+                        : "text-gray-800 hover:text-gray-900"
                     }`}
                   >
                     {link.text}
                     <span
                       className={`absolute -bottom-1 left-0 h-0.5 transition-all duration-300 group-hover:w-full ${
-                        isActive
-                          ? "w-full bg-gray-900"
-                          : "w-0 bg-gray-900"
+                        isActive ? "w-full bg-gray-900" : "w-0 bg-gray-900"
                       }`}
                     ></span>
                   </Link>
@@ -102,10 +100,10 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center space-x-2 md:hidden">
-           <SimpleDropdown />
+              <SimpleDropdown />
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 rounded-md transition-colors"
+                className="p-2 text-gray-600  hover:bg-gray-100 rounded-md transition-colors"
                 aria-label="Toggle menu"
               >
                 {isMenuOpen ? (
@@ -178,26 +176,13 @@ const Navbar = () => {
           </nav>
 
           {/* Mobile Buttons */}
-          <div className="absolute bottom-6 flex flex-col  left-6 right-6 space-y-3">
+          <div className="absolute bottom-6 flex items-center justify-between  left-6 right-6 ">
+            <LanguageArea />
             <Link to="/auth">
-              <CommonButton
-                fullWidth
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <CommonButton fullWidth onClick={() => setIsMenuOpen(false)}>
                 Sign In
               </CommonButton>
             </Link>
-
-            <Link to="/auth">
-              <CommonButton
-                fullWidth
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign Up
-              </CommonButton>
-            </Link>
-
-
           </div>
         </div>
       </div>

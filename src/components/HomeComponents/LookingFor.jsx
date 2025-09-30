@@ -9,7 +9,7 @@ const LookingFor = () => {
       <div className="flex flex-col lg:flex-row w-full justify-between h-[560px] bg-bg-custom rounded-[20px] overflow-hidden shadow-xl">
         
         {/* Left Content */}
-        <div className="lg:w-1/2 w-full p-8 lg:p-12 text-white flex flex-col gap-6 justify-center">
+        <div className="lg:w-1/2 w-full p-6 sm:p-8 lg:p-12 text-white flex flex-col gap-6 justify-center">
           <Title level="title48" className="leading-tight">
             Looking for a Car, Bike, Van, or Spare Parts?
           </Title>
@@ -18,7 +18,7 @@ const LookingFor = () => {
           </Title>
 
           {/* Email Input */}
-          <div className="flex flex-col sm:flex-row gap-3 mt-4">
+          <div className="flex flex-row gap-3 mt-4">
             <input
               type="email"
               placeholder="Enter your email"
