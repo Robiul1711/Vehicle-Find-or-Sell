@@ -6,7 +6,7 @@ import { ScrollRestoration } from 'react-router-dom'
 
 const VirtualShowroom = () => {
   return (
-    <div className='mt-20'>
+    <div >
       <ScrollRestoration />
       <VirtualShowroomBanner />
       <CommonPageWrapper>

@@ -9,7 +9,7 @@ import React from 'react'
 
 const VehiclePurchase = () => {
   return (
-    <div className='mt-20'>
+    <div >
       <VehiclePurchaseBanner />
       <CommonPageWrapper>
         <VehiclePurchaseKeypoints />

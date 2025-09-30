@@ -33,7 +33,7 @@ const DropdownMenu = ({ children, trigger }) => {
       </div>
       {isOpen && (
         <div
-          className="origin-top-right absolute right-0 mt-2 w-96 rounded-xl shadow-xl bg-white z-50 p-8"
+          className="origin-top-right absolute right-0 mt-2 w-72 sm:w-96 rounded-xl shadow-xl bg-white z-50 p-4 border sm:p-8"
           role="menu"
           aria-orientation="vertical"
         >
@@ -60,24 +60,28 @@ export default function SimpleDropdown() {
     <div className="flex items-center justify-center font-sans">
       <DropdownMenu
         trigger={(isOpen) => (
-          <CommonButton
-            variant={isOpen ? "secondary" : "primary"} // 👈 change style when open
-            className={`group ${isOpen ? "bg-custom-primary text-white hover:bg-custom-primary" : ""}`}
+          <button
+            className={` px-2 py-1 rounded-sm group border border-custom-primary md:px-3 md:py-2 ${
+              isOpen
+                ? "bg-custom-primary text-white hover:bg-custom-primary"
+                : ""
+            }`}
           >
             <CompareIcon
-              className={`size-5.5 ${
-                isOpen
-                  ? ""
-                  : "text-custom-primary group-hover:text-white"
+              className={`size-4 sm:size-5.5 ${
+                isOpen ? "" : "text-custom-primary group-hover:text-white"
               }`}
             />
-          </CommonButton>
+          </button>
         )}
       >
+        <div className="">
         <Title level="title24">Product Comparison</Title>
         <Title level="title14" className="mb-5">
           You have not chosen any products to compare.
         </Title>
+
+        </div>
         <div className="flex flex-col gap-3">
           <input
             type="text"

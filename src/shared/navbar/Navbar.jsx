@@ -53,11 +53,11 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`w-full transition-all duration-300 fixed top-0 left-0 z-40 ${
+        className={`w-full transition-all duration-300  top-0 left-0 z-40 sticky ${
           isScrolled
-            ? "bg-white/95 backdrop-blur-lg shadow-lg"
+            ? "bg-white/65 backdrop-blur-lg shadow-lg"
             : "bg-white/90 backdrop-blur-md"
-        } border-b border-gray-200`}
+        } `}
       >
         <div className="section-padding-x">
           <div className="flex h-16 lg:h-20 items-center justify-between">
@@ -102,13 +102,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center space-x-2 md:hidden">
-              <CommonButton
-                variant="primary"
-                className="group px-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <CompareIcon className="text-custom-primary group-hover:text-white size-4" />
-              </CommonButton>
+           <SimpleDropdown />
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 rounded-md transition-colors"
@@ -184,7 +178,7 @@ const Navbar = () => {
           </nav>
 
           {/* Mobile Buttons */}
-          <div className="absolute bottom-6 left-6 right-6 space-y-3">
+          <div className="absolute bottom-6 flex flex-col  left-6 right-6 space-y-3">
             <Link to="/auth">
               <CommonButton
                 fullWidth

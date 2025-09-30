@@ -134,7 +134,7 @@ const DealerListing = () => {
                     <div
                         className={` ${isGrid
                             ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3  gap-4"
-                            : "space-y-6 md:w-1/2"
+                            : "space-y-6 md:w-[75%]"
                             }`}
                     >
                         {items.map((item, i) => {
@@ -206,7 +206,7 @@ const DealerListing = () => {
                                                 className=" my-2 "
                                             >
                                                 <Link to={'/dealer-profile'}>   
-                                                    <button className="py-4 border border-black rounded-lg w-full">View Dealer Profile</button>
+                                                    <button className="xl:py-4 py-2  border border-black rounded-lg w-full">View Dealer Profile</button>
                                                 </Link>
                                             </motion.div>
 

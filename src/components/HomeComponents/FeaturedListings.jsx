@@ -40,7 +40,7 @@ const FeaturedListings = () => {
       <Title level="title18" className="mt-4">
         Showcasing the latest and most popular ads on the platform.
       </Title>
-      <div className="mt-10">
+      <div className="mt-5 md:mt-10">
         <Tabs items={tabData} />
       </div>
     </div>
