@@ -55,7 +55,6 @@ export default function SimpleDropdown() {
       alert("Please fill both inputs before comparing.");
     }
   };
-
   return (
     <div className="flex items-center justify-center font-sans">
       <DropdownMenu
