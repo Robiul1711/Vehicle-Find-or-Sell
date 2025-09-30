@@ -61,7 +61,7 @@ export default function SimpleDropdown() {
       <DropdownMenu
         trigger={(isOpen) => (
           <button
-            className={` px-2 py-1 rounded-sm group border border-custom-primary md:px-3 md:py-2 ${
+            className={` px-2 py-1 hover:bg-custom-primary rounded-sm group border border-custom-primary md:px-3 md:py-2 ${
               isOpen
                 ? "bg-custom-primary text-white hover:bg-custom-primary"
                 : ""

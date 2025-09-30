@@ -110,7 +110,7 @@ const Subscription = () => {
       <div className="relative z-10 min-h-screen">
         <div className="w-full">
     <div className="text-center sm:text-left max-w-3xl mx-auto sm:mx-0 px-4 sm:px-0">
-  <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-snug sm:leading-tight">
+  <h1 className="text-2xl sm:text-4xl xl:text-5xl font-extrabold text-gray-900 tracking-tight leading-snug sm:leading-tight">
     Choose Your Professional Subscription Plan
   </h1>
   <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
@@ -153,7 +153,7 @@ const Subscription = () => {
 
           {/* Pricing Cards */}
           <motion.div
-            className="mt-8 md:mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 xlg:grid-cols-3 xl:grid-cols-4"
+            className="mt-8 md:mt-16 grid grid-cols-1 gap-4 xl:gap-8 md:grid-cols-2 xlg:grid-cols-3 xl:grid-cols-4"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -171,29 +171,29 @@ const Subscription = () => {
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                <h3 className="text-2xl font-bold text-gray-900">{tier.name}</h3>
+                <h3 className="text-lg sm:text-2xl font-bold text-gray-900">{tier.name}</h3>
                 <div className="mt-4 flex justify-between items-baseline">
                   <div>
-                    <span className="text-5xl font-extrabold text-gray-900">
+                    <span className="text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-extrabold text-gray-900">
                       <AnimatedPrice price={tier.price} />
                     </span>
                     <span className="ml-1 text-xl font-medium text-gray-500">/ad</span>
                   </div>
-                  <p className="text-2xl text-[#F88E08]">Excl. VAT</p>
+                  <p className="xl:text-2xl text-[#F88E08]">Excl. VAT</p>
                 </div>
 
-                <ul role="list" className="mt-8 space-y-3 flex-grow">
+                <ul role="list" className="mt-5 md:mt-8 space-y-3 flex-grow">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-center">
                       <IoIosCheckmarkCircleOutline className="w-5 h-5 text-[#01244B]" />
-                      <p className="ml-2 text-base text-gray-700">{feature}</p>
+                      <p className="ml-2 text-sm sm:text-base text-gray-700">{feature}</p>
                     </li>
                   ))}
                 </ul>
 
                 <div className="mt-8">
                   <motion.button
-                    className="w-full py-2 px-4 rounded-md text-base font-medium text-white bg-[#01244B] border border-[#01244B] hover:bg-[#001E3C] transition-all duration-300"
+                    className="w-full py-2 px-4 rounded-md text-sm sm:text-base font-medium text-white bg-[#01244B] border border-[#01244B] hover:bg-[#001E3C] transition-all duration-300"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >

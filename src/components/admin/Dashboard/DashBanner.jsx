@@ -17,7 +17,7 @@ const DashBanner = () => {
         <p className="leading-relaxed text-sm md:text-base xl:text-2xl">
         Post ads, explore listings, and manage everything in one place.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+        <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-4 justify-center md:justify-start">
             <CommonButton variant="secondary"><CiCirclePlus className="text-2xl"/>View Dashboard</CommonButton>
             <CommonButton variant="secondary"><CiSearch className="text-2xl"/>Browse Listings</CommonButton>
         </div>
