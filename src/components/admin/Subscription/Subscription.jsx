@@ -46,28 +46,28 @@ const Subscription = () => {
   const vehicleTiers = [
     {
       name: "Premium Ad (single)",
-      price: "$19",
+      price: " €19",
       features: ["5 Projects", "10 GB Storage", "Basic Analytics", "Community Support", "Custom Domains"],
       buttonText: "Purchase Plan",
       isPopular: false,
     },
     {
       name: "Pack of 15 Ads",
-      price: "$49",
+      price: " €49",
       features: ["Unlimited Projects", "50 GB Storage", "Advanced Analytics", "Priority Email Support", "Custom Domains", "Team Collaboration"],
       buttonText: "Purchase Plan",
       isPopular: true,
     },
     {
       name: "Pack of 30 Ads",
-      price: "$99",
+      price: " €99",
       features: ["All Pro Features", "Unlimited Storage", "Real-time Analytics", "24/7 Phone Support", "Dedicated Account Manager", "SAML/SSO Integration"],
       buttonText: "Purchase Plan",
       isPopular: false,
     },
     {
       name: "Pack of 50 Ads",
-      price: "$149",
+      price: " €149",
       features: ["All Pro Features", "Unlimited Storage", "Real-time Analytics", "24/7 Phone Support", "Dedicated Account Manager", "SAML/SSO Integration"],
       buttonText: "Purchase Plan",
       isPopular: false,
@@ -78,7 +78,7 @@ const Subscription = () => {
   const sparePartsTiers = [
     {
       name: "Spare Parts Basic",
-      price: "$9",
+      price: " €9",
       features: ["1 Spare Part Ad", "Basic Listing", "7 Days Visibility"],
       buttonText: "Purchase Spare Plan",
       isPopular: true,
