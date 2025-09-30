@@ -5,10 +5,13 @@ import { IoGrid } from "react-icons/io5";
 import { FaList } from "react-icons/fa6";
 import { ArrowUpRight, ChevronDown, ChevronUp, Search } from "lucide-react";
 import {
+  CustomElement,
   CustomLocation,
   CustomMileage,
   CustomPetrol,
+  CustomTime,
   CustomTransmission,
+  CustomWeight,
 } from "@/utils/IconProvider";
 import FilterSection from "./FilterSection";
 import { Link } from "react-router-dom";
@@ -59,21 +62,19 @@ const PartListing = ({ items }) => {
           <div className="flex space-x-2 bg-gray-200 p-1.5 rounded-lg">
             <button
               onClick={() => setIsGrid(true)}
-              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${
-                isGrid
+              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${isGrid
                   ? "bg-custom-primary text-white shadow-sm"
                   : "text-black hover:bg-gray-300"
-              }`}
+                }`}
             >
               <IoGrid />
             </button>
             <button
               onClick={() => setIsGrid(false)}
-              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${
-                !isGrid
+              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${!isGrid
                   ? "bg-custom-primary text-white shadow-sm"
                   : "text-black hover:bg-gray-300"
-              }`}
+                }`}
             >
               <FaList />
             </button>
@@ -105,11 +106,10 @@ const PartListing = ({ items }) => {
                     <div key={index}>
                       <p
                         onClick={() => handleSelect(option)}
-                        className={`hover:text-[#1B1B1B] cursor-pointer ${
-                          selectedOption === option
+                        className={`hover:text-[#1B1B1B] cursor-pointer ${selectedOption === option
                             ? "text-Primary font-medium"
                             : ""
-                        }`}
+                          }`}
                       >
                         {option}
                       </p>
@@ -131,11 +131,10 @@ const PartListing = ({ items }) => {
         </div>
         <div className="flex-1 w-full md:w-3/4">
           <div
-            className={`${
-              isGrid
+            className={`${isGrid
                 ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
                 : "space-y-6 md:w-3/4"
-            }`}
+              }`}
           >
             {items.map((item, i) => {
               const waveDelay = isGrid
@@ -157,17 +156,15 @@ const PartListing = ({ items }) => {
                       delay: waveDelay,
                     },
                   }}
-                  className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${
-                    isGrid ? "w-full mx-auto" : ""
-                  }`}
+                  className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${isGrid ? "w-full mx-auto" : ""
+                    }`}
                 >
                   <motion.div
                     layout
-                    className={`${
-                      isGrid
+                    className={`${isGrid
                         ? "p-5"
                         : "p-4 flex flex-col lg:flex-row items-center"
-                    }`}
+                      }`}
                     transition={{
                       type: "spring",
                       stiffness: 300,
@@ -179,18 +176,16 @@ const PartListing = ({ items }) => {
                       layout
                       src={item.image}
                       alt={item.name}
-                      className={`rounded-lg object-cover ${
-                        isGrid
+                      className={`rounded-lg object-cover ${isGrid
                           ? "w-full h-[200px] mb-5"
                           : "w-44 h-44 mr-4 flex-shrink-0"
-                      }`}
+                        }`}
                     />
                     <div className={`${isGrid ? "w-full" : "flex-1"}`}>
                       <motion.h3
                         layout
-                        className={`${
-                          isGrid ? "text-xl" : "text-[1.1rem]"
-                        } text-gray-800 dark:text-[#d2e5f5]`}
+                        className={`${isGrid ? "text-xl" : "text-[1.1rem]"
+                          } text-gray-800 dark:text-[#d2e5f5]`}
                       >
                         {item.name}
                       </motion.h3>
@@ -214,16 +209,16 @@ const PartListing = ({ items }) => {
                         className="px-4 py-2 flex justify-around items-center gap-6 w-full rounded-lg"
                       >
                         <div className="flex flex-col items-center">
-                          <CustomMileage />
+                          <CustomTime />
                           <p className="">{item?.mileage}</p>
                         </div>
                         <div className="flex flex-col items-center">
-                          <CustomPetrol />
+                          <CustomWeight />
                           <p className="">{item?.fuelType}</p>
                         </div>
 
                         <div className="flex flex-col items-center">
-                          <CustomTransmission />
+                          <CustomElement />
                           <p className="">{item?.transmission}</p>
                         </div>
                       </motion.button>
@@ -234,18 +229,16 @@ const PartListing = ({ items }) => {
                       <motion.div layout className="flex justify-between">
                         <motion.p
                           layout
-                          className={`${
-                            isGrid ? "text-xl" : "text-[1.1rem]"
-                          } font-semibold text-gray-900 text-center`}
+                          className={`${isGrid ? "text-xl" : "text-[1.1rem]"
+                            } font-semibold text-gray-900 text-center`}
                         >
                           ${item?.price}
                         </motion.p>
                         <Link to={"/details/1"}>
                           <motion.p
                             layout
-                            className={`${
-                              isGrid ? "text-xl" : "text-[1.1rem]"
-                            } flex items-center gap-3 font-semibold text-gray-900 text-center`}
+                            className={`${isGrid ? "text-xl" : "text-[1.1rem]"
+                              } flex items-center gap-3 font-semibold text-gray-900 text-center`}
                           >
                             View Details <ArrowUpRight size={26} />
                           </motion.p>
