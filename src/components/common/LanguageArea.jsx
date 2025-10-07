@@ -11,7 +11,7 @@ const setGoogleTranslateCookie = (langCode) => {
 
 const LanguageArea = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem("selectedLanguage") || "en"
+    localStorage.getItem("selectedLanguage") || "fr"
   );
 
   // Effect: load Google Translate script once
