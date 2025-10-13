@@ -50,7 +50,7 @@ const UploadMedia = () => {
           />
           <UploadCloud className="w-6 h-6 text-gray-400" />
           <p className="text-sm text-gray-500">
-            Drag & drop your car, bike, or part photos here, or{" "}
+         
             <span className="text-custom-primary">click to browse</span>
           </p>
         </label>
@@ -90,7 +90,7 @@ const UploadMedia = () => {
           />
           <UploadCloud className="w-6 h-6 text-gray-400" />
           <p className="text-sm text-gray-500">
-            Drag & drop your car, bike, or part video here, or{" "}
+          
             <span className="text-custom-primary">click to browse</span>
           </p>
         </label>
