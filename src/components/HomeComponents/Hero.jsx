@@ -33,7 +33,7 @@ const Hero = () => {
             {item.desc}
           </Title>
           <div className="flex items-center justify-between gap-4">
-            <CommonButton variant="primary" className="flex items-center gap-2">
+            <CommonButton link="/listings" variant="primary" className="flex items-center gap-2">
               Get Started <MdOutlineArrowOutward />
             </CommonButton>
             <div className="">{item.icon}</div>

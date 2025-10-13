@@ -189,7 +189,7 @@ const CarListing = ({ items }) => {
                       <motion.h3
                         layout
                         className={`${
-                          isGrid ? "text-xl" : "text-[1.1rem]"
+                          isGrid ? "lg:text-xl xl:text-2xl font-semibold" : "lg:text-xl xl:text-2xl font-semibold"
                         } text-gray-800 dark:text-[#d2e5f5]`}
                       >
                         {item.name}
@@ -200,7 +200,7 @@ const CarListing = ({ items }) => {
 
                       <motion.p
                         layout
-                        className="text-black mt-1 flex items-center gap-2"
+                        className="text-black mt-1 flex text-sm items-center gap-1"
                       >
                         <CustomLocation />
                         {item.location}
@@ -211,7 +211,7 @@ const CarListing = ({ items }) => {
                       ></motion.div>
                       <motion.button
                         layout
-                        className="px-4 py-2 flex justify-around items-center gap-6 w-full rounded-lg"
+                        className="px-4 py-2 flex justify-between items-center gap-4 w-full rounded-lg"
                       >
                         <div className="flex flex-col items-center">
                           <CustomMileage />
@@ -244,10 +244,10 @@ const CarListing = ({ items }) => {
                           <motion.p
                             layout
                             className={`${
-                              isGrid ? "text-xl" : "text-[1.1rem]"
-                            } flex items-center gap-3 font-semibold text-gray-900 text-center`}
+                              isGrid ? "" : ""
+                            } flex items-center gap-1 font-semibold text-gray-900 text-center`}
                           >
-                            View Details <ArrowUpRight size={26} />
+                            View Details <ArrowUpRight size={20} />
                           </motion.p>
                         </Link>
                       </motion.div>

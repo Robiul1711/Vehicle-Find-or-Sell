@@ -98,6 +98,7 @@ export default function SimpleDropdown() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-primary"
           />
           <CommonButton
+          link={"/compare"}
             variant="primary"
             onClick={handleCompare}
             className="w-full"

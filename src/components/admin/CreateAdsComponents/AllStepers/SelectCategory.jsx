@@ -62,7 +62,7 @@ export default function SelectCategory({ onCategorySelect }) {
     p-6 rounded-lg border-2 transition-all duration-200 
     ${
       isSelected
-        ? "border-orange-500 bg-orange-100 shadow-md"
+        ? "border-orange-500 bg-orange-50 shadow-md"
         : "border-gray-200 bg-white hover:border-orange-300 hover:bg-orange-50"
     }
   `}
@@ -72,12 +72,12 @@ export default function SelectCategory({ onCategorySelect }) {
       mb-3 p-3 rounded-full 
       ${
         isSelected
-          ? "bg-orange-200 text-orange-700"
+          ? "bg-[#F88E08]/10 text-orange-700"
           : "bg-gray-100 text-gray-600"
       }
     `}
                     >
-                      <IconComponent size={24} />
+                      <IconComponent size={24} className="bg-[#F88E08]" />
                     </div>
                     <span
                       className={`

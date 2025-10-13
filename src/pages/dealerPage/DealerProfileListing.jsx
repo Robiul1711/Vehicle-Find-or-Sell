@@ -12,6 +12,7 @@ import {
 } from "@/utils/IconProvider";
 import { carData, dealerProfileData } from "@/utils/data";
 import DealerFilter from "@/components/additionalServicesComponent/dealerComponent/DealerFilter";
+import { Link } from "react-router-dom";
 
 const options = [
     "Newest",
@@ -233,13 +234,13 @@ const DealerProfileListing = ({ items = dealerProfileData }) => {
                                                 >
                                                     ${item?.price}
                                                 </motion.p>
-                                                <motion.p
+                                                <Link to={`/details/${item.id}`}
                                                     layout
-                                                    className={`${isGrid ? "text-xl" : "text-[1.1rem]"
-                                                        } flex items-center gap-3 font-semibold text-gray-900 text-center`}
+                                                    className={`${isGrid ? "" : ""
+                                                        } flex items-center gap-2 font-semibold text-gray-900 text-center`}
                                                 >
-                                                    View Details <ArrowUpRight size={26} />
-                                                </motion.p>
+                                                    View Details <ArrowUpRight size={20} />
+                                                </Link>
                                             </motion.div>
                                         </div>
                                     </motion.div>
