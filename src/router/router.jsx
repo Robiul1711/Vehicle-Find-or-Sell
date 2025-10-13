@@ -33,7 +33,6 @@ import BlogPage from "@/pages/BlogPage/BlogPage";
 import Home from "@/pages/home/Home";
 import BrouseListing from "@/pages/ListingsPges/BrouseListing";
 
-
 import { createBrowserRouter } from "react-router-dom";
 import CreateAds from "@/components/admin/CreateAdsComponents/CreateAds";
 import DetailsPage from "@/pages/detailsPage/DetailsPage";
@@ -70,39 +69,39 @@ const router = createBrowserRouter([
       },
       {
         path: "/dealers",
-        element: <DealerPage />
+        element: <DealerPage />,
       },
       {
         path: "/dealer-profile",
-        element: <DealerProfile />
+        element: <DealerProfile />,
       },
       {
         path: "/contact",
-        element: <ContactPage />
+        element: <ContactPage />,
       },
       {
         path: "/term-and-conditions",
-        element: <TermAndCondition />
+        element: <TermAndCondition />,
       },
       {
         path: "/legal-notice",
-        element: <LegalNotice />
+        element: <LegalNotice />,
       },
       {
         path: "/cookie-policy",
-        element: <CookiePolicy />
+        element: <CookiePolicy />,
       },
       {
         path: "/personal-data-protection-policy",
-        element: <PersonalData />
+        element: <PersonalData />,
       },
       {
         path: "/term-of-use",
-        element: <TermOfUse />
+        element: <TermOfUse />,
       },
       {
         path: "/compare",
-        element: <ProductComparison />
+        element: <ProductComparison />,
       },
       // All aditionals services page
       {
@@ -149,11 +148,10 @@ const router = createBrowserRouter([
         path: "/aditionalservices/partner-garage-directory",
         element: <PartnerGarageDirectory />,
       },
-
     ],
   },
 
-  // auth related pages 
+  // auth related pages
   {
     path: "/auth",
     element: <AuthLayout />,
@@ -164,22 +162,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/auth/forgot-password",
-        element: <ForgetPassword />
+        element: <ForgetPassword />,
       },
       {
         path: "/auth/verify-otp",
-        element: <VerifyOTP />
+        element: <VerifyOTP />,
       },
       {
         path: "/auth/set-new-password",
-        element: <NewPassword />
+        element: <NewPassword />,
       },
       {
         path: "/auth/reset-successful-password",
-        element: <ResetSuccessful />
+        element: <ResetSuccessful />,
       },
-
-    ]
+    ],
   },
 
   // Admin routes
@@ -189,51 +186,51 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <Dashboard />
+        element: <Dashboard />,
       },
       {
         path: "/dashboard/my-adds",
-        element: <MyAdds />
+        element: <MyAdds />,
       },
       {
         path: "/dashboard/create-ads",
-        element: <CreateAds />
+        element: <CreateAds />,
       },
       {
         path: "/dashboard/car-details/:id",
-        element: <CarDetailsPage />
+        element: <CarDetailsPage />,
       },
       {
         path: "/dashboard/view-analytics/:id",
-        element: <ViewAnalytics />
+        element: <ViewAnalytics />,
       },
       {
         path: "/dashboard/boost-ads",
-        element: <BoostAds />
+        element: <BoostAds />,
       },
       {
         path: "/dashboard/boost-your-ad-visibility/:id",
-        element: <BoostYourAdVisibility />
+        element: <BoostYourAdVisibility />,
       },
       {
         path: "/dashboard/my-favorites",
-        element: <MyFavorites />
+        element: <MyFavorites />,
       },
       {
         path: "/dashboard/message",
-        element: <Message />
+        element: <Message />,
       },
       {
         path: "/dashboard/subscription",
-        element: <Subscription />
+        element: <Subscription />,
       },
       {
         path: "/dashboard/support-and-help",
-        element: <SupportAndHelp />
+        element: <SupportAndHelp />,
       },
       {
         path: "/dashboard/settings",
-        element: <Settings />
+        element: <Settings />,
       },
     ],
   },

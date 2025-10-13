@@ -13,11 +13,11 @@ const Footer = () => {
 
         {/* Navigation Links */}
         <ul className="flex flex-wrap justify-center gap-6 text-sm font-medium">
-          <li className="hover:text-gray-300 cursor-pointer">About Us</li>
-          <li className="hover:text-gray-300 cursor-pointer">Browse Listings</li>
-          <li className="hover:text-gray-300 cursor-pointer">Blog</li>
-          <li className="hover:text-gray-300 cursor-pointer">Contact Us</li>
-          <li className="hover:text-gray-300 cursor-pointer">Dealers</li>
+          <Link to={"/"} className="hover:text-gray-300 cursor-pointer">Home</Link>
+          <Link to={"/listings"} className="hover:text-gray-300 cursor-pointer">Browse Listings</Link>
+          <Link to={"/blog"} className="hover:text-gray-300 cursor-pointer">Blog</Link>
+          <Link to={"/contact"} className="hover:text-gray-300 cursor-pointer">Contact Us</Link>
+          <Link to={"/dealers"} className="hover:text-gray-300 cursor-pointer">Dealers</Link>
         </ul>
 
         {/* Social Links */}

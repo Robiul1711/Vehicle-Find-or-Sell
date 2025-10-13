@@ -127,7 +127,7 @@ const CreateAds = () => {
             steps={steps.map((s) => s.label)}
             currentStep={currentStep + 1}
             onStepClick={(index) => setCurrentStep(index)}
-              category={selectedCategory} // 👈 pass category here
+            category={selectedCategory} // 👈 pass category here
           />
         )}
 
