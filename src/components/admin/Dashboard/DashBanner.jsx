@@ -5,21 +5,24 @@ import { CiCirclePlus } from "react-icons/ci";
 import { CiSearch } from "react-icons/ci";
 const DashBanner = () => {
   return (
-    <div
-      className="rounded-2xl flex flex-col md:flex-row justify-between items-center text-white bg-custom-primary md:gap-10"
-     
-    >
+    <div className="rounded-2xl flex flex-col md:flex-row justify-between items-center text-white bg-custom-primary md:gap-10">
       {/* Text Section */}
       <div className="w-full md:w-1/2 space-y-4 text-center md:text-left p-8 md:p-12 ">
         <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold ">
-        Control Your Buying & Selling
+          Control Your Buying & Selling
         </h1>
         <p className="leading-relaxed text-sm md:text-base xl:text-2xl">
-        Post ads, explore listings, and manage everything in one place.
+          Post ads, explore listings, and manage everything in one place.
         </p>
         <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-4 justify-center md:justify-start">
-            <CommonButton variant="secondary"><CiCirclePlus className="text-2xl"/>View Dashboard</CommonButton>
-            <CommonButton variant="secondary"><CiSearch className="text-2xl"/>Browse Listings</CommonButton>
+          <CommonButton link={"/dashboard/create-ads"} variant="secondary">
+            <CiCirclePlus className="text-2xl" />
+            Post New Ad
+          </CommonButton>
+          <CommonButton link={"/listings"} variant="secondary">
+            <CiSearch className="text-2xl" />
+            Browse Listings
+          </CommonButton>
         </div>
       </div>
 

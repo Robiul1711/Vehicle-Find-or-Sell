@@ -17,12 +17,17 @@ export default function BasicDetails({ steps }) {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Brand
           </label>
-          <input
+          <select
             {...register("brand")}
-            type="text"
-            placeholder="Select Brand"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
-          />
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
+          >
+            <option value="">Select Brand</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Honda">Honda</option>
+            <option value="Yamaha">Yamaha</option>
+            <option value="BMW">BMW</option>
+            <option value="Ford">Ford</option>
+          </select>
         </div>
 
         {/* Model */}
@@ -34,7 +39,12 @@ export default function BasicDetails({ steps }) {
             {...register("model")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
-            <option value="">Select Model</option>
+                  <option value="">Select Model</option>
+            <option value="Corolla">Corolla</option>
+            <option value="Civic">Civic</option>
+            <option value="R15 V3">R15 V3</option>
+            <option value="3 Series">3 Series</option>
+            <option value="Mustang">Mustang</option>
           </select>
         </div>
 
@@ -47,38 +57,44 @@ export default function BasicDetails({ steps }) {
             {...register("body")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
-            <option value="">Select body type</option>
+             <option value="">Select Body Type</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Hatchback">Hatchback</option>
+            <option value="SUV">SUV</option>
+            <option value="Coupe">Coupe</option>
+            <option value="Bike">Bike</option>
+            <option value="Scooter">Scooter</option>
           </select>
         </div>
 
-{(watch().category === "Motorcycle" || watch().category === "Scoter") ? (
-  // Seat Height for motorcycles and scoters
-  <div>
-    <label className="block text-sm font-medium text-gray-700 mb-2">
-      Seat Height
-    </label>
-    <input
-      {...register("seatHeight")}
-      type="text"
-      placeholder="Type your vehicle seat height"
-      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
-    />
-  </div>
-) : (
-  // Door for cars and trucks
-  <div>
-    <label className="block text-sm font-medium text-gray-700 mb-2">
-      Door
-    </label>
-    <input
-      {...register("door")}
-      type="text"
-      placeholder="Type your vehicle door"
-      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
-    />
-  </div>
-)}
- 
+        {watch().category === "Motorcycle" || watch().category === "Scoter" ? (
+          // Seat Height for motorcycles and scoters
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Seat Height
+            </label>
+            <input
+              {...register("seatHeight")}
+              type="text"
+              placeholder="Type your vehicle seat height"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+            />
+          </div>
+        ) : (
+          // Door for cars and trucks
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Door
+            </label>
+            <input
+              {...register("door")}
+              type="text"
+              placeholder="Type your vehicle door"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+            />
+          </div>
+        )}
+
         {/* Original Price */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -128,6 +144,11 @@ export default function BasicDetails({ steps }) {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Fuel Type</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Electric">Electric</option>
+            <option value="CNG">CNG</option>
           </select>
         </div>
 
@@ -153,7 +174,10 @@ export default function BasicDetails({ steps }) {
             {...register("transmission")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
-            <option value="">Select Transmission type</option>
+            <option value="">Select Transmission Type</option>
+            <option value="Automatic">Automatic</option>
+            <option value="Manual">Manual</option>
+            <option value="Semi-Automatic">Semi-Automatic</option>
           </select>
         </div>
 
@@ -180,6 +204,10 @@ export default function BasicDetails({ steps }) {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Condition</option>
+            <option value="Brand New">Brand New</option>
+            <option value="Used - Like New">Used - Like New</option>
+            <option value="Used - Good">Used - Good</option>
+            <option value="Used - Fair">Used - Fair</option>
           </select>
         </div>
 
