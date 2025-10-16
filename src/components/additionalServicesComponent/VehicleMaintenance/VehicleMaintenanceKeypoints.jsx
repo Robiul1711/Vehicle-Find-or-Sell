@@ -3,6 +3,7 @@ import Title from '@/components/common/Title';
 import { CustomCheck } from '@/utils/IconProvider';
 import { ImageProvider } from '@/utils/ImageProvider';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const VehicleMaintenanceKeypoints = () => {
     return (
@@ -207,21 +208,21 @@ const VehicleMaintenanceKeypoints = () => {
                 <p className="text-xl">Verify your car’s complete history instantly via trusted platforms.</p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    <Link to="https://autoviza.fr/" target="_blank" className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         Autoviza
-                    </button>
-                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    </Link>
+                    <Link to="https://www.carfax.eu/" target="_blank" className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         Carfax
-                    </button>
-                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    </Link>
+                    <Link to="https://www.carvertical.com/" target="_blank" className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         CarVertical
-                    </button>
-                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    </Link>
+                    <Link to="https://autorigin.com/" target="_blank" className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         Auto Origin
-                    </button>
-                    <button className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
+                    </Link>
+                    <Link to="https://histovec.interieur.gouv.fr/histovec/accueil" target="_blank" className="bg-custom-primary text-white px-8 py-5 rounded-xl mt-4">
                         Histovec
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

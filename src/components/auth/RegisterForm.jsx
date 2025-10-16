@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import { CustomEmail } from '@/utils/IconProvider';
 import { Eye, EyeClosed } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
+import { FcGoogle } from "react-icons/fc";
 
 const RegisterForm = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +23,7 @@ const RegisterForm = () => {
         console.log(data)
     }
     return (
-        <div>
+        <div className="space-y-6">
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="space-y-4">
@@ -129,7 +129,19 @@ const RegisterForm = () => {
                 </div>
                 <Button className="w-full !h-12 text-lg bg-custom-primary ">Create Account</Button>
             </form>
+      {/* Divider */}
+      <div className="flex items-center gap-2">
+        <div className="flex-1 h-px bg-gray-300" />
+        <p className="text-sm text-gray-500">Or continue with</p>
+        <div className="flex-1 h-px bg-gray-300" />
+      </div>
 
+      {/* Social Login */}
+      <div className="flex justify-center">
+        <button className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center hover:bg-slate-300 transition">
+          <FcGoogle className="w-6 h-6" />
+        </button>
+      </div>
             <p className="mt-10 text-center">Already have an account?
                 <span className="font-bold"> Sign In</span>
             </p>
