@@ -41,11 +41,11 @@ const VehiclesCard = ({
         {/* Title & Badge */}
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
-          {
+          {/* {
             isNew && (
               <span className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center"> <FireIcon className="w-6 h-6" /></span>
             )
-          }
+          } */}
          
         </div>
 

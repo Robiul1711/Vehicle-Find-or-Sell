@@ -2,6 +2,7 @@ import React from 'react'
 import { MessageCircle, ExternalLink } from 'lucide-react'
 import { OfferIcon } from '../common/SVGicons/CarSvg'
 import ImageAvatar from "@/assets/images/avatar1.png"
+import { Link } from 'react-router-dom'
 
 const VehiclePriceDealer = () => {
   return (
@@ -40,10 +41,10 @@ const VehiclePriceDealer = () => {
 
         {/* Contact Buttons */}
         <div className="space-y-3 mb-4">
-          <button className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+          <Link to="/dashboard/message" className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
             <MessageCircle size={18} />
             Message Dealer
-          </button>
+          </Link>
           
           <button className="w-full border border-green-300 hover:border-green-400 bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
             <MessageCircle size={18} />
