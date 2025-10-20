@@ -15,7 +15,7 @@ const Subscription = () => {
         {/* Plan Content */}
         <div className="pt-8">
           <h2 className="text-xl font-semibold text-primaryColor mb-2">Standard Plan</h2>
-          <div className="text-gray-900 text-lg font-medium mb-4">$24.99/month</div>
+          <div className="text-gray-900 text-lg font-medium mb-4">€24.99/month</div>
           
           {/* Plan Details */}
           <div className="flex flex-col sm:flex-row sm:justify-between gap-3 sm:items-center">
