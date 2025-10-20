@@ -81,7 +81,7 @@ export default function CarRightSideDetails() {
 
       {/* Price */}
       <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
-        $10,000
+        €,000
       </div>
 
       {/* Description */}

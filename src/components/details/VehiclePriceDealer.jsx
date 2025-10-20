@@ -11,11 +11,11 @@ const VehiclePriceDealer = () => {
       <div className="mb-6">
         <div className="text-sm text-gray-500 mb-1">Our Price</div>
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-sm text-gray-400 line-through">$180,000</span>
-          <span className="text-2xl font-bold text-gray-900">$165,000</span>
+          <span className="text-sm text-gray-400 line-through">€180,000</span>
+          <span className="text-2xl font-bold text-gray-900">€165,000</span>
         </div>
         <div className="text-sm text-orange-500 font-medium">
-          Instant Saving $15,000
+          Instant Saving €15,000
         </div>
       </div>
 
@@ -46,17 +46,22 @@ const VehiclePriceDealer = () => {
             Message Dealer
           </Link>
           
-          <button className="w-full border border-green-300 hover:border-green-400 bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+          <button  onClick={() =>
+    window.open(
+      "https://wa.me/8801777777777?text=Hi%2C%20I%27m%20interested%20in%20your%20car!",
+      "_blank"
+    )
+  } className="w-full border border-green-300 hover:border-green-400 bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
             <MessageCircle size={18} />
             Chat Via WhatsApp
           </button>
         </div>
 
         {/* View All Stock Link */}
-        <button className="text-sm text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1 w-full">
+        <Link to="/dealer-profile" className="text-sm text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1 w-full">
           View All stock at this dealer
           <ExternalLink size={14} />
-        </button>
+        </Link>
       </div>
 
       {/* Vehicle History Button */}

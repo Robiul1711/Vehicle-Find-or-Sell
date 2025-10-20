@@ -232,7 +232,7 @@ const PartListing = ({ items }) => {
                           className={`${isGrid ? "text-xl" : "text-[1.1rem]"
                             } font-semibold text-gray-900 text-center`}
                         >
-                          ${item?.price}
+                          €{item?.price}
                         </motion.p>
                         <Link to={"/details/1"}>
                           <motion.p

@@ -2,8 +2,9 @@ import React from 'react'
 import Title from '../common/Title'
 import { ArrowUpRight } from 'lucide-react'
 import { FaRegUser } from "react-icons/fa";
-import { FaCalendarAlt } from "react-icons/fa";
+import { RxCalendar } from "react-icons/rx";
 import car from '@/assets/images/car1.png'
+import { Link } from 'react-router-dom';
 
 // JSON Data
 const articles = [
@@ -64,15 +65,15 @@ const AutoInsightsAdvice = () => {
                   <FaRegUser /> {article.author}
                 </p>
                 <p className='flex items-center gap-2'>
-                  <FaCalendarAlt /> {article.date}
+                 <RxCalendar /> {article.date}
                 </p>
               </div>
 
               <Title level="title20">{article.title}</Title>
 
-              <button className='flex items-center gap-2 text-custom-primary mb-4'>
+              <Link to={`/blogDetails/${article.id}`} className='flex items-center gap-2 font-semibold text-custom-primary mb-4'>
                 Read More <ArrowUpRight className='w-4 h-4'/>
-              </button>
+              </Link>
             </div>
           </div>
         ))}

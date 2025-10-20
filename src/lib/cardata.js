@@ -10,10 +10,10 @@ export const cars = [
     imageUrl: car,
     title: "Toyota Camry New",
     subtitle: "3.5 D5 PowerPulse Momentum 5dr AWD Auto",
-    mileage: "20 Miles",
+    mileage: "20 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$40,000",
+    price: "€40,000",
     isNew: true
   },
   {
@@ -21,10 +21,10 @@ export const cars = [
      imageUrl: car,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -32,10 +32,10 @@ export const cars = [
      imageUrl: car,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -43,10 +43,10 @@ export const cars = [
      imageUrl: car,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   // add more cars here
@@ -60,10 +60,10 @@ export const bikes = [
     imageUrl: bike,
     title: "Toyota Camry New",
     subtitle: "3.5 D5 PowerPulse Momentum 5dr AWD Auto",
-    mileage: "20 Miles",
+    mileage: "20 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$40,000",
+    price: "€40,000",
     isNew: true
   },
   {
@@ -71,10 +71,10 @@ export const bikes = [
      imageUrl: bike,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -82,10 +82,10 @@ export const bikes = [
      imageUrl:bike,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -93,10 +93,10 @@ export const bikes = [
      imageUrl: bike,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   // add more cars here
@@ -107,10 +107,10 @@ export const trucks = [
     imageUrl: truck,
     title: "Toyota Camry New",
     subtitle: "3.5 D5 PowerPulse Momentum 5dr AWD Auto",
-    mileage: "20 Miles",
+    mileage: "20 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$40,000",
+    price: "€40,000",
     isNew: true
   },
   {
@@ -118,10 +118,10 @@ export const trucks = [
      imageUrl: truck,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -129,10 +129,10 @@ export const trucks = [
      imageUrl:truck,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -140,10 +140,10 @@ export const trucks = [
      imageUrl: truck,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   // add more cars here
@@ -154,10 +154,10 @@ export const Scoter = [
     imageUrl: vespa,
     title: "Toyota Camry New",
     subtitle: "3.5 D5 PowerPulse Momentum 5dr AWD Auto",
-    mileage: "20 Miles",
+    mileage: "20 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$40,000",
+    price: "€40,000",
     isNew: true
   },
   {
@@ -165,10 +165,10 @@ export const Scoter = [
      imageUrl: vespa,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -176,10 +176,10 @@ export const Scoter = [
      imageUrl:vespa,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -187,10 +187,10 @@ export const Scoter = [
      imageUrl: vespa,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   // add more cars here
@@ -201,10 +201,10 @@ export const Parts = [
     imageUrl: parts,
     title: "Toyota Camry New",
     subtitle: "3.5 D5 PowerPulse Momentum 5dr AWD Auto",
-    mileage: "20 Miles",
+    mileage: "20 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$40,000",
+    price: "€40,000",
     isNew: true
   },
   {
@@ -212,10 +212,10 @@ export const Parts = [
      imageUrl: parts,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -223,10 +223,10 @@ export const Parts = [
      imageUrl:parts,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   {
@@ -234,10 +234,10 @@ export const Parts = [
      imageUrl: parts,
     title: "Honda Civic 2023",
     subtitle: "1.5 Turbo Sport CVT Auto",
-    mileage: "15 Miles",
+    mileage: "15 Kilometer",
     fuelType: "Petrol",
     transmission: "Automatic",
-    price: "$35,000",
+    price: "€35,000",
     isNew: false
   },
   // add more cars here
