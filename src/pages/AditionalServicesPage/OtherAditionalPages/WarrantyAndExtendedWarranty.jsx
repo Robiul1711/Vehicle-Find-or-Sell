@@ -3,12 +3,13 @@ import CarwarrantiesKeypoints from '@/components/additionalServicesComponent/car
 import { CommonPageWrapper } from '@/components/common/CommonPageWrapper'
 import React from 'react'
 import { ScrollRestoration } from 'react-router-dom'
-
+import s4 from '@/assets/images/s4.jpg'
+import ServiceBanner from '@/components/common/ServiceBanner'
 const WarrantyAndExtendedWarranty = () => {
   return (
     <div >
       <ScrollRestoration />
-      <CarWarrantiesBanner />
+      <ServiceBanner image={s4} title="Car Warranties" subText="Learn about legal, contractual, and external warranties to protect your car and your budget." />
       <CommonPageWrapper>
         <CarwarrantiesKeypoints />
       </CommonPageWrapper>

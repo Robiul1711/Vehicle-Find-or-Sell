@@ -6,11 +6,12 @@ import { CommonPageWrapper } from '@/components/common/CommonPageWrapper'
 import { CustomAutoLoan, CustomCash, CustomCheck, CustomCompare, CustomLOA } from '@/utils/IconProvider'
 import { ImageProvider } from '@/utils/ImageProvider'
 import React from 'react'
-
+import s2 from '@/assets/images/s2.jpg'
+import ServiceBanner from '@/components/common/ServiceBanner'
 const VehiclePurchase = () => {
   return (
     <div >
-      <VehiclePurchaseBanner />
+      <ServiceBanner image={s2} title="Vehicle Purchase Options" subText="Explore different ways to buy a vehicle—cash, loans, leasing, or rental—and choose the option that suits your budget and lifestyle." />
       <CommonPageWrapper>
         <VehiclePurchaseKeypoints />
         <CompareTable />

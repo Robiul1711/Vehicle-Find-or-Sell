@@ -308,7 +308,7 @@ button{
   top: -53px !important;
   height: 39px;
   width: 100%;
-  z-index: 10000001;
+  z-index: 10000001 !important;
   display: none !important;
 }
 .VIpgJd-ZVi9od-ORHb {

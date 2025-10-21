@@ -1,11 +1,12 @@
 import PartnerGarageBanner from '@/components/additionalServicesComponent/partnerGarage/PartnerGarageBanner'
 import { CommonPageWrapper } from '@/components/common/CommonPageWrapper'
 import React from 'react'
-
+import s9 from '@/assets/images/s9.jpg'
+import ServiceBanner from '@/components/common/ServiceBanner'
 const PartnerGarageDirectory = () => {
   return (
     <div >
-      <PartnerGarageBanner />
+      <ServiceBanner image={s9} title="Partner Garage Directory" subText="Find trusted partner garages near you for reliable service and support." />
       <CommonPageWrapper>
 
         <div className="grid grid-cols-1  gap-4 lg:gap-10 ">
