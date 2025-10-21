@@ -43,14 +43,14 @@ const VehiclesCard = ({
           <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
           {
             isNew && (
-              <span className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center"> <Bumpcon className="w-6 h-6" /></span>
+              <span className="size-8 bg-gray-100 rounded-full flex items-center justify-center"> <Bumpcon className="w-5 h-5" /></span>
             )
           }
          
         </div>
 
         {/* Subtitle */}
-        <p className="text-gray-600 text-sm  leading-relaxed">
+        <p className="text-gray-600 text-sm  leading-relaxed line-clamp-1">
           {subtitle}
         </p>
 

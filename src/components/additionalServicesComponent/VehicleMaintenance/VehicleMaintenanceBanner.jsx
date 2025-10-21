@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import React, { useEffect, useRef } from 'react';
 
-const VehicleMaintenanceBanner = () => {
+const VehicleMaintenanceBanner = ({image, title, subText}) => {
     const titleRef = useRef(null);
     const subTextRef = useRef(null);
     useEffect(() => {
@@ -17,12 +17,13 @@ const VehicleMaintenanceBanner = () => {
         )
     }, [])
     return (
-        <div className='bg-[#E9F2FF] min-h-[40vh] px-4 flex flex-col justify-center items-center text-center gap-4 text-black '>
-            <p ref={titleRef} className="text-2xl md:text-5xl text-black font-bold">
-                Vehicle Maintenance History
+        <div className='relative min-h-[50vh] px-4 flex flex-col justify-center text-white items-center text-center gap-4  ' style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+           <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
+            <p ref={titleRef} className="text-2xl md:text-5xl  font-bold">
+                {title}
             </p>
-            <p ref={subTextRef} className="text-xl">
-                Verify your car’s service and repair records for a safer purchase or sale.
+            <p ref={subTextRef} className="text-xl text-white">
+               {subText}
             </p>
         </div>
     );
