@@ -32,12 +32,29 @@ const DealerSection = () => {
     { day: "Sunday", hours: "Closed" },
   ];
 
-  const services = [
-    { name: "Used Vehicle", icon: <CustomUsedVehicle /> },
-    { name: "New Vehicle", icon: <CustomNewVehicle /> },
-    { name: "Auto Repair", icon: <CustomAutoRepair /> },
-    { name: "Car Wash", icon: <CustomCarWash /> },
-  ];
+const services = [
+  {
+    name: "Used Vehicle",
+    icon: <CustomUsedVehicle />,
+    color: "bg-blue-50 text-blue-600 border-blue-200",
+  },
+  {
+    name: "New Vehicle",
+    icon: <CustomNewVehicle />,
+    color: "bg-green-50 text-green-600 border-green-200",
+  },
+  {
+    name: "Auto Repair",
+    icon: <CustomAutoRepair />,
+    color: "bg-yellow-50 text-yellow-600 border-yellow-200",
+  },
+  {
+    name: "Car Wash",
+    icon: <CustomCarWash />,
+    color: "bg-purple-50 text-purple-600 border-purple-200",
+  },
+];
+
 
   return (
     <div className="flex flex-col lg:flex-row gap-10">
@@ -127,7 +144,8 @@ const DealerSection = () => {
                   return (
                     <div
                       key={index}
-                      className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200"
+                   className={`flex items-center gap-3 p-3 rounded-lg border ${service.color} transition hover:scale-[1.01] hover:shadow-lg`}
+
                     >
                       {service.icon}
                       <span className="text-sm font-medium text-gray-700">
