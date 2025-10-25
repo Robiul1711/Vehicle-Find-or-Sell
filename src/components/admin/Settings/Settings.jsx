@@ -47,14 +47,14 @@ export default function Settings() {
     {
       id: 4,
       name: "Manage Notification",
-      icon: <IoIosNotifications />,
+      icon: <IoIosNotifications  className="size-6"/>,
       type: "content",
       content: <ManageNotification />,
     },
     {
       id: 5,
       name: "Subscription",
-      icon: <LuPackage2 />,
+      icon: <LuPackage2 className="size-6"/>,
       type: "content",
       content: <Subscription />,
     },
