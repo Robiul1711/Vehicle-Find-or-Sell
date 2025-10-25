@@ -20,14 +20,14 @@ export default function SupportAndHelp() {
     {
       id: 1,
       name: "FAQ",
-      icon: <FaQuestionCircle />,
+      icon: <FaQuestionCircle className="size-6"/>,
       type: "content",
       content: <Faq />,
     },
     {
       id: 2,
       name: "Contact Us",
-      icon: <BiMessageRoundedDots />,
+      icon: <BiMessageRoundedDots className="size-7"/>,
       type: "content",
       content: <ContactUs />,
     },
