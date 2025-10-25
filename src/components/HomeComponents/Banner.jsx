@@ -27,7 +27,7 @@ const Banner = () => {
         >
           Post Your Ads <MdOutlineArrowOutward />
         </CommonButton>
-        <CommonButton link={"/listings"} className="flex items-center gap-2">
+        <CommonButton link={"/listings"} variant="primary" className="flex items-center gap-2">
           Browse Listings <MdOutlineArrowOutward />
         </CommonButton>
       </div>

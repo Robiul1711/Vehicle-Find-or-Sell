@@ -13,7 +13,7 @@ const Home = () => {
   return (
 
     <div className=''>
-        <HomePageSpecialOffer />
+       
       <Banner/>
       <Hero/>
       <HomeAds/>

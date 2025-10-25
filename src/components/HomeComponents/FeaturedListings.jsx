@@ -24,7 +24,7 @@ const tabData = [
   },
   {
     id: 4,
-    name: "Scoter",
+    name: "Scooter",
     content: <VehiclesCardDemo cars={Scoter} />,
   },
   {
