@@ -36,9 +36,9 @@ export default function Tabs({ items = [], className = '' }) {
           <motion.button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`relative px-2 sm:px-6 py-3 text-sm sm:text-base font-medium transition-all duration-300 ease-out flex-shrink-0 ${
+            className={`relative px-2 sm:px-6 py-2 text-sm sm:text-base font-medium transition-all duration-300 ease-out flex-shrink-0 ${
               activeTab === tab.id
-                ? 'text-slate-800'
+                ? 'text-slate-800 bg-custom-primary/10 rounded-t-lg'
                 : 'text-slate-500 hover:text-slate-700'
             }`}
             whileHover={{ scale: 1.02 }}

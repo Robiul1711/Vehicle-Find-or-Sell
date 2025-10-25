@@ -3,16 +3,21 @@ import React, { useState, useEffect } from "react";
 const HomePageSpecialOffer = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Open modal automatically on first page load
   useEffect(() => {
-    setIsOpen(true);
+    // Check if the user has already seen the offer
+    const hasSeenOffer = localStorage.getItem("hasSeenOffer");
+
+    if (!hasSeenOffer) {
+      setIsOpen(true); // show modal on first visit
+      localStorage.setItem("hasSeenOffer", "true"); // mark as seen
+    }
   }, []);
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full relative">
+      <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full relative animate-fadeIn">
         {/* Close Button */}
         <button
           onClick={() => setIsOpen(false)}
