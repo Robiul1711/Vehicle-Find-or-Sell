@@ -5,22 +5,35 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CustomEmail } from "@/utils/IconProvider";
 import { Eye, EyeClosed } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { useApiMutation } from "@/hooks/useApiMutation";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
-  const {
+const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+const { mutate, isPending } = useApiMutation({
+  url: "/account/signin/",
+  method: "POST",
+  secure: false,
+  successMessage: "Welcome back!",
+  // ✅ This now works because we passed it in the hook above
+  onSuccess: (data) => {
+    localStorage.setItem('token', data.tokens.access);
+    navigate('/dashboard'); 
+  }
+});
 
+  const onSubmit = (data) => {
+    mutate(data);
+  };
   return (
     <div className="space-y-6">
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>

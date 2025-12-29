@@ -79,7 +79,7 @@ export const SelectFeatures = () => {
   ];
 
   return (
-    <div className="">
+    <>
       <h1 className="text-2xl font-semibold text-gray-800 mb-8">
         Select Features
       </h1>
@@ -90,7 +90,7 @@ export const SelectFeatures = () => {
             {section.title}
           </h2>
 
-          <div className="grid grid-cols-3 gap-x-8 gap-y-3">
+          <div className="grid grid-cols-3 gap-x-8 ">
             {section.features.map((feature, featureIndex) => {
               const fieldName = `${section.title
                 .toLowerCase()
@@ -102,7 +102,7 @@ export const SelectFeatures = () => {
                   name={fieldName}
                   control={control}
                   render={({ field }) => (
-                    <label className="flex items-center space-x-2 cursor-pointer">
+                    <label className="flex items-center space-x-2 cursor-pointer ">
                       <Checkbox
                         {...field}
                         checked={field.value || false}
@@ -120,6 +120,6 @@ export const SelectFeatures = () => {
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 };
