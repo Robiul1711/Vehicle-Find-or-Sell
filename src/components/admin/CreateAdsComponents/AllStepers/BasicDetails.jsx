@@ -1,3 +1,4 @@
+import { useApiQuery } from "@/hooks/useApiQuery";
 import { useFormContext } from "react-hook-form";
 
 export default function BasicDetails({ steps }) {
@@ -6,7 +7,12 @@ export default function BasicDetails({ steps }) {
     register,
     formState: { errors },
   } = useFormContext();
-
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["brands"],
+    url: "/core/brands/",
+    secure: true,
+  });
+// console.log(data?.data)
   return (
     <div className="">
       <h2 className="text-xl font-medium text-gray-800 mb-6">Basic Details</h2>
@@ -22,11 +28,11 @@ export default function BasicDetails({ steps }) {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Brand</option>
-            <option value="Toyota">Toyota</option>
-            <option value="Honda">Honda</option>
-            <option value="Yamaha">Yamaha</option>
-            <option value="BMW">BMW</option>
-            <option value="Ford">Ford</option>
+            {data?.data?.map((brand) => (
+              <option key={brand.id} value={brand.name}>
+                {brand.name}
+              </option>
+            ))}
           </select>
         </div>
 
