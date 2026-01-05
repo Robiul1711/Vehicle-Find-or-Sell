@@ -2,7 +2,7 @@ import { CheckMarkIcon } from "@/components/common/SVGicons/DashboardIcon";
 import Title from "@/components/common/Title";
 import React from "react";
 
-const CarBottomFeatures = () => {
+const CarBottomFeatures = ({details}) => {
   const features = [
     {
       title: "Exterior Features",
@@ -69,9 +69,13 @@ const CarBottomFeatures = () => {
           <Title level="title14" className="text-gray-500">
             Address
           </Title>
-          <Title level="title16">
-            1456 Veltri Drive, Anchorage, AK 99502
-          </Title>
+         <Title level="title16">
+  {details?.seller_address?.map((address) => (
+    [address.street, address.city, address.zip_code, address.country]
+      .filter(Boolean)
+      .join(', ')
+  )).join(' | ')}
+</Title>
         </div>
       </div>
 

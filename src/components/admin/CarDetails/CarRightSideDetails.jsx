@@ -21,28 +21,37 @@ import {
 import { ProfetionalIcon, VideoIcon } from "@/components/common/SVGicons/MySvg";
 import { Link, useParams } from "react-router-dom";
 
+
+
+
+
+export default function CarRightSideDetails({details}) {
+  const { id } = useParams();
+  
 const specs = [
-  { icon: Car, label: "Body", value: "Sedan" },
-  { icon: Gauge, label: "Mileage", value: "250 km" },
-  { icon: Fuel, label: "Fuel Type", value: "Petrol" },
-  { icon: Calendar, label: "Year", value: "2021" },
-  { icon: Settings, label: "Transmission", value: "Manual" },
-  { icon: Wind, label: "Air Criteria", value: "Crit Air 2" },
-  { icon: Shield, label: "Warranty", value: "12 Months" },
-  { icon: Zap, label: "Horsepower (CV)", value: "500 CV" },
-  { icon: FileText, label: "Deductible VAT", value: "50%" },
+  { icon: Car, label: "Body", value: details?.body },
+  { icon: Gauge, label: "Mileage", value: details?.mileage },
+  { icon: Fuel, label: "Fuel Type", value: details?.fuel_type },
+  { icon: Calendar, label: "Year", value: details?.exact_date },
+  { icon: Settings, label: "Transmission", value: details?.transmission },
+  { icon: Wind, label: "Air Criteria", value: details?.air_criteria },
+  { icon: Shield, label: "Warranty", value: details?.warrenty_duration },
+  { icon: Zap, label: "Horsepower (CV)", value: details?.horsepower_cv },
+  { icon: FileText, label: "Deductible VAT", value: details?.vat_percentage },
 ];
 
 const rightSpecs = [
-  { icon: User, label: "Condition", value: "Used" },
-  { icon: Wrench, label: "Engine Size", value: "4.0" },
+  { icon: User, label: "Condition", value: details?.condition },
+  { icon: Wrench, label: "Engine Size", value: details?.engine_transmission?.Engine?.Cylinders
+ },
   { icon: DoorOpen, label: "Door", value: "4 Doors" },
-  { icon: Palette, label: "Color", value: "Black" },
+  { icon: Palette, label: "Color", value: details?.color },
   { icon: Hash, label: "VIN", value: "FCB123792" },
-  { icon: Leaf, label: "CO₂ Emissions", value: "120 g/km" },
+  { icon: Leaf, label: "CO₂ Emissions", value: details?.co2_emission },
   { icon: Users, label: "Previous Owners", value: "01" },
-  { icon: Activity, label: "Horsepower (DIN)", value: "368 DIN hp" },
+  { icon: Activity, label: "Horsepower (DIN)", value: details?.horsepower_din },
 ];
+
 
 const engineSpecs = [
   { label: "Fuel Tank Capacity (Litres)", value: "65 L" },
@@ -51,14 +60,11 @@ const engineSpecs = [
   { label: "Max. Towing Weight - Unbraked (kg)", value: "1,000 kg" },
   { label: "Turning Circle (m)", value: "11.5 m" },
 ];
-
-export default function CarRightSideDetails() {
-  const { id } = useParams();
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">BMW 95</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{details?.brand_name}</h1>
         <div className="flex flex-wrap gap-2">
           <Link
             to={`/dashboard/view-analytics/${id}`}
@@ -81,17 +87,12 @@ export default function CarRightSideDetails() {
 
       {/* Price */}
       <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
-        €,000
+        €{details?.discount_price}
       </div>
 
       {/* Description */}
       <p className="text-gray-600 text-sm sm:text-base mb-8 leading-relaxed">
-        Well-maintained BMW 330d M Sport 2021 with only 25,000 km on the
-        odometer. Single-owner vehicle, full service history available. Features
-        include panoramic sunroof, leather interior, advanced safety systems,
-        and Apple CarPlay/Android Auto. Smooth automatic transmission and
-        powerful diesel engine for excellent performance. Ideal for city and
-        highway driving. Available for immediate inspection.
+{details?.description}
       </p>
 
       {/* Specs Grid */}

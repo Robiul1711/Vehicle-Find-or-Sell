@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Search, ChevronDown, Plus } from "lucide-react";
 import DasCarCard from "../Dashboard/DasCarCard";
 import { Link } from "react-router-dom";
+import { useApiQuery } from "@/hooks/useApiQuery";
 const cars = [
   {
     id: 1,
@@ -30,7 +31,12 @@ export default function AdsOverview() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedStatus, setSelectedStatus] = useState("All Status");
-
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["ads-vehicles"],
+    url: "/ads/vehicles/",
+    secure: true,
+  });
+console.log(data)
   return (
  <div className="space-y-6 md:space-y-9">
   {/* Header */}
@@ -109,7 +115,7 @@ export default function AdsOverview() {
 
   {/* Cars Grid */}
   <div className="grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-4 gap-4 sm:gap-6">
-    {cars.map((car) => (
+    {data?.map((car) => (
       <DasCarCard key={car.id} car={car} />
     ))}
   </div>
