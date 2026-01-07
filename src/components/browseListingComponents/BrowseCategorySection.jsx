@@ -15,41 +15,147 @@ import {
   truckData,
 } from "@/utils/data";
 import PartListing from "./PartListing";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const BrowseCategorySection = () => {
-  const [activeTab, setActiveTab] = useState("cars");
+  const [activeTab, setActiveTab] = useState("car");
+  const [filterParams, setFilterParams] = useState({
+    price_min: "",
+    price_max: "",
+    body_type: "",
+    brand: "",
+    model: "",
+    fuel_type: "",
+    transmission: "",
+    mileage_min: "",
+    mileage_max: "",
+    year_min: "",
+    year_max: "",
+    hp_cv_min: "",
+    hp_cv_max: "",
+    hp_din_min: "",
+    hp_din_max: "",
+    vat: "",
+    country: "",
+    condition: "",
+    seller_type: "",
+    search: "",
+  });
+
+  const { data, isLoading, refetch } = useApiQuery({
+    queryKey: ["store-filter", activeTab, filterParams],
+    url: "/store/filter/",
+    params: {
+      type: activeTab,
+      ...Object.fromEntries(
+        Object.entries(filterParams).filter(
+          ([_, v]) => v !== "" && v !== null && v !== undefined
+        )
+      ),
+    },
+    secure: true,
+  });
+
+  const handleFilterChange = (newParams) => {
+    setFilterParams((prev) => ({ ...prev, ...newParams }));
+  };
+
+  const mapCarData = (results) => {
+    if (!results) return [];
+    return results.map((item) => ({
+      id: item.id,
+      name: `${item.brand_name || ""} ${item.model || ""}`,
+      description: item.body || item.model,
+      location: item.seller_address,
+      mileage: item.mileage,
+      fuelType: item.fuel_type,
+      transmission: item.transmission,
+      image: item.first_image, // Handle null/default image in component
+      price: item.discount_price || item.original_price,
+    }));
+  };
+
+  const mapPartData = (results) => {
+    if (!results) return [];
+    return results.map((item) => ({
+      id: item.id,
+      name: item.part_name,
+      description: item.description,
+      location: item.seller_address,
+      mileage: item.warrenty_duration, // Reusing mileage slot for warranty or other info if needed, or create new prop
+      fuelType: item.weight ? `${item.weight} ${item.unit || ""}` : "", // Reusing fuelType for weight
+      transmission: item.color, // Reusing transmission for color
+      image: item.first_image,
+      price: item.discount_price || item.original_price,
+    }));
+  };
 
   // Define categories data
   const categories = [
     {
-      id: "cars",
+      id: "car",
       label: "Car",
       icon: <CustomCar />,
-      content: <CarListing items={carData} />,
+      content: (
+        <CarListing
+          items={mapCarData(data?.results)}
+          onFilterChange={handleFilterChange}
+          filters={filterParams}
+          isLoading={isLoading}
+        />
+      ),
     },
     {
-      id: "trucks",
+      id: "truck",
       label: "Utility Trucks",
       icon: <CustomTruck />,
-      content: <CarListing items={truckData} />,
+      content: (
+        <CarListing
+          items={mapCarData(data?.results)}
+          onFilterChange={handleFilterChange}
+          filters={filterParams}
+          isLoading={isLoading}
+        />
+      ),
     },
     {
       id: "motorcycle",
       label: "Motorcycle",
       icon: <CustomBike />,
-      content: <CarListing items={bikeData} />,
+      content: (
+        <CarListing
+          items={mapCarData(data?.results)}
+          onFilterChange={handleFilterChange}
+          filters={filterParams}
+          isLoading={isLoading}
+        />
+      ),
     },
     {
       id: "scooter",
       label: "Scooter",
       icon: <CustomScoter />,
-      content: <CarListing items={scooterData} />,
+      content: (
+        <CarListing
+          items={mapCarData(data?.results)}
+          onFilterChange={handleFilterChange}
+          filters={filterParams}
+          isLoading={isLoading}
+        />
+      ),
     },
     {
       id: "parts",
       label: "Parts",
       icon: <CustomPart />,
-      content: <PartListing items={partData} />,
+      content: (
+        <PartListing
+          items={mapPartData(data?.results)}
+          onFilterChange={handleFilterChange}
+          filters={filterParams}
+          isLoading={isLoading}
+        />
+      ),
     },
   ];
 

@@ -7,7 +7,16 @@ import RealatedCars from "@/components/details/RealatedCars";
 import React from "react";
 import { bikes, cars, Parts, Scoter, trucks } from "@/lib/cardata";
 import PartOverview from "@/components/details/PartOverview";
+import { useApiQuery } from "@/hooks/useApiQuery";
+import { useParams } from "react-router-dom";
 const DetailsPage = () => {
+  const { id } = useParams();
+    const { data, isLoading } = useApiQuery({
+      queryKey: ["vehicle-details", id],
+      url: `store/vehicle/${id}`,
+      secure: true,
+    });
+  console.log(data)
   const details = "car"; // car, truck, bike, scoter, parts
   return (
     <div className="  section-padding-x pb-20 flex flex-col gap-10 ">
