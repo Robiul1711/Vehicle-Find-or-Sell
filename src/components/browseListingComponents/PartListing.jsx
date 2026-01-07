@@ -24,10 +24,15 @@ const options = [
   "Last Update",
 ];
 
-const PartListing = ({ items }) => {
+const PartListing = ({ items, onFilterChange, filters, isLoading }) => {
   const [isGrid, setIsGrid] = useState(false);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
+  const [searchText, setSearchText] = useState(filters?.search || "");
+
+  const handleSearch = () => {
+    onFilterChange({ search: searchText });
+  };
 
   const handleSelect = (option) => {
     handleSortSelect(option);
@@ -48,13 +53,18 @@ const PartListing = ({ items }) => {
             type="text"
             className="w-full p-2 outline-none bg-transparent"
             placeholder="Search..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
 
         {/* Button Group - Stack on mobile, row on desktop */}
         <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-center">
           {/* Search Button - Full width on mobile, auto on larger screens */}
-          <button className="w-full sm:w-auto bg-custom-primary text-white px-4 py-2 rounded-lg whitespace-nowrap">
+          <button
+            onClick={handleSearch}
+            className="w-full sm:w-auto bg-custom-primary text-white px-4 py-2 rounded-lg whitespace-nowrap"
+          >
             Search
           </button>
 
@@ -62,19 +72,21 @@ const PartListing = ({ items }) => {
           <div className="flex space-x-2 bg-gray-200 p-1.5 rounded-lg">
             <button
               onClick={() => setIsGrid(true)}
-              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${isGrid
+              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${
+                isGrid
                   ? "bg-custom-primary text-white shadow-sm"
                   : "text-black hover:bg-gray-300"
-                }`}
+              }`}
             >
               <IoGrid />
             </button>
             <button
               onClick={() => setIsGrid(false)}
-              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${!isGrid
+              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${
+                !isGrid
                   ? "bg-custom-primary text-white shadow-sm"
                   : "text-black hover:bg-gray-300"
-                }`}
+              }`}
             >
               <FaList />
             </button>
@@ -106,10 +118,11 @@ const PartListing = ({ items }) => {
                     <div key={index}>
                       <p
                         onClick={() => handleSelect(option)}
-                        className={`hover:text-[#1B1B1B] cursor-pointer ${selectedOption === option
+                        className={`hover:text-[#1B1B1B] cursor-pointer ${
+                          selectedOption === option
                             ? "text-Primary font-medium"
                             : ""
-                          }`}
+                        }`}
                       >
                         {option}
                       </p>
@@ -127,128 +140,183 @@ const PartListing = ({ items }) => {
 
       <div className="flex gap-5">
         <div className="hidden md:block w-1/4 flex-shrink-0">
-          <FilterSection />
+          <FilterSection onFilterChange={onFilterChange} filters={filters} />
         </div>
         <div className="flex-1 w-full md:w-3/4">
           <div
-            className={`${isGrid
+            className={`${
+              isGrid
                 ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
                 : "space-y-6 md:w-3/4"
-              }`}
+            }`}
           >
-            {items.map((item, i) => {
-              const waveDelay = isGrid
-                ? (i % 3) * 0.1 + Math.floor(i / 3) * 0.1
-                : i * 0.1;
-
-              return (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={false}
-                  animate={{
-                    y: [0, -20, 0],
-                    opacity: [1, 0.5, 1],
-                    scale: [1, 0.95, 1],
-                    transition: {
-                      duration: 0.6,
-                      times: [0, 0.5, 1],
-                      delay: waveDelay,
-                    },
-                  }}
-                  className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${isGrid ? "w-full mx-auto" : ""
-                    }`}
+            {isLoading ? (
+              // Skeleton Loader
+              Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={index}
+                  className={`rounded-md bg-white dark:bg-slate-800 shadow-lg overflow-hidden animate-pulse ${
+                    isGrid ? "w-full mx-auto" : ""
+                  }`}
                 >
-                  <motion.div
-                    layout
-                    className={`${isGrid
+                  <div
+                    className={`${
+                      isGrid
                         ? "p-5"
                         : "p-4 flex flex-col lg:flex-row items-center"
-                      }`}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 25,
-                      delay: waveDelay + 0.3,
-                    }}
+                    }`}
                   >
-                    <motion.img
-                      layout
-                      src={item.image}
-                      alt={item.name}
-                      className={`rounded-lg object-cover ${isGrid
+                    <div
+                      className={`bg-gray-200 dark:bg-gray-700 rounded-lg ${
+                        isGrid
                           ? "w-full h-[200px] mb-5"
                           : "w-44 h-44 mr-4 flex-shrink-0"
+                      }`}
+                    ></div>
+                    <div
+                      className={`${isGrid ? "w-full" : "flex-1 space-y-3"}`}
+                    >
+                      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                      <div className="border-[1px] my-2 border-gray-100 dark:border-gray-700"></div>
+                      <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+                      <div className="border-[1px] my-2 border-gray-100 dark:border-gray-700"></div>
+                      <div className="flex justify-between">
+                        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
+                        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : items.length === 0 ? (
+              <div className="col-span-full text-center py-20 text-gray-500">
+                No Parts Found
+              </div>
+            ) : (
+              items.map((item, i) => {
+                const waveDelay = isGrid
+                  ? (i % 3) * 0.1 + Math.floor(i / 3) * 0.1
+                  : i * 0.1;
+
+                return (
+                  <motion.div
+                    key={item.id}
+                    layout
+                    initial={false}
+                    animate={{
+                      y: [0, -20, 0],
+                      opacity: [1, 0.5, 1],
+                      scale: [1, 0.95, 1],
+                      transition: {
+                        duration: 0.6,
+                        times: [0, 0.5, 1],
+                        delay: waveDelay,
+                      },
+                    }}
+                    className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${
+                      isGrid ? "w-full mx-auto" : ""
+                    }`}
+                  >
+                    <motion.div
+                      layout
+                      className={`${
+                        isGrid
+                          ? "p-5"
+                          : "p-4 flex flex-col lg:flex-row items-center"
+                      }`}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 25,
+                        delay: waveDelay + 0.3,
+                      }}
+                    >
+                      <motion.img
+                        layout
+                        src={item.image}
+                        alt={item.name}
+                        className={`rounded-lg object-cover ${
+                          isGrid
+                            ? "w-full h-[200px] mb-5"
+                            : "w-44 h-44 mr-4 flex-shrink-0"
                         }`}
-                    />
-                    <div className={`${isGrid ? "w-full" : "flex-1"}`}>
-                      <motion.h3
-                        layout
-                        className={`${isGrid ?  "lg:text-xl xl:text-2xl font-semibold" : "lg:text-xl xl:text-2xl font-semibold"
+                      />
+                      <div className={`${isGrid ? "w-full" : "flex-1"}`}>
+                        <motion.h3
+                          layout
+                          className={`${
+                            isGrid
+                              ? "lg:text-xl xl:text-2xl font-semibold"
+                              : "lg:text-xl xl:text-2xl font-semibold"
                           } text-gray-800 dark:text-[#d2e5f5]`}
-                      >
-                        {item.name}
-                      </motion.h3>
-                      <motion.p layout className="text-black mt-1">
-                        {item.description}
-                      </motion.p>
+                        >
+                          {item.name}
+                        </motion.h3>
+                        <motion.p layout className="text-black mt-1">
+                          {item.description}
+                        </motion.p>
 
-                      <motion.p
-                        layout
-                        className="text-black mt-1 flex items-center gap-1 text-sm"
-                      >
-                        <CustomLocation />
-                        {item.location}
-                      </motion.p>
-                      <motion.div
-                        layout
-                        className="border-[1px] my-2 border-gray-300"
-                      ></motion.div>
-                      <motion.button
-                        layout
-                        className="px-4 py-2 flex justify-between items-center gap-4 w-full rounded-lg"
-                      >
-                        <div className="flex flex-col items-center">
-                          <CustomTime />
-                          <p className="">{item?.mileage}</p>
-                        </div>
-                        <div className="flex flex-col items-center">
-                          <CustomWeight />
-                          <p className="">{item?.fuelType}</p>
-                        </div>
-
-                        <div className="flex flex-col items-center">
-                          <CustomElement />
-                          <p className="">{item?.transmission}</p>
-                        </div>
-                      </motion.button>
-                      <motion.div
-                        layout
-                        className="border-[1px] my-2 border-gray-300"
-                      ></motion.div>
-                      <motion.div layout className="flex justify-between">
                         <motion.p
                           layout
-                          className={`${isGrid ? "text-xl" : "text-[1.1rem]"
-                            } font-semibold text-gray-900 text-center`}
+                          className="text-black mt-1 flex items-center gap-1 text-sm"
                         >
-                          €{item?.price}
+                          <CustomLocation />
+                          {item.location}
                         </motion.p>
-                        <Link to={"/details/1"}>
+                        <motion.div
+                          layout
+                          className="border-[1px] my-2 border-gray-300"
+                        ></motion.div>
+                        <motion.button
+                          layout
+                          className="px-4 py-2 flex justify-between items-center gap-4 w-full rounded-lg"
+                        >
+                          <div className="flex flex-col items-center">
+                            <CustomTime />
+                            <p className="">{item?.mileage}</p>
+                          </div>
+                          <div className="flex flex-col items-center">
+                            <CustomWeight />
+                            <p className="">{item?.fuelType}</p>
+                          </div>
+
+                          <div className="flex flex-col items-center">
+                            <CustomElement />
+                            <p className="">{item?.transmission}</p>
+                          </div>
+                        </motion.button>
+                        <motion.div
+                          layout
+                          className="border-[1px] my-2 border-gray-300"
+                        ></motion.div>
+                        <motion.div layout className="flex justify-between">
                           <motion.p
                             layout
-                            className={`${isGrid ? "" : ""
-                              } flex items-center gap-1 font-semibold text-gray-900 text-center`}
+                            className={`${
+                              isGrid ? "text-xl" : "text-[1.1rem]"
+                            } font-semibold text-gray-900 text-center`}
                           >
-                            View Details <ArrowUpRight size={20} />
+                            €{item?.price}
                           </motion.p>
-                        </Link>
-                      </motion.div>
-                    </div>
+                          <Link to={"/details/1"}>
+                            <motion.p
+                              layout
+                              className={`${
+                                isGrid ? "" : ""
+                              } flex items-center gap-1 font-semibold text-gray-900 text-center`}
+                            >
+                              View Details <ArrowUpRight size={20} />
+                            </motion.p>
+                          </Link>
+                        </motion.div>
+                      </div>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
       </div>
