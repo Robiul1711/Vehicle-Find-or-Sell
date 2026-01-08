@@ -16,10 +16,10 @@ const DetailsPage = () => {
       url: `store/vehicle/${id}`,
       secure: true,
     });
-  console.log(data)
+  // console.log(data)
   const details = "car"; // car, truck, bike, scoter, parts
   return (
-    <div className="  section-padding-x pb-20 flex flex-col gap-10 ">
+    <div className="section-padding-x pb-20 flex flex-col gap-10 ">
       <DetailsRowOne details={details} />
       <div className=" max-w-[950px]">
         {details === "parts" ? <PartOverview /> : <CarOverView details={details} />}
