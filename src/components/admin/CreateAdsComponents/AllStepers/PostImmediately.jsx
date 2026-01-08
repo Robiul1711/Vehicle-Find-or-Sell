@@ -3,7 +3,7 @@ import { RxCross1 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 
 const PostImmediately = ({ isModalOpen, setIsModalOpen }) => {
-  if (!isModalOpen) return null; // hide modal when not open
+  if (!isModalOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[200000000] bg-black/40 flex items-center justify-center transition-all duration-300">
@@ -30,9 +30,8 @@ const PostImmediately = ({ isModalOpen, setIsModalOpen }) => {
 
         {/* Buttons */}
         <div className="flex justify-center gap-4 mt-6">
-
-          <Link to={"/dashboard/my-adds"}
-     
+          <Link
+            to={"/dashboard/my-adds"}
             className="px-4 py-2 rounded-lg bg-custom-primary text-white hover:bg-custom-primary/90"
           >
             View My Ad
