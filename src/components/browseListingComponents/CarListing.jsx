@@ -251,7 +251,7 @@ const CarListing = ({ items, onFilterChange, filters, isLoading }) => {
                         >
                           {item.name}
                         </motion.h3>
-                        <motion.p layout className="text-black mt-1">
+                        <motion.p layout className="text-black mt-1 line-clamp-2">
                           {item.description}
                         </motion.p>
 
