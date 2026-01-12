@@ -12,7 +12,7 @@ export default function BasicDetails({ steps }) {
     url: "/core/brands/",
     secure: true,
   });
-// console.log(data?.data)
+  // console.log(data?.data)
   return (
     <div className="">
       <h2 className="text-xl font-medium text-gray-800 mb-6">Basic Details</h2>
@@ -29,7 +29,7 @@ export default function BasicDetails({ steps }) {
           >
             <option value="">Select Brand</option>
             {data?.data?.map((brand) => (
-              <option key={brand.id} value={brand.name}>
+              <option key={brand.id} value={brand.id}>
                 {brand.name}
               </option>
             ))}
@@ -45,12 +45,12 @@ export default function BasicDetails({ steps }) {
             {...register("model")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
-                  <option value="">Select Model</option>
-            <option value="Corolla">Corolla</option>
-            <option value="Civic">Civic</option>
-            <option value="R15 V3">R15 V3</option>
-            <option value="3 Series">3 Series</option>
-            <option value="Mustang">Mustang</option>
+            <option value="">Select Model</option>
+            <option value="corolla">Corolla</option>
+            <option value="civic">Civic</option>
+            <option value="r15 v3">R15 V3</option>
+            <option value="3 series">3 Series</option>
+            <option value="mustang">Mustang</option>
           </select>
         </div>
 
@@ -63,13 +63,13 @@ export default function BasicDetails({ steps }) {
             {...register("body")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
-             <option value="">Select Body Type</option>
-            <option value="Sedan">Sedan</option>
-            <option value="Hatchback">Hatchback</option>
-            <option value="SUV">SUV</option>
-            <option value="Coupe">Coupe</option>
-            <option value="Bike">Bike</option>
-            <option value="Scooter">Scooter</option>
+            <option value="">Select Body Type</option>
+            <option value="sedan">Sedan</option>
+            <option value="hatchback">Hatchback</option>
+            <option value="suv">SUV</option>
+            <option value="coupe">Coupe</option>
+            <option value="bike">Bike</option>
+            <option value="scooter">Scooter</option>
           </select>
         </div>
 
@@ -150,11 +150,11 @@ export default function BasicDetails({ steps }) {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Fuel Type</option>
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Hybrid">Hybrid</option>
-            <option value="Electric">Electric</option>
-            <option value="CNG">CNG</option>
+            <option value="petrol">Petrol</option>
+            <option value="diesel">Diesel</option>
+            <option value="hybrid">Hybrid</option>
+            <option value="electric">Electric</option>
+            <option value="cng">CNG</option>
           </select>
         </div>
 
@@ -181,9 +181,8 @@ export default function BasicDetails({ steps }) {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Transmission Type</option>
-            <option value="Automatic">Automatic</option>
-            <option value="Manual">Manual</option>
-            <option value="Semi-Automatic">Semi-Automatic</option>
+            <option value="automatic">Automatic</option>
+            <option value="manual">Manual</option>
           </select>
         </div>
 
@@ -210,10 +209,8 @@ export default function BasicDetails({ steps }) {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Condition</option>
-            <option value="Brand New">Brand New</option>
-            <option value="Used - Like New">Used - Like New</option>
-            <option value="Used - Good">Used - Good</option>
-            <option value="Used - Fair">Used - Fair</option>
+            <option value="new">Brand New</option>
+            <option value="used">Used - Like New</option>
           </select>
         </div>
 
@@ -342,7 +339,7 @@ export default function BasicDetails({ steps }) {
           </label>
           <input
             {...register("deductiblePercentage")}
-            type="text"
+            type="number"
             placeholder="Enter the percentage of VAT that is deductible"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
           />
