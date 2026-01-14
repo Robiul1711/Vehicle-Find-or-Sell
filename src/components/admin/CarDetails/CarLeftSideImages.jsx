@@ -1,91 +1,43 @@
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css"; // Swiper core styles
+import "swiper/css"; 
 import "swiper/css/navigation";
-import car1 from "@/assets/images/car1.png";
-import car2 from "@/assets/images/car2.png";
 import Title from "@/components/common/Title";
 import { PdfIcon } from "@/components/common/SVGicons/DashboardIcon";
 import { useLocation } from "react-router-dom";
-import truck from "@/assets/images/truck.png";
-import bike from "@/assets/images/bike.png";
-import scooter from "@/assets/images/scooter.png";
-import part from "@/assets/images/part.png";
 import { Image } from "antd";
+import { IMG_URL } from "@/config/constant";
 
-const carImages = [
-  car1,
-  car2,
-  car1,
-  car2,
-  car1,
-  car2,
-  car1,
-  car2,
-  car1,
-  car2,
-  car1,
-];
-const truckImage = [
-  truck,
-  truck,
-  truck,
-  truck,
-  truck,
-  truck,
-  truck,
-  truck,
-  truck,
-];
-const bikeImages = [bike, bike, bike, bike, bike, bike, bike, bike, bike];
-const scooterImages = [
-  scooter,
-  scooter,
-  scooter,
-  scooter,
-  scooter,
-  scooter,
-  scooter,
-  scooter,
-  scooter,
-];
-const partImages = [part, part, part, part, part, part, part, part, part];
-
-const getImagesByDetails = (details) => {
-  switch (details) {
-    case "car":
-      return carImages;
-    case "truck":
-      return truckImage;
-    case "bike":
-      return bikeImages;
-    case "scooter":
-      return scooterImages;
-    case "parts":
-      return partImages;
-    default:
-      return carImages;
-  }
-};
-
-const CarLeftSideImages = ({ images = [], details }) => {
+const CarLeftSideImages = ({ data, isLoading }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const location = useLocation();
 
+  // 1. Loading State (Skeleton)
+  if (isLoading) {
+    return (
+      <div className="w-full flex flex-col h-full animate-pulse">
+        <div className="w-full h-[550px] bg-gray-200 rounded-xl" />
+        <div className="flex gap-3 mt-5">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="md:w-28 w-24 md:h-20 h-20 bg-gray-200 rounded-lg" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full flex flex-col justify-between h-full ">
+    <div className="w-full flex flex-col justify-between h-full">
       <div>
-        {/* Main Image */}
-        <div className="rounded-xl overflow-hidden">
-          {/* <img
-          src={getImagesByDetails(details)[selectedIndex]}
-          alt="Car"
-          className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover rounded-xl"
-        /> */}
+        {/* Main Image with Centered Preview */}
+        <div className="rounded-xl overflow-hidden relative group">
           <Image
-            width={1000}
+            width="100%" // Changed to 100% for responsiveness
             height={550}
-            src={getImagesByDetails(details)[selectedIndex]}
+            preview={{
+              mask: <div className="flex items-center justify-center h-full w-full">Preview</div>
+            }}
+            src={IMG_URL + data?.media?.image?.[selectedIndex]?.file}
             alt="Car"
             className="w-full h-full object-cover rounded-xl"
           />
@@ -95,18 +47,18 @@ const CarLeftSideImages = ({ images = [], details }) => {
         <div className="mt-5">
           <Swiper
             spaceBetween={12}
-            slidesPerView={5} // number of thumbnails to show
+            slidesPerView={"auto"} // Allows custom widths for slides
             className="pb-2"
           >
-            {getImagesByDetails(details).map((img, idx) => (
+            {data?.media?.image?.map((img, idx) => (
               <SwiperSlide key={idx} className="!w-auto">
                 <img
-                  src={img}
+                  src={IMG_URL + img?.file}
                   onClick={() => setSelectedIndex(idx)}
-                  className={`md:w-28 w-24 md:h-30 h-20 rounded-lg cursor-pointer object-cover border-2 transition ${
+                  className={`md:w-28 w-24 md:h-24 h-20 rounded-lg cursor-pointer object-cover border-2 transition ${
                     selectedIndex === idx
-                      ? "border-blue-500"
-                      : "border-gray-200"
+                      ? "border-blue-500 shadow-md"
+                      : "border-gray-200 hover:border-blue-300"
                   }`}
                   alt={`Car Thumbnail ${idx + 1}`}
                 />
@@ -116,15 +68,20 @@ const CarLeftSideImages = ({ images = [], details }) => {
         </div>
       </div>
 
-      {location.pathname.startsWith("/dashboard/car-details/") && (
-        <div>
+      {location.pathname.startsWith("/dashboard/car-details/") && data?.registration?.document && (
+        <div className="mt-8">
           <Title level="title20" className="mb-4">
             Document
           </Title>
-          <button className="flex items-center gap-2 text-custom-primary bg-custom-primary/10 py-2 px-4 rounded-lg">
+          <a 
+            href={data?.registration?.document} 
+            target="_blank" 
+            rel="noreferrer"
+            className="flex items-center gap-2 text-custom-primary bg-custom-primary/10 py-2 px-4 rounded-lg inline-flex hover:bg-custom-primary/20 transition"
+          >
             <PdfIcon />
             Car-Brochure.pdf
-          </button>
+          </a>
         </div>
       )}
     </div>

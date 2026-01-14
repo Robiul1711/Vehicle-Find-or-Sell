@@ -16,16 +16,16 @@ const DetailsPage = () => {
       url: `store/vehicle/${id}`,
       secure: true,
     });
-  // console.log(data)
+  console.log(data)
   const details = "car"; // car, truck, bike, scoter, parts
   return (
     <div className="section-padding-x pb-20 flex flex-col gap-10 ">
-      <DetailsRowOne details={details} />
+      <DetailsRowOne details={details} data={data} />
       <div className=" max-w-[950px]">
-        {details === "parts" ? <PartOverview /> : <CarOverView details={details} />}
-        {details !== "parts" && <FeaturesComponent />}
-        {details !== "parts" && <EngineSpec />}
-        <Location />
+        {details === "parts" ? <PartOverview /> : <CarOverView details={details} data={data} />}
+        {details !== "parts" && <FeaturesComponent data={data} />}
+        {details !== "parts" && <EngineSpec data={data} />}
+        <Location data={data} />
       </div>
       <RealatedCars
         items={

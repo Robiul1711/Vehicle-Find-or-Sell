@@ -17,16 +17,18 @@ export const useApiMutation = ({
   const axiosSecure = useAxiosSecure();
   const axiosClient = secure ? axiosSecure : axiosPublic;
   const queryClient = useQueryClient();
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
+
+  // console.log(axiosClient)
 
   return useMutation({
     mutationFn: async (data) => {
       const config = {
         method: method.toUpperCase(),
         url: url,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
         // ✅ Fix: Axios DELETE expects data inside a 'data' key, others use 'data' directly
         ...(method.toUpperCase() === "DELETE" ? { data: data } : { data: data }),
       };

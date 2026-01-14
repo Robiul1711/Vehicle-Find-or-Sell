@@ -1,12 +1,12 @@
 import React from "react";
 
-const EngineSpec = () => {
+const EngineSpec = ({data}) => {
   const engineSpecs = [
-    { label: "Fuel Tank Capacity (Litres)", value: "65 L" },
-    { label: "Minimum Kerbweight (kg)", value: "1,650 kg" },
-    { label: "Max. Towing Weight - Braked (kg)", value: "800 kg" },
-    { label: "Max. Towing Weight - Unbraked (kg)", value: "1,000 kg" },
-    { label: "Turning Circle (m)", value: "11.5 m" },
+    { label: "Fuel Tank Capacity (Litres)", value: data?.engine_transmission?.fuelTankCapacity },
+    { label: "Minimum Kerbweight (kg)", value: data?.engine_transmission?.minimumKerWeight },
+    { label: "Max. Towing Weight - Braked (kg)", value: data?.engine_transmission?.maxTowingWeightBraked },
+    { label: "Max. Towing Weight - Unbraked (kg)", value: data?.engine_transmission?.maxTowingWeightUnbraked },
+    { label: "Turning Circle (m)", value: data?.engine_transmission?.turningCircle },
   ];
   return (
     <div className="mt-8">

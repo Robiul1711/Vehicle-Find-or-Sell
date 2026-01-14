@@ -13,10 +13,10 @@ export default function SelectCategory({ onCategorySelect }) {
 
   const categories = [
     { id: "car", label: "Car", icon: CustomCar },
-    { id: "UtilityTrucks", label: "Utility Trucks", icon: CustomTruck },
-    { id: "Motorcycle", label: "Motorcycle", icon: CustomBike },
-    { id: "Scoter", label: "Scooter", icon: CustomScoter },
-    { id: "Parts", label: "Parts", icon: CustomPart },
+    { id: "Truck", label: "truck", icon: CustomTruck },
+    { id: "Motorcycle", label: "motorcycle", icon: CustomBike },
+    { id: "Scooter", label: "scooter", icon: CustomScoter },
+    { id: "Parts", label: "parts", icon: CustomPart },
   ];
 
   const selectedVehicleType = watch("vehicle_type") || null;

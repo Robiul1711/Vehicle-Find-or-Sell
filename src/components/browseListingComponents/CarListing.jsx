@@ -297,7 +297,7 @@ const CarListing = ({ items, onFilterChange, filters, isLoading }) => {
                           >
                             €{item?.price}
                           </motion.p>
-                          <Link to={"/details/1"}>
+                          <Link to={`/details/${item?.id}`}>
                             <motion.p
                               layout
                               className={`${

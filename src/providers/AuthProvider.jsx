@@ -48,12 +48,12 @@ const AuthProvider = ({ children }) => {
     if (!token) return;
 
     try {
-      const res = await axiosSecure.get("/profile", {
+      const res = await axiosSecure.get("/account/profile/", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       setProfile(res.data.data);
-      setUser(res.data.data);
+      setUser(res.data);
       localStorage.setItem("user", JSON.stringify(res.data.data));
     } catch (err) {
       console.error(err);

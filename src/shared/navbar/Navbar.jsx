@@ -6,12 +6,14 @@ import CommonButton from "@/components/common/CommonButton";
 import { CompareIcon } from "@/components/common/SVGicons/MySvg";
 import SimpleDropdown from "@/components/common/SimpleDropdown";
 import LanguageArea from "@/components/common/LanguageArea";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-
+const {user}=useAuth()
+console.log(user)
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {

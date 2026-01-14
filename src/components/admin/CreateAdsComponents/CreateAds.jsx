@@ -40,11 +40,11 @@ const stepsConfig = {
     { id: 7, label: "Contact Info", component: ContactInformation },
     { id: 8, label: "Preview", component: UtilityTrucksPreview },
   ],
-  UtilityTrucks: [
+  Truck: [
     { id: 0, label: "Category", component: SelectCategory },
     { id: 1, label: "Registration Number", component: RegistrationNumber },
     { id: 2, label: "Basic Details", component: BasicDetails },
-    { id: 3, label: "Features", component: UtilityTrucksFeatures },
+    { id: 3, label: "Features", component: SelectFeatures },
     {
       id: 4,
       label: "Engine & Transmission",
@@ -59,7 +59,7 @@ const stepsConfig = {
     { id: 0, label: "Category", component: SelectCategory },
     { id: 1, label: "Registration Number", component: RegistrationNumber },
     { id: 2, label: "Basic Details", component: BasicDetails },
-    { id: 3, label: "Features", component: BikeFeatures },
+    { id: 3, label: "Features", component: SelectFeatures },
     {
       id: 4,
       label: "Engine & Transmission",
@@ -70,11 +70,11 @@ const stepsConfig = {
     { id: 7, label: "Contact Info", component: ContactInformation },
     { id: 8, label: "Preview", component: Preview },
   ],
-  Scoter: [
+  Scooter: [
     { id: 0, label: "Category", component: SelectCategory },
     { id: 1, label: "Registration Number", component: RegistrationNumber },
     { id: 2, label: "Basic Details", component: BasicDetails },
-    { id: 3, label: "Features", component: ScooterFeatures },
+    { id: 3, label: "Features", component: SelectFeatures },
     {
       id: 4,
       label: "Engine & Transmission",
@@ -110,14 +110,12 @@ const CreateAds = () => {
   const { mutate, isPending } = useApiMutation({
     url: "/ads/vehicles/",
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     onSuccess: (data) => {
       setIsPostModalOpen(true);
       console.log("Success:", data);
     },
     onError: (error) => {
+      console.log(error);
       console.error("Error submitting ad:", error);
     },
     secure: true,
@@ -134,70 +132,124 @@ const CreateAds = () => {
   const onSubmit = (data) => {
     console.log("Raw form data:", data);
 
-    // Extract features (collect all true boolean fields that look like feature keys)
-    // Note: The structure of feature keys in SelectFeatures is 'exterior_features0', etc.
-    // Since we don't have the IDs mapping here, we will collect the values or keys.
-    // However, the user provided JSON has "features": [44, 45, 46].
-    // Assuming the backend might accept an empty array if we don't have IDs, or we send what we have.
-    // For now, I'll send an empty array or handle it if I can infer IDs.
-    // Given I can't look up IDs, I will assume the backend might handle standard feature creation or this is a limitation.
-    // I'll filter for keys that include 'features' and are true to at least see what's selected,
-    // but ultimately map to the structure requested.
+    const formData = new FormData();
 
-    // Construct the payload matching the user's JSON structure
-    const formattedData = {
-      brand: data.brand,
-      brand_name: data.brand,
-      model: data.model,
-      vehicle_type: selectedCategory?.toLowerCase() || "car",
-      body: data.body,
-      original_price: data.originalPrice,
-      discount_price: data.discountPrice,
-      mileage: data.mileage,
-      fuel_type: data.fuelType,
-      engine_type: data.engineSize,
-      transmission: data.transmission,
-      exact_date: data.exactDate,
-      condition: data.condition,
-      color: data.color,
-      vat: data.deductibleVAT === "yes",
-      vat_percentage: data.deductiblePercentage,
-      description: data.description,
-      co2_emission: data.co2Emissions,
-      air_criteria: data.emissionStandard,
-      warrenty_duration: data.warrantyDuration,
-      number_of_owner: data.previousOwners,
-      horsepower_cv: data.horsepowerCV,
-      horsepower_din: data.horsepowerDIN,
-      seat_height: data.seatHeight || null,
-      kerb_weight: data.minimumKerWeight,
-      engine_transmission: {
-        engine: data.engineSize,
-        transmission: data.transmission,
-      },
-      features: [],
-      is_active: true,
-      seller_address: [
-        {
-          city: data.city,
-          country: data.country,
-          zip_code: data.zipCode,
-          street: data.street,
-        },
-      ],
-      contact: [
-        {
-          name: data.name,
-          phone: data.contactNumber,
-          email: data.email,
-          whatsapp: data.whatsappNumber,
-        },
-      ],
-      media: [],
+    // Helper to append data
+    const append = (key, value) => {
+      if (value === null || value === undefined) return;
+      formData.append(key, value);
     };
 
-    console.log("Formatted payload:", formattedData);
-    mutate(formattedData);
+    append("brand", data.brand);
+    append("brand_name", data.brand);
+    append("model", data.model);
+    append("vehicle_type", selectedCategory?.toLowerCase() || "car");
+    append("body", data.body);
+    append("original_price", data.originalPrice);
+    append("discount_price", data.discountPrice);
+    append("mileage", data.mileage);
+    append("fuel_type", data.fuelType);
+    append("engine_type", data.engineSize);
+    append("transmission", data.transmission);
+    append("exact_date", data.exactDate);
+    append("condition", data.condition);
+    append("color", data.color);
+    append("vat", data.deductibleVAT === "yes");
+    append("vat_percentage", data.deductiblePercentage);
+    append("description", data.description);
+    append("co2_emission", data.co2Emissions);
+    append("air_criteria", data.emissionStandard);
+    append("warrenty_duration", data.warrantyDuration);
+    append("number_of_owner", data.previousOwners);
+    append("engine_size", data.engineSize);
+
+    append("horsepower_cv", data.horsepowerCV);
+    append("horsepower_din", data.horsepowerDIN);
+    append("seat_height", data.seatHeight);
+    append("door", data.door);
+    append("kerb_weight", data.minimumKerWeight);
+    append("is_active", true);
+
+    // Engine Transmission (Nested Object)
+    if (data.fuelTankCapacity) append("engine_transmission[fuelTankCapacity]", data.fuelTankCapacity);
+    if (data.minimumKerWeight)
+      append("engine_transmission[minimumKerWeight]", data.minimumKerWeight);
+    if (data.maxTowingWeightBraked)
+      append("engine_transmission[maxTowingWeightBraked]", data.maxTowingWeightBraked);
+    if (data.maxTowingWeightUnbraked)
+      append("engine_transmission[maxTowingWeightUnbraked]", data.maxTowingWeightUnbraked);
+    if (data.turningCircle)
+      append("engine_transmission[turningCircle]", data.turningCircle);
+
+    // Seller Address (Array of Objects)
+    // Assuming API expects flattened array syntax like seller_address[0][field]
+    append("seller_address[city]", data.city);
+    append("seller_address[country]", data.country);
+    append("seller_address[zip_code]", data.zipCode);
+    append("seller_address[street]", data.street);
+
+    // Contact (Array of Objects)
+    append("contact[name]", data.name);
+    append("contact[phone]", data.contactNumber);
+    append("contact[email]", data.email);
+    append("contact[whatsapp]", data.whatsappNumber);
+
+    // Registration
+    if (data.registrationNumber) {
+      append("registration[registration_number]", data.registrationNumber);
+    }
+    if (data.vinNumber) {
+      append("registration[vin_number]", data.vinNumber);
+    }
+
+    // Registration Documents
+    if (Array.isArray(data.documents)) {
+      data.documents.forEach((doc) => {
+        if (doc.file) {
+          append("registration[document]", doc.file);
+        }
+      });
+    }
+
+    // Features
+    // The features are now stored in data.features as an object: { id: boolean }
+    if (data.features) {
+      Object.keys(data.features).forEach((featureId) => {
+        if (data.features[featureId] === true) {
+          append("features", featureId);
+        }
+      });
+    }
+
+    // Media Uploads
+    // Images
+    if (Array.isArray(data.images)) {
+      data.images.forEach((file) => {
+        append("uploaded_images", file);
+      });
+    }
+
+    // Videos
+    if (Array.isArray(data.videos)) {
+      data.videos.forEach((file) => {
+        append("uploaded_videos", file);
+      });
+    }
+
+    // Documents (General)
+    if (Array.isArray(data.documents)) {
+      data.documents.forEach((file) => {
+        append("uploaded_documents", file);
+      });
+    }
+
+    console.log("FormData created.");
+    // Log entries for debugging
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    mutate(formData);
   };
 
   return (

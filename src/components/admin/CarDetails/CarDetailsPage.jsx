@@ -13,14 +13,14 @@ const CarDetailsPage = () => {
     url: `/store/vehicle/${id}`,
     secure: true,
   });
-console.log(data)
+// console.log(data)
   return (
     <div className=" ">
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Left Images */}
         <div className="w-full lg:w-1/2">
-          <CarLeftSideImages details={data?.media} />
+          <CarLeftSideImages data={data} />
         </div>
 
         {/* Right Details */}

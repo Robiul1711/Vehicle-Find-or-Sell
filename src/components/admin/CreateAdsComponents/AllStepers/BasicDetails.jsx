@@ -1,7 +1,9 @@
+import { useState } from "react";
+import { useApiMutation } from "@/hooks/useApiMutation";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useFormContext } from "react-hook-form";
 
-export default function BasicDetails({ steps }) {
+export default function BasicDetails() {
   const {
     watch,
     register,
@@ -12,6 +14,26 @@ export default function BasicDetails({ steps }) {
     url: "/core/brands/",
     secure: true,
   });
+
+  const { mutate, isPending } = useApiMutation({
+    url: "/core/brands/",
+    method: "POST",
+    secure: true,
+    invalidateKeys: ["brands"],
+    onSuccess: () => {
+      setIsBrandModalOpen(false);
+      setNewBrandName("");
+    },
+  });
+
+  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
+  const [newBrandName, setNewBrandName] = useState("");
+
+  const handleCreateBrand = () => {
+    if (!newBrandName.trim()) return;
+    mutate({ name: newBrandName });
+  };
+
   // console.log(data?.data)
   return (
     <div className="">
@@ -20,9 +42,18 @@ export default function BasicDetails({ steps }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Brand */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Brand
-          </label>
+          <div className="flex justify-between items-center mb-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Brand
+            </label>
+            <button
+              type="button"
+              onClick={() => setIsBrandModalOpen(true)}
+              className="text-xs text-custom-primary hover:underline"
+            >
+              + Add Brand
+            </button>
+          </div>
           <select
             {...register("brand")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
@@ -41,17 +72,12 @@ export default function BasicDetails({ steps }) {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Model
           </label>
-          <select
+          <input
             {...register("model")}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
-          >
-            <option value="">Select Model</option>
-            <option value="corolla">Corolla</option>
-            <option value="civic">Civic</option>
-            <option value="r15 v3">R15 V3</option>
-            <option value="3 series">3 Series</option>
-            <option value="mustang">Mustang</option>
-          </select>
+            type="text"
+            placeholder="Type your vehicle model"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+          />
         </div>
 
         {/* Body */}
@@ -64,16 +90,29 @@ export default function BasicDetails({ steps }) {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Body Type</option>
-            <option value="sedan">Sedan</option>
-            <option value="hatchback">Hatchback</option>
-            <option value="suv">SUV</option>
+            <option value="buggy">Buggy</option>
+            <option value="convertible">Convertible</option>
             <option value="coupe">Coupe</option>
-            <option value="bike">Bike</option>
-            <option value="scooter">Scooter</option>
+            <option value="fastback">Fastback</option>
+            <option value="flower_car">Flower Car</option>
+            <option value="hatchback">Hatchback</option>
+            <option value="hearse">Hearse</option>
+            <option value="limousine">Limousine</option>
+            <option value="microvan">Microvan</option>
+            <option value="minivan">Minivan</option>
+            <option value="panel_van">Panel Van</option>
+            <option value="panel_truck">Panel Truck</option>
+            <option value="pickup_truck">Pickup Truck</option>
+            <option value="roadster">Roadster</option>
+            <option value="sedan">Sedan</option>
+            <option value="shooting_brake">Shooting Brake</option>
+            <option value="station_wagon">Station Wagon</option>
+            <option value="targa_top">Targa Top</option>
+            <option value="ute">Ute</option>
           </select>
         </div>
-
-        {watch().category === "Motorcycle" || watch().category === "Scoter" ? (
+        {watch().vehicle_type === "Motorcycle" ||
+        watch().vehicle_type === "Scooter" ? (
           // Seat Height for motorcycles and scoters
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -358,6 +397,44 @@ export default function BasicDetails({ steps }) {
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm resize-vertical"
         />
       </div>
+
+      {/* Brand Creation Modal */}
+      {isBrandModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
+            <h3 className="text-lg font-bold mb-4">Add New Brand</h3>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Brand Name
+              </label>
+              <input
+                type="text"
+                value={newBrandName}
+                onChange={(e) => setNewBrandName(e.target.value)}
+                placeholder="Enter brand name"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                type="button"
+                onClick={() => setIsBrandModalOpen(false)}
+                className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleCreateBrand}
+                disabled={isPending}
+                className="px-4 py-2 text-sm text-white bg-custom-primary hover:opacity-90 rounded-md disabled:opacity-50"
+              >
+                {isPending ? "Adding..." : "Add Brand"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

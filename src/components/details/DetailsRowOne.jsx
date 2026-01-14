@@ -6,14 +6,14 @@ import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import VehiclePriceDealer from "./VehiclePriceDealer";
 
-const DetailsRowOne = ({ details }) => {
+const DetailsRowOne = ({ details, data }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const carInfo = [
-    { id: 1, icon: MilesIcons, value: "250 miles" },
-    { id: 2, icon: ManualIcon, value: "Manual" },
-    { id: 3, icon: PetrolIcon, value: "Petrol" },
-    { id: 4, icon: WarrentiesIcon, value: "Warranty" },
+    { id: 1, icon: MilesIcons, value: data?.mileage },
+    { id: 2, icon: ManualIcon, value: data?.transmission },
+    { id: 3, icon: PetrolIcon, value: data?.fuel_type },
+    { id: 4, icon: WarrentiesIcon, value: data?.warrenty_duration },
   ];
 
   // Favorite Toggle Function
@@ -49,7 +49,7 @@ const DetailsRowOne = ({ details }) => {
       <div className="xmd:w-[60%] w-full flex flex-col gap-5">
         <div className="flex flex-col gap-4">
           <Title level="title40" className="!font-bold">
-            Toyota Corolla 2020
+         {data?.brand_name}  {data?.model}
           </Title>
 
           <div className="flex w-full gap-6 justify-between">
@@ -93,11 +93,11 @@ const DetailsRowOne = ({ details }) => {
           </div>
         </div>
 
-        <CarLeftSideImages details={details} />
+        <CarLeftSideImages details={details} data={data} />
       </div>
 
       <div className="xmd:w-[40%] w-full">
-        <VehiclePriceDealer />
+        <VehiclePriceDealer data={data} />
       </div>
     </div>
   );

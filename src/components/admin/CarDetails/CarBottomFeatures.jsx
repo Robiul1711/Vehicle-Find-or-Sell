@@ -2,40 +2,13 @@ import { CheckMarkIcon } from "@/components/common/SVGicons/DashboardIcon";
 import Title from "@/components/common/Title";
 import React from "react";
 
-const CarBottomFeatures = ({details}) => {
-  const features = [
-    {
-      title: "Exterior Features",
-      items: [
-        "4-wheel steering",
-        "4 wheel drive",
-        "Tinted Windows",
-        "Differential Lock",
-      ],
-    },
-    {
-      title: "Interior Features",
-      items: [
-        "Leather Seats",
-        "Touchscreen Display",
-        "AC / Climate Control",
-        "Power Windows",
-      ],
-    },
-    {
-      title: "Security",
-      items: ["2 airbags", "ABS + EBD", "3-point seat belts"],
-    },
-    {
-      title: "Comfort & Convenience",
-      items: [
-        "Keyless Entry",
-        "Bluetooth",
-        "Virtual Cockpit",
-        "Cruise Control",
-      ],
-    },
-  ];
+const CarBottomFeatures = ({ details }) => {
+  console.log(details);
+  const featuresData = details?.features_grouped || {};
+  const { city, country, street, zip_code } = details?.seller_address || {};
+  const fullAddress = [street, city, zip_code, country]
+    .filter(Boolean)
+    .join(", ");
 
   return (
     <div className="mt-10 space-y-10">
@@ -44,14 +17,16 @@ const CarBottomFeatures = ({details}) => {
         <Title level="title20">Features</Title>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-6">
-          {features.map((featureGroup, index) => (
-            <div key={index}>
-              <h3 className="font-semibold text-[#333] mb-3">{featureGroup.title}</h3>
+          {Object.entries(featuresData).map(([category, items]) => (
+            <div key={category}>
+              <h3 className="font-semibold text-[#333] mb-3 capitalize">
+                {category}
+              </h3>
               <ul className="space-y-2 text-gray-600">
-                {featureGroup.items.map((item, i) => (
+                {items.map((item, i) => (
                   <li key={i} className="flex items-center gap-2">
                     <CheckMarkIcon className="text-blue-600 w-4 h-4" />
-                    <span>{item}</span>
+                    <span className="capitalize">{item.name}</span>
                   </li>
                 ))}
               </ul>
@@ -69,13 +44,9 @@ const CarBottomFeatures = ({details}) => {
           <Title level="title14" className="text-gray-500">
             Address
           </Title>
-         <Title level="title16">
-  {details?.seller_address?.map((address) => (
-    [address.street, address.city, address.zip_code, address.country]
-      .filter(Boolean)
-      .join(', ')
-  )).join(' | ')}
-</Title>
+          <Title level="title16" className="capitalize">
+            {fullAddress || "No address provided"}
+          </Title>
         </div>
       </div>
 
@@ -89,25 +60,25 @@ const CarBottomFeatures = ({details}) => {
             <Title level="title14" className="text-gray-500">
               Name
             </Title>
-            <Title level="title16">Patricia Sanders</Title>
+            <Title level="title16">{details?.contact?.name}</Title>
           </div>
           <div>
             <Title level="title14" className="text-gray-500">
               Email
             </Title>
-            <Title level="title16">dennis416@gmail.com</Title>
+            <Title level="title16">{details?.contact?.email}</Title>
           </div>
           <div>
             <Title level="title14" className="text-gray-500">
               Contact Number
             </Title>
-            <Title level="title16">(617) 623-2338</Title>
+            <Title level="title16">{details?.contact?.phone}</Title>
           </div>
           <div>
             <Title level="title14" className="text-gray-500">
               WhatsApp Number
             </Title>
-            <Title level="title16">(618) 474-9169</Title>
+            <Title level="title16">{details?.contact?.whatsapp}</Title>
           </div>
         </div>
       </div>

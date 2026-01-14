@@ -1,116 +1,61 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { Checkbox } from "@/components/ui/checkbox"; // shadcn Checkbox
+import { Checkbox } from "@/components/ui/checkbox";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 export const SelectFeatures = () => {
-  const { control, watch } = useFormContext();
+  const { control } = useFormContext();
 
-  const featureSections = [
-    {
-      title: "Exterior Features",
-      features: [
-        "2-wheel drive",
-        "2 sunroofs",
-        "4-wheel steering",
-        "3 sunroofs",
-        "4-wheel drive",
-        "Fog Lamps",
-        "Roof Rails",
-        "Automatic differential lock",
-        "Coupling",
-        "Front tow parking assistance",
-        "Rear differential lock",
-        "Differential lock",
-        "Spoiler",
-        "Body-coloured wheel cover",
-        "Stainless steel wheel cover",
-      ],
-    },
-    {
-      title: "Interior Features",
-      features: [
-        "Leather Seats",
-        "Touchscreen Display",
-        "Air Conditioning / Climate Control",
-        "Power Windows",
-        "Steering Wheel Controls",
-        "Adjustable Seats",
-        "CD player/head unit",
-        "Folding bench seat",
-        "6-speed gearbox",
-        "Refrigerated glove box",
-        "Automatic transmission",
-        "Separated gearbox",
-        "Built-in compass",
-        "Rear center armrest",
-        "Front center armrest",
-      ],
-    },
-    {
-      title: "Security",
-      features: [
-        "2 airbags",
-        "3 rear 3-point seat belts",
-        "3rd brake light",
-        "4 airbags",
-        "6 airbags",
-        "8 airbags",
-        "ABS",
-        "Head-up display",
-        "Hill start assist",
-        "Front airbag",
-        "Rearview Camera",
-        "Blind Spot Monitoring",
-        "Lane Assist",
-      ],
-    },
-    {
-      title: "Comfort Convenience",
-      features: [
-        "Keyless entry system",
-        "Bluetooth",
-        "Virtual cockpit",
-        "Cruise Control",
-        "Keyless Entry / Push Start",
-        "Voice Control",
-        "Heated Seats",
-      ],
-    },
-  ];
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["features"],
+    url: "/ads/features/",
+    secure: true,
+  });
+
+  // The API returns { features_grouped: { ... } }
+  // So we access data.features_grouped if it exists, otherwise fallback to data (just in case)
+  const featuresData = data?.features_grouped || data;
+
+  if (isLoading) return <div>Loading features...</div>;
+  if (!featuresData) return <div>No features found.</div>;
+
+  // We convert the API object keys into an array to map over them
+  const categories = Object.keys(featuresData);
 
   return (
-    <>
+    <div className="overflow-y-auto">
       <h1 className="text-2xl font-semibold text-gray-800 mb-8">
         Select Features
       </h1>
 
-      {featureSections.map((section, sectionIndex) => (
-        <div key={sectionIndex} className="mb-8">
-          <h2 className="text-lg font-medium text-gray-700 mb-4">
-            {section.title}
+      {categories.map((category) => (
+        <div key={category} className="mb-8">
+          {/* Capitalize the category name for the title */}
+          <h2 className="text-lg font-medium text-gray-700 mb-4 capitalize">
+            {category}
           </h2>
 
-          <div className="grid grid-cols-3 gap-x-8 ">
-            {section.features.map((feature, featureIndex) => {
-              const fieldName = `${section.title
-                .toLowerCase()
-                .replace(/[^a-z0-9]/g, "_")}${featureIndex}`;
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+            {featuresData[category].map((feature) => {
+              // Using a consistent naming convention for form state
+              // e.g., features.1, features.5, etc.
+              const fieldName = `features.${feature.id}`;
 
               return (
                 <Controller
-                  key={fieldName}
+                  key={feature.id}
                   name={fieldName}
                   control={control}
                   render={({ field }) => (
-                    <label className="flex items-center space-x-2 cursor-pointer ">
+                    <label className="flex items-center space-x-2 cursor-pointer group">
                       <Checkbox
-                        {...field}
+                        id={fieldName}
                         checked={field.value || false}
                         onCheckedChange={(val) => field.onChange(val)}
-                        className="border-black data-[state=checked]:bg-black data-[state=checked]:border-black"
+                        className="border-gray-400 data-[state=checked]:bg-black data-[state=checked]:border-black"
                       />
-                      <span className="text-sm text-gray-700 select-none">
-                        {feature}
+                      <span className="text-sm text-gray-700 select-none group-hover:text-black capitalize">
+                        {feature.name}
                       </span>
                     </label>
                   )}
@@ -120,6 +65,6 @@ export const SelectFeatures = () => {
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };

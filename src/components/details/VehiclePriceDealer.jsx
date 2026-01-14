@@ -4,18 +4,18 @@ import { OfferIcon } from '../common/SVGicons/CarSvg'
 import ImageAvatar from "@/assets/images/avatar1.png"
 import { Link } from 'react-router-dom'
 
-const VehiclePriceDealer = () => {
+const VehiclePriceDealer = ({data}) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-10 ">
       {/* Price Section */}
       <div className="mb-6">
         <div className="text-sm text-gray-500 mb-1">Our Price</div>
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-sm text-gray-400 line-through">€180,000</span>
-          <span className="text-2xl font-bold text-gray-900">€165,000</span>
+          <span className="text-sm text-gray-400 line-through">€{data?.original_price}</span>
+          <span className="text-2xl font-bold text-gray-900">€{data?.discount_price}</span>
         </div>
         <div className="text-sm text-orange-500 font-medium">
-          Instant Saving €15,000
+          Instant Saving €{data?.original_price - data?.discount_price}
         </div>
       </div>
 

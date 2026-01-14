@@ -7,8 +7,8 @@ const UploadMedia = () => {
 
   // Watch fields from react-hook-form
   const images = watch("images") || [];
-  const video = watch("video") || null;
-  const document = watch("document") || null;
+  const videos = watch("videos") || [];
+  // const documents = watch("documents") || [];
 
   // Handle Images
   const handleImageChange = (e) => {
@@ -23,15 +23,31 @@ const UploadMedia = () => {
     setValue("images", updated);
   };
 
-  // Handle Video
+  // Handle Videos
   const handleVideoChange = (e) => {
-    setValue("video", e.target.files[0]);
+    const files = Array.from(e.target.files);
+    const updated = [...videos, ...files];
+    setValue("videos", updated, { shouldValidate: true });
   };
 
-  // Handle Document
-  const handleDocChange = (e) => {
-    setValue("document", e.target.files[0]);
+  const removeVideo = (index) => {
+    const updated = [...videos];
+    updated.splice(index, 1);
+    setValue("videos", updated);
   };
+
+  // Handle Documents
+  // const handleDocChange = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   const updated = [...documents, ...files];
+  //   setValue("documents", updated, { shouldValidate: true });
+  // };
+
+  // const removeDocument = (index) => {
+  //   const updated = [...documents];
+  //   updated.splice(index, 1);
+  //   setValue("documents", updated);
+  // };
 
   return (
     <div className="space-y-6 ">
@@ -50,7 +66,6 @@ const UploadMedia = () => {
           />
           <UploadCloud className="w-6 h-6 text-gray-400" />
           <p className="text-sm text-gray-500">
-         
             <span className="text-custom-primary">click to browse</span>
           </p>
         </label>
@@ -85,23 +100,34 @@ const UploadMedia = () => {
           <input
             type="file"
             accept="video/*"
+            multiple
             className="hidden"
             onChange={handleVideoChange}
           />
           <UploadCloud className="w-6 h-6 text-gray-400" />
           <p className="text-sm text-gray-500">
-          
             <span className="text-custom-primary">click to browse</span>
           </p>
         </label>
 
-        {video && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-            <video
-              controls
-              className="mt-3 w-full h-40 rounded-md border object-cover"
-              src={URL.createObjectURL(video)}
-            />
+        {videos.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mt-3">
+            {videos.map((file, idx) => (
+              <div key={idx} className="relative">
+                <video
+                  controls
+                  className="w-full h-40 rounded-md border object-cover"
+                  src={URL.createObjectURL(file)}
+                />
+                <button
+                  type="button"
+                  className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1"
+                  onClick={() => removeVideo(idx)}
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            ))}
           </div>
         )}
         <p className="mt-2 text-xs text-orange-500 flex items-center gap-1">
@@ -111,10 +137,15 @@ const UploadMedia = () => {
       </div>
 
       {/* Document Upload */}
-      <div>
+      {/* <div>
         <h3 className="font-medium mb-2">Document</h3>
         <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary">
-          <input type="file" className="hidden" onChange={handleDocChange} />
+          <input
+            type="file"
+            multiple
+            className="hidden"
+            onChange={handleDocChange}
+          />
           <UploadCloud className="w-6 h-6 text-gray-400" />
           <p className="text-sm text-gray-500">
             Attach important documents (e.g., registration papers, service
@@ -123,13 +154,29 @@ const UploadMedia = () => {
           </p>
         </label>
 
-        {document && (
-          <div className="mt-3 flex items-center gap-2 text-sm text-gray-700 border p-2 rounded-md">
-            <File className="w-5 h-5 text-gray-500" />
-            {document.name}
+        {documents.length > 0 && (
+          <div className="mt-3 space-y-2">
+            {documents.map((file, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between text-sm text-gray-700 border p-2 rounded-md"
+              >
+                <div className="flex items-center gap-2">
+                  <File className="w-5 h-5 text-gray-500" />
+                  {file.name}
+                </div>
+                <button
+                  type="button"
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => removeDocument(idx)}
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            ))}
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

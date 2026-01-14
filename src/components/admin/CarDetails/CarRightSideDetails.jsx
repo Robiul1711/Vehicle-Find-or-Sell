@@ -26,6 +26,7 @@ import { Link, useParams } from "react-router-dom";
 
 
 export default function CarRightSideDetails({details}) {
+  // console.log(details)
   const { id } = useParams();
   
 const specs = [
@@ -42,11 +43,11 @@ const specs = [
 
 const rightSpecs = [
   { icon: User, label: "Condition", value: details?.condition },
-  { icon: Wrench, label: "Engine Size", value: details?.engine_transmission?.Engine?.Cylinders
+  { icon: Wrench, label: "Engine Size", value: details?.engine_transmission?.engine
  },
-  { icon: DoorOpen, label: "Door", value: "4 Doors" },
+  { icon: DoorOpen, label: "Door", value: details?.door },
   { icon: Palette, label: "Color", value: details?.color },
-  { icon: Hash, label: "VIN", value: "FCB123792" },
+  { icon: Hash, label: "VIN", value: details?.registration?.vin_number },
   { icon: Leaf, label: "CO₂ Emissions", value: details?.co2_emission },
   { icon: Users, label: "Previous Owners", value: "01" },
   { icon: Activity, label: "Horsepower (DIN)", value: details?.horsepower_din },
@@ -54,14 +55,14 @@ const rightSpecs = [
 
 
 const engineSpecs = [
-  { label: "Fuel Tank Capacity (Litres)", value: "65 L" },
-  { label: "Minimum Kerbweight (kg)", value: "1,650 kg" },
-  { label: "Max. Towing Weight - Braked (kg)", value: "800 kg" },
-  { label: "Max. Towing Weight - Unbraked (kg)", value: "1,000 kg" },
-  { label: "Turning Circle (m)", value: "11.5 m" },
+  { label: "Fuel Tank Capacity (Litres)", value: details?.engine_transmission?.fuelTankCapacity },
+  { label: "Minimum Kerbweight (kg)", value: details?.engine_transmission?.minimumKerWeight },
+  { label: "Max. Towing Weight - Braked (kg)", value: details?.engine_transmission?.maxTowingWeightBraked },
+  { label: "Max. Towing Weight - Unbraked (kg)", value: details?.engine_transmission?.maxTowingWeightUnbraked },
+  { label: "Turning Circle (m)", value: details?.engine_transmission?.turningCircle },
 ];
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div className="">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{details?.brand_name}</h1>
