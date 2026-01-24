@@ -45,6 +45,8 @@ import CookiePolicy from "@/pages/cookiePolicy/CookiePolicy";
 import PersonalData from "@/pages/personalData/PersonalData";
 import TermOfUse from "@/pages/tou/TermOfUse";
 import ProductComparison from "@/pages/comparePage/ProductComparison";
+import PartsDetails from "@/pages/detailsPage/PartsDetails";
+import PrivateRoute from "@/providers/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
       {
         path: "/listings",
         element: <BrouseListing />,
+      },
+      {
+        path: "/details/:id",
+        element: <DetailsPage />,
+      },
+      {
+        path: "/parts-details/:id",
+        element: <PartsDetails />,
       },
       {
         path: "/blog",
@@ -108,10 +118,7 @@ const router = createBrowserRouter([
         path: "/services",
         element: <AditionalServicesPages />,
       },
-      {
-        path: "/details/:id",
-        element: <DetailsPage />,
-      },
+
       {
         path: "/aditionalservices/vehicle-maintenance-history",
         element: <VehicleMaintenanceHistory />,
@@ -182,7 +189,12 @@ const router = createBrowserRouter([
   // Admin routes
   {
     path: "/dashboard",
-    element: <AdminLayout />,
+
+    element: (
+      <PrivateRoute>
+        <AdminLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard",
@@ -194,6 +206,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/create-ads",
+        element: <CreateAds />,
+      },
+      {
+        path: "/dashboard/edit-ads/:id",
         element: <CreateAds />,
       },
       {

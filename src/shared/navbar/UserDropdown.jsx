@@ -1,15 +1,17 @@
-import useAxiosSecure from "@/hooks/useAxiosSecure";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 import React, { useState, useEffect, useRef } from "react";
-import { FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import { FaSignOutAlt } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import profile from "@/assets/images/dummy.png";
+import { IMG_URL } from "@/config/constant";
+
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const axiosSecure = useAxiosSecure();
+  const { user, logout } = useAuth();
+  console.log(user);
   const navigate = useNavigate();
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
@@ -36,41 +38,6 @@ const UserDropdown = () => {
     };
   }, []);
 
-  // ✅ Fetch user details
-  const { data: userDetails } = useQuery({
-    queryKey: ["userDetails"],
-    queryFn: async () => {
-      const response = await axiosSecure.get(`/profile`);
-      return response.data;
-    },
-  });
-
-  // ✅ Logout Mutation
-  const LogoutMutation = useMutation({
-    mutationFn: async () => {
-      const response = await axiosSecure.post(`/logout`);
-      return response.data;
-    },
-    onSuccess: () => {
-      Swal.fire({
-        icon: "success",
-        title: "Logged Out!",
-        text: "You have been successfully logged out.",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      localStorage.removeItem("user");
-      navigate("/auth/sign-in");
-    },
-    onError: (error) => {
-      Swal.fire({
-        icon: "error",
-        title: "Logout Failed",
-        text: error?.message || "Something went wrong!",
-      });
-    },
-  });
-
   // ✅ Handle Logout with Confirmation
   const handleLogout = () => {
     Swal.fire({
@@ -84,43 +51,59 @@ const UserDropdown = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        LogoutMutation.mutate();
+        logout();
+        navigate("/");
       }
     });
   };
-
+  // console.log(user?.profile?.profile_image)
   return (
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
         className="flex items-center gap-2 text-white text-lg"
       >
-     <img className="w-10 h-10 rounded-full" src={profile} alt="image" />
+        <img
+          className="w-10 h-10 rounded-full border-2 border-custom-primary object-cover"
+          src={
+            user?.profile?.profile_image
+              ? IMG_URL + user?.profile?.profile_image
+              : profile
+          }
+          alt="user profile"
+        />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white rounded shadow-xl border  z-50 text-gray-800">
-          <div className="px-4 py-3 border-b">
-            <p className="font-semibold">
-              {userDetails?.userdata?.name || "Username"}
+        <div className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 text-gray-800 overflow-hidden transform origin-top-right transition-all">
+          <div className="px-4 py-4 bg-gray-50/50 border-b border-gray-100">
+            <p className="font-bold text-gray-900 truncate">
+              {user?.profile?.first_name} {user?.profile?.last_name}
             </p>
-            <p className="text-sm text-gray-500 truncate">
-              {userDetails?.userdata?.email}
+            <p className="text-xs text-gray-500 truncate mt-0.5">
+              {user?.profile?.user?.email}
             </p>
           </div>
-          <div className="py-1">
+
+          <div className="py-2">
             <Link
-              to={`/dashboard`}
-              className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100"
+              to="/dashboard"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-custom-primary/5 hover:text-custom-primary transition-colors"
             >
-              <MdDashboard className="mr-2" /> Dashboard
+              <MdDashboard className="mr-3 text-lg text-gray-400" /> Dashboard
             </Link>
 
+            <div className="my-1 border-t border-gray-100"></div>
+
             <button
-              onClick={handleLogout}
-              className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+              onClick={() => {
+                setIsOpen(false);
+                handleLogout();
+              }}
+              className="flex w-full items-center px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
             >
-              <FaSignOutAlt className="mr-2" /> Logout
+              <FaSignOutAlt className="mr-3 text-lg" /> Logout
             </button>
           </div>
         </div>

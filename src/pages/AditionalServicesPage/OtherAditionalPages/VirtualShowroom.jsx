@@ -5,13 +5,20 @@ import ServiceBanner from '@/components/common/ServiceBanner'
 import React from 'react'
 import { ScrollRestoration } from 'react-router-dom'
 import s7 from '@/assets/images/s7.jpg'
+import { useApiQuery } from '@/hooks/useApiQuery'
 const VirtualShowroom = () => {
+    const { data, isLoading } = useApiQuery({
+        queryKey: ["virtual-showroom"],
+        url: "/cms/virtual-showroom/",
+        secure: false,
+      });
+      console.log(data?.data);
   return (
     <div >
       <ScrollRestoration />
-      <ServiceBanner image={s7} title="Showcase Your Car Ads Professionally" subText="Make your vehicle listing stand out and attract serious buyers." />
+      <ServiceBanner image={data?.data?.hero_background_image_url || s7} title={data?.data?.title} subText={data?.data?.subtitle} />
       <CommonPageWrapper>
-        <VirtualShowroomKeyPoints />
+        <VirtualShowroomKeyPoints data={data?.data}/>
       </CommonPageWrapper>
     </div>
   )

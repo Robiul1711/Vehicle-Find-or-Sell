@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import { useParams } from "react-router-dom";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 // Steps
 import SelectCategory from "./AllStepers/SelectCategory";
@@ -95,29 +97,229 @@ const stepsConfig = {
   ],
 };
 
+import toast from "react-hot-toast";
+
 const CreateAds = () => {
+  const { id } = useParams();
   const [currentStep, setCurrentStep] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const methods = useForm({ mode: "onChange" });
 
+  // Fetch data if dealing with an edit
+  const { data: existingData, isLoading: isFetching } = useApiQuery({
+    queryKey: ["ads-vehicle-details", id],
+    url: `/ads/vehicles/${id}/`,
+    enabled: !!id,
+    secure: true,
+  });
+
+  // Also try fetching parts if vehicle fetch fails or returns empty/wrong type?
+  // Usually the ID would be unique across types or we try 404 handling.
+  // For now assuming vehicles endpoint serves vehicles. If parts are separate:
+  const { data: existingPartData, isLoading: isFetchingPart } = useApiQuery({
+    queryKey: ["ads-part-details", id],
+    url: `/ads/parts/${id}/`,
+    enabled: !!id && !existingData, // Simple fallback logic, might need refinement
+    secure: true,
+  });
+
+  useEffect(() => {
+    const data = existingData || existingPartData;
+    if (data && id) {
+      console.log("Populating form with:", data);
+
+      // Determine standardized category ID
+      let categoryId = "car";
+      if (data.vehicle_type) {
+        const typeLower = data.vehicle_type.toLowerCase();
+        if (["car", "cars"].includes(typeLower)) categoryId = "car";
+        // Check for 'truck' or 'utility trucks' etc if needed, but 'truck' usually suffices
+        else if (typeLower.includes("truck")) categoryId = "Truck";
+        else if (
+          ["motorcycle", "motorcycles", "bike", "bikes"].includes(typeLower)
+        )
+          categoryId = "Motorcycle";
+        else if (["scooter", "scooters"].includes(typeLower))
+          categoryId = "Scooter";
+        else if (["part", "parts"].includes(typeLower)) categoryId = "Parts";
+        else categoryId = data.vehicle_type;
+      } else if (data.part_name || data.part_number_sku) {
+        categoryId = "Parts";
+      }
+
+      setSelectedCategory(categoryId);
+      // Advance to next step so user sees data, not category selection
+      if (currentStep === 0) setCurrentStep(1);
+
+      // Map API response to form fields
+      // Common fields
+      const formattedData = {
+        brand: data.brand || data.brand_name, // API might return brand_name or brand
+        model: data.model,
+        vehicle_type: categoryId,
+        body: data.body,
+        originalPrice: data.original_price,
+        discountPrice: data.discount_price,
+        mileage: data.mileage,
+        fuelType: data.fuel_type,
+        // engineSize mapped to engine_type in submission, but engine_size in append
+        engine_type: data.engine_type,
+        transmission: data.transmission,
+        exactDate: data.exact_date,
+        condition: data.condition,
+        color: data.color,
+        deductibleVAT: data.vat ? "yes" : "no",
+        deductiblePercentage: data.vat_percentage,
+        description: data.description,
+        co2Emissions: data.co2_emission,
+        emissionStandard: data.air_criteria,
+        warrantyDuration: data.warrenty_duration,
+        previousOwners: data.number_of_owner,
+
+        horsepowerCV: data.horsepower_cv,
+        horsepowerDIN: data.horsepower_din,
+        seatHeight: data.seat_height,
+        door: data.door,
+        minimumKerWeight: data.kerb_weight,
+
+        // Technical Spec (Engine Transmission nested in fetch? likely flattened or in engine_transmission object)
+        fuelTankCapacity: data.engine_transmission?.fuelTankCapacity,
+        // minimumKerWeight: data.engine_transmission?.minimumKerWeight, // Already mapped locally or flattened?
+        maxTowingWeightBraked: data.engine_transmission?.maxTowingWeightBraked,
+        maxTowingWeightUnbraked:
+          data.engine_transmission?.maxTowingWeightUnbraked,
+        turningCircle: data.engine_transmission?.turningCircle,
+
+        // Seller Address
+        city: data.seller_address?.[0]?.city || data.seller_address?.city,
+        country:
+          data.seller_address?.[0]?.country || data.seller_address?.country,
+        zipCode:
+          data.seller_address?.[0]?.zip_code || data.seller_address?.zip_code,
+        street: data.seller_address?.[0]?.street || data.seller_address?.street,
+
+        // Contact
+        name: data.contact?.[0]?.name || data.contact?.name,
+        contactNumber: data.contact?.[0]?.phone || data.contact?.phone,
+        email: data.contact?.[0]?.email || data.contact?.email,
+        whatsappNumber: data.contact?.[0]?.whatsapp || data.contact?.whatsapp,
+
+        // Registration
+        registrationNumber:
+          data.registration?.[0]?.registration_number ||
+          data.registration?.registration_number,
+        vinNumber:
+          data.registration?.[0]?.vin_number || data.registration?.vin_number,
+
+        // Parts specific
+        part_name: data.part_name,
+        part_number_sku: data.part_number_sku,
+        main_system: data.main_system,
+        sub_system: data.sub_system,
+        compatible_make: data.compatible_make,
+        compatible_model: data.compatible_model,
+        compatible_year: data.compatible_year,
+        material: data.material,
+        length: data.length,
+        width: data.width,
+        height: data.height,
+        unit: data.unit,
+        weight: data.weight,
+        position_on_vehicle: data.position_on_vehicle,
+        quantity_in_stock: data.quantity_in_stock,
+
+        // Features - map back to { [id]: true }
+        features:
+          data.features_obj?.reduce(
+            (acc, feat) => ({ ...acc, [feat.id]: true }),
+            {},
+          ) || {},
+
+        // Media
+        images: data.media?.image || [],
+        videos: data.media?.video || [],
+        documents: data.media?.document || [],
+      };
+
+      // If features comes as array of IDs:
+      if (Array.isArray(data.features)) {
+        formattedData.features = data.features.reduce(
+          (acc, id) => ({ ...acc, [id]: true }),
+          {},
+        );
+      }
+
+      methods.reset(formattedData);
+    }
+  }, [existingData, existingPartData, id, methods]);
+
   const steps = selectedCategory
     ? stepsConfig[selectedCategory]
     : [{ id: 0, label: "Category", component: SelectCategory }];
   const CurrentComponent = steps[currentStep]?.component;
+  console.log(methods.watch().vehicle_type);
 
   const { mutate, isPending } = useApiMutation({
-    url: "/ads/vehicles/",
-    method: "POST",
+    url: id
+      ? methods.watch().part_name
+        ? `/ads/parts/${id}/`
+        : `/ads/vehicles/${id}/`
+      : methods.watch().part_name
+        ? "/ads/parts/"
+        : "/ads/vehicles/",
+    method: id ? "PUT" : "POST",
     onSuccess: (data) => {
       setIsPostModalOpen(true);
       console.log("Success:", data);
     },
     onError: (error) => {
-      console.log(error);
-      console.error("Error submitting ad:", error);
+      console.error("Submission failed:", error);
+      if (error?.response?.data) {
+        const errorData = error.response.data;
+        const errorMessages = [];
+
+        const processErrors = (data, parentKey = "") => {
+          Object.entries(data).forEach(([key, value]) => {
+            const formattedKey = key
+              .replace(/_/g, " ")
+              .replace(/\b\w/g, (char) => char.toUpperCase());
+
+            const label = parentKey
+              ? `${parentKey} > ${formattedKey}`
+              : formattedKey;
+
+            if (Array.isArray(value)) {
+              value.forEach((msg) => {
+                errorMessages.push(`${label}: ${msg}`);
+              });
+            } else if (typeof value === "object" && value !== null) {
+              processErrors(value, formattedKey);
+            } else if (typeof value === "string") {
+              errorMessages.push(`${label}: ${value}`);
+            }
+          });
+        };
+
+        processErrors(errorData);
+
+        if (errorMessages.length > 0) {
+          toast.error(
+            <div className="text-left">
+              <span className="font-bold">Validation Errors:</span>
+              <ul className="list-disc pl-4 mt-1 text-sm">
+                {errorMessages.map((msg, i) => (
+                  <li key={i}>{msg}</li>
+                ))}
+              </ul>
+            </div>,
+            { duration: 6000 },
+          );
+        }
+      }
     },
+    errorMessage: "Submission failed. Please check the fields.",
     secure: true,
   });
 
@@ -149,7 +351,7 @@ const CreateAds = () => {
     append("discount_price", data.discountPrice);
     append("mileage", data.mileage);
     append("fuel_type", data.fuelType);
-    append("engine_type", data.engineSize);
+    append("engine_type", data.engine_type);
     append("transmission", data.transmission);
     append("exact_date", data.exactDate);
     append("condition", data.condition);
@@ -161,7 +363,6 @@ const CreateAds = () => {
     append("air_criteria", data.emissionStandard);
     append("warrenty_duration", data.warrantyDuration);
     append("number_of_owner", data.previousOwners);
-    append("engine_size", data.engineSize);
 
     append("horsepower_cv", data.horsepowerCV);
     append("horsepower_din", data.horsepowerDIN);
@@ -171,13 +372,20 @@ const CreateAds = () => {
     append("is_active", true);
 
     // Engine Transmission (Nested Object)
-    if (data.fuelTankCapacity) append("engine_transmission[fuelTankCapacity]", data.fuelTankCapacity);
+    if (data.fuelTankCapacity)
+      append("engine_transmission[fuelTankCapacity]", data.fuelTankCapacity);
     if (data.minimumKerWeight)
       append("engine_transmission[minimumKerWeight]", data.minimumKerWeight);
     if (data.maxTowingWeightBraked)
-      append("engine_transmission[maxTowingWeightBraked]", data.maxTowingWeightBraked);
+      append(
+        "engine_transmission[maxTowingWeightBraked]",
+        data.maxTowingWeightBraked,
+      );
     if (data.maxTowingWeightUnbraked)
-      append("engine_transmission[maxTowingWeightUnbraked]", data.maxTowingWeightUnbraked);
+      append(
+        "engine_transmission[maxTowingWeightUnbraked]",
+        data.maxTowingWeightUnbraked,
+      );
     if (data.turningCircle)
       append("engine_transmission[turningCircle]", data.turningCircle);
 
@@ -202,6 +410,23 @@ const CreateAds = () => {
       append("registration[vin_number]", data.vinNumber);
     }
 
+    //parts details
+    append("part_name", data.part_name);
+    append("part_number_sku", data.part_number_sku);
+    append("main_system", data.main_system);
+    append("sub_system", data.sub_system);
+    append("compatible_make", data.compatible_make);
+    append("compatible_model", data.compatible_model);
+    append("compatible_year", data.compatible_year);
+    append("material", data.material);
+    append("length", data.length);
+    append("width", data.width);
+    append("height", data.height);
+    append("unit", data.unit);
+    append("weight", data.weight);
+    append("position_on_vehicle", data.position_on_vehicle);
+    append("quantity_in_stock", data.quantity_in_stock);
+    append("description", data.description);
     // Registration Documents
     if (Array.isArray(data.documents)) {
       data.documents.forEach((doc) => {
@@ -223,23 +448,34 @@ const CreateAds = () => {
 
     // Media Uploads
     // Images
+    // IMPORTANT: Only append new files. Existing images are likely URLs and shouldn't be re-uploaded unless backend expects something else.
+    // If backend replaces all images, we need to handle existing ones.
+    // Usually standard is: uploaded_images adds to list, or simple replace.
+    // Assuming standard "append new files" here. If replacing is needed, might need deleted_ids.
+
     if (Array.isArray(data.images)) {
       data.images.forEach((file) => {
-        append("uploaded_images", file);
+        if (file instanceof File) {
+          append("uploaded_images", file);
+        }
       });
     }
 
     // Videos
     if (Array.isArray(data.videos)) {
       data.videos.forEach((file) => {
-        append("uploaded_videos", file);
+        if (file instanceof File) {
+          append("uploaded_videos", file);
+        }
       });
     }
 
     // Documents (General)
     if (Array.isArray(data.documents)) {
       data.documents.forEach((file) => {
-        append("uploaded_documents", file);
+        if (file instanceof File) {
+          append("uploaded_documents", file);
+        }
       });
     }
 
@@ -251,6 +487,16 @@ const CreateAds = () => {
 
     mutate(formData);
   };
+
+  if (
+    id &&
+    isFetching &&
+    isFetchingPart &&
+    !existingData &&
+    !existingPartData
+  ) {
+    return <div className="p-10 text-center">Loading ad details...</div>;
+  }
 
   return (
     <FormProvider {...methods}>

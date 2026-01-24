@@ -1,10 +1,24 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-export default function Tabs({ items = [], className = '' }) {
-  const [activeTab, setActiveTab] = useState(items[0]?.id ?? 1);
+export default function Tabs({
+  items = [],
+  className = "",
+  activeTab,
+  onChange,
+}) {
+  const [internalTab, setInternalTab] = useState(items[0]?.id ?? 1);
+
+  const currentTab = activeTab !== undefined ? activeTab : internalTab;
+
+  const handleTabClick = (id) => {
+    setInternalTab(id);
+    if (onChange) {
+      onChange(id);
+    }
+  };
 
   const tabVariants = {
     hidden: { opacity: 0, y: 10 },
@@ -35,26 +49,26 @@ export default function Tabs({ items = [], className = '' }) {
         {items.map((tab) => (
           <motion.button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => handleTabClick(tab.id)}
             className={`relative px-2 sm:px-6 py-2 text-sm sm:text-base font-medium transition-all duration-300 ease-out flex-shrink-0 ${
-              activeTab === tab.id
-                ? 'text-slate-800 bg-custom-primary/10 rounded-t-lg'
-                : 'text-slate-500 hover:text-slate-700'
+              currentTab === tab.id
+                ? "text-slate-800 bg-custom-primary/10 rounded-t-lg"
+                : "text-slate-500 hover:text-slate-700"
             }`}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            aria-selected={activeTab === tab.id}
+            aria-selected={currentTab === tab.id}
             role="tab"
           >
             <span className="relative z-10 whitespace-nowrap">{tab.name}</span>
-            {activeTab === tab.id && (
+            {currentTab === tab.id && (
               <motion.div
                 layoutId="activeTab"
                 className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-slate-600 to-slate-800"
                 initial="hidden"
                 animate="visible"
                 variants={indicatorVariants}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
               />
             )}
           </motion.button>
@@ -65,16 +79,16 @@ export default function Tabs({ items = [], className = '' }) {
       <div className="relative overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeTab}
+            key={currentTab}
             role="tabpanel"
             className="py-6  "
             variants={contentVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
           >
-            {items.find((tab) => tab.id === activeTab)?.content ||
+            {items.find((tab) => tab.id === currentTab)?.content ||
               items[0]?.content}
           </motion.div>
         </AnimatePresence>

@@ -6,7 +6,10 @@ import { CustomEmail } from '@/utils/IconProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeClosed } from 'lucide-react';
 import logo from '../../assets/images/logo.png';
+import { useApiMutation } from '@/hooks/useApiMutation';
+import { useAuth } from '@/hooks/useAuth';
 const NewPassword = () => {
+    const {email}=useAuth()
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
@@ -17,11 +20,27 @@ const NewPassword = () => {
         watch,
         formState: { errors },
     } = useForm()
+  const { mutate, isPending } = useApiMutation({
+    url: "/account/reset-password/",
+    method: "POST",
+    secure: false,
+    successMessage: "Password reset successfully!",
+    // ✅ This now works because we passed it in the hook above
+    onSuccess: (data) => {
+    //   console.log(data);
+      navigate("/auth/reset-successful-password");
+    },
+  });
 
-    const onSubmit = (data) => {
-        console.log(data)
-        navigate('/auth/reset-successful-password')
-    }
+  const onSubmit = (data) => {
+     const payload = { 
+            email: email, 
+            password: data.password,
+            confirm_password: data.confirmPassword
+        };
+    mutate(payload);
+
+  };
     return (
         <div className="flex flex-col min-h-full">
                   <Link to="/" className="flex items-center justify-center">

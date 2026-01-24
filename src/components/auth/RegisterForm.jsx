@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { FcGoogle } from "react-icons/fc";
 import { useApiMutation } from "@/hooks/useApiMutation"; // Import your custom hook
 
-const RegisterForm = () => {
+const RegisterForm = ({ onSuccessSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
@@ -18,10 +18,13 @@ const RegisterForm = () => {
   const { mutate: registerUser, isPending } = useApiMutation({
     url: "/account/signup/",
     method: "POST",
+    successMessage: "Account created successfully! Please log in.",
     // secure: false, // Usually false for signup (no token needed yet)
     onSuccess: (data) => {
-      // 2. Handle Success (e.g., redirect to login)
-      navigate("/auth"); 
+      // 2. Handle Success (e.g., switch to login tab)
+      if (onSuccessSignup) {
+        onSuccessSignup();
+      }
     },
   });
 
@@ -34,8 +37,8 @@ const RegisterForm = () => {
 
   const onSubmit = (data) => {
     // Optional: Clean data before sending (e.g., remove confirm_password)
-    const {  terms, ...payload } = data;
-    
+    const { terms, ...payload } = data;
+
     // 3. Trigger the mutation
     registerUser(payload);
   };
@@ -43,7 +46,6 @@ const RegisterForm = () => {
   return (
     <div className="space-y-6">
       <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
-        
         {/* Account Type */}
         <div className="">
           <Label className="text-lg">Type</Label>
@@ -66,7 +68,9 @@ const RegisterForm = () => {
             </label>
           </div>
           {errors.account_type && (
-            <span className="text-red-500 text-sm">Account Type is required</span>
+            <span className="text-red-500 text-sm">
+              Account Type is required
+            </span>
           )}
         </div>
 
@@ -147,7 +151,8 @@ const RegisterForm = () => {
           </div>
           {errors.confirm_password && (
             <span className="text-red-500 text-sm">
-              {errors.confirm_password.message || "Confirm Password is required"}
+              {errors.confirm_password.message ||
+                "Confirm Password is required"}
             </span>
           )}
         </div>
@@ -164,7 +169,9 @@ const RegisterForm = () => {
             />
           </div>
           {errors.siren_number && (
-            <span className="text-red-500 text-sm">SIREN Number is required</span>
+            <span className="text-red-500 text-sm">
+              SIREN Number is required
+            </span>
           )}
         </div>
 
@@ -172,10 +179,10 @@ const RegisterForm = () => {
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center space-x-2 cursor-pointer">
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 {...register("terms", { required: true })}
-                className="rounded accent-custom-primary" 
+                className="rounded accent-custom-primary"
               />
               <span className="text-sm lg:text-xl">
                 I agree to the Terms & Conditions and Privacy Policy.
@@ -183,12 +190,14 @@ const RegisterForm = () => {
             </label>
           </div>
           {errors.terms && (
-             <span className="text-red-500 text-sm block">You must agree to the terms</span>
+            <span className="text-red-500 text-sm block">
+              You must agree to the terms
+            </span>
           )}
         </div>
 
         {/* Submit Button */}
-        <Button 
+        <Button
           disabled={isPending}
           className="w-full !h-12 text-lg bg-custom-primary disabled:opacity-50"
         >
@@ -209,10 +218,16 @@ const RegisterForm = () => {
           <FcGoogle className="w-6 h-6" />
         </button>
       </div>
-      
+
       <p className="mt-10 text-center">
         Already have an account?
-        <Link to="/login" className="font-bold ml-1 hover:underline">Sign In</Link>
+        <button
+          type="button"
+          onClick={() => onSuccessSignup && onSuccessSignup()}
+          className="font-bold ml-1 hover:underline text-theme-primary"
+        >
+          Sign In
+        </button>
       </p>
     </div>
   );

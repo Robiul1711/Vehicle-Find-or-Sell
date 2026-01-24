@@ -8,12 +8,14 @@ import SimpleDropdown from "@/components/common/SimpleDropdown";
 import LanguageArea from "@/components/common/LanguageArea";
 import { useAuth } from "@/hooks/useAuth";
 
+import NotificationDropdown from "./NotificationDropdown";
+import UserDropdown from "./UserDropdown";
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-const {user}=useAuth()
-console.log(user)
+  const { user, loading } = useAuth();
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -95,7 +97,15 @@ console.log(user)
 
             {/* Desktop Buttons */}
             <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
-              <CommonButton link="/auth">Sign In</CommonButton>
+              {loading ? (
+                <div className="h-10 w-10 flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-primary"></div>
+                </div>
+              ) : user ? (
+                <UserDropdown />
+              ) : (
+                <CommonButton link="/auth">Sign In</CommonButton>
+              )}
               <LanguageArea />
               <SimpleDropdown />
             </div>
@@ -180,11 +190,17 @@ console.log(user)
           {/* Mobile Buttons */}
           <div className="absolute bottom-6 flex items-center justify-between  left-6 right-6 ">
             <LanguageArea />
-            <Link to="/auth">
-              <CommonButton fullWidth onClick={() => setIsMenuOpen(false)}>
-                Sign In
-              </CommonButton>
-            </Link>
+            {loading ? (
+              <div className="h-10 w-10 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-primary"></div>
+              </div>
+            ) : user ? (
+              <UserDropdown />
+            ) : (
+              <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
+                <CommonButton fullWidth>Sign In</CommonButton>
+              </Link>
+            )}
           </div>
         </div>
       </div>

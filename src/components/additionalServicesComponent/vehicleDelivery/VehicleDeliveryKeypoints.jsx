@@ -95,7 +95,7 @@ const InSummaryData = [
 
 ]
 
-const VehicleDeliveryKeypoints = () => {
+const VehicleDeliveryKeypoints = ({data}) => {
     return (
         <div className='lg:space-y-20 mx-auto'>
 

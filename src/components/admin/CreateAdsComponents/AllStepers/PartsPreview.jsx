@@ -1,3 +1,4 @@
+import { IMG_URL } from "@/config/constant";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -47,43 +48,51 @@ const PartsPreview = ({ goToStep }) => {
       <div className="mb-8">
         <SectionHeader title="Parts Details" onEdit={() => goToStep(1)} />
         <div className="grid grid-cols-4 gap-6">
-          <DetailRow label="Part Name" value={formData.partName} />
-          <DetailRow label="Category" value={formData.category} />
-          <DetailRow label="Vehicle Type" value={formData.vehicleType} />
+          <DetailRow label="Part Name" value={formData.part_name} />
+          <DetailRow label="Category" value={formData.vehicle_type} />
+          <DetailRow label="Vehicle Type" value={formData.vehicle_type} />
           <DetailRow label="Brand / Manufacturer" value={formData.brand} />
-          <DetailRow label="Part Number / SKU" value={formData.partNumber} />
+          <DetailRow
+            label="Part Number / SKU"
+            value={formData.part_number_sku}
+          />
 
-          <DetailRow label="Main System" value={formData.mainSystem} />
-          <DetailRow label="Sub-System / Sub-Part" value={formData.subSystem} />
-          <DetailRow label="Compatible Make" value={formData.compatibleMake} />
+          <DetailRow label="Main System" value={formData.main_system} />
+          <DetailRow
+            label="Sub-System / Sub-Part"
+            value={formData.sub_system}
+          />
+          <DetailRow label="Compatible Make" value={formData.compatible_make} />
           <DetailRow
             label="Compatible Model(s)"
-            value={formData.compatibleModels}
+            value={formData.compatible_model}
           />
 
           <DetailRow
             label="Compatible Year(s)"
-            value={
-              formData.compatibleYearFrom && formData.compatibleYearTo
-                ? `${formData.compatibleYearFrom} - ${formData.compatibleYearTo}`
-                : formData.compatibleYearFrom || formData.compatibleYearTo
-            }
+            value={formData.compatible_year}
           />
 
           <DetailRow label="Material" value={formData.material} />
-          <DetailRow label="Dimension Unit" value={formData.dimensionUnit} />
+          <DetailRow label="Dimension Unit" value={formData.unit} />
           <DetailRow label="Length (L)" value={formData.length} />
           <DetailRow label="Width (W)" value={formData.width} />
 
           <DetailRow label="Height (H)" value={formData.height} />
           <DetailRow label="Weight" value={formData.weight} />
-          <DetailRow label="Position on Vehicle" value={formData.position} />
+          <DetailRow
+            label="Position on Vehicle"
+            value={formData.position_on_vehicle}
+          />
           <DetailRow label="Color" value={formData.color} />
 
-          <DetailRow label="Original Price" value={formData.originalPrice} />
-          <DetailRow label="Discount Price" value={formData.discountPrice} />
-          <DetailRow label="Quantity in Stock" value={formData.quantity} />
-          <DetailRow label="Warranty" value={formData.warranty} />
+          <DetailRow label="Original Price" value={formData.original_price} />
+          <DetailRow label="Discount Price" value={formData.discount_price} />
+          <DetailRow
+            label="Quantity in Stock"
+            value={formData.quantity_in_stock}
+          />
+          <DetailRow label="Warranty" value={formData.warrenty_duration} />
 
           <DetailRow
             label="Description"
@@ -101,14 +110,24 @@ const PartsPreview = ({ goToStep }) => {
             <div className="text-sm text-gray-600 mb-2">Images</div>
             <div className="flex flex-wrap gap-3">
               {formData.images && Array.from(formData.images).length > 0
-                ? Array.from(formData.images).map((file, idx) => (
-                    <img
-                      key={idx}
-                      src={URL.createObjectURL(file)}
-                      alt={`part-${idx}`}
-                      className="w-24 h-24 object-cover rounded border border-gray-300"
-                    />
-                  ))
+                ? Array.from(formData.images).map((file, idx) => {
+                    let src = "";
+                    if (file instanceof File) {
+                      src = URL.createObjectURL(file);
+                    } else if (file?.file) {
+                      src = IMG_URL + file.file;
+                    } else if (typeof file === "string") {
+                      src = file;
+                    }
+                    return (
+                      <img
+                        key={idx}
+                        src={src}
+                        alt={`part-${idx}`}
+                        className="w-24 h-24 object-cover rounded border border-gray-300"
+                      />
+                    );
+                  })
                 : // Placeholder images
                   Array.from({ length: 0 }).map((_, idx) => (
                     <div
@@ -133,16 +152,30 @@ const PartsPreview = ({ goToStep }) => {
             </div>
           </div>
 
-          {formData.video && (
-            <div>
-              <div className="text-sm text-gray-600 mb-2">Video</div>
-              <video
-                src={URL.createObjectURL(formData.video)}
-                controls
-                className="w-80 h-48 rounded border border-gray-300"
-              />
-            </div>
-          )}
+          {formData.videos &&
+            Array.from(formData.videos).length > 0 &&
+            (() => {
+              const videoFile = Array.from(formData.videos)[0];
+              let src = "";
+              if (videoFile instanceof File) {
+                src = URL.createObjectURL(videoFile);
+              } else if (videoFile?.file) {
+                src = IMG_URL + videoFile.file;
+              } else if (typeof videoFile === "string") {
+                src = videoFile;
+              }
+
+              return (
+                <div>
+                  <div className="text-sm text-gray-600 mb-2">Video</div>
+                  <video
+                    src={src}
+                    controls
+                    className="w-80 h-48 rounded border border-gray-300"
+                  />
+                </div>
+              );
+            })()}
 
           {formData.document && (
             <div>

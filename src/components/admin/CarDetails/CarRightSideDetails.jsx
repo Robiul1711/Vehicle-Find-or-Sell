@@ -43,8 +43,7 @@ const specs = [
 
 const rightSpecs = [
   { icon: User, label: "Condition", value: details?.condition },
-  { icon: Wrench, label: "Engine Size", value: details?.engine_transmission?.engine
- },
+  { icon: Wrench, label: "Engine Size", value: details?.engine_type },
   { icon: DoorOpen, label: "Door", value: details?.door },
   { icon: Palette, label: "Color", value: details?.color },
   { icon: Hash, label: "VIN", value: details?.registration?.vin_number },

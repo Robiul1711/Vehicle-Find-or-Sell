@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { UploadCloud, File, X } from "lucide-react";
+import { UploadCloud, File as FileIcon, X } from "lucide-react";
+import { IMG_URL } from "@/config/constant";
 
 const UploadMedia = () => {
   const { register, setValue, watch } = useFormContext();
@@ -73,22 +74,35 @@ const UploadMedia = () => {
         {/* Image Preview */}
         {images.length > 0 && (
           <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
-            {images.map((file, idx) => (
-              <div key={idx} className="relative">
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt="preview"
-                  className="w-full h-24 object-cover rounded-md border"
-                />
-                <button
-                  type="button"
-                  className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1"
-                  onClick={() => removeImage(idx)}
-                >
-                  <X size={14} />
-                </button>
-              </div>
-            ))}
+            {images.map((file, idx) => {
+              let src = "";
+              if (file instanceof File) {
+                src = URL.createObjectURL(file);
+              } else if (file?.file) {
+                // Existing image from API
+                src = IMG_URL + file.file;
+              } else if (typeof file === "string") {
+                // Fallback if string
+                src = file;
+              }
+
+              return (
+                <div key={idx} className="relative">
+                  <img
+                    src={src}
+                    alt="preview"
+                    className="w-full h-24 object-cover rounded-md border"
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1"
+                    onClick={() => removeImage(idx)}
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
@@ -112,27 +126,38 @@ const UploadMedia = () => {
 
         {videos.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mt-3">
-            {videos.map((file, idx) => (
-              <div key={idx} className="relative">
-                <video
-                  controls
-                  className="w-full h-40 rounded-md border object-cover"
-                  src={URL.createObjectURL(file)}
-                />
-                <button
-                  type="button"
-                  className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1"
-                  onClick={() => removeVideo(idx)}
-                >
-                  <X size={14} />
-                </button>
-              </div>
-            ))}
+            {videos.map((file, idx) => {
+              let src = "";
+              if (file instanceof File) {
+                src = URL.createObjectURL(file);
+              } else if (file?.file) {
+                src = IMG_URL + file.file;
+              } else if (typeof file === "string") {
+                src = file;
+              }
+
+              return (
+                <div key={idx} className="relative">
+                  <video
+                    controls
+                    className="w-full h-40 rounded-md border object-cover"
+                    src={src}
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1"
+                    onClick={() => removeVideo(idx)}
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              );
+            })}
           </div>
         )}
         <p className="mt-2 text-xs text-orange-500 flex items-center gap-1">
-          <File size={14} /> Upload your video now. It will be published after
-          the add-on purchase.
+          <FileIcon size={14} /> Upload your video now. It will be published
+          after the add-on purchase.
         </p>
       </div>
 

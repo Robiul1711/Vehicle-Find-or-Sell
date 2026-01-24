@@ -15,6 +15,7 @@ import {
 } from "@/utils/IconProvider";
 import FilterSection from "./FilterSection";
 import { Link } from "react-router-dom";
+import { IMG_URL } from "@/config/constant";
 
 const options = [
   "Newest",
@@ -233,6 +234,7 @@ const PartListing = ({ items, onFilterChange, filters, isLoading }) => {
                         delay: waveDelay + 0.3,
                       }}
                     >
+                      {console.log(item)}
                       <motion.img
                         layout
                         src={item.image}
@@ -300,7 +302,7 @@ const PartListing = ({ items, onFilterChange, filters, isLoading }) => {
                           >
                             €{item?.price}
                           </motion.p>
-                          <Link to={"/details/1"}>
+                          <Link to={`/parts-details/${item?.id}`}>
                             <motion.p
                               layout
                               className={`${

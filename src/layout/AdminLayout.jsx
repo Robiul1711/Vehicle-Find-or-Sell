@@ -11,6 +11,7 @@ import {
 
 import CommonNavbar from "@/pages/admin/CommonNavbar";
 import SideBar from "@/pages/admin/SideBar";
+import { Plus } from "lucide-react";
 
 import React, { useEffect, useState } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
@@ -28,15 +29,25 @@ const AdminLayout = () => {
       sublink: false,
     },
     {
+ 
       id: 2,
-      icon: <MyAddsIcon className=" hover:text-primaryColor" />,
-      text: "My Ads",
-      path: "/dashboard/my-adds",
-      activePaths: ["/dashboard/my-adds", "/dashboard/car-details/:id", "/dashboard/view-analytics/:id", "/dashboard/create-ads"],
+      icon:    <Plus size={24} />,
+      text: "Post New Ad",
+      path: "/dashboard/create-ads",
+      activePaths: ["/dashboard/create-ads", ],
       sublink: false,
+    
     },
     {
       id: 3,
+      icon: <MyAddsIcon className=" hover:text-primaryColor" />,
+      text: "My Ads",
+      path: "/dashboard/my-adds",
+      activePaths: ["/dashboard/my-adds", "/dashboard/car-details/:id", "/dashboard/view-analytics/:id"],
+      sublink: false,
+    },
+    {
+      id: 4,
       icon: <BoostAddsIcon className=" hover:text-primaryColor" />,
       text: "Boost Ads ",
       path: "/dashboard/boost-ads",
@@ -44,7 +55,7 @@ const AdminLayout = () => {
       sublink: false,
     },
     {
-      id: 4,
+      id: 5,
       icon: <FavouriteIcon className=" hover:text-primaryColor" />,
       text: "My Favorites",
       path: "/dashboard/my-favorites",
@@ -52,7 +63,7 @@ const AdminLayout = () => {
       sublink: false,
     },
     {
-      id: 5,
+      id: 6,
       icon: <MessageIcon className=" hover:text-primaryColor" />,
       text: "Messages",
       path: "/dashboard/message",
@@ -60,7 +71,7 @@ const AdminLayout = () => {
       sublink: false,
     },
     {
-      id: 6,
+      id: 7,
       icon: <SubscriptionIcon className=" hover:text-primaryColor" />,
       text: "Subscription",
       path: "/dashboard/subscription",
@@ -68,7 +79,7 @@ const AdminLayout = () => {
       sublink: false,
     },
     {
-      id: 7,
+      id: 8,
       icon: <SupportIcon className=" hover:text-primaryColor" />,
       text: "Support & Help",
       path: "/dashboard/support-and-help",
@@ -76,7 +87,7 @@ const AdminLayout = () => {
       sublink: false,
     },
     {
-      id: 8,
+      id: 9,
       icon: <SettingIcon className=" hover:text-primaryColor" />,
       text: "Settings",
       path: "/dashboard/settings",

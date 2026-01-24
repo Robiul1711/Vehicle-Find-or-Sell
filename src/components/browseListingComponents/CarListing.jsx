@@ -251,16 +251,19 @@ const CarListing = ({ items, onFilterChange, filters, isLoading }) => {
                         >
                           {item.name}
                         </motion.h3>
-                        <motion.p layout className="text-black mt-1 line-clamp-2">
+                        <motion.p
+                          layout
+                          className="text-black mt-1 line-clamp-2"
+                        >
                           {item.description}
                         </motion.p>
 
                         <motion.p
                           layout
-                          className="text-black mt-1 flex text-sm items-center gap-1"
+                          className="text-black mt-1 flex text-sm items-start gap-1 "
                         >
                           <CustomLocation />
-                          {item.location}
+                          <span className="flex-1 line-clamp-1">{item.location}</span>
                         </motion.p>
                         <motion.div
                           layout
@@ -302,7 +305,7 @@ const CarListing = ({ items, onFilterChange, filters, isLoading }) => {
                               layout
                               className={`${
                                 isGrid ? "" : ""
-                              } flex items-center gap-1 font-semibold text-gray-900 text-center`}
+                              } flex items-center gap-1 font-semibold text-gray-900 text-center hover:text-blue-500 transition-all duration-300 ease-in-out `}
                             >
                               View Details <ArrowUpRight size={20} />
                             </motion.p>

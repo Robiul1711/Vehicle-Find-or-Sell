@@ -1,4 +1,5 @@
 
+import { useApiMutation } from "@/hooks/useApiMutation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -10,10 +11,19 @@ const ContactUs = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    reset();
-  };
+    const { mutate, isPending } = useApiMutation({
+        url: "/core/contact-us/",
+        method: "POST",
+        secure: false,
+        successMessage: "Message sent successfully!",
+
+    });
+
+    // 2. Handle Submission
+    const onSubmit = (data) => {
+        mutate(data);
+        reset();
+    };
 
   return (
     <div className="">
@@ -35,12 +45,12 @@ const ContactUs = () => {
       </label>
       <input
         type="text"
-        {...register("firstName", { required: "First name is required" })}
+        {...register("first_name", { required: "First name is required" })}
         placeholder="Enter your first name..."
         className="mt-1 block w-full rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm shadow-sm focus:border-green-500 focus:ring focus:ring-green-200"
       />
-      {errors.firstName && (
-        <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
+      {errors.first_name && (
+        <p className="text-red-500 text-sm mt-1">{errors.first_name.message}</p>
       )}
     </div>
 
@@ -51,12 +61,12 @@ const ContactUs = () => {
       </label>
       <input
         type="text"
-        {...register("lastName", { required: "Last name is required" })}
+        {...register("last_name", { required: "Last name is required" })}
         placeholder="Enter your last name..."
         className="mt-1 block w-full rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm shadow-sm focus:border-green-500 focus:ring focus:ring-green-200"
       />
-      {errors.lastName && (
-        <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
+      {errors.last_name && (
+        <p className="text-red-500 text-sm mt-1">{errors.last_name.message}</p>
       )}
     </div>
 

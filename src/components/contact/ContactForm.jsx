@@ -1,3 +1,4 @@
+import { useApiMutation } from '@/hooks/useApiMutation';
 import { CustomArrow, CustomEmail, CustomEmail2, CustomLocation, CustomLocation2, CustomPhone } from '@/utils/IconProvider';
 import { MoveUpRightIcon } from 'lucide-react';
 import React from 'react';
@@ -8,12 +9,23 @@ const ContactForm = () => {
         register,
         handleSubmit,
         watch,
+        reset,
         formState: { errors },
     } = useForm()
 
+    const { mutate, isPending } = useApiMutation({
+        url: "/core/contact-us/",
+        method: "POST",
+        secure: false,
+        successMessage: "Message sent successfully!",
+
+    });
+
+    // 2. Handle Submission
     const onSubmit = (data) => {
-        console.log(data);
-    }
+        mutate(data);
+        reset();
+    };
 
     return (
         <div className='flex flex-col lg:flex-row gap-10'>
@@ -54,17 +66,17 @@ const ContactForm = () => {
                             <div className="">
                                 <label htmlFor="">First Name</label>
                                 <div className="border bg-white w-full">
-                                    <input type="text" {...register('firstName', { required: true })} placeholder='Enter your first name...' className='w-full outline-0 px-2 py-2' />
+                                    <input type="text" {...register('first_name', { required: true })} placeholder='Enter your first name...' className='w-full outline-0 px-2 py-2' />
                                 </div>
-                                {errors.firstName && <span className="text-red-500">First Name is required</span>}
+                                {errors.first_name && <span className="text-red-500">First Name is required</span>}
                             </div>
 
                             <div className="">
                                 <label htmlFor="">Last Name</label>
                                 <div className="border bg-white w-full">
-                                    <input type="text" {...register('lastName', { required: true })} placeholder='Last Name' className='w-full outline-0 px-2 py-2' />
+                                    <input type="text" {...register('last_name', { required: true })} placeholder='Last Name' className='w-full outline-0 px-2 py-2' />
                                 </div>
-                                {errors.lastName && <span className="text-red-500">Last Name is required</span>}
+                                {errors.last_name && <span className="text-red-500">Last Name is required</span>}
                             </div>
                         </div>
 
@@ -73,7 +85,7 @@ const ContactForm = () => {
                             <div className="">
                                 <label htmlFor="">Email</label>
                                 <div className="border bg-white w-full">
-                                    <input type="text" {...register('email', { required: true })} placeholder='Enter your email...' className='w-full outline-0 px-2 py-2' />
+                                    <input type="email" {...register('email', { required: true })} placeholder='Enter your email...' className='w-full outline-0 px-2 py-2' />
                                 </div>
                                 {errors.email && <span className="text-red-500">Email is required</span>}
                             </div>

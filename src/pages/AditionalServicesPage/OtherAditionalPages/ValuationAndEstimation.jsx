@@ -5,13 +5,20 @@ import React from 'react'
 import { ScrollRestoration } from 'react-router-dom'
 import s5 from '@/assets/images/s5.jpg'
 import ServiceBanner from '@/components/common/ServiceBanner'
+import { useApiQuery } from '@/hooks/useApiQuery'
 const ValuationAndEstimation = () => {
+    const { data, isLoading } = useApiQuery({
+        queryKey: ["vehicle-valuation"],
+        url: "/cms/vehicle-valuation/",
+        secure: false,
+      });
+      console.log(data?.data);
   return (
     <div >
       <ScrollRestoration />
-      <ServiceBanner image={s5} title="Vehicle Valuation" subText="Learn how to assess your car’s true worth using key factors, market data, and expert tips." />
+      <ServiceBanner image={data?.data?.hero_background_image_url || s5} title={data?.data?.title} subText={data?.data?.subtitle} />
       <CommonPageWrapper>
-        <VehicleValuationKeypoints />
+        <VehicleValuationKeypoints data={data?.data}/>
       </CommonPageWrapper>
     </div>
   )

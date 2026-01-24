@@ -41,7 +41,7 @@ const EditProfile = () => {
       reset({
         firstName: profile.first_name || "",
         lastName: profile.last_name || "",
-        email: profile.user?.email || "", // Still loaded for display
+        email: profile.user?.email || "", 
         phone: profile.phone || "",
         siren: profile.user?.siren_number || "",
         siret: profile.user?.siret_number || "",

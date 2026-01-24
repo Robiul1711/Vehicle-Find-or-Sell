@@ -8,28 +8,33 @@ import { Eye, EyeClosed } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import { useAuth } from "@/hooks/useAuth";
 
-const LoginForm = () => {
+const LoginForm = ({ onRegisterClick }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { saveAuth } = useAuth();
 
-const {
+  const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-const { mutate, isPending } = useApiMutation({
-  url: "/account/signin/",
-  method: "POST",
-  secure: false,
-  successMessage: "Welcome back!",
-  // ✅ This now works because we passed it in the hook above
-  onSuccess: (data) => {
-    localStorage.setItem('token', data.tokens.access);
-    navigate('/dashboard'); 
-  }
-});
+  const { mutate, isPending } = useApiMutation({
+    url: "/account/signin/",
+    method: "POST",
+    secure: false,
+    successMessage: "Welcome back!",
+    // ✅ This now works because we passed it in the hook above
+    onSuccess: (data) => {
+      saveAuth({
+        access: data.tokens.access,
+        user: data.user || data.userdata,
+      });
+      navigate("/dashboard");
+    },
+  });
 
   const onSubmit = (data) => {
     mutate(data);
@@ -118,12 +123,13 @@ const { mutate, isPending } = useApiMutation({
       {/* Register Section */}
       <p className="text-center text-sm">
         Don't have an account?
-        <Link
-          to="/auth/register"
+        <button
+          type="button"
+          onClick={() => onRegisterClick && onRegisterClick()}
           className="text-theme-primary font-semibold hover:underline ml-1"
         >
           Sign Up
-        </Link>
+        </button>
       </p>
     </div>
   );

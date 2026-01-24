@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,10 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
+
 export default function AuthTabs() {
+  const [activeTab, setActiveTab] = useState("signin");
+
   return (
     <div className="flex flex-col min-h-full">
       <Link to="/" className="flex items-center justify-center">
@@ -21,7 +25,11 @@ export default function AuthTabs() {
         </p>
       </div>
 
-      <Tabs defaultValue="signin" className="w-full flex-1 flex flex-col">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="w-full flex-1 flex flex-col"
+      >
         {/* Tab Header */}
         <TabsList className="grid w-full grid-cols-2 rounded-lg bg-muted p-1">
           <TabsTrigger value="signin" className="p-2 text-sm lg:text-lg">
@@ -40,7 +48,7 @@ export default function AuthTabs() {
             className="mt-6 w-full flex-1 flex items-center"
           >
             <div className="w-full">
-              <LoginForm />
+              <LoginForm onRegisterClick={() => setActiveTab("signup")} />
             </div>
           </TabsContent>
 
@@ -50,7 +58,7 @@ export default function AuthTabs() {
             className="mt-6 w-full flex-1 flex items-center"
           >
             <div className="w-full">
-              <RegisterForm />
+              <RegisterForm onSuccessSignup={() => setActiveTab("signin")} />
             </div>
           </TabsContent>
         </div>

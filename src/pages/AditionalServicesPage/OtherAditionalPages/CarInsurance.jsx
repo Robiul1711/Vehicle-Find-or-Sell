@@ -4,12 +4,19 @@ import { CommonPageWrapper } from '@/components/common/CommonPageWrapper'
 import React from 'react'
 import s3 from '@/assets/images/s3.jpg'
 import ServiceBanner from '@/components/common/ServiceBanner'
+import { useApiQuery } from '@/hooks/useApiQuery'
 const CarInsurance = () => {
+    const { data, isLoading } = useApiQuery({
+      queryKey: ["car-insurance"],
+      url: "/cms/car-insurance/",
+      secure: false,
+    });
+    console.log(data?.data);
   return (
     <div >
-      <ServiceBanner image={s3} title="Car Insurance" subText="Understand the essentials of car insurance in France, from legal requirements to choosing the best plan for your needs" />
+      <ServiceBanner image={data?.data?.hero_background_image_url} title={data?.data?.title} subText={data?.data?.subtitle} />
       <CommonPageWrapper>
-        <CarInsuranceBannerKeypoints />
+        <CarInsuranceBannerKeypoints data={data?.data}/>
       </CommonPageWrapper>
     </div>
   )

@@ -5,13 +5,20 @@ import React from 'react'
 import { ScrollRestoration } from 'react-router-dom'
 import s4 from '@/assets/images/s4.jpg'
 import ServiceBanner from '@/components/common/ServiceBanner'
+import { useApiQuery } from '@/hooks/useApiQuery'
 const WarrantyAndExtendedWarranty = () => {
+    const { data, isLoading } = useApiQuery({
+    queryKey: ["car-warranties"],
+    url: "/cms/car-warranties/",
+    secure: false,
+  });
+  console.log(data?.data);
   return (
     <div >
       <ScrollRestoration />
-      <ServiceBanner image={s4} title="Car Warranties" subText="Learn about legal, contractual, and external warranties to protect your car and your budget." />
+      <ServiceBanner image={data?.data?.hero_background_image_url} title={data?.data?.title} subText={data?.data?.subtitle} />
       <CommonPageWrapper>
-        <CarwarrantiesKeypoints />
+        <CarwarrantiesKeypoints data={data?.data} />
       </CommonPageWrapper>
     </div>
   )

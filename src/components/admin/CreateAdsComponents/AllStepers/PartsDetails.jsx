@@ -53,7 +53,7 @@ export default function PartsDetails() {
               Part Name
             </label>
             <input
-              {...register("partName")}
+              {...register("part_name")}
               type="text"
               placeholder="Front Rotating Red Set"
               className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 bg-white focus:ring-blue-500 focus:border-blue-500"
@@ -74,6 +74,7 @@ export default function PartsDetails() {
               <option value="truck">Truck</option>
               <option value="motorcycle">Motorcycle</option>
               <option value="scooter">Scooter</option>
+              <option value="parts">Parts</option>
             </select>
           </div>
 
@@ -110,7 +111,7 @@ export default function PartsDetails() {
               Part Number / SKU
             </label>
             <input
-              {...register("partNumber")}
+              {...register("part_number_sku")}
               type="text"
               placeholder="e.g. P-24-0045 or unique identifying code"
               className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 bg-white focus:ring-blue-500 focus:border-blue-500"
@@ -190,12 +191,12 @@ export default function PartsDetails() {
                 placeholder="e.g. 2018-2022"
                 className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               />
-              <input
+              {/* <input
                 {...register("compatibleYearTo")}
                 type="text"
                 placeholder="e.g. 2018-2022"
                 className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              />
+              /> */}
             </div>
           </div>
         </div>
@@ -324,7 +325,7 @@ export default function PartsDetails() {
               Original Price
             </label>
             <input
-              {...register("original_price")}
+              {...register("originalPrice")}
               type="text"
               placeholder="Enter the cost price, e.g. 2600"
               className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
@@ -337,7 +338,7 @@ export default function PartsDetails() {
               Discount Price
             </label>
             <input
-              {...register("discount_price")}
+              {...register("discountPrice")}
               type="text"
               placeholder="Enter the retail price, e.g. 3800"
               className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
@@ -363,7 +364,7 @@ export default function PartsDetails() {
               Warranty
             </label>
             <input
-              {...register("warrenty_duration")}
+              {...register("warrantyDuration")}
               type="text"
               placeholder="e.g. 1 Year or 20,000 km"
               className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500"

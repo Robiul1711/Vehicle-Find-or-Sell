@@ -1,25 +1,26 @@
 import React from "react";
 import Title from "../common/Title";
 
-const PartOverview = () => {
+const PartOverview = ({data}) => {
+  console.log(data)
   const overviewData = [
-    { label: "Honda Type", value: "Car" },
-    { label: "Brand / Manufacturer", value: "Used" },
-    { label: "Part Number / SKU", value: "P-24-09Hb" },
-    { label: "Main System", value: "Braking System" },
-    { label: "Sub-System", value: "Friction Components" },
-    { label: "Compatible Make", value: "Toyota" },
-    { label: "Compatible Model(s)", value: "Corolla, Axio" },
-    { label: "Compatible Year(s)", value: "2018 - 2022" },
-    { label: "Material", value: "Ceramic" },
-    { label: "Length (L)", value: "132 mm" },
-    { label: "Width (W)", value: "55 mm" },
-    { label: "Height (H)", value: "16 mm" },
-    { label: "Weight", value: "1.5 kg" },
-    { label: "Position on Vehicle", value: "Front Axle" },
-    { label: "Color", value: "Matte Black" },
-    { label: "Warranty", value: "6 Year" },
-    { label: "Quantity in Stock", value: "20" },
+    { label: "Vehicle Type", value: data?.vehicle_type },
+    { label: "Brand / Manufacturer", value: data?.brand },
+    { label: "Part Number / SKU", value: data?.part_number_sku },
+    { label: "Main System", value: data?.main_system },
+    { label: "Sub-System", value: data?.sub_system },
+    { label: "Compatible Make", value: data?.compatible_make },
+    { label: "Compatible Model(s)", value: data?.compatible_model },
+    { label: "Compatible Year(s)", value: data?.compatible_year },
+    { label: "Material", value: data?.material },
+    { label: "Length (L)", value: data?.length },
+    { label: "Width (W)", value: data?.width },
+    { label: "Height (H)", value: data?.height },
+    { label: "Weight", value: data?.weight },
+    { label: "Position on Vehicle", value: data?.position_on_vehicle },
+    { label: "Color", value: data?.color },
+    { label: "Warranty", value: data?.warrenty_duration },
+    { label: "Quantity in Stock", value: data?.quantity_in_stock },
   ];
 
   return (

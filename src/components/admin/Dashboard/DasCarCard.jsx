@@ -33,7 +33,6 @@ const DasCarCard = ({ car }) => {
 
       {/* Content Area - Added 'flex-grow' and 'flex flex-col' */}
       <div className="p-4 flex flex-col flex-grow">
-        
         {/* Top Content (Title + Subtitle) */}
         <div className="flex-grow space-y-2">
           <div className="flex justify-between items-start">
@@ -84,9 +83,12 @@ const DasCarCard = ({ car }) => {
             >
               View Details
             </Link>
-            <button className="bg-gray-900 text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800 transition-colors">
+            <Link
+              to={`/dashboard/edit-ads/${car?.id}`}
+              className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800 transition-colors"
+            >
               Edit
-            </button>
+            </Link>
             <button className="bg-gray-900 text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800 transition-colors">
               Pause Ad
             </button>
@@ -94,7 +96,9 @@ const DasCarCard = ({ car }) => {
               onClick={() => mutate()}
               disabled={isPending}
               className={`text-white text-sm font-medium rounded-lg py-2 transition-colors ${
-                isPending ? "bg-gray-400 cursor-not-allowed" : "bg-gray-900 hover:bg-red-700"
+                isPending
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gray-900 hover:bg-red-700"
               }`}
             >
               {isPending ? "Deleting..." : "Delete"}

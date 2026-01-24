@@ -1,65 +1,102 @@
-import LoginForm from '@/components/auth/LoginForm';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { CustomEmail } from '@/utils/IconProvider';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import OTPInput from "otp-input-react";
-import logo from '../../assets/images/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../assets/images/logo.png';
+import { Button } from '@/components/ui/button';
+import { useApiMutation } from '@/hooks/useApiMutation';
+import { useAuth } from '@/hooks/useAuth';
+
 
 const VerifyOTP = () => {
-    const [OTP, setOTP] = useState("");
+    const { email } = useAuth();
+ 
     const navigate = useNavigate();
-    const handleVerify = () => {
-        console.log("OTP Submitted:", OTP);
-        navigate('/auth/set-new-password');
+
+    // 1. Initialize Hook Form
+    const { control, handleSubmit, formState: { isValid } } = useForm({
+        defaultValues: {
+            otp: ""
+        }
+    });
+
+    const { mutate, isPending } = useApiMutation({
+        url: "/account/verify-otp/",
+        method: "POST",
+        secure: false,
+        successMessage: "OTP verified successfully!",
+        onSuccess: (data) => {
+            // Data is verified, move to next step
+            navigate("/auth/set-new-password");
+        },
+    });
+
+    // 2. Handle Submission
+    const onSubmit = (formData) => {
+        // Combine the email from context with the OTP from the form
+        const payload = { 
+            email: email, 
+            otp: formData.otp 
+        };
+        mutate(payload);
     };
+
     return (
         <div className="flex flex-col min-h-full">
-                  <Link to="/" className="flex items-center justify-center">
-                <img src={logo} alt="" className="w-20 h-20" />
+            <Link to="/" className="flex items-center justify-center">
+                <img src={logo} alt="Logo" className="w-20 h-20" />
             </Link>
-            {/* Header Section */}
+
             <div className="text-center mb-6 py-10 space-y-5">
                 <h1 className="text-2xl lg:text-4xl font-bold mb-2">Verify Your Account</h1>
                 <p className="text-sm lg:text-xl text-muted-foreground">
                     Enter the 6-digit code we sent to your email to continue.
                 </p>
-                <div className="flex justify-center">
-                    <OTPInput
-                        value={OTP}
-                        onChange={setOTP}
-                        autoFocus
-                        OTPLength={6}
-                        otpType="number"
-                        disabled={false}
-                        secure
-                        inputStyles={{
-                            width: "4rem",
-                            height: "4rem",
-                            margin: "0 0.5rem",
-                            fontSize: "1.5rem",
-                            borderRadius: "0.5rem",
-                            border: "2px solid #d1d5db",
-                            textAlign: "center",
-                            outline: "none",
-                        }}
-                        focusStyles={{
-                            border: "2px solid #3b82f6",
-                            boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.5)",
-                        }}
-                        className="otp-input-container text-center"
-                    />
-                </div>
 
-                <Button
-                    onClick={handleVerify}
-                    className="w-full !h-12 text-lg bg-custom-primary ">Verify
-                </Button>
+                {/* 3. Wrap in a form tag and use handleSubmit */}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="flex justify-center">
+                        <Controller
+                            name="otp"
+                            control={control}
+                            rules={{ required: true, minLength: 6 }}
+                            render={({ field: { onChange, value } }) => (
+                                <OTPInput
+                                    value={value}
+                                    onChange={onChange}
+                                    autoFocus
+                                    OTPLength={6}
+                                    otpType="number"
+                                    disabled={isPending}
+                                    secure
+                                    inputStyles={{
+                                        width: "4rem",
+                                        height: "4rem",
+                                        margin: "0 0.5rem",
+                                        fontSize: "1.5rem",
+                                        borderRadius: "0.5rem",
+                                        border: "2px solid #d1d5db",
+                                        textAlign: "center",
+                                        outline: "none",
+                                    }}
+                                    focusStyles={{
+                                        border: "2px solid #3b82f6",
+                                        boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.5)",
+                                    }}
+                                />
+                            )}
+                        />
+                    </div>
+
+                    <Button
+                        type="submit"
+                        disabled={isPending}
+                        className="w-full !h-12 text-lg bg-custom-primary"
+                    >
+                        {isPending ? "Verifying..." : "Verify"}
+                    </Button>
+                </form>
             </div>
-
-
         </div>
     );
 };

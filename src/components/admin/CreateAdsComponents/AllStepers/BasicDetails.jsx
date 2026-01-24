@@ -194,6 +194,9 @@ export default function BasicDetails() {
             <option value="hybrid">Hybrid</option>
             <option value="electric">Electric</option>
             <option value="cng">CNG</option>
+            <option value="lpg">LPG</option>
+            <option value="gasoline">Gasoline</option>
+            <option value="unknown">Unknown</option>
           </select>
         </div>
 
@@ -203,7 +206,7 @@ export default function BasicDetails() {
             Engine Size/Type
           </label>
           <input
-            {...register("engineSize")}
+            {...register("engine_type")}
             type="text"
             placeholder="0"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"

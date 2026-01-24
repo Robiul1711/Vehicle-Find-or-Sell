@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import { showLoadingToast, updateToastError, updateToastSuccess } from "@/lib/utils";
+import {
+  showLoadingToast,
+  updateToastError,
+  updateToastSuccess,
+} from "@/lib/utils";
 
 export const useApiMutation = ({
   url,
@@ -11,7 +15,7 @@ export const useApiMutation = ({
   successMessage = "Success!",
   errorMessage = "Something went wrong",
   onSuccess, // ✅ Accept external callback
-  onError,   // ✅ Accept external callback
+  onError, // ✅ Accept external callback
 }) => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -30,7 +34,9 @@ export const useApiMutation = ({
         //   Authorization: `Bearer ${token}`,
         // },
         // ✅ Fix: Axios DELETE expects data inside a 'data' key, others use 'data' directly
-        ...(method.toUpperCase() === "DELETE" ? { data: data } : { data: data }),
+        ...(method.toUpperCase() === "DELETE"
+          ? { data: data }
+          : { data: data }),
       };
 
       // We use the generic request method to handle all types correctly
@@ -45,10 +51,7 @@ export const useApiMutation = ({
 
     onSuccess: (response, variables, context) => {
       // 1. Update Toast
-      updateToastSuccess(
-        context.toastId,
-        response?.message || successMessage
-      );
+      updateToastSuccess(context.toastId, response?.message || successMessage);
 
       // 2. Invalidate Queries (Refresh Data)
       if (invalidateKeys.length > 0) {

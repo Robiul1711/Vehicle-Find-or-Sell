@@ -1,9 +1,16 @@
-import React from 'react';
-import { Heart, Gauge, Droplets, Settings, ArrowUpRight } from 'lucide-react';
-import { AutomaticIcon, Bumpcon, FireIcon, FuelIcon, MilageIcon } from './SVGicons/MySvg';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Heart, Gauge, Droplets, Settings, ArrowUpRight } from "lucide-react";
+import {
+  AutomaticIcon,
+  Bumpcon,
+  FireIcon,
+  FuelIcon,
+  MilageIcon,
+} from "./SVGicons/MySvg";
+import { Link } from "react-router-dom";
 
 const VehiclesCard = ({
+  id,
   imageUrl,
   title,
   subtitle,
@@ -14,21 +21,16 @@ const VehiclesCard = ({
   isNew,
   onViewDetails,
   onFavorite,
-  path
+  path,
 }) => {
-
-  console.log(path)
+  console.log(path);
   return (
     <div className="rounded-2xl shadow-lg overflow-hidden">
       {/* Image */}
       <div className="relative">
-        <img 
-          src={imageUrl} 
-          alt={title}
-          className="w-full h-58 object-cover"
-        />
+        <img src={imageUrl} alt={title} className="w-full h-58 object-cover" />
         {/* Favorite Button */}
-        <button 
+        <button
           onClick={onFavorite}
           className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
         >
@@ -41,12 +43,12 @@ const VehiclesCard = ({
         {/* Title & Badge */}
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
-          {
-            isNew && (
-              <span className="size-8 bg-gray-100 rounded-full flex items-center justify-center"> <Bumpcon className="w-5 h-5" /></span>
-            )
-          }
-         
+          {isNew && (
+            <span className="size-8 bg-gray-100 rounded-full flex items-center justify-center">
+              {" "}
+              <Bumpcon className="w-5 h-5" />
+            </span>
+          )}
         </div>
 
         {/* Subtitle */}
@@ -65,7 +67,7 @@ const VehiclesCard = ({
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-gray-900">{price}</span>
           <Link
-          to={`/details/1`}
+            to={`/${path || "details"}/${id}`}
             onClick={onViewDetails}
             className="flex items-center text-custom-primary font-medium hover:text-blue-700 transition-colors"
           >

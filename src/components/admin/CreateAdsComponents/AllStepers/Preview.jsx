@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { RiEdit2Fill } from "react-icons/ri";
 import { useFormContext } from "react-hook-form";
+import { IMG_URL } from "@/config/constant";
 
 // Reusable Section component
 const Section = ({ title, content, sectionKey, onEdit }) => (
   <div className="mb-6">
     <div className="flex justify-between items-center mb-2">
       <h2 className="text-lg font-medium text-gray-700">{title}</h2>
-      <button  onClick={() => onEdit(sectionKey)} className="flex items-center gap-1 font-bold text-gray-500 hover:text-blue-600 ">
-
-      <RiEdit2Fill
-        className="w-5 h-5 "
-       
-      />
-      Edit
+      <button
+        onClick={() => onEdit(sectionKey)}
+        className="flex items-center gap-1 font-bold text-gray-500 hover:text-blue-600 "
+      >
+        <RiEdit2Fill className="w-5 h-5 " />
+        Edit
       </button>
     </div>
     <div className="text-gray-900">{content}</div>
@@ -24,7 +24,7 @@ const Preview = ({ goToStep }) => {
   const [editingSection, setEditingSection] = useState(null);
   const { watch } = useFormContext();
   const formData = watch();
-console.log(formData);
+  console.log(formData);
   // ✅ Convert checkbox-style features into arrays
   const getFeatures = (prefix) => {
     return Object.keys(formData)
@@ -34,54 +34,110 @@ console.log(formData);
 
   const handleEdit = (sectionKey) => {
     switch (sectionKey) {
-      case "basicDetails": goToStep(2); break;
-      case "features": goToStep(3); break;
-      case "engine": goToStep(4); break;
-      case "media": goToStep(5); break;
-      case "sellerAddress": goToStep(6); break;
-      case "contact": goToStep(7); break;
-      default: setEditingSection(sectionKey);
+      case "basicDetails":
+        goToStep(2);
+        break;
+      case "features":
+        goToStep(3);
+        break;
+      case "engine":
+        goToStep(4);
+        break;
+      case "media":
+        goToStep(5);
+        break;
+      case "sellerAddress":
+        goToStep(6);
+        break;
+      case "contact":
+        goToStep(7);
+        break;
+      default:
+        setEditingSection(sectionKey);
     }
   };
 
   return (
     <div className="space-y-6">
-{/* Basic Details */}
-<Section
-  title="Basic Details"
-  sectionKey="basicDetails"
-  onEdit={handleEdit}
-  content={
-    <div className="grid grid-cols-2 gap-4">
-      <div><strong>Brand:</strong> {formData.brand}</div>
-      <div><strong>Model:</strong> {formData.model}</div>
-      <div><strong>Body:</strong> {formData.body}</div>
-      <div><strong>Door:</strong> {formData.door}</div>
-      <div><strong>Original Price:</strong> {formData.originalPrice}</div>
-      <div><strong>Discount Price:</strong> {formData.discountPrice}</div>
-      <div><strong>Mileage:</strong> {formData.mileage}</div>
-      <div><strong>Fuel Type:</strong> {formData.fuelType}</div>
-      <div><strong>Engine Size/Type:</strong> {formData.engineSize}</div>
-      <div><strong>Transmission:</strong> {formData.transmission}</div>
-      <div><strong>Exact Date:</strong> {formData.exactDate}</div>
-      <div><strong>Condition:</strong> {formData.condition}</div>
-      <div><strong>CO₂ Emissions (g/km):</strong> {formData.co2Emissions}</div>
-      <div><strong>Air Criteria / Emission Standard:</strong> {formData.emissionStandard}</div>
-      <div><strong>Warranty Duration:</strong> {formData.warrantyDuration}</div>
-      <div><strong>Number of Previous Owners:</strong> {formData.previousOwners}</div>
-      <div><strong>Horsepower (CV):</strong> {formData.horsepowerCV}</div>
-      <div><strong>Horsepower (DIN):</strong> {formData.horsepowerDIN}</div>
-      <div><strong>Color:</strong> {formData.color}</div>
-      <div><strong>Deductible VAT:</strong> {formData.deductibleVAT}</div>
-      <div><strong>Deductible Percentage (%):</strong> {formData.deductiblePercentage}</div>
-      <div className="col-span-2">
-        <strong>Description:</strong> {formData.description}
-      </div>
-    </div>
-  }
-/>
-
-
+      {/* Basic Details */}
+      <Section
+        title="Basic Details"
+        sectionKey="basicDetails"
+        onEdit={handleEdit}
+        content={
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <strong>Brand:</strong> {formData.brand}
+            </div>
+            <div>
+              <strong>Model:</strong> {formData.model}
+            </div>
+            <div>
+              <strong>Body:</strong> {formData.body}
+            </div>
+            <div>
+              <strong>Door:</strong> {formData.door}
+            </div>
+            <div>
+              <strong>Original Price:</strong> {formData.originalPrice}
+            </div>
+            <div>
+              <strong>Discount Price:</strong> {formData.discountPrice}
+            </div>
+            <div>
+              <strong>Mileage:</strong> {formData.mileage}
+            </div>
+            <div>
+              <strong>Fuel Type:</strong> {formData.fuelType}
+            </div>
+            <div>
+              <strong>Engine Size/Type:</strong> {formData.engineSize}
+            </div>
+            <div>
+              <strong>Transmission:</strong> {formData.transmission}
+            </div>
+            <div>
+              <strong>Exact Date:</strong> {formData.exactDate}
+            </div>
+            <div>
+              <strong>Condition:</strong> {formData.condition}
+            </div>
+            <div>
+              <strong>CO₂ Emissions (g/km):</strong> {formData.co2Emissions}
+            </div>
+            <div>
+              <strong>Air Criteria / Emission Standard:</strong>{" "}
+              {formData.emissionStandard}
+            </div>
+            <div>
+              <strong>Warranty Duration:</strong> {formData.warrantyDuration}
+            </div>
+            <div>
+              <strong>Number of Previous Owners:</strong>{" "}
+              {formData.previousOwners}
+            </div>
+            <div>
+              <strong>Horsepower (CV):</strong> {formData.horsepowerCV}
+            </div>
+            <div>
+              <strong>Horsepower (DIN):</strong> {formData.horsepowerDIN}
+            </div>
+            <div>
+              <strong>Color:</strong> {formData.color}
+            </div>
+            <div>
+              <strong>Deductible VAT:</strong> {formData.deductibleVAT}
+            </div>
+            <div>
+              <strong>Deductible Percentage (%):</strong>{" "}
+              {formData.deductiblePercentage}
+            </div>
+            <div className="col-span-2">
+              <strong>Description:</strong> {formData.description}
+            </div>
+          </div>
+        }
+      />
 
       {/* Features */}
       <Section
@@ -113,13 +169,29 @@ console.log(formData);
         onEdit={handleEdit}
         content={
           <div className="grid grid-cols-2 gap-4">
-            <div><strong>Fuel Tank Capacity:</strong> {formData.fuelTankCapacity}</div>
-            <div><strong>Engine Size:</strong> {formData.engineSize}</div>
-            <div><strong>Horsepower (CV):</strong> {formData.horsepowerCV}</div>
-            <div><strong>Horsepower (DIN):</strong> {formData.horsepowerDIN}</div>
-            <div><strong>Max Towing (Braked):</strong> {formData.maxTowingWeightBraked}</div>
-            <div><strong>Max Towing (Unbraked):</strong> {formData.maxTowingWeightUnbraked}</div>
-            <div><strong>Transmission:</strong> {formData.transmission}</div>
+            <div>
+              <strong>Fuel Tank Capacity:</strong> {formData.fuelTankCapacity}
+            </div>
+            <div>
+              <strong>Engine Size:</strong> {formData.engineSize}
+            </div>
+            <div>
+              <strong>Horsepower (CV):</strong> {formData.horsepowerCV}
+            </div>
+            <div>
+              <strong>Horsepower (DIN):</strong> {formData.horsepowerDIN}
+            </div>
+            <div>
+              <strong>Max Towing (Braked):</strong>{" "}
+              {formData.maxTowingWeightBraked}
+            </div>
+            <div>
+              <strong>Max Towing (Unbraked):</strong>{" "}
+              {formData.maxTowingWeightUnbraked}
+            </div>
+            <div>
+              <strong>Transmission:</strong> {formData.transmission}
+            </div>
           </div>
         }
       />
@@ -134,23 +206,43 @@ console.log(formData);
             {/* Images */}
             <div className="flex flex-wrap gap-2">
               {formData.images &&
-                Array.from(formData.images).map((file, idx) => (
-                  <img
-                    key={idx}
-                    src={URL.createObjectURL(file)}
-                    alt={`car-${idx}`}
-                    className="w-24 h-24 object-cover rounded border"
-                  />
-                ))}
+                Array.from(formData.images).map((file, idx) => {
+                  let src = "";
+                  if (file instanceof File) {
+                    src = URL.createObjectURL(file);
+                  } else if (file?.file) {
+                    src = IMG_URL + file.file;
+                  } else if (typeof file === "string") {
+                    src = file;
+                  }
+
+                  return (
+                    <img
+                      key={idx}
+                      src={src}
+                      alt={`car-${idx}`}
+                      className="w-24 h-24 object-cover rounded border"
+                    />
+                  );
+                })}
             </div>
             {/* Video */}
-            {formData.video && (
-              <video
-                src={URL.createObjectURL(formData.video)}
-                controls
-                className="w-64 rounded border"
-              />
-            )}
+            {(formData.video ||
+              (formData.videos && formData.videos.length > 0)) &&
+              (() => {
+                const videoFile = formData.video || formData.videos[0];
+                let src = "";
+                if (videoFile instanceof File) {
+                  src = URL.createObjectURL(videoFile);
+                } else if (videoFile?.file) {
+                  src = IMG_URL + videoFile.file;
+                } else if (typeof videoFile === "string") {
+                  src = videoFile;
+                }
+                return (
+                  <video src={src} controls className="w-64 rounded border" />
+                );
+              })()}
             {/* Document */}
             {formData.document && (
               <a
@@ -173,7 +265,8 @@ console.log(formData);
         onEdit={handleEdit}
         content={
           <div>
-            {formData.street}, {formData.city}, {formData.zipCode}, {formData.country}
+            {formData.street}, {formData.city}, {formData.zipCode},{" "}
+            {formData.country}
           </div>
         }
       />
@@ -185,10 +278,18 @@ console.log(formData);
         onEdit={handleEdit}
         content={
           <div>
-            <div><strong>Name:</strong> {formData.name}</div>
-            <div><strong>Email:</strong> {formData.email}</div>
-            <div><strong>Contact:</strong> {formData.contactNumber}</div>
-            <div><strong>WhatsApp:</strong> {formData.whatsappNumber}</div>
+            <div>
+              <strong>Name:</strong> {formData.name}
+            </div>
+            <div>
+              <strong>Email:</strong> {formData.email}
+            </div>
+            <div>
+              <strong>Contact:</strong> {formData.contactNumber}
+            </div>
+            <div>
+              <strong>WhatsApp:</strong> {formData.whatsappNumber}
+            </div>
           </div>
         }
       />
