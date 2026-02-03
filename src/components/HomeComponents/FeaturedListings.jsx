@@ -6,6 +6,7 @@ import Tabs from "../common/Tabs";
 import { bikes, cars, Parts, Scoter, trucks } from "@/lib/cardata";
 import VehiclesCardDemo from "../common/VehiclesCardDemo";
 import { useApiQuery } from "@/hooks/useApiQuery";
+import { useApiMutation } from "@/hooks/useApiMutation";
 
 const FeaturedListings = () => {
   const [activeTab, setActiveTab] = useState("car");
@@ -17,6 +18,21 @@ const FeaturedListings = () => {
     },
     secure: true,
   });
+
+  // add favorite
+  const { mutate, isPending } = useApiMutation({
+    url: "/account/favorites/toggle/",
+    method: "POST",
+    secure: true,
+    successMessage: "Toggle favorite success!",
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const onAddFavorite = (id, type) => {
+    mutate({ id, type });
+  };
 
   const getMappedData = () => {
     if (!data?.results) return [];
@@ -32,6 +48,7 @@ const FeaturedListings = () => {
         transmission: item.material,
         price: item.discount_price,
         isNew: false,
+        isFavorite: item.is_favorite,
       }));
     } else {
       return data.results.map((item) => ({
@@ -44,6 +61,7 @@ const FeaturedListings = () => {
         transmission: item.transmission,
         price: item.discount_price,
         isNew: false,
+        isFavorite: item.is_favorite,
       }));
     }
   };
@@ -54,27 +72,42 @@ const FeaturedListings = () => {
     {
       id: "car",
       name: "Cars",
-      content: <VehiclesCardDemo cars={currentData} />,
+      content: (
+        <VehiclesCardDemo cars={currentData} onAddFavorite={onAddFavorite} />
+      ),
     },
     {
       id: "motorcycle",
       name: "Motorcycle",
-      content: <VehiclesCardDemo cars={currentData} />,
+      content: (
+        <VehiclesCardDemo cars={currentData} onAddFavorite={onAddFavorite} />
+      ),
     },
     {
       id: "truck",
       name: "Utility Trucks",
-      content: <VehiclesCardDemo cars={currentData} />,
+      content: (
+        <VehiclesCardDemo cars={currentData} onAddFavorite={onAddFavorite} />
+      ),
     },
     {
       id: "scooter",
       name: "Scooter",
-      content: <VehiclesCardDemo cars={currentData} />,
+      content: (
+        <VehiclesCardDemo cars={currentData} onAddFavorite={onAddFavorite} />
+      ),
     },
     {
       id: "parts",
       name: "Parts",
-      content: <VehiclesCardDemo cars={currentData} path="parts-details" />,
+      content: (
+        <VehiclesCardDemo
+          cars={currentData}
+          path="parts-details"
+          onAddFavorite={onAddFavorite}
+          type="part"
+        />
+      ),
     },
   ];
 

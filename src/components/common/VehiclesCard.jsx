@@ -22,8 +22,8 @@ const VehiclesCard = ({
   onViewDetails,
   onFavorite,
   path,
+  isFavorite,
 }) => {
-  console.log(path);
   return (
     <div className="rounded-2xl shadow-lg overflow-hidden">
       {/* Image */}
@@ -31,10 +31,16 @@ const VehiclesCard = ({
         <img src={imageUrl} alt={title} className="w-full h-58 object-cover" />
         {/* Favorite Button */}
         <button
-          onClick={onFavorite}
-          className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
+          onClick={(e) => {
+            e.stopPropagation();
+            onFavorite();
+          }}
+          className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-300 group z-10"
         >
-          <Heart className="w-5 h-5 text-gray-600" />
+          <Heart
+            className={`w-5 h-5 transition-all duration-300 ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-600 group-hover:text-red-500 group-hover:fill-red-500"}`}
+            fill={isFavorite ? "currentColor" : "none"}
+          />
         </button>
       </div>
 
@@ -65,7 +71,7 @@ const VehiclesCard = ({
 
         {/* Price & Button */}
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900">{price}</span>
+          <span className="text-2xl font-bold text-gray-900">€{price}</span>
           <Link
             to={`/${path || "details"}/${id}`}
             onClick={onViewDetails}

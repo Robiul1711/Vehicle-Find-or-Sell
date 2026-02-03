@@ -11,7 +11,7 @@ const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { user, logout } = useAuth();
-  console.log(user);
+  // console.log(user);
   const navigate = useNavigate();
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);

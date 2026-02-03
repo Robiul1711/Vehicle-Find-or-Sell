@@ -11,23 +11,27 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 import { useParams } from "react-router-dom";
 const DetailsPage = () => {
   const { id } = useParams();
-    const { data, isLoading } = useApiQuery({
-      queryKey: ["vehicle-details", id],
-      url: `store/vehicle/${id}`,
-      secure: true,
-    });
-  console.log(data)
+  const { data, isLoading, refetch } = useApiQuery({
+    queryKey: ["vehicle-details", id],
+    url: `store/vehicle/${id}`,
+    secure: true,
+  });
+  console.log(data);
   const details = "car"; // car, truck, bike, scoter, parts
   return (
     <div className="section-padding-x pb-20 flex flex-col gap-10 ">
-      <DetailsRowOne details={details} data={data} />
+      <DetailsRowOne details={details} data={data} refetch={refetch} />
       <div className=" max-w-[950px]">
-        {details === "parts" ? <PartOverview /> : <CarOverView details={details} data={data} />}
+        {details === "parts" ? (
+          <PartOverview />
+        ) : (
+          <CarOverView details={details} data={data} />
+        )}
         {details !== "parts" && <FeaturesComponent data={data} />}
         {details !== "parts" && <EngineSpec data={data} />}
         <Location data={data} />
       </div>
-      <RealatedCars
+      {/* <RealatedCars
         items={
           details === "car"
             ? cars
@@ -40,7 +44,7 @@ const DetailsPage = () => {
             : Parts
         }
         title="Related Cars"
-      />
+      /> */}
     </div>
   );
 };

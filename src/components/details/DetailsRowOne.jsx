@@ -1,13 +1,37 @@
 import React, { useState } from "react";
 import CarLeftSideImages from "../admin/CarDetails/CarLeftSideImages";
 import Title from "../common/Title";
-import { ManualIcon, MilesIcons, PetrolIcon, WarrentiesIcon } from "../common/SVGicons/CarSvg";
+import {
+  ManualIcon,
+  MilesIcons,
+  PetrolIcon,
+  WarrentiesIcon,
+} from "../common/SVGicons/CarSvg";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import VehiclePriceDealer from "./VehiclePriceDealer";
+import { useApiMutation } from "@/hooks/useApiMutation";
 
-const DetailsRowOne = ({ details, data }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const DetailsRowOne = ({ details, data, refetch }) => {
+  // add favorite
+  const { mutate, isPending } = useApiMutation({
+    url: "/account/favorites/toggle/",
+    method: "POST",
+    secure: true,
+    successMessage: "Toggle favorite success!",
+    onSuccess: () => {
+      if (refetch) refetch();
+    },
+  });
+
+  const isFavorite = data?.is_favorite || false;
+  const favType = details === "parts" ? "part" : "vehicle";
+
+  const onAddFavorite = () => {
+    if (data?.id) {
+      mutate({ id: data.id, type: favType });
+    }
+  };
 
   const carInfo = [
     { id: 1, icon: MilesIcons, value: data?.mileage },
@@ -29,7 +53,11 @@ const DetailsRowOne = ({ details, data }) => {
     if (navigator.share) {
       // ✅ Mobile/Modern Browsers
       try {
-        await navigator.share({ title: "Car Details", text: shareText, url: shareUrl });
+        await navigator.share({
+          title: "Car Details",
+          text: shareText,
+          url: shareUrl,
+        });
       } catch (error) {
         console.log("Share canceled");
       }
@@ -49,7 +77,7 @@ const DetailsRowOne = ({ details, data }) => {
       <div className="xmd:w-[60%] w-full flex flex-col gap-5">
         <div className="flex flex-col gap-4">
           <Title level="title40" className="!font-bold">
-         {data?.brand_name}  {data?.model}
+            {data?.brand_name} {data?.model}
           </Title>
 
           <div className="flex w-full gap-6 justify-between">
@@ -70,7 +98,8 @@ const DetailsRowOne = ({ details, data }) => {
             <div className="flex gap-3 flex-wrap items-center">
               {/* Favorite Button */}
               <button
-                onClick={handleFavorite}
+                onClick={onAddFavorite}
+                disabled={isPending}
                 className={`flex items-center gap-2 border px-3 py-1 rounded-lg transition ${
                   isFavorite ? "bg-red-100 border-red-400" : ""
                 }`}

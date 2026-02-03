@@ -16,6 +16,7 @@ import {
 } from "@/utils/data";
 import PartListing from "./PartListing";
 import { useApiQuery } from "@/hooks/useApiQuery";
+import { useApiMutation } from "@/hooks/useApiMutation";
 
 const BrowseCategorySection = () => {
   const [activeTab, setActiveTab] = useState("car");
@@ -49,8 +50,8 @@ const BrowseCategorySection = () => {
       type: activeTab,
       ...Object.fromEntries(
         Object.entries(filterParams).filter(
-          ([_, v]) => v !== "" && v !== null && v !== undefined
-        )
+          ([_, v]) => v !== "" && v !== null && v !== undefined,
+        ),
       ),
     },
     secure: true,
@@ -72,6 +73,7 @@ const BrowseCategorySection = () => {
       transmission: item.transmission,
       image: item.first_image, // Handle null/default image in component
       price: item.discount_price || item.original_price,
+      isFavorite: item.is_favorite,
     }));
   };
 
@@ -87,7 +89,22 @@ const BrowseCategorySection = () => {
       transmission: item.color, // Reusing transmission for color
       image: item.first_image,
       price: item.discount_price || item.original_price,
+      isFavorite: item.is_favorite,
     }));
+  };
+
+  const { mutate } = useApiMutation({
+    url: "/account/favorites/toggle/",
+    method: "POST",
+    secure: true,
+    successMessage: "Toggle favorite success!",
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const onAddFavorite = (id, type) => {
+    mutate({ id, type });
   };
 
   // Define categories data
@@ -102,6 +119,7 @@ const BrowseCategorySection = () => {
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
+          onAddFavorite={(id) => onAddFavorite(id, "vehicle")}
         />
       ),
     },
@@ -115,6 +133,7 @@ const BrowseCategorySection = () => {
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
+          onAddFavorite={(id) => onAddFavorite(id, "vehicle")}
         />
       ),
     },
@@ -128,6 +147,7 @@ const BrowseCategorySection = () => {
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
+          onAddFavorite={(id) => onAddFavorite(id, "vehicle")}
         />
       ),
     },
@@ -141,6 +161,7 @@ const BrowseCategorySection = () => {
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
+          onAddFavorite={(id) => onAddFavorite(id, "vehicle")}
         />
       ),
     },
@@ -154,6 +175,7 @@ const BrowseCategorySection = () => {
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
+          onAddFavorite={(id) => onAddFavorite(id, "parts")}
         />
       ),
     },

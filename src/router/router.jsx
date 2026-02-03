@@ -82,7 +82,7 @@ const router = createBrowserRouter([
         element: <DealerPage />,
       },
       {
-        path: "/dealer-profile",
+        path: "/dealer-profile/:id",
         element: <DealerProfile />,
       },
       {

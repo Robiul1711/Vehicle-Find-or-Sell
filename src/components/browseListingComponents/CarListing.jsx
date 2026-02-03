@@ -3,7 +3,13 @@ import { motion } from "framer-motion";
 import { ImageProvider } from "@/utils/ImageProvider";
 import { IoGrid } from "react-icons/io5";
 import { FaList } from "react-icons/fa6";
-import { ArrowUpRight, ChevronDown, ChevronUp, Search } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  ChevronUp,
+  Search,
+  Heart,
+} from "lucide-react";
 import {
   CustomLocation,
   CustomMileage,
@@ -21,7 +27,13 @@ const options = [
   "Last Update",
 ];
 
-const CarListing = ({ items, onFilterChange, filters, isLoading }) => {
+const CarListing = ({
+  items,
+  onFilterChange,
+  filters,
+  isLoading,
+  onAddFavorite,
+}) => {
   const [isGrid, setIsGrid] = useState(false);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
@@ -189,7 +201,7 @@ const CarListing = ({ items, onFilterChange, filters, isLoading }) => {
               ))
             ) : items.length === 0 ? (
               <div className="col-span-full text-center py-20 text-gray-500">
-                No Cars Found
+                No Vehicle Found
               </div>
             ) : (
               items.map((item, i) => {
@@ -230,16 +242,30 @@ const CarListing = ({ items, onFilterChange, filters, isLoading }) => {
                         delay: waveDelay + 0.3,
                       }}
                     >
-                      <motion.img
-                        layout
-                        src={item.image}
-                        alt={item.name}
-                        className={`rounded-lg object-cover ${
-                          isGrid
-                            ? "w-full h-[200px] mb-5"
-                            : "w-44 h-44 mr-4 flex-shrink-0"
-                        }`}
-                      />
+                      <div className="relative">
+                        <motion.img
+                          layout
+                          src={item.image}
+                          alt={item.name}
+                          className={`rounded-lg object-cover ${
+                            isGrid
+                              ? "w-full h-[200px] mb-5"
+                              : "w-44 h-44 mr-4 flex-shrink-0"
+                          }`}
+                        />
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAddFavorite(item.id);
+                          }}
+                          className={`absolute ${isGrid ? "top-2 right-2" : "top-2 right-6"} p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all duration-200 z-10 group`}
+                        >
+                          <Heart
+                            className={`w-5 h-5 transition-all duration-300 ${item.isFavorite ? "text-red-500 fill-red-500" : "text-gray-600 group-hover:text-red-500 group-hover:fill-red-500"}`}
+                            fill={item.isFavorite ? "currentColor" : "none"}
+                          />
+                        </button>
+                      </div>
                       <div className={`${isGrid ? "w-full" : "flex-1"}`}>
                         <motion.h3
                           layout
@@ -263,7 +289,9 @@ const CarListing = ({ items, onFilterChange, filters, isLoading }) => {
                           className="text-black mt-1 flex text-sm items-start gap-1 "
                         >
                           <CustomLocation />
-                          <span className="flex-1 line-clamp-1">{item.location}</span>
+                          <span className="flex-1 line-clamp-1">
+                            {item.location}
+                          </span>
                         </motion.p>
                         <motion.div
                           layout

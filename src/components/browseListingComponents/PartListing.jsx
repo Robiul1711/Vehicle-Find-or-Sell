@@ -3,7 +3,13 @@ import { motion } from "framer-motion";
 import { ImageProvider } from "@/utils/ImageProvider";
 import { IoGrid } from "react-icons/io5";
 import { FaList } from "react-icons/fa6";
-import { ArrowUpRight, ChevronDown, ChevronUp, Search } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  ChevronUp,
+  Search,
+  Heart,
+} from "lucide-react";
 import {
   CustomElement,
   CustomLocation,
@@ -25,7 +31,13 @@ const options = [
   "Last Update",
 ];
 
-const PartListing = ({ items, onFilterChange, filters, isLoading }) => {
+const PartListing = ({
+  items,
+  onFilterChange,
+  filters,
+  isLoading,
+  onAddFavorite,
+}) => {
   const [isGrid, setIsGrid] = useState(false);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
@@ -235,16 +247,30 @@ const PartListing = ({ items, onFilterChange, filters, isLoading }) => {
                       }}
                     >
                       {console.log(item)}
-                      <motion.img
-                        layout
-                        src={item.image}
-                        alt={item.name}
-                        className={`rounded-lg object-cover ${
-                          isGrid
-                            ? "w-full h-[200px] mb-5"
-                            : "w-44 h-44 mr-4 flex-shrink-0"
-                        }`}
-                      />
+                      <div className="relative">
+                        <motion.img
+                          layout
+                          src={item.image}
+                          alt={item.name}
+                          className={`rounded-lg object-cover ${
+                            isGrid
+                              ? "w-full h-[200px] mb-5"
+                              : "w-44 h-44 mr-4 flex-shrink-0"
+                          }`}
+                        />
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAddFavorite(item.id);
+                          }}
+                          className={`absolute ${isGrid ? "top-2 right-2" : "top-2 right-6"} p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all duration-200 z-10 group`}
+                        >
+                          <Heart
+                            className={`w-5 h-5 transition-all duration-300 ${item.isFavorite ? "text-red-500 fill-red-500" : "text-gray-600 group-hover:text-red-500 group-hover:fill-red-500"}`}
+                            fill={item.isFavorite ? "currentColor" : "none"}
+                          />
+                        </button>
+                      </div>
                       <div className={`${isGrid ? "w-full" : "flex-1"}`}>
                         <motion.h3
                           layout
@@ -256,7 +282,10 @@ const PartListing = ({ items, onFilterChange, filters, isLoading }) => {
                         >
                           {item.name}
                         </motion.h3>
-                        <motion.p layout className="text-black mt-1 line-clamp-2">
+                        <motion.p
+                          layout
+                          className="text-black mt-1 line-clamp-2"
+                        >
                           {item.description}
                         </motion.p>
 

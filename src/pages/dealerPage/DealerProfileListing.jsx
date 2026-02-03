@@ -3,255 +3,268 @@ import { motion } from "framer-motion";
 import { ImageProvider } from "@/utils/ImageProvider";
 import { IoGrid } from "react-icons/io5";
 import { FaList } from "react-icons/fa6";
-import { ArrowUpRight, ChevronDown, ChevronUp, Search } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Search } from "lucide-react";
 import {
-    CustomLocation,
-    CustomMileage,
-    CustomPetrol,
-    CustomTransmission,
+  CustomLocation,
+  CustomMileage,
+  CustomPetrol,
+  CustomTransmission,
 } from "@/utils/IconProvider";
-import { carData, dealerProfileData } from "@/utils/data";
-import DealerFilter from "@/components/additionalServicesComponent/dealerComponent/DealerFilter";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useApiQuery } from "@/hooks/useApiQuery";
+import { IMG_URL } from "@/config/constant";
 
-const options = [
-    "Newest",
-    "Featured",
-    "Make (A-Z)",
-    "Make (Z-A)",
-    "Last Update",
-];
+const options = ["car", "motorcycle", "truck", "scooter", "parts"];
 
-const DealerProfileListing = ({ items = dealerProfileData }) => {
+const DealerProfileListing = () => {
+  const { id } = useParams();
+  const [type, setType] = useState("car");
+  const [search, setSearch] = useState("");
+  const [isGrid, setIsGrid] = useState(true);
+  const [isFeatureModal, setIsFeatureModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("car");
 
-    const [isGrid, setIsGrid] = useState(false);
-    const [isFeatureModal, setIsFeatureModal] = useState(false);
-    const [selectedOption, setSelectedOption] = useState("Feature");
+  const { data: adsData, isLoading } = useApiQuery({
+    queryKey: ["dealerListing", id, type, search],
+    url: `/delears/listing/${id}/`,
+    secure: true,
+    params: {
+      type: type,
+      search: search || undefined,
+    },
+  });
 
-    const handleSelect = (option) => {
-        handleSortSelect(option);
-    };
+  // Determine item type correctly from results
+  const items =
+    adsData?.results?.map((item) => ({
+      ...item,
+      itemType: item.part_name ? "part" : "vehicle",
+    })) || [];
 
-    const handleSortSelect = (option) => {
-        setSelectedOption(option);
-        setIsFeatureModal(false);
-    };
+  const handleSelect = (option) => {
+    setType(option);
+    setSelectedOption(option);
+    setIsFeatureModal(false);
+  };
 
-
-    return (
-        <div className="w-full">
-            <div className="flex flex-col lg:flex-row justify-between items-center gap-4 lg:gap-5 mb-10">
-                {/* Search Bar - Full width on mobile, flexible on desktop */}
-                <div className="w-full lg:w-auto lg:flex-1 border rounded-xl flex items-center gap-3 px-4">
-                    <Search />
-                    <input
-                        type="text"
-                        className="w-full p-2 outline-none bg-transparent"
-                        placeholder="Search..."
-                    />
-                </div>
-
-                {/* Button Group - Stack on mobile, row on desktop */}
-                <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-center">
-                    {/* Search Button - Full width on mobile, auto on larger screens */}
-                    <button className="w-full sm:w-auto bg-custom-primary text-white px-4 py-2 rounded-lg whitespace-nowrap">
-                        Search
-                    </button>
-
-                    {/* View Toggle Buttons */}
-                    <div className="flex space-x-2 bg-gray-200 p-1.5 rounded-lg">
-                        <button
-                            onClick={() => setIsGrid(true)}
-                            className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${isGrid
-                                ? "bg-custom-primary text-white shadow-sm"
-                                : "text-black hover:bg-gray-300"
-                                }`}
-                        >
-                            <IoGrid />
-                        </button>
-                        <button
-                            onClick={() => setIsGrid(false)}
-                            className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${!isGrid
-                                ? "bg-custom-primary text-white shadow-sm"
-                                : "text-black hover:bg-gray-300"
-                                }`}
-                        >
-                            <FaList />
-                        </button>
-                    </div>
-
-                    {/* Sort Dropdown */}
-                    <div className="w-full sm:w-auto">
-                        <div className="relative">
-                            <div
-                                onClick={() => setIsFeatureModal((prev) => !prev)}
-                                className="flex justify-between items-center px-4 py-2 border border-[#E5E5E5] rounded-lg cursor-pointer whitespace-nowrap"
-                            >
-                                <p className="font-light text-sm sm:text-base">
-                                    Sort by:{" "}
-                                    <span className="text-[#1B1B1B] font-medium">
-                                        {selectedOption}
-                                    </span>
-                                </p>
-                                {isFeatureModal ? (
-                                    <ChevronUp size={18} />
-                                ) : (
-                                    <ChevronDown size={18} />
-                                )}
-                            </div>
-
-                            {isFeatureModal && (
-                                <div className="absolute left-0 right-0 sm:left-auto sm:right-0 w-full sm:w-48 bg-[#FFFFFF] px-5 py-4 mt-2 rounded-lg shadow-md text-[14px] font-light space-y-3 z-50">
-                                    {options.map((option, index) => (
-                                        <div key={index}>
-                                            <p
-                                                onClick={() => handleSelect(option)}
-                                                className={`hover:text-[#1B1B1B] cursor-pointer ${selectedOption === option
-                                                    ? "text-Primary font-medium"
-                                                    : ""
-                                                    }`}
-                                            >
-                                                {option}
-                                            </p>
-                                            {index !== options.length - 1 && (
-                                                <hr className="text-[#E5E5E5]" />
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="flex gap-5">
-                <div className="hidden md:block w-1/4 flex-shrink-0">
-                    <DealerFilter />
-                </div>
-                <div className="flex-1 w-full md:w-3/4">
-                    <div
-                        className={`${isGrid
-                            ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
-                            : "space-y-6 md:w-[75%]"
-                            }`}
-                    >
-                        {items.map((item, i) => {
-                            const waveDelay = isGrid
-                                ? (i % 3) * 0.1 + Math.floor(i / 3) * 0.1
-                                : i * 0.1;
-
-                            return (
-                                <motion.div
-                                    key={item.id}
-                                    layout
-                                    initial={false}
-                                    animate={{
-                                        y: [0, -20, 0],
-                                        opacity: [1, 0.5, 1],
-                                        scale: [1, 0.95, 1],
-                                        transition: {
-                                            duration: 0.6,
-                                            times: [0, 0.5, 1],
-                                            delay: waveDelay,
-                                        },
-                                    }}
-                                    className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${isGrid ? "w-full mx-auto" : ""
-                                        }`}
-                                >
-                                    <motion.div
-                                        layout
-                                        className={`${isGrid
-                                            ? "p-5"
-                                            : "p-4 flex flex-col lg:flex-row items-center"
-                                            }`}
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 300,
-                                            damping: 25,
-                                            delay: waveDelay + 0.3,
-                                        }}
-                                    >
-                                        <motion.img
-                                            layout
-                                            src={item.image}
-                                            alt={item.name}
-                                            className={`rounded-lg object-cover ${isGrid
-                                                ? "w-full h-[200px] mb-5"
-                                                : "sm:w-58 sm:h-44 mr-4 flex-shrink-0"
-                                                }`}
-                                        />
-                                        <div className={`${isGrid ? "w-full" : "flex-1 pt-4"}`}>
-                                            <motion.h3
-                                                layout
-                                                className={`${isGrid ? "text-xl" : "text-[1.1rem]"
-                                                    } text-gray-800 dark:text-[#d2e5f5]`}
-                                            >
-                                                {item.name}
-                                            </motion.h3>
-                                            <motion.p layout className="text-black mt-1">
-                                                {item.description}
-                                            </motion.p>
-
-                                            <motion.p
-                                                layout
-                                                className="text-black mt-1 flex items-center gap-2"
-                                            >
-                                                <CustomLocation />
-                                                {item.location}
-                                            </motion.p>
-                                            <motion.div
-                                                layout
-                                                className="border-[1px] my-2 border-gray-300"
-                                            ></motion.div>
-                                            <motion.button
-                                                layout
-                                                className="px-4 py-2 flex justify-around items-center gap-6 w-full rounded-lg"
-                                            >
-                                                <div className="flex flex-col items-center">
-                                                    <CustomMileage />
-                                                    <p className="">{item?.mileage}</p>
-                                                </div>
-                                                <div className="flex flex-col items-center">
-                                                    <CustomPetrol />
-                                                    <p className="">{item?.fuelType}</p>
-                                                </div>
-
-                                                <div className="flex flex-col items-center">
-                                                    <CustomTransmission />
-                                                    <p className="">{item?.transmission}</p>
-                                                </div>
-                                            </motion.button>
-                                            <motion.div
-                                                layout
-                                                className="border-[1px] my-2 border-gray-300"
-                                            ></motion.div>
-                                            <motion.div layout className="flex justify-between">
-                                                <motion.p
-                                                    layout
-                                                    className={`${isGrid ? "text-xl" : "text-[1.1rem]"
-                                                        } font-semibold text-gray-900 text-center`}
-                                                >
-                                                    ${item?.price}
-                                                </motion.p>
-                                                <Link to={`/details/${item.id}`}
-                                                    layout
-                                                    className={`${isGrid ? "" : ""
-                                                        } flex items-center gap-2 font-semibold text-gray-900 text-center`}
-                                                >
-                                                    View Details <ArrowUpRight size={20} />
-                                                </Link>
-                                            </motion.div>
-                                        </div>
-                                    </motion.div>
-                                </motion.div>
-                            );
-                        })}
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="w-full space-y-8">
+      {/* Header Filters Section */}
+      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col md:flex-row gap-4 items-center justify-between">
+        {/* Search Input */}
+        <div className="relative w-full md:max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-custom-primary/20 focus:border-custom-primary outline-none transition-all text-sm"
+            placeholder="Search within this dealer's inventory..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
-    );
+
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          {/* Category Selector */}
+          <div className="relative flex-1 md:flex-none">
+            <button
+              onClick={() => setIsFeatureModal((prev) => !prev)}
+              className="w-full md:w-48 flex items-center justify-between px-4 py-2.5 bg-white border border-gray-200 rounded-xl hover:border-custom-primary transition-colors text-sm"
+            >
+              <span className="text-gray-500 mr-2">Category:</span>
+              <span className="font-semibold text-gray-900 capitalize">
+                {selectedOption}
+              </span>
+              <ChevronDown
+                className={`w-4 h-4 text-gray-400 transition-transform ${isFeatureModal ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            {isFeatureModal && (
+              <div className="absolute top-full mt-2 left-0 right-0 md:left-auto md:w-48 bg-white border border-gray-100 rounded-xl shadow-xl z-50 py-2 overflow-hidden">
+                {options.map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => handleSelect(option)}
+                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors hover:bg-gray-50 capitalize ${
+                      selectedOption === option
+                        ? "text-custom-primary font-bold bg-custom-primary/5"
+                        : "text-gray-700"
+                    }`}
+                  >
+                    {option === "parts" ? "Auto Parts" : option}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* View Toggles */}
+          <div className="flex items-center p-1 bg-gray-100 rounded-xl">
+            <button
+              onClick={() => setIsGrid(true)}
+              className={`p-2 rounded-lg transition-all ${isGrid ? "bg-white text-custom-primary shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
+            >
+              <IoGrid className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setIsGrid(false)}
+              className={`p-2 rounded-lg transition-all ${!isGrid ? "bg-white text-custom-primary shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
+            >
+              <FaList className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Grid */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+            <div
+              key={n}
+              className="bg-white rounded-2xl h-[400px] animate-pulse border border-gray-100"
+            >
+              <div className="h-48 bg-gray-200 rounded-t-2xl mb-4" />
+              <div className="px-4 space-y-3">
+                <div className="h-6 bg-gray-200 w-3/4 rounded" />
+                <div className="h-4 bg-gray-200 w-full rounded" />
+                <div className="h-10 bg-gray-100 rounded-xl" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : items.length > 0 ? (
+        <div
+          className={`${
+            isGrid
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              : "space-y-6 "
+          }`}
+        >
+          {items.map((item, i) => {
+            const isPartItem = item.itemType === "part";
+            return (
+              <motion.div
+                key={item.id + item.itemType}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className={`group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden ${
+                  !isGrid ? "flex flex-col sm:flex-row" : ""
+                }`}
+              >
+                {/* Image Container */}
+                <div
+                  className={`relative overflow-hidden ${!isGrid ? "sm:w-56" : "w-full h-52 text-center"}`}
+                >
+                  <img
+                    src={
+                      item.first_image
+                        ? item.first_image.startsWith("http")
+                          ? item.first_image
+                          : IMG_URL + item.first_image
+                        : ImageProvider.car1
+                    }
+                    alt={
+                      isPartItem
+                        ? item.part_name
+                        : `${item.brand_name} ${item.model}`
+                    }
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3 flex gap-2">
+                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-wider text-custom-primary shadow-sm border border-white">
+                      {isPartItem ? "Part" : type}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-custom-primary transition-colors line-clamp-1 mb-1">
+                      {isPartItem
+                        ? item.part_name
+                        : `${item.brand_name} ${item.model}`}
+                    </h3>
+                    <p className="text-gray-500 text-sm line-clamp-2 mb-4 h-10">
+                      {isPartItem ? item.description : item.body || item.model}
+                    </p>
+
+                    <div className="flex items-center gap-2 text-gray-400 text-sm mb-4">
+                      <CustomLocation className="w-4 h-4 flex-shrink-0" />
+                      <span className="truncate">
+                        {item.seller_address || "Address N/A"}
+                      </span>
+                    </div>
+
+                    {/* Specs Grid */}
+                    <div className="bg-gray-50 rounded-xl p-3 flex justify-between items-center gap-2 mb-5">
+                      <div className="flex flex-col items-center">
+                        <CustomMileage className="w-4 h-4 text-gray-400 mb-1" />
+                        <span className="text-[10px] text-gray-600 font-medium">
+                          {isPartItem
+                            ? item.warrenty_duration || "N/A"
+                            : item.mileage || "N/A"}
+                        </span>
+                      </div>
+                      <div className="w-px h-8 bg-gray-200" />
+                      <div className="flex flex-col items-center">
+                        <CustomPetrol className="w-4 h-4 text-gray-400 mb-1" />
+                        <span className="text-[10px] text-gray-600 font-medium lowercase">
+                          {isPartItem
+                            ? item.weight || "N/A"
+                            : item.fuel_type || "N/A"}
+                        </span>
+                      </div>
+                      <div className="w-px h-8 bg-gray-200" />
+                      <div className="flex flex-col items-center">
+                        <CustomTransmission className="w-4 h-4 text-gray-400 mb-1" />
+                        <span className="text-[10px] text-gray-600 font-medium">
+                          {isPartItem
+                            ? item.material || "N/A"
+                            : item.transmission || "N/A"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-xl font-black text-gray-950">
+                      €{item.discount_price || item.original_price || "0"}
+                    </span>
+                    <Link
+                      to={
+                        isPartItem
+                          ? `/parts-details/${item.id}`
+                          : `/details/${item.id}`
+                      }
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-custom-primary text-white rounded-lg text-sm font-bold hover:bg-custom-primary/90 transition-all active:scale-95 shadow-lg shadow-custom-primary/20"
+                    >
+                      View <ArrowUpRight size={16} />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-32 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+            <Search className="w-10 h-10 text-gray-300" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">
+            No listings found
+          </h3>
+          <p className="text-gray-500 text-center max-w-xs px-4">
+            This dealer doesn't have any items matching your criteria at the
+            moment.
+          </p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default DealerProfileListing;

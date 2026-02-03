@@ -8,7 +8,7 @@ import { PdfIcon } from "@/components/common/SVGicons/DashboardIcon";
 import PartsDetailsRowOne from "@/components/details/PartsDetailsRowOne";
 const PartsDetails = () => {
   const { id } = useParams();
-  const { data, isLoading } = useApiQuery({
+  const { data, isLoading, refetch } = useApiQuery({
     queryKey: ["parts-details", id],
     url: `/store/parts/${id}`,
     secure: true,
@@ -17,7 +17,7 @@ const PartsDetails = () => {
 
   return (
     <div className="section-padding-x pb-20 flex flex-col gap-10 ">
-      <PartsDetailsRowOne data={data} />
+      <PartsDetailsRowOne data={data} refetch={refetch} details="parts" />
       <div className=" max-w-[950px]">
         <PartOverview data={data} />
 

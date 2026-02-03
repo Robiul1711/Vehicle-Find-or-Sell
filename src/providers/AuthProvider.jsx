@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
   const getProfile = useCallback(async () => {
     if (!token || loadingProfile) return;
     setLoadingProfile(true);
-    setLoading(true);
+    // Removed setLoading(true) to prevent UI flicker/reload feeling in PrivateRoute
     try {
       const res = await axiosSecure.get("/account/profile/");
       const userData = res.data?.data || res.data;
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
       setProfileAttempted(true);
       if (err.response?.status === 401) {
         logout();
-      } 
+      }
     } finally {
       setLoading(false);
       setLoadingProfile(false);

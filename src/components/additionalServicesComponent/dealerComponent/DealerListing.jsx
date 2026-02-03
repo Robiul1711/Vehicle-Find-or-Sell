@@ -14,6 +14,8 @@ import FilterSection from "@/components/browseListingComponents/FilterSection";
 import DealerFilter from "./DealerFilter";
 import { carData, dealerData } from "@/utils/data";
 import { Link } from "react-router-dom";
+import { useApiQuery } from "@/hooks/useApiQuery";
+import { IMG_URL } from "@/config/constant";
 
 const options = [
   "Newest",
@@ -24,7 +26,14 @@ const options = [
 ];
 
 const DealerListing = () => {
-  const items = dealerData;
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["dealerData"],
+    url: "/delears/",
+    secure: true,
+  });
+
+  console.log(data?.dealers);
+  const items = data?.dealers;
   const [isGrid, setIsGrid] = useState(false);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
@@ -140,7 +149,7 @@ const DealerListing = () => {
                 : "space-y-6 md:w-[75%]"
             }`}
           >
-            {items.map((item, i) => {
+            {items?.map((item, i) => {
               const waveDelay = isGrid
                 ? (i % 3) * 0.1 + Math.floor(i / 3) * 0.1
                 : i * 0.1;
@@ -180,7 +189,7 @@ const DealerListing = () => {
                   >
                     <motion.img
                       layout
-                      src={item.image}
+                      src={IMG_URL + item?.profile_image}
                       alt={item.name}
                       className={`rounded-lg object-cover ${
                         isGrid
@@ -195,10 +204,10 @@ const DealerListing = () => {
                           isGrid ? "text-xl" : "text-[1.1rem]"
                         } text-gray-800 dark:text-[#d2e5f5]`}
                       >
-                        {item.name}
+                        {item?.full_name}
                       </motion.h3>
                       <motion.p layout className="text-black mt-1">
-                        {item.description}
+                        {item?.title}
                       </motion.p>
 
                       <motion.p
@@ -206,10 +215,10 @@ const DealerListing = () => {
                         className="text-black mt-1 flex items-center gap-2"
                       >
                         <CustomLocation />
-                        {item.location}
+                        {item?.country}, {item?.street}, {item?.city}, {item?.zip_code}
                       </motion.p>
                       <motion.div layout className=" my-2 ">
-                        <Link to={"/dealer-profile"}>
+                        <Link to={`/dealer-profile/${item?.id}`}>
                           <button className=" py-2  border border-black rounded-lg w-full">
                             View Dealer Profile
                           </button>

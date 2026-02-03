@@ -19,59 +19,69 @@ import {
   CustomRightUp,
   CustomUsedVehicle,
 } from "@/utils/IconProvider";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useApiQuery } from "@/hooks/useApiQuery";
+
+
+import { IMG_URL } from "@/config/constant";
 
 const DealerSection = () => {
-  const openingHours = [
-    { day: "Monday", hours: "9:00AM - 5:00PM" },
-    { day: "Tuesday", hours: "9:00AM - 5:00PM" },
-    { day: "Wednesday", hours: "9:00AM - 5:00PM" },
-    { day: "Thursday", hours: "9:00AM - 5:00PM" },
-    { day: "Friday", hours: "9:00AM - 5:00PM" },
-    { day: "Saturday", hours: "Closed" },
-    { day: "Sunday", hours: "Closed" },
-  ];
+  const { id } = useParams();
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["dealerDetail", id],
+    url: `/delears/detail/${id}/`,
+    secure: true,
+  });
 
-const services = [
-  {
-    name: "Used Vehicle",
-    icon: <CustomUsedVehicle />,
-    color: "bg-blue-50 text-blue-600 border-blue-200",
-  },
-  {
-    name: "New Vehicle",
-    icon: <CustomNewVehicle />,
-    color: "bg-green-50 text-green-600 border-green-200",
-  },
-  {
-    name: "Auto Repair",
-    icon: <CustomAutoRepair />,
-    color: "bg-yellow-50 text-yellow-600 border-yellow-200",
-  },
-  {
-    name: "Car Wash",
-    icon: <CustomCarWash />,
-    color: "bg-purple-50 text-purple-600 border-purple-200",
-  },
-];
+  const profileData = data?.profile;
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-custom-primary"></div>
+      </div>
+    );
+  }
+
+  const openingHours = profileData?.opening_hours || [];
+// console.log(openingHours);
+  const serviceIcons = {
+    "Used Vehicle": <CustomUsedVehicle />,
+    "New Vehicle": <CustomNewVehicle />,
+    "Auto Repair": <CustomAutoRepair />,
+    "Car Wash": <CustomCarWash />,
+  };
+
+  const services = profileData?.services || [];
 
   return (
     <div className="flex flex-col lg:flex-row gap-10">
       <div className="bg-white relative lg:w-3/4 rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         {/* Header with geometric design */}
         <div className=" ">
-          {/* Geometric shapes */}
-          <div className="w-full h-full">
-            <img src={ImageProvider.profile} className="w-full" alt="" />
+          {/* Cover image or fallback */}
+          <div className="w-full h-48 lg:h-64 bg-gray-100 overflow-hidden">
+            <img
+              src={
+                profileData?.cover_image
+                  ? IMG_URL + profileData.cover_image
+                  : ImageProvider.profile
+              }
+              className="w-full h-full object-cover"
+              alt="Cover"
+            />
           </div>
         </div>
         {/* Profile picture */}
         <div className=" -mt-10 lg:-mt-20 ">
           <div className="w-20 h-20 lg:w-32 lg:h-32 ml-10 rounded-full border-4 border-white overflow-hidden bg-gray-200">
             <img
-              src={ImageProvider.profileImg}
-              alt="Katie Sims"
+              src={
+                profileData?.profile_image
+                  ? IMG_URL + profileData.profile_image
+                  : ImageProvider.profileImg
+              }
+              alt={profileData?.full_name}
               className="w-full h-full object-cover"
             />
           </div>
@@ -79,32 +89,35 @@ const services = [
 
         <div className="p-6 pt-8">
           {/* Dealer info */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="">
               <h2 className="text-2xl font-bold text-gray-900 mb-1">
-                Katie Sims
+                {profileData?.full_name}
               </h2>
-              <p className="text-gray-600 mb-4">Professional Seller</p>
+              <p className="text-gray-600 mb-4">
+                {profileData?.account_type || "Professional Seller"}
+              </p>
 
               <div className="space-y-3 text-sm text-gray-700">
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-4 h-4 text-gray-500" />
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 text-gray-500 mt-1 flex-shrink-0" />
                   <span>
-                    2323 Dancing Dove Lane, Long Island City, NY 11101
+                    {profileData?.street}, {profileData?.city},{" "}
+                    {profileData?.zip_code}, {profileData?.country}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-gray-500" />
-                  <span>(636) 296-7838</span>
+                  <Phone className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                  <span>{profileData?.phone}</span>
                 </div>
-                <div className="text-xs space-y-1">
+                <div className="text-xs space-y-1 pt-2">
                   <p>
-                    <span className="font-semibold">SIREN Number:</span> 0123
-                    456 789 00015
+                    <span className="font-semibold">SIREN Number:</span>{" "}
+                    {profileData?.siren_number || "N/A"}
                   </p>
                   <p>
-                    <span className="font-semibold">SIRET Number:</span> 123 456
-                    789 00015
+                    <span className="font-semibold">SIRET Number:</span>{" "}
+                    {profileData?.siret_number || "N/A"}
                   </p>
                 </div>
               </div>
@@ -117,43 +130,60 @@ const services = [
                 <h3 className="font-semibold text-gray-900">Opening Hours</h3>
               </div>
               <div className="space-y-2">
-                {openingHours.map((schedule, index) => (
-                  <div key={index} className="flex justify-between text-sm">
-                    <span className="text-gray-700">{schedule.day}</span>
-                    <span
-                      className={`font-medium ${
-                        schedule.hours === "Closed"
-                          ? "text-red-600"
-                          : "text-gray-900"
-                      }`}
+                {openingHours.length > 0 ? (
+                  openingHours.map((schedule, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between text-sm py-1 border-b border-gray-50 last:border-0"
                     >
-                      {schedule.hours}
-                    </span>
-                  </div>
-                ))}
+                   
+                      <span className="text-gray-700 capitalize">
+                        {schedule.day_of_week}
+                      </span>
+                      <span
+                        className={`font-medium ${
+                          !schedule.is_open ? "text-red-600" : "text-gray-900"
+                        }`}
+                      >
+                        {schedule.is_open
+                          ? `${schedule.opening_time || "N/A"} - ${schedule.closing_time || "N/A"}`
+                          : "Closed"}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500 italic">
+                    No opening hours specified
+                  </p>
+                )}
               </div>
             </div>
           </div>
 
-          <div className="    ">
+          <div className="mt-8 border-t pt-6">
             {/* Services */}
             <div>
               <h3 className="font-semibold text-gray-900 mb-4">Services</h3>
-              <div className="grid grid-cols-4 gap-3">
-                {services.map((service, index) => {
-                  return (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {services.length > 0 ? (
+                  services.map((service, index) => (
                     <div
                       key={index}
-                   className={`flex items-center gap-3 p-3 rounded-lg border ${service.color} transition hover:scale-[1.01] hover:shadow-lg`}
-
+                      className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 bg-gray-50 transition hover:scale-[1.01] hover:shadow-sm"
                     >
-                      {service.icon}
+                      {serviceIcons[service.name] || (
+                        <Wrench className="w-5 h-5" />
+                      )}
                       <span className="text-sm font-medium text-gray-700">
                         {service.name}
                       </span>
                     </div>
-                  );
-                })}
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500 italic">
+                    No services listed
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -171,8 +201,8 @@ const services = [
           <button
             onClick={() =>
               window.open(
-                "https://wa.me/+1234567890?text=Hello!%20I'm%20interested%20in%20your%20vehicle.",
-                "_blank"
+                `https://wa.me/${profileData?.phone}?text=Hello!%20I'm%20interested%20in%20your%20vehicle.`,
+                "_blank",
               )
             }
             className="flex w-full py-3 xl:py-5 text-sm lg:text-xl xl:text-2xl items-center justify-center gap-2 bg-green-100 text-green-500 px-4 rounded-lg font-medium border-2 border-custom-primary transition-colors"
