@@ -1,13 +1,11 @@
-import { IoIosNotifications } from "react-icons/io";
-import { CgProfile } from "react-icons/cg";
-import React, { use } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, useLocation } from "react-router-dom";
 import NotificationDropdown from "@/shared/navbar/NotificationDropdown";
 import UserDropdown from "@/shared/navbar/UserDropdown";
+import { useAuth } from "@/hooks/useAuth";
 
 const CommonNavbar = ({ open, setOpen }) => {
-  const { pathname } = useLocation();
+  const {user}=useAuth()
+  // console.log(user)  
   return (
     <div className="flex items-center gap-5 justify-between w-full py-3 md:py-6 px-4 sm:px-8 bg-white ">
       <div className="flex items-center gap-4">
@@ -18,7 +16,7 @@ const CommonNavbar = ({ open, setOpen }) => {
           <GiHamburgerMenu color="black" size={26} />
         </span>
         <div className="flex items-center gap-4">
-          <p className=" text-black sm:text-2xl md:text-3xl font-bold">Admin Header</p>
+          <p className=" text-black sm:text-2xl md:text-3xl font-bold">{user?.profile?.first_name} {user?.profile?.last_name}</p>
         </div>
       </div>
 

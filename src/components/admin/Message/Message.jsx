@@ -1,82 +1,95 @@
-import React, { useState, useEffect } from "react";
-import { Loader } from "lucide-react";
+import React, { useState, useEffect, useMemo } from "react";
+import { Loader, Search, MessageSquare, Inbox } from "lucide-react";
 import MessageInbox from "./MessageInbox";
+import { useApiQuery } from "@/hooks/useApiQuery";
+import { useAuth } from "@/hooks/useAuth";
+import { IMG_URL } from "@/config/constant";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Message = () => {
-  const [conversations, setConversations] = useState([]);
+  const { user } = useAuth();
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const queryClient = useQueryClient();
 
-  // Mock API function
-  const fetchConversations = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          {
-            id: 1,
-            name: "Kabir",
-            avatar: "https://i.pravatar.cc/40?img=3",
-            lastMessage: "Hey there!",
-            unread: 2,
-            time: "10:00am",
-          },
-          {
-            id: 2,
-            name: "Junaid",
-            avatar: "https://i.pravatar.cc/40?img=4",
-            lastMessage: "How are you?",
-            unread: 0,
-            time: "9:45am",
-          },
-          {
-            id: 3,
-            name: "Mahi",
-            avatar: "https://i.pravatar.cc/40?img=5",
-            lastMessage: "See you tomorrow!",
-            unread: 1,
-            time: "Yesterday",
-          },
-          {
-            id: 4,
-            name: "Arif",
-            avatar: "https://i.pravatar.cc/40?img=6",
-            lastMessage: "Check this out",
-            unread: 0,
-            time: "Mon",
-          },
-          {
-            id: 5,
-            name: "Sarah",
-            avatar: "https://i.pravatar.cc/40?img=7",
-            lastMessage: "Meeting at 3pm",
-            unread: 3,
-            time: "Sun",
-          },
-        ]);
-      }, 800);
+  // Fetch conversations list
+  const { data: conversationsList, isLoading: conversationsLoading } =
+    useApiQuery({
+      queryKey: ["conversations-list"],
+      url: `/message/conversations/`,
+      secure: true,
     });
-  };
 
+  // Listen for real-time conversation updates via query cache invalidation
   useEffect(() => {
-    const loadConversations = async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchConversations();
-        setConversations(data);
-      } catch (error) {
-        console.error("Error loading conversations:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    const interval = setInterval(() => {
+      queryClient.invalidateQueries({ queryKey: ["conversations-list"] });
+    }, 1000); // Refresh every 1 seconds
 
-    loadConversations();
-  }, []);
+    return () => clearInterval(interval);
+  }, [queryClient]);
 
-  const filteredConversations = conversations.filter((conv) =>
-    conv.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Process conversations
+  const processedConversations = useMemo(() => {
+    return (
+      conversationsList?.data
+        ?.map((conv) => {
+          const otherParticipant =
+            conv.participants?.find((p) => p.email !== user?.email) ||
+            conv.participants?.[0] ||
+            {};
+
+          return {
+            id: conv.id,
+            participants: conv.participants,
+            name: otherParticipant.full_name || "Unknown User",
+            avatar: otherParticipant.profile_image || "/default-avatar.png",
+            lastMessage:
+              typeof conv.last_message?.text === "string"
+                ? conv.last_message.text
+                : conv.last_message?.text?.text || "No messages yet",
+            rawTimestamp: conv.last_message?.timestamp,
+            time: conv.last_message?.timestamp
+              ? new Date(conv.last_message.timestamp).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              : "",
+            unread: conv.unread_count || 0,
+            lastMessageId: conv.last_message?.id,
+          };
+        })
+        .sort((a, b) => {
+          const dateA = a.rawTimestamp ? new Date(a.rawTimestamp).getTime() : 0;
+          const dateB = b.rawTimestamp ? new Date(b.rawTimestamp).getTime() : 0;
+          return dateB - dateA;
+        }) || []
+    );
+  }, [conversationsList, user]);
+
+  const filteredConversations = useMemo(() => {
+    return processedConversations.filter((conv) =>
+      conv.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }, [processedConversations, searchQuery]);
+
+  // Handle conversation selection
+  const handleConversationSelect = (conversation) => {
+    setSelectedConversation(conversation);
+    // Mark conversation as read when selected
+    if (conversation.unread > 0) {
+      // Update local cache to reset unread count
+      queryClient.setQueryData(["conversations-list"], (oldData) => {
+        if (!oldData?.data) return oldData;
+        return {
+          ...oldData,
+          data: oldData.data.map((conv) =>
+            conv.id === conversation.id ? { ...conv, unread_count: 0 } : conv,
+          ),
+        };
+      });
+    }
+  };
 
   return (
     <div className="flex flex-col md:flex-row gap-4 w-full h-[calc(100vh-70px)] sm:h-[calc(100vh-120px)]">
@@ -84,79 +97,86 @@ const Message = () => {
       <div
         className={`${
           selectedConversation ? "hidden md:flex" : "flex"
-        } flex-col w-full md:w-1/3 p-4 border rounded-lg bg-white`}
+        } flex-col w-full md:w-1/3 p-4 border rounded-lg bg-white shadow-sm`}
       >
-        {/* Search box */}
-        <div className="relative mb-4">
-          <input
-            type="text"
-            placeholder="Search for a user..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-theme-primary dark:bg-slate-800 dark:border-slate-700 dark:text-white"
-          />
-          <span className="absolute right-3 top-3 text-gray-400 dark:text-slate-400">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103 10.5a7.5 7.5 0 0013.15 6.15z"
-              />
-            </svg>
-          </span>
+        <div className="mb-4">
+          <h1 className="text-xl font-bold text-gray-800 mb-2">Messages</h1>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search conversations..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm"
+            />
+            <span className="absolute left-3 top-2.5 text-gray-400">
+              <Search size={20} />
+            </span>
+          </div>
         </div>
 
-        {/* Conversations */}
-        {isLoading ? (
+        {/* Conversations List */}
+        {conversationsLoading ? (
           <div className="flex justify-center items-center flex-1">
-            <Loader className="animate-spin" size={24} />
+            <Loader className="animate-spin text-blue-500" size={24} />
           </div>
         ) : (
-          <div className="space-y-2 overflow-y-auto flex-1">
-            {filteredConversations.map((conversation) => (
-              <div
-                key={conversation.id}
-                onClick={() => setSelectedConversation(conversation)}
-                className={`flex items-center gap-3 p-3 rounded-lg hover:bg-[#E6EAEE] dark:hover:bg-slate-800 cursor-pointer ${
-                  selectedConversation?.id === conversation.id
-                    ? "bg-[#E6EAEE] dark:bg-slate-800"
-                    : ""
-                }`}
-              >
-                <img
-                  src={conversation.avatar}
-                  alt={conversation.name}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between items-center mb-1">
-                    <h3 className="font-medium text-slate-800 dark:text-white truncate">
-                      {conversation.name}
-                    </h3>
-                    <p className="text-[11px] text-gray-500 dark:text-slate-400 whitespace-nowrap">
-                      {conversation.time}
-                    </p>
+          <div className="space-y-1 overflow-y-auto flex-1 -mx-2 px-2">
+            {filteredConversations?.length > 0 ? (
+              filteredConversations.map((conversation) => (
+                <div
+                  key={conversation.id}
+                  onClick={() => handleConversationSelect(conversation)}
+                  className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-200 cursor-pointer group ${
+                    selectedConversation?.id === conversation.id
+                      ? "bg-blue-50 border border-blue-100"
+                      : "hover:bg-gray-50"
+                  }`}
+                >
+                  <div className="relative">
+                    <img
+                      src={IMG_URL + conversation.avatar}
+                      alt={conversation.name}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-white"
+                      onError={(e) => {
+                        e.target.src = "https://i.pravatar.cc/150";
+                      }}
+                    />
+                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <p className="text-xs text-gray-500 dark:text-slate-400 truncate max-w-[70%]">
-                      {conversation.lastMessage}
-                    </p>
-                    {conversation.unread > 0 && (
-                      <span className="bg-custom-primary text-white text-xs rounded-full min-w-[20px] h-5 flex items-center justify-center">
-                        {conversation.unread}
-                      </span>
-                    )}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-center mb-1">
+                      <h3 className="font-semibold text-gray-800 truncate">
+                        {conversation.name}
+                      </h3>
+                      <p className="text-xs text-gray-500 whitespace-nowrap">
+                        {conversation.time}
+                      </p>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="text-sm text-gray-600 truncate max-w-[70%]">
+                        {conversation.lastMessage}
+                      </p>
+                      {conversation.unread > 0 && (
+                        <span className="bg-blue-500 text-white text-xs font-medium rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">
+                          {conversation.unread}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                  <Inbox className="h-8 w-8 text-gray-400" />
+                </div>
+                <h3 className="text-gray-600 font-medium">No conversations</h3>
+                <p className="text-sm text-gray-500 mt-1">
+                  Start a new conversation
+                </p>
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>
@@ -167,31 +187,19 @@ const Message = () => {
           <MessageInbox
             selectedConversation={selectedConversation}
             onBack={() => setSelectedConversation(null)}
+            queryClient={queryClient}
           />
         ) : (
-          <div className="border rounded-lg p-5 bg-white h-full flex items-center justify-center">
-            <div className="text-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-12 w-12 mx-auto text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                />
-              </svg>
-              <h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-white">
-                Select a conversation
-              </h3>
-              <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">
-                Choose a chat from the sidebar to start messaging
-              </p>
+          <div className="border rounded-lg bg-white h-full flex flex-col items-center justify-center p-6 shadow-sm">
+            <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+              <MessageSquare className="h-12 w-12 text-blue-500" />
             </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              Welcome to Messages
+            </h3>
+            <p className="text-gray-600 text-center max-w-md mb-6">
+              Select a conversation from the sidebar to start messaging.
+            </p>
           </div>
         )}
       </div>

@@ -22,18 +22,26 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
-
 import { IMG_URL } from "@/config/constant";
+import { useApiMutation } from "@/hooks/useApiMutation";
+import { useAuth } from "@/hooks/useAuth";
 
 const DealerSection = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const { data, isLoading } = useApiQuery({
     queryKey: ["dealerDetail", id],
     url: `/delears/detail/${id}/`,
     secure: true,
   });
-
+  // console.log(user?.profile?.user?.id);
   const profileData = data?.profile;
+
+  const { mutate, isPending } = useApiMutation({
+    url: "/message/conversations/get-or-create/",
+    method: "POST",
+    secure: true,
+  });
 
   if (isLoading) {
     return (
@@ -44,7 +52,7 @@ const DealerSection = () => {
   }
 
   const openingHours = profileData?.opening_hours || [];
-// console.log(openingHours);
+  // console.log(openingHours);
   const serviceIcons = {
     "Used Vehicle": <CustomUsedVehicle />,
     "New Vehicle": <CustomNewVehicle />,
@@ -136,7 +144,6 @@ const DealerSection = () => {
                       key={index}
                       className="flex justify-between text-sm py-1 border-b border-gray-50 last:border-0"
                     >
-                   
                       <span className="text-gray-700 capitalize">
                         {schedule.day_of_week}
                       </span>
@@ -190,8 +197,14 @@ const DealerSection = () => {
         </div>
       </div>
       <div className="lg:w-1/4">
+     {/* {console.log(profileData?.user_id)} */}
         <div className="border shadow-lg rounded-xl p-5 flex flex-col gap-5">
           <Link
+            onClick={() =>
+              mutate({
+                user_id: profileData?.user_id,
+              })
+            }
             to="/dashboard/message"
             className="flex w-full py-3   xl:py-5 text-sm lg:text-xl xl:text-2xl items-center justify-center gap-2 bg-blue-100 text-custom-primary px-4 rounded-lg  font-medium border-2 border-custom-primary transition-colors "
           >

@@ -11,7 +11,7 @@ const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { user, logout } = useAuth();
-  // console.log(user);
+  console.log(user);
   const navigate = useNavigate();
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
@@ -82,6 +82,9 @@ const UserDropdown = () => {
             </p>
             <p className="text-xs text-gray-500 truncate mt-0.5">
               {user?.profile?.user?.email}
+            </p>
+            <p className="text-xs text-gray-500 font-bold mt-0.5">
+              {user?.profile?.user?.account_type}
             </p>
           </div>
 

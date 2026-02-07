@@ -1,562 +1,535 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  LuHeart,
-  LuSend,
-  LuThumbsUp,
-  LuPaperclip,
-  LuX,
-  LuFile,
-} from "react-icons/lu";
-import { FaRegSmile } from "react-icons/fa";
-import { FiImage } from "react-icons/fi";
+import { LuSend, LuX } from "react-icons/lu";
 import { Loader } from "lucide-react";
-import { TiStarFullOutline } from "react-icons/ti";
+import { useApiQuery } from "@/hooks/useApiQuery";
+import { useAuth } from "@/hooks/useAuth";
+import { IMG_URL } from "@/config/constant";
 
-const Message = ({
-  message,
-  reactingTo,
-  toggleReactionMenu,
-  handleReaction,
-  messageVariants,
-  reactionVariants,
-  formatFileSize,
-}) => (
-  <motion.div
-    variants={messageVariants}
-    custom={message}
-    initial="hidden"
-    animate="visible"
-    exit="exit"
-    layout
-    className={`mb-4 flex ${
-      message.sender === "me" ? "justify-end" : "justify-start"
-    }`}
-  >
-    <div className="relative max-w-md flex items-end gap-2">
-      {message.sender === "other" && (
-        <img
-          src={message.senderProfile?.avatar}
-          alt={message.senderProfile?.name}
-          className="w-8 h-8 rounded-full"
-        />
-      )}
-      <div>
-        <div
-          className={`p-3 rounded-lg text-black dark:text-[#d2e5f5] text-sm ${
-            message.sender === "me"
-              ? "bg-blue-50 dark:bg-blue-900/90 rounded-br-none"
-              : "bg-gray-50 dark:bg-slate-800 rounded-bl-none"
-          }`}
-        >
-          {message.attachments?.length > 0 && (
-            <div className="mb-2">
-              {message.attachments.map((attachment) => (
-                <div
-                  key={attachment.id}
-                  className="flex items-center p-2 mb-2 bg-white rounded-md border border-gray-200 dark:bg-slate-800 dark:border-slate-700"
-                >
-                  <div className="p-2 bg-gray-100 dark:bg-slate-900 rounded-md">
-                    {attachment.type.includes("image/") ? (
-                      <FiImage size={16} />
-                    ) : (
-                      <LuFile size={16} />
-                    )}
-                  </div>
-                  <div className="ml-2 flex-1 max-w-[330px]">
-                    <span className="text-xs break-words font-medium">
-                      {attachment.name}
-                    </span>
-                    <p className="text-xs dark:text-[#d2e5f5]/70 text-gray-500">
-                      {formatFileSize(attachment.size)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          {message.text}
-        </div>
-        <div
-          className={`${
-            message.sender === "me" ? "text-right" : "text-left"
-          } mt-1 text-xs text-gray-500 dark:text-[#abc2d3]/70`}
-        >
-          {message.timestamp}
-        </div>
-      </div>
-      {message.sender === "me" && (
-        <img
-          src={message.senderProfile?.avatar}
-          alt={message.senderProfile?.name}
-          className="w-8 h-8 rounded-full"
-        />
-      )}
+/* ================= MESSAGE COMPONENT ================= */
 
-      {message.reaction && (
-        <span
-          title={message.reaction}
-          onClick={() => toggleReactionMenu(message.id)}
-          className="bg-white absolute -right-2 bottom-2 rounded-full min-h-[25px] min-w-[25px] flex items-center cursor-pointer justify-center shadow-md shadow-gray-100 dark:bg-slate-700 dark:shadow-slate-800"
-        >
-          {message.reaction === "love" ? (
-            <LuHeart size={12} fill="red" color="red" />
-          ) : null}
-          {message.reaction === "like" ? (
-            <LuThumbsUp size={12} fill="blue" color="blue" />
-          ) : null}
-          {message.reaction === "smile" ? (
-            <FaRegSmile size={12} fill="gold" color="gold" />
-          ) : null}
-        </span>
-      )}
+const MessageBubble = memo(({ message, isCurrentUser }) => {
+  const getMessageText = () => {
+    if (!message.text) return "";
 
-      {message.sender === "other" && !message.reaction && (
-        <button
-          onClick={() => toggleReactionMenu(message.id)}
-          title="add reaction"
-          className="absolute bottom-2 -right-2 bg-gray-100 rounded-full p-1 shadow-sm hover:bg-gray-200 dark:bg-slate-700 dark:text-[#d2e5f5] dark:hover:bg-slate-800 transition-colors"
-        >
-          <FaRegSmile size={14} />
-        </button>
-      )}
+    if (typeof message.text === "string") return message.text;
+    if (typeof message.text === "object") {
+      return message.text?.text || message.text?.message || "";
+    }
+    return String(message.text);
+  };
 
-      <AnimatePresence>
-        {reactingTo === message.id && (
-          <motion.div
-            variants={reactionVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="absolute z-30 -bottom-6 right-0 bg-white rounded-full p-1 flex border border-border dark:bg-slate-800 dark:border-slate-700 shadow-lg"
-          >
-            <button
-              onClick={() => handleReaction(message.id, "love")}
-              className="min-w-[25px] min-h-[25px] flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-            >
-              <LuHeart
-                size={15}
-                color={message.reaction === "love" ? "red" : "gray"}
-                className="dark:!text-[#d2e5f5]"
-              />
-            </button>
-            <button
-              onClick={() => handleReaction(message.id, "like")}
-              className="p-1 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-            >
-              <LuThumbsUp
-                size={15}
-                color={message.reaction === "like" ? "blue" : "gray"}
-                className="dark:!text-[#d2e5f5]"
-              />
-            </button>
-            <button
-              onClick={() => handleReaction(message.id, "smile")}
-              className="p-1 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-            >
-              <FaRegSmile
-                size={16}
-                color={message.reaction === "smile" ? "gold" : "gray"}
-                className="dark:!text-[#d2e5f5]"
-              />
-            </button>
-          </motion.div>
+  const text = getMessageText();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
+      className={`flex ${isCurrentUser ? "justify-end" : "justify-start"} mb-3`}
+    >
+      <div className="flex items-end gap-2 max-w-[80%]">
+        {!isCurrentUser && (
+          <img
+            src={
+              IMG_URL + (message.senderProfile?.avatar || "/default-avatar.png")
+            }
+            alt="Profile"
+            className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+            onError={(e) => {
+              e.target.src = "https://i.pravatar.cc/150";
+            }}
+          />
         )}
-      </AnimatePresence>
-    </div>
-  </motion.div>
-);
 
-const MessageInbox = ({ selectedConversation, onBack }) => {
+        <div className={`${isCurrentUser ? "order-2" : "order-1"}`}>
+          <div
+            className={`px-4 py-2.5 rounded-2xl ${
+              isCurrentUser
+                ? "bg-blue-500 text-white rounded-br-md"
+                : "bg-gray-100 text-gray-800 rounded-bl-md"
+            }`}
+          >
+            <p className="text-sm leading-relaxed">{text}</p>
+          </div>
+          <div
+            className={`text-xs mt-1 text-gray-500 ${
+              isCurrentUser ? "text-right" : "text-left"
+            }`}
+          >
+            {message.timestamp}
+            {message.status && (
+              <span className="ml-1">
+                {message.status === "sent" && "✓"}
+                {message.status === "delivered" && "✓✓"}
+                {message.status === "read" && "✓✓ (Read)"}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {isCurrentUser && (
+          <img
+            src={
+              IMG_URL + (message.senderProfile?.avatar || "/default-avatar.png")
+            }
+            alt="Profile"
+            className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+            onError={(e) => {
+              e.target.src = "https://i.pravatar.cc/150";
+            }}
+          />
+        )}
+      </div>
+    </motion.div>
+  );
+});
+
+MessageBubble.displayName = "MessageBubble";
+
+/* ================= MAIN INBOX ================= */
+
+const MessageInbox = ({ selectedConversation, onBack, queryClient }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [reactingTo, setReactingTo] = useState(null);
-  const [attachments, setAttachments] = useState([]);
-  const [isUploading, setIsUploading] = useState(false);
-  const [totalAttachments, setTotalAttachments] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const { user } = useAuth();
 
   const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
-  const fileInputRef = useRef(null);
+  const socketRef = useRef(null);
+  const typingTimeoutRef = useRef(null);
 
-  // Mock API function
-  const fetchMessages = (conversationId) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          {
-            id: 1,
-            text: "Hey there! How's it going?",
-            sender: "other",
-            senderProfile: {
-              name: selectedConversation?.name || "User",
-              avatar:
-                selectedConversation?.avatar ||
-                "https://i.pravatar.cc/40?img=3",
-            },
-            timestamp: new Date(Date.now() - 3600000).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            reaction: null,
-            attachments: [],
-          },
-          {
-            id: 2,
-            text: "I was wondering about the project timeline",
-            sender: "other",
-            senderProfile: {
-              name: selectedConversation?.name || "User",
-              avatar:
-                selectedConversation?.avatar ||
-                "https://i.pravatar.cc/40?img=3",
-            },
-            timestamp: new Date(Date.now() - 1800000).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            reaction: null,
-            attachments: [],
-          },
-          {
-            id: 3,
-            text: "Everything is on track! We should be done by Friday",
-            sender: "me",
-            senderProfile: {
-              name: "You",
-              avatar: "https://i.pravatar.cc/40?img=1",
-            },
-            timestamp: new Date().toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            reaction: null,
-            attachments: [],
-          },
-        ]);
-      }, 500);
-    });
-  };
+  /* -------- FETCH HISTORY -------- */
+  const {
+    data: inboxMessagesData,
+    isLoading,
+    refetch,
+  } = useApiQuery({
+    queryKey: ["inbox-messages", selectedConversation?.id],
+    url: `/message/conversations/${selectedConversation?.id}/messages/`,
+    secure: true,
+    enabled: !!selectedConversation?.id,
+  });
 
-  // Fetch messages when conversation changes
+  // Process message to determine sender
+  const processMessage = useCallback(
+    (msg) => {
+      const msgSenderId = msg.sender?.id || msg.sender;
+      const msgSenderEmail = msg.sender_email;
+
+      const isMe =
+        (msgSenderId && msgSenderId === user?.profile?.user?.id) ||
+        (msgSenderEmail && msgSenderEmail === user?.email);
+
+      return {
+        id: msg.id || Date.now(),
+        text: msg.text || msg.message,
+        sender: isMe ? "me" : "other",
+        senderProfile: {
+          avatar: isMe
+            ? user?.profile?.profile_image
+            : selectedConversation?.avatar,
+        },
+        timestamp: new Date(
+          msg.timestamp || msg.created_at || Date.now(),
+        ).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        status: isMe ? "sent" : undefined,
+      };
+    },
+    [user, selectedConversation],
+  );
+
+  // Sync History
   useEffect(() => {
-    if (selectedConversation) {
-      setIsLoading(true);
-      fetchMessages(selectedConversation.id)
-        .then((data) => {
-          setMessages(data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching messages:", error);
-          setIsLoading(false);
-        });
+    if (inboxMessagesData?.data) {
+      const processed = inboxMessagesData.data.map(processMessage);
+      setMessages(processed);
     }
-  }, [selectedConversation]);
+  }, [inboxMessagesData, processMessage]);
 
-  // Auto-scroll to bottom when messages change
-  //   useEffect(() => {
-  //     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  //   }, [messages]);
+  /* -------- WEBSOCKET CONNECTION -------- */
+  useEffect(() => {
+    if (!selectedConversation?.id) return;
 
-  const handleSendMessage = async () => {
-    if (newMessage.trim() === "" && attachments.length === 0) return;
+    const wsUrl = `wss://gtac.softvencealpha.com/ws/chat/${selectedConversation.id}/`;
+    const socket = new WebSocket(wsUrl);
+    socketRef.current = socket;
 
-    const newId = messages.length
-      ? Math.max(...messages.map((m) => m.id)) + 1
-      : 1;
-
-    const message = {
-      id: newId,
-      text: newMessage,
-      sender: "me",
-      senderProfile: {
-        name: "You",
-        avatar: "https://i.pravatar.cc/40?img=1",
-      },
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      reaction: null,
-      attachments: [...attachments],
+    socket.onopen = () => {
+      console.log("WebSocket Connected");
     };
 
-    setMessages([...messages, message]);
-    setNewMessage("");
-    setAttachments([]);
-    inputRef.current?.focus();
-  };
+    socket.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
-  const handleFileUpload = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length === 0) return;
-
-    setTotalAttachments(files.length);
-    setIsUploading(true);
-
-    setTimeout(() => {
-      const newAttachments = files.map((file) => ({
-        id: Math.random().toString(36).substring(2, 9),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        url: URL.createObjectURL(file),
-      }));
-
-      setAttachments([...attachments, ...newAttachments]);
-      setIsUploading(false);
-    }, 1500);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const handleRemoveAttachment = (attachmentId) => {
-    setAttachments(
-      attachments.filter((attachment) => attachment.id !== attachmentId)
-    );
-  };
-
-  const handleReaction = (messageId, reaction) => {
-    setMessages(
-      messages.map((message) => {
-        if (message.id === messageId) {
-          const hasReaction = message.reaction === reaction;
-          const updatedReaction = hasReaction ? null : reaction;
-          return { ...message, reaction: updatedReaction };
+        // Handle typing indicators
+        if (data.type === "typing") {
+          setTyping(data.is_typing);
+          return;
         }
-        return message;
-      })
+
+        // Extract message data
+        let messageData = data;
+        if (data.message && typeof data.message === "object") {
+          messageData = data.message;
+        } else if (data.message && typeof data.message === "string") {
+          messageData = {
+            id: data.id || `ws-${Date.now()}`,
+            text: data.message,
+            sender: data.sender,
+            sender_email: data.sender_email,
+            timestamp: data.timestamp || new Date().toISOString(),
+          };
+        }
+
+        // Skip if this is an echo of our own message (already handled optimistically)
+        const msgSenderId = messageData.sender?.id || messageData.sender;
+        const isMe = msgSenderId && msgSenderId === user?.profile?.user?.id;
+
+        if (isMe) {
+          // This is our own message echoed back from server
+          // Find and update the optimistic message
+          setMessages((prev) => {
+            const newMessages = [...prev];
+            const optimisticIndex = newMessages.findIndex((m) =>
+              m.id.toString().startsWith("temp-"),
+            );
+
+            if (optimisticIndex !== -1) {
+              // Replace optimistic message with real one
+              const processedMessage = processMessage(messageData);
+              processedMessage.status = "delivered";
+              newMessages[optimisticIndex] = processedMessage;
+            } else {
+              // Add as new message if no optimistic found
+              const processedMessage = processMessage(messageData);
+              processedMessage.status = "delivered";
+              newMessages.push(processedMessage);
+            }
+
+            return newMessages;
+          });
+        } else {
+          // Message from other user
+          const processedMessage = processMessage(messageData);
+
+          setMessages((prev) => {
+            // Check for duplicates by ID
+            if (prev.find((m) => m.id === processedMessage.id)) return prev;
+            return [...prev, processedMessage];
+          });
+
+          // Update conversation list with new message
+          updateConversationList(processedMessage, false);
+        }
+      } catch (error) {
+        console.error("Error processing WebSocket message:", error);
+      }
+    };
+
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    socket.onclose = () => {
+      console.log("WebSocket disconnected");
+    };
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+    };
+  }, [selectedConversation?.id, processMessage, user]);
+
+  // Update conversation list in real-time
+  const updateConversationList = useCallback(
+    (message, isCurrentUser) => {
+      if (!queryClient) return;
+
+      queryClient.setQueryData(["conversations-list"], (oldData) => {
+        if (!oldData?.data) return oldData;
+
+        const updatedData = oldData.data.map((conv) => {
+          if (conv.id === selectedConversation.id) {
+            const textContent =
+              typeof message.text === "object"
+                ? message.text.text
+                : message.text;
+
+            return {
+              ...conv,
+              last_message: {
+                ...conv.last_message,
+                id: message.id,
+                text: textContent,
+                timestamp: new Date().toISOString(),
+              },
+              // Increment unread count only if message is from other user
+              unread_count: isCurrentUser
+                ? conv.unread_count
+                : (conv.unread_count || 0) + 1,
+            };
+          }
+          return conv;
+        });
+
+        // Move updated conversation to top
+        const updatedConv = updatedData.find(
+          (c) => c.id === selectedConversation.id,
+        );
+        const otherConvs = updatedData.filter(
+          (c) => c.id !== selectedConversation.id,
+        );
+
+        return {
+          ...oldData,
+          data: updatedConv ? [updatedConv, ...otherConvs] : updatedData,
+        };
+      });
+    },
+    [selectedConversation?.id, queryClient],
+  );
+
+  // Scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Handle typing indicator
+  const handleTyping = useCallback(() => {
+    if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN)
+      return;
+
+    // Send typing start
+    socketRef.current.send(
+      JSON.stringify({
+        type: "typing",
+        is_typing: true,
+      }),
     );
-    setReactingTo(null);
-  };
 
-  const toggleReactionMenu = (messageId) => {
-    setReactingTo(reactingTo === messageId ? null : messageId);
-  };
+    // Clear previous timeout
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
 
-  const messageVariants = {
-    hidden: (message) => ({
-      opacity: 0,
-      y: 20,
-      x: message.sender === "me" ? 50 : -50,
-      scale: 0.8,
-    }),
-    visible: {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      scale: 1,
-      transition: {
-        type: "spring",
-        damping: 18,
-        stiffness: 220,
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: 10,
-      scale: 0.8,
-      transition: { duration: 0.2 },
-    },
-  };
+    // Set timeout to stop typing indicator
+    typingTimeoutRef.current = setTimeout(() => {
+      if (socketRef.current?.readyState === WebSocket.OPEN) {
+        socketRef.current.send(
+          JSON.stringify({
+            type: "typing",
+            is_typing: false,
+          }),
+        );
+      }
+    }, 1000);
+  }, []);
 
-  const reactionVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 10 },
-  };
+  /* -------- SEND MESSAGE -------- */
+  const handleSendMessage = async () => {
+    const trimmedMessage = newMessage.trim();
+    if (!trimmedMessage || !socketRef.current || isSending) return;
 
-  const formatFileSize = (bytes) => {
-    if (bytes < 1024) return bytes + " B";
-    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
-    else return (bytes / 1048576).toFixed(1) + " MB";
+    if (socketRef.current.readyState !== WebSocket.OPEN) {
+      alert("Connection lost. Please refresh the page.");
+      return;
+    }
+
+    setIsSending(true);
+
+    const tempId = `temp-${Date.now()}`;
+
+    try {
+      // Create optimistic message
+      const optimisticMessage = {
+        id: tempId,
+        text: trimmedMessage,
+        sender: "me",
+        senderProfile: {
+          avatar: user?.profile?.profile_image,
+        },
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        status: "sending",
+      };
+
+      // Add optimistic message to UI
+      setMessages((prev) => [...prev, optimisticMessage]);
+
+      // Update conversation list optimistically
+      updateConversationList(optimisticMessage, true);
+
+      // Prepare payload
+      const payload = {
+        message: trimmedMessage,
+        sender_id: user?.profile?.user?.id,
+        conversation_id: selectedConversation.id,
+        timestamp: new Date().toISOString(),
+      };
+
+      // Send via WebSocket
+      socketRef.current.send(JSON.stringify(payload));
+
+      // Clear input
+      setNewMessage("");
+
+      // Refetch messages after a short delay to ensure consistency
+      // Keeping this as a safety net
+      setTimeout(() => {
+        refetch();
+      }, 500);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      // Remove optimistic message on error
+      setMessages((prev) => prev.filter((m) => m.id !== tempId));
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
-    <div className="border rounded-lg p-4 bg-white h-full flex flex-col">
+    <div className="border rounded-lg bg-white h-full flex flex-col overflow-hidden shadow-sm">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row justify-between lg:items-center border-b pb-3 mb-4 gap-4">
-        <div className="flex items-center gap-2">
+      <div className="px-4 py-3 border-b bg-white flex items-center justify-between">
+        <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="md:hidden mr-2 p-1 rounded-full hover:bg-gray-100"
+            className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
+            aria-label="Back to conversations"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <LuX size={18} />
           </button>
-          <img
-            src={
-              selectedConversation?.avatar || "https://i.pravatar.cc/40?img=3"
-            }
-            alt="user"
-            className="w-10 h-10 rounded-full object-cover"
-          />
+          <div className="relative">
+            <img
+              src={
+                IMG_URL +
+                (selectedConversation?.avatar || "/default-avatar.png")
+              }
+              className="w-10 h-10 rounded-full object-cover"
+              alt={selectedConversation?.name}
+              onError={(e) => {
+                e.target.src = "https://i.pravatar.cc/150";
+              }}
+            />
+            <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+          </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="font-semibold text-lg lg:text-xl">
-                {selectedConversation?.name || "Select a conversation"}
-              </h2>
-              <p className="flex items-center gap-0.5 text-sm">
-                <TiStarFullOutline
-                  size={18}
-                  className="text-custom-primary mb-1"
-                />
-                4.3
-              </p>
-            </div>
-            <p className="text-sm text-gray-700">jaannecooper@gmail.com</p>
+            <h2 className="font-semibold text-gray-800">
+              {selectedConversation?.name}
+            </h2>
+            <p className="text-xs text-gray-500">
+              {typing ? "Typing..." : "Online"}
+            </p>
           </div>
         </div>
-  
+        {/* Removed inactive header buttons */}
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-hidden flex flex-col">
-        <div className="flex-1 p-2 md:p-4 overflow-y-auto">
-          {isLoading ? (
-            <div className="flex justify-center items-center h-full">
-              <Loader className="animate-spin" size={24} />
+      {/* Message List */}
+      <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-gray-50 to-white custom-scrollbar">
+        {isLoading ? (
+          <div className="flex justify-center items-center h-full">
+            <div className="text-center">
+              <Loader
+                className="animate-spin text-blue-500 mx-auto mb-2"
+                size={28}
+              />
+              <p className="text-sm text-gray-500">Loading messages...</p>
             </div>
-          ) : (
-            <AnimatePresence>
-              {messages.map((message) => (
-                <Message
-                  key={message.id}
-                  message={message}
-                  reactingTo={reactingTo}
-                  toggleReactionMenu={toggleReactionMenu}
-                  handleReaction={handleReaction}
-                  messageVariants={messageVariants}
-                  reactionVariants={reactionVariants}
-                  formatFileSize={formatFileSize}
+          </div>
+        ) : messages.length === 0 ? (
+          <div className="flex justify-center items-center h-full">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                <svg
+                  className="w-8 h-8 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-700 mb-1">
+                No messages yet
+              </h3>
+              <p className="text-gray-500 text-sm">
+                Send a message to start the conversation
+              </p>
+            </div>
+          </div>
+        ) : (
+          <AnimatePresence initial={false}>
+            <div className="space-y-1">
+              {messages.map((msg) => (
+                <MessageBubble
+                  key={msg.id}
+                  message={msg}
+                  isCurrentUser={msg.sender === "me"}
                 />
               ))}
-              <div ref={messagesEndRef} />
-            </AnimatePresence>
-          )}
-        </div>
-
-        {/* Message Input */}
-        <div className="bg-white dark:bg-slate-900 dark:border-slate-700 py-2 px-4 pb-3 border border-border rounded-lg">
-          {(attachments.length || isUploading) && (
-            <div className="mb-2 flex flex-wrap gap-2">
-              {isUploading &&
-                Array.from({ length: totalAttachments }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-50 dark:bg-slate-800 dark:border-slate-700 dark:text-[#d2e5f5] p-2 rounded-md border border-gray-200 flex items-center gap-2"
-                  >
-                    <Loader className="animate-spin" size={16} />
-                    <span className="text-sm">Uploading...</span>
-                  </div>
-                ))}
-
-              {attachments.map((file) =>
-                file.type.startsWith("image/") ? (
-                  <div key={file.id} className="relative group">
-                    <img
-                      src={file.url}
-                      alt={file.name}
-                      className="w-[80px] object-cover h-[60px] dark:border-slate-700 border border-border p-1 rounded-lg"
-                    />
-                    <button
-                      onClick={() => handleRemoveAttachment(file.id)}
-                      className="p-1 invisible dark:bg-slate-700 dark:text-[#d2e5f5] group-hover:visible absolute top-0 right-0 bg-gray-100 hover:bg-gray-200 rounded-full scale-[0.8] group-hover:scale-100 transition-all duration-200 ease-in"
-                    >
-                      <LuX size={14} />
-                    </button>
-                  </div>
-                ) : (
-                  <div
-                    key={file.id}
-                    className="pl-2 pr-3.5 py-2 dark:border-slate-700 rounded-lg border border-border flex items-center gap-2 group relative"
-                  >
-                    <LuFile className="text-[2.2rem] text-gray-600 dark:text-[#d2e5f5]/70" />
-                    <div>
-                      <p className="text-sm dark:text-[#d2e5f5] max-w-xs truncate">
-                        {file.name}
-                      </p>
-                      <p className="text-xs mt-0.5 dark:text-[#d2e5f5]/70 text-gray-500">
-                        {formatFileSize(file.size)}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => handleRemoveAttachment(file.id)}
-                      className="p-1 invisible dark:bg-slate-700 dark:text-[#d2e5f5] group-hover:visible scale-[0.8] group-hover:scale-100 transition-all duration-200 absolute top-0 right-0 bg-gray-100 hover:bg-gray-200 rounded-full ease-in"
-                    >
-                      <LuX size={14} />
-                    </button>
-                  </div>
-                )
-              )}
             </div>
-          )}
+            <div ref={messagesEndRef} />
+          </AnimatePresence>
+        )}
+      </div>
 
-          <div className="flex gap-2">
+      {/* Input Area */}
+      <div className="p-4 border-t bg-white">
+        <div className="flex items-center gap-2">
+          <div className="flex-1 relative">
             <input
-              ref={inputRef}
               type="text"
               value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Type a message..."
-              className="w-[70%] md:flex-1 pr-4 py-1 border-none dark:bg-transparent dark:text-[#d2e5f5] focus:outline-none focus:ring-0"
-              disabled={!selectedConversation}
+              onChange={(e) => {
+                setNewMessage(e.target.value);
+                handleTyping();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage();
+                }
+              }}
+              placeholder="Type your message..."
+              className="w-full px-4 py-3 bg-gray-50 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              disabled={isSending}
             />
-
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileUpload}
-              className="hidden"
-              multiple
-              disabled={!selectedConversation}
-            />
-
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={() => fileInputRef.current?.click()}
-              className="bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-[#d2e5f5] dark:hover:bg-slate-600/50 min-w-[30px] p-2.5 rounded-full hover:bg-gray-200 flex items-center justify-center focus:outline-none"
-              disabled={isUploading || !selectedConversation}
-            >
-              <LuPaperclip size={18} />
-            </motion.button>
-
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={handleSendMessage}
-              className="bg-custom-primary text-white min-w-[30px] p-2 rounded-full hover:bg-custom-primary/90 flex items-center justify-center focus:outline-none"
-              disabled={
-                (!newMessage.trim() && attachments.length === 0) ||
-                !selectedConversation
-              }
-            >
-              <LuSend size={18} />
-            </motion.button>
           </div>
+          <button
+            onClick={handleSendMessage}
+            disabled={!newMessage.trim() || isSending}
+            className={`p-3 rounded-full transition-all ${
+              newMessage.trim()
+                ? "bg-blue-500 hover:bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-400"
+            } ${isSending ? "opacity-70 cursor-not-allowed" : ""}`}
+            aria-label="Send message"
+          >
+            {isSending ? (
+              <Loader className="animate-spin" size={18} />
+            ) : (
+              <LuSend size={18} />
+            )}
+          </button>
         </div>
       </div>
     </div>

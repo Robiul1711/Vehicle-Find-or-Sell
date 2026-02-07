@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Loader } from "lucide-react";
 
 import Title from "../common/Title";
 import Tabs from "../common/Tabs";
@@ -68,46 +69,79 @@ const FeaturedListings = () => {
 
   const currentData = getMappedData();
 
+  /* Helper to render content based on state */
+  const renderTabContent = (type = "vehicle") => {
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center py-20">
+          <Loader className="animate-spin text-blue-600" size={32} />
+        </div>
+      );
+    }
+
+    if (!currentData || currentData.length === 0) {
+      return (
+        <div className="flex flex-col items-center justify-center py-16 text-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+            <svg
+              className="w-8 h-8 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+              />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900">
+            No {type === "part" ? "parts" : "vehicles"} available
+          </h3>
+          <p className="text-gray-500 mt-1">
+            Check back later for new listings.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <VehiclesCardDemo
+        cars={currentData}
+        path={type === "part" ? "parts-details" : undefined}
+        onAddFavorite={onAddFavorite}
+        type={type}
+      />
+    );
+  };
+
   const tabData = [
     {
       id: "car",
       name: "Cars",
-      content: (
-        <VehiclesCardDemo cars={currentData} onAddFavorite={onAddFavorite} />
-      ),
+      content: renderTabContent("vehicle"),
     },
     {
       id: "motorcycle",
       name: "Motorcycle",
-      content: (
-        <VehiclesCardDemo cars={currentData} onAddFavorite={onAddFavorite} />
-      ),
+      content: renderTabContent("vehicle"),
     },
     {
       id: "truck",
       name: "Utility Trucks",
-      content: (
-        <VehiclesCardDemo cars={currentData} onAddFavorite={onAddFavorite} />
-      ),
+      content: renderTabContent("vehicle"),
     },
     {
       id: "scooter",
       name: "Scooter",
-      content: (
-        <VehiclesCardDemo cars={currentData} onAddFavorite={onAddFavorite} />
-      ),
+      content: renderTabContent("vehicle"),
     },
     {
       id: "parts",
       name: "Parts",
-      content: (
-        <VehiclesCardDemo
-          cars={currentData}
-          path="parts-details"
-          onAddFavorite={onAddFavorite}
-          type="part"
-        />
-      ),
+      content: renderTabContent("part"),
     },
   ];
 
