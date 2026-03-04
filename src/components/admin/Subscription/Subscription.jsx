@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { useApiQuery } from "@/hooks/useApiQuery";
+import { useApiMutation } from "@/hooks/useApiMutation";
 
 const AnimatedPrice = ({ price }) => {
   return (
@@ -22,6 +24,33 @@ const Subscription = () => {
   const yearlyButtonRef = useRef(null);
   const [activeButtonLeft, setActiveButtonLeft] = useState(0);
   const [activeButtonWidth, setActiveButtonWidth] = useState(0);
+  const [loadingPlanId, setLoadingPlanId] = useState(null);
+  const { data, isLoading, refetch } = useApiQuery({
+    queryKey: ["subscription"],
+    url: "/subscription/plans/",
+    secure: true,
+    params: {
+      package_type: isMonthly ? "vehicle" : "parts",
+    },
+  });
+  const { mutate: subscribe, isPending } = useApiMutation({
+    url: "/subscription/subscribe/",
+    method: "POST",
+    secure: true,
+    onSuccess: (response) => {
+      if (response?.checkout_url) {
+        window.location.href = response.checkout_url;
+      }
+    },
+    onError: () => {
+      setLoadingPlanId(null);
+    },
+  });
+
+  const handlePurchase = (planId) => {
+    setLoadingPlanId(planId);
+    subscribe({ plan_id: planId });
+  };
 
   useEffect(() => {
     const updateButtonMetrics = () => {
@@ -42,49 +71,6 @@ const Subscription = () => {
     };
   }, [isMonthly]);
 
-  // Vehicle Packages (4 plans)
-  const vehicleTiers = [
-    {
-      name: "Premium Ad (single)",
-      price: " €19",
-      features: ["5 Projects", "10 GB Storage", "Basic Analytics", "Community Support", "Custom Domains"],
-      buttonText: "Purchase Plan",
-      isPopular: false,
-    },
-    {
-      name: "Pack of 15 Ads",
-      price: " €49",
-      features: ["Unlimited Projects", "50 GB Storage", "Advanced Analytics", "Priority Email Support", "Custom Domains", "Team Collaboration"],
-      buttonText: "Purchase Plan",
-      isPopular: true,
-    },
-    {
-      name: "Pack of 30 Ads",
-      price: " €99",
-      features: ["All Pro Features", "Unlimited Storage", "Real-time Analytics", "24/7 Phone Support", "Dedicated Account Manager", "SAML/SSO Integration"],
-      buttonText: "Purchase Plan",
-      isPopular: false,
-    },
-    {
-      name: "Pack of 50 Ads",
-      price: " €149",
-      features: ["All Pro Features", "Unlimited Storage", "Real-time Analytics", "24/7 Phone Support", "Dedicated Account Manager", "SAML/SSO Integration"],
-      buttonText: "Purchase Plan",
-      isPopular: false,
-    },
-  ];
-
-  // Spare Parts Packages (different data)
-  const sparePartsTiers = [
-    {
-      name: "Spare Parts Basic",
-      price: " €9",
-      features: ["1 Spare Part Ad", "Basic Listing", "7 Days Visibility"],
-      buttonText: "Purchase Spare Plan",
-      isPopular: true,
-    },
-  ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -103,20 +89,21 @@ const Subscription = () => {
   };
 
   // Switch data based on tab
-  const displayedTiers = isMonthly ? vehicleTiers : sparePartsTiers;
+  const displayedTiers = Array.isArray(data) ? data : [];
 
   return (
     <div className="w-full relative overflow-hidden">
       <div className="relative z-10 min-h-screen">
         <div className="w-full">
-    <div className="text-center sm:text-left max-w-3xl mx-auto sm:mx-0 px-4 sm:px-0">
-  <h1 className="text-2xl sm:text-4xl xl:text-5xl font-extrabold text-gray-900 tracking-tight leading-snug sm:leading-tight">
-    Choose Your Professional Subscription Plan
-  </h1>
-  <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
-    Access advanced tools, statistics, and premium ad packs to grow your visibility and sales.
-  </p>
-</div>
+          <div className="text-center sm:text-left max-w-3xl mx-auto sm:mx-0 px-4 sm:px-0">
+            <h1 className="text-2xl sm:text-4xl xl:text-5xl font-extrabold text-gray-900 tracking-tight leading-snug sm:leading-tight">
+              Choose Your Professional Subscription Plan
+            </h1>
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
+              Access advanced tools, statistics, and premium ad packs to grow
+              your visibility and sales.
+            </p>
+          </div>
 
           {/* Toggle Buttons */}
           <div className=" mt-5 md:mt-10 flex justify-center">
@@ -158,50 +145,93 @@ const Subscription = () => {
             initial="hidden"
             animate="visible"
           >
-            {displayedTiers.map((tier) => (
-              <motion.div
-                key={tier.name}
-                className={`relative flex flex-col p-8 rounded-xl border transition-all duration-300 ${
-                  tier.isPopular ? "border-[#01244B] bg-white" : "border-gray-200 bg-white/90"
-                }`}
-                variants={cardVariants}
-                whileHover={{
-                  y: -8,
-                  boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15), 0 10px 10px -5px rgba(0,0,0,0.05)",
-                }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <h3 className="text-lg sm:text-2xl font-bold text-gray-900">{tier.name}</h3>
-                <div className="mt-4 flex justify-between items-baseline">
-                  <div>
-                    <span className="text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-extrabold text-gray-900">
-                      <AnimatedPrice price={tier.price} />
-                    </span>
-                    <span className="ml-1 text-xl font-medium text-gray-500">/ad</span>
+            {isLoading ? (
+              <div className="col-span-full flex justify-center items-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#01244B]"></div>
+              </div>
+            ) : (
+              displayedTiers.map((tier) => (
+                <motion.div
+                  key={tier.id}
+                  className={`relative flex flex-col p-8 rounded-xl border transition-all duration-300 ${
+                    tier.is_popular
+                      ? "border-[#01244B] bg-white"
+                      : "border-gray-200 bg-white/90"
+                  }`}
+                  variants={cardVariants}
+                  whileHover={{
+                    y: -8,
+                    boxShadow:
+                      "0 25px 50px -12px rgba(0,0,0,0.15), 0 10px 10px -5px rgba(0,0,0,0.05)",
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <div className="flex justify-between items-start">
+                    <h3 className="text-lg sm:text-2xl font-bold text-gray-900">
+                      {tier.name}
+                    </h3>
+                    {tier.is_recommended && (
+                      <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
+                        Recommended
+                      </span>
+                    )}
                   </div>
-                  <p className="xl:text-2xl text-[#F88E08]">Excl. VAT</p>
-                </div>
+                  {tier.description && (
+                    <p className="mt-2 text-sm text-gray-500">
+                      {tier.description}
+                    </p>
+                  )}
+                  <div className="mt-4 flex justify-between items-baseline">
+                    <div>
+                      <span className="text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-extrabold text-gray-900">
+                        <AnimatedPrice price={`€ ${tier.price}`} />
+                      </span>
+                    </div>
+                    <p className="xl:text-2xl text-[#F88E08]">Excl. VAT</p>
+                  </div>
 
-                <ul role="list" className="mt-5 md:mt-8 space-y-3 flex-grow">
-                  {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-center">
-                      <IoIosCheckmarkCircleOutline className="w-5 h-5 text-[#01244B]" />
-                      <p className="ml-2 text-sm sm:text-base text-gray-700">{feature}</p>
-                    </li>
-                  ))}
-                </ul>
+                  <ul role="list" className="mt-5 md:mt-8 space-y-3 flex-grow">
+                    {tier.features
+                      ?.filter((f) => f.is_enabled)
+                      .map((featureObj) => (
+                        <li key={featureObj.id} className="flex items-start">
+                          <IoIosCheckmarkCircleOutline className="w-5 h-5 mt-0.5 text-[#01244B] shrink-0" />
+                          <p className="ml-2 text-sm sm:text-base text-gray-700">
+                            {featureObj.limit_value
+                              ? `${featureObj.limit_value} `
+                              : ""}
+                            {featureObj.feature?.name}
+                          </p>
+                        </li>
+                      ))}
+                  </ul>
 
-                <div className="mt-8">
-                  <motion.button
-                    className="w-full py-2 px-4 rounded-md text-sm sm:text-base font-medium text-white bg-[#01244B] border border-[#01244B] hover:bg-[#001E3C] transition-all duration-300"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {tier.buttonText}
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
+                  <div className="mt-8">
+                    <motion.button
+                      onClick={() => handlePurchase(tier.id)}
+                      disabled={isPending && loadingPlanId === tier.id}
+                      className="w-full h-10 py-2 px-4 rounded-md text-sm sm:text-base font-medium text-white bg-[#01244B] border border-[#01244B] hover:bg-[#001E3C] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center"
+                      whileHover={
+                        !(isPending && loadingPlanId === tier.id)
+                          ? { scale: 1.02 }
+                          : {}
+                      }
+                      whileTap={
+                        !(isPending && loadingPlanId === tier.id)
+                          ? { scale: 0.98 }
+                          : {}
+                      }
+                    >
+                      {isPending && loadingPlanId === tier.id ? (
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      ) : (
+                        "Purchase Plan"
+                      )}
+                    </motion.button>
+                  </div>
+                </motion.div>
+              ))
+            )}
           </motion.div>
         </div>
       </div>

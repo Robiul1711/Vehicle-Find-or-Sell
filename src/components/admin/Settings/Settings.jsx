@@ -23,41 +23,42 @@ export default function Settings() {
     }
   }, [activeTab]);
   const tabs = [
-    {
+      {
       id: 1,
+      name: "Subscription",
+      icon: <LuPackage2 className="size-6"/>,
+      type: "content",
+      content: <Subscription />,
+    },
+    {
+      id: 2,
       name: "Edit Profile",
       icon:<FaRegUser /> ,
       type: "content",
       content: <EditProfile />,
     },
     {
-      id: 2,
+      id: 3,
       name: "Add Services",
       icon: <GrServices />,
       type: "content",
       content:<AddServices/>,
     },
     {
-      id: 3,
+      id: 4,
       name: "Change Password",
       icon: <FaLock />,
       type: "content",
       content:<ChangePassword/>,
     },
     {
-      id: 4,
+      id: 5,
       name: "Manage Notification",
       icon: <IoIosNotifications  className="size-6"/>,
       type: "content",
       content: <ManageNotification />,
     },
-    {
-      id: 5,
-      name: "Subscription",
-      icon: <LuPackage2 className="size-6"/>,
-      type: "content",
-      content: <Subscription />,
-    },
+  
   ];
   return (
   <div className="w-full">

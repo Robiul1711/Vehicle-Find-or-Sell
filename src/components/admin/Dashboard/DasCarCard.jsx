@@ -16,7 +16,7 @@ const DasCarCard = ({ car }) => {
     url: `/ads/vehicles/${car?.id}/`,
     method: "DELETE",
     secure: true,
-    invalidateKeys: ["ads-vehicles"],
+    invalidateKeys: ["my-ads", "search-ads"],
   });
 
   return (
@@ -25,7 +25,7 @@ const DasCarCard = ({ car }) => {
       {/* Image */}
       <div className="w-full h-64 overflow-hidden flex-shrink-0">
         <img
-          src={IMG_URL + car?.media?.image?.[0]?.file}
+          src={IMG_URL + car?.thumbnail}
           alt={car?.brand_name}
           className="w-full h-full object-cover"
         />
