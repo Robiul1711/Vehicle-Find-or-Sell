@@ -4,14 +4,20 @@ import {
   State3Icon,
   State4Icon,
 } from "@/components/common/SVGicons/DashboardIcon";
+import { useApiQuery } from "@/hooks/useApiQuery";
 import React from "react";
 
 const DashStates = () => {
+    const { data, isLoading } = useApiQuery({
+      queryKey: ["dashboardStats"],
+      url: "/ads/dashboard/stats/",
+      secure: true,
+    });
   const stats = [
     {
       id: 1,
       title: "Total Listing",
-      value: "12",
+      value: data?.data?.total_listings || "00",
       icon: State1Icon,
       iconBg: "bg-[#9FCC3B1A]",
       iconColor: "text-[#9FCC3B]",
@@ -19,7 +25,7 @@ const DashStates = () => {
     {
       id: 2,
       title: "Active Listing",
-      value: "02",
+      value: data?.data?.active_listings || "00",
       icon: State2Icon,
       iconBg: "bg-[#9FCC3B1A]",
       iconColor: "text-[#9FCC3B]",
@@ -27,7 +33,7 @@ const DashStates = () => {
     {
       id: 3,
       title: "Favorites Saved",
-      value: "02",
+      value: data?.data?.favourites_saved || "00",
       icon: State3Icon,
       iconBg: "bg-[#9FCC3B1A]",
       iconColor: "text-[#9FCC3B]",
@@ -35,7 +41,7 @@ const DashStates = () => {
     {
       id: 4,
       title: "Pending Ads",
-      value: "10",
+      value: data?.data?.pending_ads || "00",
       icon: State4Icon,
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",

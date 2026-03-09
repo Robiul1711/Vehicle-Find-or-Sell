@@ -7,6 +7,7 @@ import {
   ProfetionalIcon,
   VideoIcon,
 } from "@/components/common/SVGicons/MySvg";
+import { IMG_URL } from "@/config/constant";
 import { Link } from "react-router-dom";
 
 const VechleBoostCard = ({ car }) => {
@@ -15,8 +16,8 @@ const VechleBoostCard = ({ car }) => {
       {/* Image */}
       <div className="w-full h-64 overflow-hidden">
         <img
-          src={car.image}
-          alt={car.title}
+          src={IMG_URL + car?.thumbnail}
+          alt={car?.title}
           className="w-full h-full object-cover"
         />
       </div>
@@ -28,9 +29,9 @@ const VechleBoostCard = ({ car }) => {
           <div className="flex  justify-between">
             <h2 className="text-lg font-semibold text-gray-900">{car.title}</h2>
             <div className="flex items-center gap-2 ">
-              <Bumpcon />
-              <VideoIcon />
-              <ProfetionalIcon />
+           {car?.is_bump && <Bumpcon />}
+              {car?.is_video && <VideoIcon />}
+              {car?.is_featured && <ProfetionalIcon />}
             </div>
           </div>
           <p className="text-gray-500 text-sm truncate">{car.subtitle}</p>
@@ -40,11 +41,11 @@ const VechleBoostCard = ({ car }) => {
         <div className="flex items-center justify-between text-gray-700 text-sm mt-3 border-t pt-3 border-b pb-3">
           <div className="flex flex-col items-center gap-1">
             <MilageIcon />
-            <span>{car.miles}</span>
+            <span>{car.mileage}</span>
           </div>
           <div className="flex flex-col items-center gap-1">
             <FuelIcon />
-            <span>{car.fuel}</span>
+            <span>{car.fuel_type}</span>
           </div>
           <div className="flex flex-col items-center gap-1">
             <AutomaticIcon />
@@ -61,13 +62,19 @@ const VechleBoostCard = ({ car }) => {
 
         {/* Buttons */}
         <div className="grid grid-cols-2 gap-2 mt-3">
-          <Link to={`/dashboard/car-details/${car.id}`} className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800">
+          <Link
+            to={`/dashboard/car-details/${car.id}`}
+            className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800"
+          >
             View Details
           </Link>
-          <Link to={`/dashboard/boost-your-ad-visibility/${car.id}`} className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800">
-           Boost Ads
+          {/* Updated Boost Ads Link */}
+          <Link
+            to={`/dashboard/boost-your-ad-visibility/${car.id}?type=${car.ad_type}`}
+            className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800"
+          >
+            Boost Ads
           </Link>
-
         </div>
       </div>
     </div>

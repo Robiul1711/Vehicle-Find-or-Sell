@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 const DasCarCard = ({ car }) => {
   const { mutate, isPending } = useApiMutation({
-    url: `/ads/vehicles/${car?.id}/`,
+    url: `${car?.ad_type === "parts" ? `/ads/parts/${car?.id}/` : `/ads/vehicles/${car?.id}/`}`,
     method: "DELETE",
     secure: true,
     invalidateKeys: ["my-ads", "search-ads"],
@@ -39,10 +39,12 @@ const DasCarCard = ({ car }) => {
             <h2 className="text-lg font-semibold text-gray-900 leading-tight">
               {car?.brand_name} {car?.model}
             </h2>
+    
             <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-              <Bumpcon />
-              <VideoIcon />
-              <ProfetionalIcon />
+              {car?.is_bump && <Bumpcon />}
+              {car?.is_video && <VideoIcon />}
+              {car?.is_featured && <ProfetionalIcon />}
+          
             </div>
           </div>
           <p className="text-gray-500 text-sm line-clamp-2">{car?.subtitle}</p>
