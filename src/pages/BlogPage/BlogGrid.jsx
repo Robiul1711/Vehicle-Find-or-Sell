@@ -3,7 +3,7 @@ import gsap from "gsap";
 import React, { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
-import { IMG_URL } from "@/config/constant";
+
 
 const BlogGrid = ({ data, isLoading }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,14 +66,9 @@ const BlogGrid = ({ data, isLoading }) => {
               key={blog.id}
               className="rounded-xl overflow-hidden hover:shadow-lg transition flex flex-col h-full border border-gray-100"
             >
+              {console.log(blog)}
               <img
-                src={
-                  blog.image
-                    ? blog.image.startsWith("http")
-                      ? blog.image
-                      : IMG_URL + blog.image
-                    : "https://picsum.photos/600/400"
-                }
+                src={blog.image}
                 alt={blog.title}
                 className="w-full h-64 object-cover"
               />

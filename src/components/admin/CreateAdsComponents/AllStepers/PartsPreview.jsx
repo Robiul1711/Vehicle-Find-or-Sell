@@ -1,4 +1,4 @@
-import { IMG_URL } from "@/config/constant";
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -115,7 +115,7 @@ const PartsPreview = ({ goToStep }) => {
                     if (file instanceof File) {
                       src = URL.createObjectURL(file);
                     } else if (file?.file) {
-                      src = IMG_URL + file.file;
+                      src = file.file;
                     } else if (typeof file === "string") {
                       src = file;
                     }
@@ -160,7 +160,7 @@ const PartsPreview = ({ goToStep }) => {
               if (videoFile instanceof File) {
                 src = URL.createObjectURL(videoFile);
               } else if (videoFile?.file) {
-                src = IMG_URL + videoFile.file;
+                src = videoFile.file;
               } else if (typeof videoFile === "string") {
                 src = videoFile;
               }

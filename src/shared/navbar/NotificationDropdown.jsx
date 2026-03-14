@@ -17,13 +17,14 @@ const NotificationDropdown = () => {
     url: "/notification/notifications/",
     secure: true,
   });
-
+console.log(notificationsData)
   const { data: specificNotification, isLoading: notificationLoading } =
     useApiQuery({
       queryKey: ["notification-detail", selectedId],
       url: `/notification/notifications/${selectedId}/`,
       secure: true,
       enabled: !!selectedId,
+
     });
 
   const { mutate: markAsRead } = useApiMutation({

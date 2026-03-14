@@ -272,6 +272,7 @@ const CreateAds = () => {
     method: id ? "PUT" : "POST",
     onSuccess: (data) => {
       setIsPostModalOpen(true);
+      setIsModalOpen(false);
       console.log("Success:", data);
     },
     onError: (error) => {
@@ -479,6 +480,14 @@ const CreateAds = () => {
       });
     }
 
+    // Schedule keys
+    if (data.scheduled_date) {
+      append("scheduled_date", data.scheduled_date);
+    }
+    if (data.scheduled_time) {
+      append("scheduled_time", data.scheduled_time);
+    }
+
     console.log("FormData created.");
     // Log entries for debugging
     for (const pair of formData.entries()) {
@@ -567,6 +576,7 @@ const CreateAds = () => {
                     <ScheduleLaterModal
                       isModalOpen={isModalOpen}
                       setIsModalOpen={setIsModalOpen}
+                      onConfirm={onSubmit}
                     />
 
                     <button

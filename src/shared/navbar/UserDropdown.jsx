@@ -5,7 +5,7 @@ import { MdDashboard } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import profile from "@/assets/images/dummy.png";
-import { IMG_URL } from "@/config/constant";
+
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +67,7 @@ const UserDropdown = () => {
           className="w-10 h-10 rounded-full border-2 border-custom-primary object-cover"
           src={
             user?.profile?.profile_image
-              ? IMG_URL + user?.profile?.profile_image
+              ?  user?.profile?.profile_image
               : profile
           }
           alt="user profile"

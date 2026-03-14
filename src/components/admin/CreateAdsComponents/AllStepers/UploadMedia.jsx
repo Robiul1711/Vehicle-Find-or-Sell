@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { UploadCloud, File as FileIcon, X } from "lucide-react";
-import { IMG_URL } from "@/config/constant";
 
 const UploadMedia = () => {
   const { register, setValue, watch } = useFormContext();
@@ -80,7 +79,7 @@ const UploadMedia = () => {
                 src = URL.createObjectURL(file);
               } else if (file?.file) {
                 // Existing image from API
-                src = IMG_URL + file.file;
+                src = file.file;
               } else if (typeof file === "string") {
                 // Fallback if string
                 src = file;
@@ -131,7 +130,7 @@ const UploadMedia = () => {
               if (file instanceof File) {
                 src = URL.createObjectURL(file);
               } else if (file?.file) {
-                src = IMG_URL + file.file;
+                src = file.file;
               } else if (typeof file === "string") {
                 src = file;
               }

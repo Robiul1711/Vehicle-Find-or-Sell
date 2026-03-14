@@ -7,7 +7,6 @@ import {
   ProfetionalIcon,
   VideoIcon,
 } from "@/components/common/SVGicons/MySvg";
-import { IMG_URL } from "@/config/constant";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { Link } from "react-router-dom";
 
@@ -18,6 +17,13 @@ const DasCarCard = ({ car }) => {
     secure: true,
     invalidateKeys: ["my-ads", "search-ads"],
   });
+  // pause ads mutation
+  const { mutate: pauseMutate, isPending: pausePending } = useApiMutation({
+    url: `${car?.ad_type === "parts" ? `/ads/pause/parts/${car?.id}/` : `/ads/pause/vehicle/${car?.id}/`}`,
+    method: "POST",
+    secure: true,
+    invalidateKeys: ["my-ads", "search-ads"],
+  });
 
   return (
     // Added 'flex flex-col h-full' to the main container
@@ -25,7 +31,7 @@ const DasCarCard = ({ car }) => {
       {/* Image */}
       <div className="w-full h-64 overflow-hidden flex-shrink-0">
         <img
-          src={IMG_URL + car?.thumbnail}
+          src={car?.thumbnail}
           alt={car?.brand_name}
           className="w-full h-full object-cover"
         />
@@ -91,8 +97,18 @@ const DasCarCard = ({ car }) => {
             >
               Edit
             </Link>
-            <button className="bg-gray-900 text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800 transition-colors">
-              Pause Ad
+            <button 
+              onClick={() => pauseMutate()} 
+              disabled={pausePending} 
+              className={`text-sm font-medium rounded-lg py-2 transition-colors ${
+                pausePending 
+                  ? "bg-gray-400 text-white cursor-not-allowed" 
+                  : car.is_pause 
+                    ? "bg-amber-500 text-white hover:bg-amber-600" 
+                    : "bg-gray-900 text-white hover:bg-gray-800"
+              }`}
+            >
+              {pausePending ? "Processing..." : car.is_pause ? "Paused" : "Pause Ad"}
             </button>
             <button
               onClick={() => mutate()}

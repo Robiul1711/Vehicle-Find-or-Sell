@@ -1,31 +1,35 @@
 import React, { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
-const DealerFilter = () => {
+const DealerFilter = ({ onApplyFilters }) => {
+        const { data:serviceList, isLoading } = useApiQuery({
+          queryKey: ["service-list"],
+          url: "/core/service-list/",
+          secure: true,
+        });
+          const { data:citiesData } = useApiQuery({
+    queryKey: ["cities-list"],
+    url: "/delears/cities/",
+    secure: true,
+  });
+    console.log(citiesData?.cities)
     // State for all filter options
     const [filters, setFilters] = useState({
         location: {
             region: ""
         },
         categories: {
-            cars: true,
-            utilityTrucks: false,
-            motorcycles: false,
-            scooters: false,
-            spareParts: false
+            car: false,
+            truck: false,
+            motorcycle: false,
+            scooter: false,
+            parts: false
         },
-        services: {
-            newVehicles: true,
-            usedVehicles: false,
-            registrationService: true,
-            autoRepair: true,
-            partsAccessories: false,
-            delivery: false,
-            financing: false
-        },
+        services: {},
         dealerType: {
-            professionalSeller: true,
-            personalSeller: false
+            professional: false,
+            personal: false
         }
     });
 
@@ -41,12 +45,12 @@ const DealerFilter = () => {
     };
 
     // Handle service checkbox changes
-    const handleServiceChange = (service) => {
+    const handleServiceChange = (serviceId) => {
         setFilters(prev => ({
             ...prev,
             services: {
                 ...prev.services,
-                [service]: !prev.services[service]
+                [serviceId]: !prev.services[serviceId]
             }
         }));
     };
@@ -75,38 +79,35 @@ const DealerFilter = () => {
 
     // Clear all filters
     const clearAllFilters = () => {
-        setFilters({
+        const resetFilters = {
             location: {
                 region: ""
             },
             categories: {
-                cars: false,
-                utilityTrucks: false,
-                motorcycles: false,
-                scooters: false,
-                spareParts: false
+                car: false,
+                truck: false,
+                motorcycle: false,
+                scooter: false,
+                parts: false
             },
-            services: {
-                newVehicles: false,
-                usedVehicles: false,
-                registrationService: false,
-                autoRepair: false,
-                partsAccessories: false,
-                delivery: false,
-                financing: false
-            },
+            services: {},
             dealerType: {
-                professionalSeller: false,
-                personalSeller: false
+                professional: false,
+                personal: false
             }
-        });
+        };
+        setFilters(resetFilters);
+        if (onApplyFilters) {
+            onApplyFilters(resetFilters);
+        }
     };
 
     // Apply filters (API call would go here)
     const applyFilters = () => {
         console.log("Applying filters:", filters);
-        // API call logic here
-        // Example: await api.filterResults(filters);
+        if (onApplyFilters) {
+            onApplyFilters(filters);
+        }
     };
 
     return (
@@ -139,14 +140,11 @@ const DealerFilter = () => {
                             className="w-full p-2 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-custom-primary"
                         >
                             <option value="">Select Region</option>
-                            <option value="dhaka">Dhaka</option>
-                            <option value="chittagong">Chittagong</option>
-                            <option value="sylhet">Sylhet</option>
-                            <option value="rajshahi">Rajshahi</option>
-                            <option value="khulna">Khulna</option>
-                            <option value="barisal">Barisal</option>
-                            <option value="rangpur">Rangpur</option>
-                            <option value="mymensingh">Mymensingh</option>
+                            {citiesData?.cities?.map((city) => (
+                                <option key={city} value={city}>
+                                    {city}
+                                </option>
+                            ))}
                         </select>
                     </div>
                 </div>
@@ -158,8 +156,8 @@ const DealerFilter = () => {
                         <label className="flex items-center">
                             <input
                                 type="checkbox"
-                                checked={filters.categories.cars}
-                                onChange={() => handleCategoryChange('cars')}
+                                checked={filters.categories.car}
+                                onChange={() => handleCategoryChange('car')}
                                 className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
                             />
                             <span className="ml-2 text-sm text-gray-700">Cars</span>
@@ -167,8 +165,8 @@ const DealerFilter = () => {
                         <label className="flex items-center">
                             <input
                                 type="checkbox"
-                                checked={filters.categories.utilityTrucks}
-                                onChange={() => handleCategoryChange('utilityTrucks')}
+                                checked={filters.categories.truck}
+                                onChange={() => handleCategoryChange('truck')}
                                 className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
                             />
                             <span className="ml-2 text-sm text-gray-700">Utility Trucks</span>
@@ -176,8 +174,8 @@ const DealerFilter = () => {
                         <label className="flex items-center">
                             <input
                                 type="checkbox"
-                                checked={filters.categories.motorcycles}
-                                onChange={() => handleCategoryChange('motorcycles')}
+                                checked={filters.categories.motorcycle}
+                                onChange={() => handleCategoryChange('motorcycle')}
                                 className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
                             />
                             <span className="ml-2 text-sm text-gray-700">Motorcycles</span>
@@ -185,8 +183,8 @@ const DealerFilter = () => {
                         <label className="flex items-center">
                             <input
                                 type="checkbox"
-                                checked={filters.categories.scooters}
-                                onChange={() => handleCategoryChange('scooters')}
+                                checked={filters.categories.scooter}
+                                onChange={() => handleCategoryChange('scooter')}
                                 className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
                             />
                             <span className="ml-2 text-sm text-gray-700">Scooters</span>
@@ -194,8 +192,8 @@ const DealerFilter = () => {
                         <label className="flex items-center">
                             <input
                                 type="checkbox"
-                                checked={filters.categories.spareParts}
-                                onChange={() => handleCategoryChange('spareParts')}
+                                checked={filters.categories.parts}
+                                onChange={() => handleCategoryChange('parts')}
                                 className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
                             />
                             <span className="ml-2 text-sm text-gray-700">Spare Parts</span>
@@ -207,69 +205,20 @@ const DealerFilter = () => {
                 <div>
                     <h3 className="font-semibold text-gray-900 mb-3">Services</h3>
                     <div className="space-y-2">
-                        <label className="flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={filters.services.newVehicles}
-                                onChange={() => handleServiceChange('newVehicles')}
+                        {
+                            serviceList?.data?.map((service) => (
+                                <label key={service?.id} className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        checked={!!filters.services[service?.id]}
+                                onChange={() => handleServiceChange(service?.id)}
                                 className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
                             />
-                            <span className="ml-2 text-sm text-gray-700">New Vehicles</span>
+                            <span className="ml-2 text-sm text-gray-700">{service?.name}</span>
                         </label>
-                        <label className="flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={filters.services.usedVehicles}
-                                onChange={() => handleServiceChange('usedVehicles')}
-                                className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
-                            />
-                            <span className="ml-2 text-sm text-gray-700">Used Vehicles</span>
-                        </label>
-                        <label className="flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={filters.services.registrationService}
-                                onChange={() => handleServiceChange('registrationService')}
-                                className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
-                            />
-                            <span className="ml-2 text-sm text-gray-700">Registration Service</span>
-                        </label>
-                        <label className="flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={filters.services.autoRepair}
-                                onChange={() => handleServiceChange('autoRepair')}
-                                className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
-                            />
-                            <span className="ml-2 text-sm text-gray-700">Auto Repair</span>
-                        </label>
-                        <label className="flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={filters.services.partsAccessories}
-                                onChange={() => handleServiceChange('partsAccessories')}
-                                className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
-                            />
-                            <span className="ml-2 text-sm text-gray-700">Parts & Accessories</span>
-                        </label>
-                        <label className="flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={filters.services.delivery}
-                                onChange={() => handleServiceChange('delivery')}
-                                className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
-                            />
-                            <span className="ml-2 text-sm text-gray-700">Delivery</span>
-                        </label>
-                        <label className="flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={filters.services.financing}
-                                onChange={() => handleServiceChange('financing')}
-                                className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
-                            />
-                            <span className="ml-2 text-sm text-gray-700">Financing</span>
-                        </label>
+                            ))
+                        }
+  
                     </div>
                 </div>
 
@@ -280,8 +229,8 @@ const DealerFilter = () => {
                         <label className="flex items-center">
                             <input
                                 type="checkbox"
-                                checked={filters.dealerType.professionalSeller}
-                                onChange={() => handleDealerTypeChange('professionalSeller')}
+                                checked={filters.dealerType.professional}
+                                onChange={() => handleDealerTypeChange('professional')}
                                 className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
                             />
                             <span className="ml-2 text-sm text-gray-700">Professional Seller</span>
@@ -289,8 +238,8 @@ const DealerFilter = () => {
                         <label className="flex items-center">
                             <input
                                 type="checkbox"
-                                checked={filters.dealerType.personalSeller}
-                                onChange={() => handleDealerTypeChange('personalSeller')}
+                                checked={filters.dealerType.personal}
+                                onChange={() => handleDealerTypeChange('personal')}
                                 className="w-4 h-4 text-custom-primary bg-gray-100 border-gray-300 rounded focus:ring-custom-primary focus:ring-2"
                             />
                             <span className="ml-2 text-sm text-gray-700">Personal Seller</span>

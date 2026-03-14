@@ -1,4 +1,3 @@
-import { IMG_URL } from "@/config/constant";
 import { CustomAdmin, CustomArrow, CustomCalendar } from "@/utils/IconProvider";
 import { ImageProvider } from "@/utils/ImageProvider";
 import gsap from "gsap";
@@ -31,9 +30,7 @@ const BlogDetailsBanner = ({ data, isLoading }) => {
           <img
             src={
               data?.data?.image
-                ? data.data.image.startsWith("http")
-                  ? data.data.image
-                  : IMG_URL + data.data.image
+                ? data.data.image
                 : ImageProvider.blogDetails
             }
             className="w-full lg:h-[70vh] object-cover rounded-xl"

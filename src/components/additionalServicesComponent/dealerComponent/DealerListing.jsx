@@ -12,28 +12,50 @@ import {
 } from "@/utils/IconProvider";
 import FilterSection from "@/components/browseListingComponents/FilterSection";
 import DealerFilter from "./DealerFilter";
-import { carData, dealerData } from "@/utils/data";
 import { Link } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { IMG_URL } from "@/config/constant";
 
-const options = [
-  "Newest",
-  "Featured",
-  "Make (A-Z)",
-  "Make (Z-A)",
-  "Last Update",
-];
 
 const DealerListing = () => {
-  const { data, isLoading } = useApiQuery({
-    queryKey: ["dealerData"],
-    url: "/delears/",
-    secure: true,
+  const [params, setParams] = useState({
+    region: "",
+    category: "",
+    services: "",
+    account_type: "",
+    search: "",
   });
 
-  console.log(data?.dealers);
-  const items = data?.dealers;
+  const { data, isLoading, refetch } = useApiQuery({
+    queryKey: ["dealerData", params],
+    url: "/delears/",
+    secure: true,
+    params: params,
+  });
+
+  const handleFilterApply = (newFilters) => {
+    // Transform filters from DealerFilter into API params
+    const category = Object.keys(newFilters.categories)
+      .filter((key) => newFilters.categories[key])
+      .join(",");
+    
+    const services = Object.keys(newFilters.services)
+      .filter((key) => newFilters.services[key])
+      .join(",");
+
+    const account_type = Object.keys(newFilters.dealerType)
+      .filter((key) => newFilters.dealerType[key])
+      .join(",");
+
+    setParams({
+      region: newFilters.location.region,
+      category,
+      services,
+      account_type,
+    });
+  };
+
+  // console.log(data?.results);
+  const items = data?.results;
   const [isGrid, setIsGrid] = useState(false);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
@@ -55,6 +77,8 @@ const DealerListing = () => {
           <Search />
           <input
             type="text"
+            value={params.search}
+            onChange={(e) => setParams(prev => ({ ...prev, search: e.target.value }))}
             className="w-full p-2 outline-none bg-transparent"
             placeholder="Search..."
           />
@@ -63,7 +87,10 @@ const DealerListing = () => {
         {/* Button Group - Stack on mobile, row on desktop */}
         <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-center">
           {/* Search Button - Full width on mobile, auto on larger screens */}
-          <button className="w-full sm:w-auto bg-custom-primary text-white px-4 py-2 rounded-lg whitespace-nowrap">
+          <button 
+            onClick={() => refetch()}
+            className="w-full sm:w-auto bg-custom-primary text-white px-4 py-2 rounded-lg whitespace-nowrap"
+          >
             Search
           </button>
 
@@ -92,7 +119,7 @@ const DealerListing = () => {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="w-full sm:w-auto">
+          {/* <div className="w-full sm:w-auto">
             <div className="relative">
               <div
                 onClick={() => setIsFeatureModal((prev) => !prev)}
@@ -133,13 +160,13 @@ const DealerListing = () => {
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
       <div className="flex gap-5">
         <div className="hidden md:block w-1/4 flex-shrink-0">
-          <DealerFilter />
+          <DealerFilter onApplyFilters={handleFilterApply} />
         </div>
         <div className="flex-1 w-full md:w-3/4">
           <div
@@ -149,86 +176,100 @@ const DealerListing = () => {
                 : "space-y-6 md:w-[75%]"
             }`}
           >
-            {items?.map((item, i) => {
-              const waveDelay = isGrid
-                ? (i % 3) * 0.1 + Math.floor(i / 3) * 0.1
-                : i * 0.1;
+            {items && items.length > 0 ? (
+              items.map((item, i) => {
+                const waveDelay = isGrid
+                  ? (i % 3) * 0.1 + Math.floor(i / 3) * 0.1
+                  : i * 0.1;
 
-              return (
-                <motion.div
-                  key={item.id}
-                  layout
-                  initial={false}
-                  animate={{
-                    y: [0, -20, 0],
-                    opacity: [1, 0.5, 1],
-                    scale: [1, 0.95, 1],
-                    transition: {
-                      duration: 0.6,
-                      times: [0, 0.5, 1],
-                      delay: waveDelay,
-                    },
-                  }}
-                  className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${
-                    isGrid ? "max-w-sm mx-auto" : ""
-                  }`}
-                >
+                return (
                   <motion.div
+                    key={item.id}
                     layout
-                    className={`${
-                      isGrid
-                        ? "p-5"
-                        : "p-4 flex flex-col lg:flex-row items-center"
-                    }`}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 25,
-                      delay: waveDelay + 0.3,
+                    initial={false}
+                    animate={{
+                      y: [0, -20, 0],
+                      opacity: [1, 0.5, 1],
+                      scale: [1, 0.95, 1],
+                      transition: {
+                        duration: 0.6,
+                        times: [0, 0.5, 1],
+                        delay: waveDelay,
+                      },
                     }}
+                    className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${
+                      isGrid ? "" : ""
+                    }`}
                   >
-                    <motion.img
+                    <motion.div
                       layout
-                      src={IMG_URL + item?.profile_image}
-                      alt={item.name}
-                      className={`rounded-lg object-cover ${
+                      className={`${
                         isGrid
-                          ? "w-full h-[200px] mb-5"
-                          : "w-44 h-44 mr-4 flex-shrink-0"
+                          ? "p-5"
+                          : "p-4 flex flex-col lg:flex-row items-center"
                       }`}
-                    />
-                    <div className={`${isGrid ? "w-full" : "flex-1"}`}>
-                      <motion.h3
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 25,
+                        delay: waveDelay + 0.3,
+                      }}
+                    >
+                      <motion.img
                         layout
-                        className={`${
-                          isGrid ? "text-xl" : "text-[1.1rem]"
-                        } text-gray-800 dark:text-[#d2e5f5]`}
-                      >
-                        {item?.full_name}
-                      </motion.h3>
-                      <motion.p layout className="text-black mt-1">
-                        {item?.title}
-                      </motion.p>
+                        src={item?.profile_image}
+                        alt={item.name}
+                        className={`rounded-lg object-cover ${
+                          isGrid
+                            ? "w-full h-[200px] mb-5"
+                            : "w-44 h-44 mr-4 flex-shrink-0"
+                        }`}
+                      />
+                      <div className={`${isGrid ? "w-full" : "flex-1"}`}>
+                        <motion.h3
+                          layout
+                          className={`${
+                            isGrid ? "text-xl" : "text-[1.1rem]"
+                          } text-gray-800 dark:text-[#d2e5f5]`}
+                        >
+                          {item?.full_name}
+                        </motion.h3>
+                        <motion.p layout className="text-black mt-1">
+                          {item?.title}
+                        </motion.p>
 
-                      <motion.p
-                        layout
-                        className="text-black mt-1 flex items-center gap-2"
-                      >
-                        <CustomLocation />
-                        {item?.country}, {item?.street}, {item?.city}, {item?.zip_code}
-                      </motion.p>
-                      <motion.div layout className=" my-2 ">
-                        <Link to={`/dealer-profile/${item?.id}`}>
-                          <button className=" py-2  border border-black rounded-lg w-full">
-                            View Dealer Profile
-                          </button>
-                        </Link>
-                      </motion.div>
-                    </div>
+                        <motion.p
+                          layout
+                          className="text-black mt-1 flex items-center gap-2"
+                        >
+                          <CustomLocation />
+                          {item?.country}, {item?.street}, {item?.city}, {item?.zip_code}
+                        </motion.p>
+                        <motion.div layout className=" my-2 ">
+                          <Link to={`/dealer-profile/${item?.id}`}>
+                            <button className=" py-2  border border-black rounded-lg w-full">
+                              View Dealer Profile
+                            </button>
+                          </Link>
+                        </motion.div>
+                      </div>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              );
-            })}
+                );
+              })
+            ) : !isLoading ? (
+              <div className="flex flex-col items-center justify-center w-full py-20 px-4 text-center bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+                <div className="bg-white p-4 rounded-full shadow-sm mb-4">
+                  <Search className="w-10 h-10 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  No Search Result Found
+                </h3>
+                <p className="text-gray-500 max-w-xs mx-auto text-sm sm:text-base">
+                  We couldn't find any dealers matching your current filters. Try adjusting your preferences.
+                </p>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

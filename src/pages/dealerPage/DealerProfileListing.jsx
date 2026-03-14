@@ -12,7 +12,7 @@ import {
 } from "@/utils/IconProvider";
 import { Link, useParams } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { IMG_URL } from "@/config/constant";
+
 
 const options = ["car", "motorcycle", "truck", "scooter", "parts"];
 
@@ -162,7 +162,7 @@ const DealerProfileListing = () => {
                       item.first_image
                         ? item.first_image.startsWith("http")
                           ? item.first_image
-                          : IMG_URL + item.first_image
+                          : item.first_image
                         : ImageProvider.car1
                     }
                     alt={

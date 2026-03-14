@@ -3,7 +3,6 @@ import { Loader, Search, MessageSquare, Inbox } from "lucide-react";
 import MessageInbox from "./MessageInbox";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useAuth } from "@/hooks/useAuth";
-import { IMG_URL } from "@/config/constant";
 import { useQueryClient } from "@tanstack/react-query";
 
 const Message = () => {
@@ -135,7 +134,7 @@ const Message = () => {
                 >
                   <div className="relative">
                     <img
-                      src={IMG_URL + conversation.avatar}
+                      src={conversation.avatar}
                       alt={conversation.name}
                       className="w-12 h-12 rounded-full object-cover border-2 border-white"
                       onError={(e) => {

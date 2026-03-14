@@ -72,10 +72,10 @@ const engineSpecs = [
           >
             View Analytics
           </Link>
-          <button className="bg-gray-800 text-white px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium flex items-center gap-2">
+          <Link to={`/dashboard/boost-your-ad-visibility/${id}`} className="bg-gray-800 text-white px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium flex items-center gap-2">
             <Zap className="w-4 h-4" />
             Boost Ads
-          </button>
+          </Link>
         </div>
       </div>
 

@@ -3,6 +3,8 @@ import CommonButton from "./CommonButton";
 import { CompareIcon } from "./SVGicons/MySvg";
 import { TbArrowsDownUp } from "react-icons/tb";
 import Title from "./Title";
+import { useApiQuery } from "@/hooks/useApiQuery";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const DropdownMenu = ({ children, trigger }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +30,6 @@ const DropdownMenu = ({ children, trigger }) => {
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <div onClick={handleTriggerClick} className="cursor-pointer">
-        {/* Pass isOpen to trigger so it can style itself */}
         {trigger(isOpen)}
       </div>
       {isOpen && (
@@ -47,14 +48,69 @@ const DropdownMenu = ({ children, trigger }) => {
 export default function SimpleDropdown() {
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
+  const [showSuggestions1, setShowSuggestions1] = useState(false);
+  const [showSuggestions2, setShowSuggestions2] = useState(false);
+  const [selectedId1, setSelectedId1] = useState(null);
+  const [selectedId2, setSelectedId2] = useState(null);
+
+  const debouncedValue1 = useDebounce(value1, 500);
+  const debouncedValue2 = useDebounce(value2, 500);
+
+  const { data: results1 } = useApiQuery({
+    queryKey: ["ads-search", 1, debouncedValue1],
+    url: "/ads/compare/search/",
+    params: { q: debouncedValue1 },
+    enabled: !!debouncedValue1 && debouncedValue1.length >= 2,
+  });
+
+  const { data: results2 } = useApiQuery({
+    queryKey: ["ads-search", 2, debouncedValue2],
+    url: "/ads/compare/search/",
+    params: { q: debouncedValue2 },
+    enabled: !!debouncedValue2 && debouncedValue2.length >= 2,
+  });
+
+  const [error1, setError1] = useState("");
+  const [error2, setError2] = useState("");
+
+  console.log("results1", results1, "results2", results2);
+
+  const handleSelect1 = (item) => {
+    setValue1(item.title);
+    setSelectedId1(item.id);
+    setShowSuggestions1(false);
+    setError1("");
+  };
+
+  const handleSelect2 = (item) => {
+    setValue2(item.title);
+    setSelectedId2(item.id);
+    setShowSuggestions2(false);
+    setError2("");
+  };
 
   const handleCompare = () => {
-    if (value1 && value2) {
-      alert(`Comparing "${value1}" with "${value2}"`);
+    let hasError = false;
+    if (!value1) {
+      setError1("Field is required");
+      hasError = true;
     } else {
-      alert("Please fill both inputs before comparing.");
+      setError1("");
+    }
+
+    if (!value2) {
+      setError2("Field is required");
+      hasError = true;
+    } else {
+      setError2("");
+    }
+
+    if (!hasError) {
+      console.log("Comparing", value1, "and", value2);
+      // Logic for comparison can go here
     }
   };
+
   return (
     <div className="flex items-center justify-center font-sans">
       <DropdownMenu
@@ -75,33 +131,89 @@ export default function SimpleDropdown() {
         )}
       >
         <div className="">
-        <Title level="title24">Product Comparison</Title>
-        <Title level="title14" className="mb-5">
-          You have not chosen any products to compare.
-        </Title>
-
+          <Title level="title24">Product Comparison</Title>
+          <Title level="title14" className="mb-5">
+            You have not chosen any products to compare.
+          </Title>
         </div>
         <div className="flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder="Enter first item"
-            value={value1}
-            onChange={(e) => setValue1(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-primary"
-          />
+          {/* Input 1 */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Enter first item"
+              value={value1}
+              onChange={(e) => {
+                setValue1(e.target.value);
+                setSelectedId1(null);
+                setShowSuggestions1(true);
+                if (e.target.value) setError1("");
+              }}
+              onFocus={() => setShowSuggestions1(true)}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                error1 ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-custom-primary"
+              }`}
+            />
+            {error1 && <p className="text-xs text-red-500 mt-1">{error1}</p>}
+            {showSuggestions1 && results1?.length > 0 && (
+              <div className="absolute z-20 w-full bg-white shadow-xl rounded-md border mt-1 max-h-60 overflow-y-auto">
+                {results1.map((item) => (
+                  <div
+                    key={item.id}
+                    className="p-2 hover:bg-gray-50 cursor-pointer transition-colors border-b last:border-0"
+                    onClick={() => handleSelect1(item)}
+                  >
+                    <span className="text-sm font-medium text-gray-900 line-clamp-2">
+                      {item.title}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <TbArrowsDownUp className="w-6 h-6 text-custom-primary self-center" />
-          <input
-            type="text"
-            placeholder="Enter second item"
-            value={value2}
-            onChange={(e) => setValue2(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-custom-primary"
-          />
+
+          {/* Input 2 */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Enter second item"
+              value={value2}
+              onChange={(e) => {
+                setValue2(e.target.value);
+                setSelectedId2(null);
+                setShowSuggestions2(true);
+                if (e.target.value) setError2("");
+              }}
+              onFocus={() => setShowSuggestions2(true)}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                error2 ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-custom-primary"
+              }`}
+            />
+            {error2 && <p className="text-xs text-red-500 mt-1">{error2}</p>}
+            {showSuggestions2 && results2?.length > 0 && (
+              <div className="absolute z-20 w-full bg-white shadow-xl rounded-md border mt-1 max-h-60 overflow-y-auto">
+                {results2.map((item) => (
+                  <div
+                    key={item.id}
+                    className="p-2 hover:bg-gray-50 cursor-pointer transition-colors border-b last:border-0"
+                    onClick={() => handleSelect2(item)}
+                  >
+                    <span className="text-sm font-medium text-gray-900 line-clamp-2">
+                      {item.title}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <CommonButton
-          link={"/compare"}
+            link={selectedId1 && selectedId2 ? `/compare?id1=${selectedId1}&id2=${selectedId2}` : null}
             variant="primary"
-            onClick={handleCompare}
             className="w-full"
+            onClick={handleCompare}
           >
             Compare
           </CommonButton>

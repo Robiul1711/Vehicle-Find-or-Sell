@@ -11,30 +11,7 @@ const MyRecentListings = () => {
     secure: true,
   });
 
-    const cars = [
-  {
-    id: 1,
-    title: "BMW X3 M Sport",
-    subtitle: "3.5 D5 PowerPulse Momentum 5dr AW...",
-    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a",
-    Kilometer: "47 Kilometer",
-    fuel: "Diesel",
-    transmission: "Automatic",
-    condition: "New",
-    price: "€33,800",
-  },
-  {
-    id: 2,
-    title: "Audi A6 Premium",
-    subtitle: "2.0 TDI Ultra SE Executive 4dr",
-    image: "https://images.unsplash.com/photo-1549924231-f129b911e442",
-    miles: "65 Kilometer",
-    fuel: "Petrol",
-    transmission: "Manual",
-    condition: "Used",
-    price: "€29,400",
-  },
-];
+
   return (
     <div>
         <div className='flex items-center justify-between mb-6'>

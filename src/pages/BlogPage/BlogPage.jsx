@@ -13,7 +13,6 @@ const BlogPage = () => {
   const { data, isLoading } = useApiQuery({
     queryKey: ["blog"],
     url: "/blog/",
-    secure: true,
   });
 
   useEffect(() => {

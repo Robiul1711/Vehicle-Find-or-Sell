@@ -5,6 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 import { RxCalendar } from "react-icons/rx";
 import car from '@/assets/images/car1.png'
 import { Link } from 'react-router-dom';
+import { useApiQuery } from '@/hooks/useApiQuery';
 
 // JSON Data
 const articles = [
@@ -35,14 +36,19 @@ const articles = [
 ]
 
 const AutoInsightsAdvice = () => {
+    const { data, isLoading } = useApiQuery({
+      queryKey: ["blog"],
+      url: "/blog/",
+    });
+    console.log(data?.data);
   return (
     <div className='section-padding-x section-padding-y'>
       {/* Header */}
       <div className='flex items-center justify-between'>
         <Title level="title40">Auto Insights & Advice</Title>
-        <button className="flex items-center gap-2 text-custom-primary">
+        <Link to="/blog" className="flex items-center gap-2 text-custom-primary">
           View All <ArrowUpRight className="w-4 h-4" />
-        </button>
+        </Link>
       </div>
 
       <Title level="title20" className="mt-2">
@@ -51,25 +57,25 @@ const AutoInsightsAdvice = () => {
 
       {/* Articles Grid */}
       <div className='mt-16 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-        {articles.map((article) => (
+        {data?.data?.slice(0, 4).map((article) => (
           <div key={article.id} className='text-[#141414] overflow-hidden'>
             <img 
-              src={car} 
+              src={article?.image} 
               alt={`Article ${article.id}`} 
               className='w-full h-68 object-cover rounded-lg' 
             />
 
             <div className='my-5 space-y-4'>
               <div className='flex items-center gap-6 text-sm text-gray-600'>
-                <p className='flex items-center gap-2'>
+                {/* <p className='flex items-center gap-2'>
                   <FaRegUser /> {article.author}
-                </p>
+                </p> */}
                 <p className='flex items-center gap-2'>
-                 <RxCalendar /> {article.date}
+                 <RxCalendar /> {article.created_at}
                 </p>
               </div>
 
-              <Title level="title20">{article.title}</Title>
+              <Title level="title20" className="line-clamp-1">{article.title}</Title>
 
               <Link to={`/blogDetails/${article.id}`} className='flex items-center gap-2 font-semibold text-custom-primary mb-4'>
                 Read More <ArrowUpRight className='w-4 h-4'/>

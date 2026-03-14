@@ -4,7 +4,6 @@ import { LuSend, LuX } from "react-icons/lu";
 import { Loader } from "lucide-react";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useAuth } from "@/hooks/useAuth";
-import { IMG_URL } from "@/config/constant";
 
 /* ================= MESSAGE COMPONENT ================= */
 
@@ -33,7 +32,7 @@ const MessageBubble = memo(({ message, isCurrentUser }) => {
         {!isCurrentUser && (
           <img
             src={
-              IMG_URL + (message.senderProfile?.avatar || "/default-avatar.png")
+              (message.senderProfile?.avatar || "/default-avatar.png")
             }
             alt="Profile"
             className="w-8 h-8 rounded-full object-cover flex-shrink-0"
@@ -72,7 +71,7 @@ const MessageBubble = memo(({ message, isCurrentUser }) => {
         {isCurrentUser && (
           <img
             src={
-              IMG_URL + (message.senderProfile?.avatar || "/default-avatar.png")
+              (message.senderProfile?.avatar || "/default-avatar.png")
             }
             alt="Profile"
             className="w-8 h-8 rounded-full object-cover flex-shrink-0"
@@ -415,7 +414,6 @@ const MessageInbox = ({ selectedConversation, onBack, queryClient }) => {
           <div className="relative">
             <img
               src={
-                IMG_URL +
                 (selectedConversation?.avatar || "/default-avatar.png")
               }
               className="w-10 h-10 rounded-full object-cover"

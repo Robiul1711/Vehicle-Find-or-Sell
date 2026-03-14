@@ -21,7 +21,6 @@ import {
 } from "@/utils/IconProvider";
 import FilterSection from "./FilterSection";
 import { Link } from "react-router-dom";
-import { IMG_URL } from "@/config/constant";
 
 const options = [
   "Newest",

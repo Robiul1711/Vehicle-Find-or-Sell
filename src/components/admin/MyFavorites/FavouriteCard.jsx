@@ -26,11 +26,12 @@ const FavouriteCard = ({ car }) => {
   return (
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition relative">
       {/* Image */}
+      {console.log(car)}
       <div className="w-full h-64 overflow-hidden relative">
         <img
           src={
             car?.content_object?.media?.image?.[0]?.file
-              ? IMG_URL + car.content_object.media.image[0].file
+              ? car.content_object.media.image[0].file
               : ""
           }
           alt={

@@ -22,7 +22,6 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
-import { IMG_URL } from "@/config/constant";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -34,7 +33,7 @@ const DealerSection = () => {
     url: `/delears/detail/${id}/`,
     secure: true,
   });
-  // console.log(user?.profile?.user?.id);
+  console.log(data?.profile?.services);
   const profileData = data?.profile;
 
   const { mutate, isPending } = useApiMutation({
@@ -69,10 +68,11 @@ const DealerSection = () => {
         <div className=" ">
           {/* Cover image or fallback */}
           <div className="w-full h-48 lg:h-64 bg-gray-100 overflow-hidden">
+            {console.log(profileData)}
             <img
               src={
                 profileData?.cover_image
-                  ? IMG_URL + profileData.cover_image
+                  ? profileData.cover_image
                   : ImageProvider.profile
               }
               className="w-full h-full object-cover"
@@ -86,7 +86,7 @@ const DealerSection = () => {
             <img
               src={
                 profileData?.profile_image
-                  ? IMG_URL + profileData.profile_image
+                  ? profileData.profile_image
                   : ImageProvider.profileImg
               }
               alt={profileData?.full_name}

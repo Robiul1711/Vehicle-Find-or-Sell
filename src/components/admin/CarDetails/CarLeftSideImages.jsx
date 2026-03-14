@@ -6,7 +6,6 @@ import Title from "@/components/common/Title";
 import { PdfIcon } from "@/components/common/SVGicons/DashboardIcon";
 import { useLocation } from "react-router-dom";
 import { Image } from "antd";
-import { IMG_URL } from "@/config/constant";
 
 const CarLeftSideImages = ({ data, isLoading }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -37,7 +36,7 @@ const CarLeftSideImages = ({ data, isLoading }) => {
             preview={{
               mask: <div className="flex items-center justify-center h-full w-full">Preview</div>
             }}
-            src={IMG_URL + data?.media?.image?.[selectedIndex]?.file}
+            src={data?.media?.image?.[selectedIndex]?.file}
             alt="Car"
             className="w-full h-full object-cover rounded-xl"
           />
@@ -53,7 +52,7 @@ const CarLeftSideImages = ({ data, isLoading }) => {
             {data?.media?.image?.map((img, idx) => (
               <SwiperSlide key={idx} className="!w-auto">
                 <img
-                  src={IMG_URL + img?.file}
+                  src={img?.file}
                   onClick={() => setSelectedIndex(idx)}
                   className={`md:w-28 w-24 md:h-24 h-20 rounded-lg cursor-pointer object-cover border-2 transition ${
                     selectedIndex === idx

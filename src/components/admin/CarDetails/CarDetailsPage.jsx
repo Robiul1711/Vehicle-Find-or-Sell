@@ -10,7 +10,7 @@ const CarDetailsPage = () => {
     const { data, isLoading , isError} = useApiQuery({
 
     queryKey: ["profile" , id],
-    url: `/store/vehicle/${id}`,
+    url: `/ads/vehicles/${id}`,
     secure: true,
   });
 // console.log(data)

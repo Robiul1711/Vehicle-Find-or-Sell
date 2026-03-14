@@ -56,7 +56,7 @@ const BrowseCategorySection = () => {
     },
     secure: true,
   });
-
+console.log(data?.results)
   const handleFilterChange = (newParams) => {
     setFilterParams((prev) => ({ ...prev, ...newParams }));
   };

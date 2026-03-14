@@ -7,7 +7,6 @@ import {
   ProfetionalIcon,
   VideoIcon,
 } from "@/components/common/SVGicons/MySvg";
-import { IMG_URL } from "@/config/constant";
 import { Link } from "react-router-dom";
 
 const VechleBoostCard = ({ car }) => {
@@ -16,7 +15,7 @@ const VechleBoostCard = ({ car }) => {
       {/* Image */}
       <div className="w-full h-64 overflow-hidden">
         <img
-          src={IMG_URL + car?.thumbnail}
+          src={car?.thumbnail}
           alt={car?.title}
           className="w-full h-full object-cover"
         />

@@ -1,29 +1,56 @@
-import React, { useState } from 'react';
-import { Switch } from '@/components/ui/switch';
+import React, { useState, useEffect } from "react";
+import { Switch } from "@/components/ui/switch";
+import { useApiMutation } from "@/hooks/useApiMutation";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const ManageNotification = () => {
   const [notifications, setNotifications] = useState({
-    subscription: true,
-    articles: true,
-    events: true
+    account_billing: false,
+    ad_updates: false,
+    messages_enquiries: false,
+    boost_promotions: false,
+  });
+
+  const { data: initialData, isLoading: isFetching } = useApiQuery({
+    queryKey: ["notificationSettings"],
+    url: "/notification/settings/",
+    secure: true,
+  });
+
+  useEffect(() => {
+    if (initialData?.data) {
+      setNotifications(initialData.data);
+    }
+  }, [initialData]);
+
+  const { mutate, isPending } = useApiMutation({
+    url: "/notification/settings/",
+    method: "PATCH",
+    secure: true,
+    invalidateKeys: ["notificationSettings"],
+    successMessage: "Notification settings updated successfully",
   });
 
   const handleToggle = (key) => {
-    setNotifications(prev => ({
+    setNotifications((prev) => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: !prev[key],
     }));
   };
 
   const handleSaveUpdate = () => {
-    console.log('Saving notification preferences:', notifications);
-    // Add your save logic here
+    mutate(notifications);
   };
+
+  if (isFetching)
+    return (
+      <div className="p-8 text-center text-gray-500">
+        Loading notification settings...
+      </div>
+    );
 
   return (
     <div className=" border-t pt-4">
-
-      
       <div className="space-y-8">
         {/* Subscription & Payments */}
         <div className="flex items-center justify-between">
@@ -32,69 +59,69 @@ const ManageNotification = () => {
               Account & Billing Alerts
             </h3>
             <p className="text-sm text-gray-600">
-          Get notified about subscription renewals and payment issues.
+              Get notified about subscription renewals and payment issues.
             </p>
           </div>
           <div className="ml-6">
             <Switch
-              checked={notifications.subscription}
-              onCheckedChange={() => handleToggle('subscription')}
+              checked={notifications.account_billing}
+              onCheckedChange={() => handleToggle("account_billing")}
               className="data-[state=checked]:bg-custom-primary"
             />
           </div>
         </div>
 
-        {/* Articles Remainders */}
+        {/* Ad Updates */}
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1">
-             Ad Updates
+              Ad Updates
             </h3>
             <p className="text-sm text-gray-600">
-             Receive alerts when your ad is approved.
+              Receive alerts when your ad is approved.
             </p>
           </div>
           <div className="ml-6">
             <Switch
-              checked={notifications.articles}
-              onCheckedChange={() => handleToggle('articles')}
+              checked={notifications.ad_updates}
+              onCheckedChange={() => handleToggle("ad_updates")}
               className="data-[state=checked]:bg-custom-primary"
             />
           </div>
         </div>
 
-        {/* Event Remainders */}
+        {/* Messages & Enquiries */}
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1">
-             Messages & Enquiries
+              Messages & Enquiries
             </h3>
             <p className="text-sm text-gray-600">
-             New buyer & Seller messages.
+              New buyer & Seller messages.
             </p>
           </div>
           <div className="ml-6">
             <Switch
-              checked={notifications.events}
-              onCheckedChange={() => handleToggle('events')}
+              checked={notifications.messages_enquiries}
+              onCheckedChange={() => handleToggle("messages_enquiries")}
               className="data-[state=checked]:bg-custom-primary"
             />
           </div>
         </div>
-        {/* Event Remainders */}
+        {/* Boost & Promotions */}
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1">
-     Boost & Promotions
+              Boost & Promotions
             </h3>
             <p className="text-sm text-gray-600">
-           Reminder when a boost is about to expire.
+              Reminder when a boost is about to expire.
             </p>
           </div>
           <div className="ml-6">
             <Switch
-              checked={notifications.events}
-              onCheckedChange={() => handleToggle('events')}
+              checked={notifications.boost_promotions}
+              onCheckedChange={() => handleToggle("boost_promotions")}
               className="data-[state=checked]:bg-custom-primary"
             />
           </div>
@@ -105,9 +132,10 @@ const ManageNotification = () => {
       <div className="flex justify-end mt-12">
         <button
           onClick={handleSaveUpdate}
-          className="px-8 py-3 bg-custom-primary text-white font-medium rounded-md transition-colors duration-200  "
+          disabled={isPending}
+          className="px-8 py-3 bg-custom-primary text-white font-medium rounded-md transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Save & Update
+          {isPending ? "Updating..." : "Save & Update"}
         </button>
       </div>
     </div>

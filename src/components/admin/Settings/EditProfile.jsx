@@ -4,7 +4,6 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { IMG_URL } from "@/config/constant";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -166,7 +165,7 @@ const EditProfile = () => {
             src={
               coverPreview ||
               (profile?.cover_image
-                ? IMG_URL + profile.cover_image
+                ? profile.cover_image
                 : "/placeholder-cover.png")
             }
             alt="Cover"
@@ -198,7 +197,7 @@ const EditProfile = () => {
               src={
                 avatarPreview ||
                 (profile?.profile_image
-                  ? IMG_URL + profile.profile_image
+                  ? profile.profile_image
                   : "/default-avatar.png")
               }
               alt="Profile"
