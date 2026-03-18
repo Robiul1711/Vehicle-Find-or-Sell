@@ -111,11 +111,11 @@ console.log(notificationsData)
             <h3 className="text-lg font-semibold text-gray-900">
               Notifications
             </h3>
-            {unreadCount > 0 && (
+            {/* {unreadCount > 0 && (
               <span className="text-xs text-blue-600 font-medium cursor-pointer hover:underline">
                 Mark all as read
               </span>
-            )}
+            )} */}
           </div>
           <div className="max-h-96 overflow-y-auto">
             {notificationsList.length > 0 ? (

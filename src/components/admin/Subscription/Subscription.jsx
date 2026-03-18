@@ -95,7 +95,7 @@ const Subscription = () => {
     <div className="w-full relative overflow-hidden">
       <div className="relative z-10 min-h-screen">
         <div className="w-full">
-          <div className="text-center sm:text-left max-w-3xl mx-auto sm:mx-0 px-4 sm:px-0">
+          <div className="text-center sm:text-left ">
             <h1 className="text-2xl sm:text-4xl xl:text-5xl font-extrabold text-gray-900 tracking-tight leading-snug sm:leading-tight">
               Choose Your Professional Subscription Plan
             </h1>

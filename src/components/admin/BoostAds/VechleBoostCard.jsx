@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 
 const VechleBoostCard = ({ car }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
+    <div className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition h-full flex flex-col">
       {/* Image */}
-      <div className="w-full h-64 overflow-hidden">
+      <div className="w-full h-64 overflow-hidden shrink-0">
         <img
           src={car?.thumbnail}
           alt={car?.title}
@@ -22,7 +22,7 @@ const VechleBoostCard = ({ car }) => {
       </div>
 
       {/* Content */}
-      <div className="p-4 space-y-2">
+      <div className="p-4 flex flex-col flex-grow">
         {/* Title + Subtitle */}
         <div>
           <div className="flex  justify-between">
@@ -37,7 +37,7 @@ const VechleBoostCard = ({ car }) => {
         </div>
 
         {/* Features */}
-        <div className="flex items-center justify-between text-gray-700 text-sm mt-3 border-t pt-3 border-b pb-3">
+        <div className="flex items-center justify-between text-gray-700 text-sm mt-3 mb-2 border-t pt-3 border-b pb-3">
           <div className="flex flex-col items-center gap-1">
             <MilageIcon />
             <span>{car.mileage}</span>
@@ -56,8 +56,9 @@ const VechleBoostCard = ({ car }) => {
           </div>
         </div>
 
-        {/* Price */}
-        <p className="text-2xl font-bold text-gray-900 mt-3">{car.price}</p>
+        <div className="mt-auto">
+          {/* Price */}
+          <p className="text-2xl font-bold text-gray-900 mt-2">{car.price}</p>
 
         {/* Buttons */}
         <div className="grid grid-cols-2 gap-2 mt-3">
@@ -74,6 +75,7 @@ const VechleBoostCard = ({ car }) => {
           >
             Boost Ads
           </Link>
+        </div>
         </div>
       </div>
     </div>

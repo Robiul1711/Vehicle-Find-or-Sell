@@ -2,14 +2,32 @@ import React from "react";
 import logo from "@/assets/images/logo.png";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const Footer = () => {
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["footer"],
+    url: "/cms/footer/",
+  });
+
+  const footerData = data?.data;
+
+  const getSocialIcon = (platform, logoUrl) => {
+    switch (platform?.toLowerCase()) {
+      case "facebook": return <FaFacebookF className="w-4 h-4" />;
+      case "twitter": return <FaTwitter className="w-4 h-4" />;
+      case "instagram": return <FaInstagram className="w-4 h-4" />;
+      case "linkedin": return <FaLinkedinIn className="w-4 h-4" />;
+      default: return logoUrl ? <img src={logoUrl} alt={platform} className="w-4 h-4 object-contain" /> : <FaFacebookF className="w-4 h-4" />;
+    }
+  };
+
   return (
     <footer className="section-padding-x section-padding-y bg-bg-custom text-white">
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-8 pb-8 border-b border-white/10">
         {/* Logo */}
-        <img src={logo} alt="Logo" className="w-24" />
+        <img src={footerData?.logo_url || logo} alt="Logo" className="w-24 object-contain h-auto max-h-16" />
 
         {/* Navigation Links */}
         <ul className="flex flex-wrap justify-center gap-6 text-sm font-medium">
@@ -22,30 +40,36 @@ const Footer = () => {
 
         {/* Social Links */}
         <div className="flex gap-4">
-          <a
-            href="#"
-            className="p-3 rounded-full bg-white text-custom-primary hover:text-white duration-300  hover:bg-custom-primary transition"
-          >
-            <FaFacebookF className="w-4 h-4" />
-          </a>
-          <a
-            href="#"
-            className="p-3 rounded-full bg-white text-custom-primary hover:text-white duration-300  hover:bg-custom-primary transition"
-          >
-            <FaTwitter className="w-4 h-4" />
-          </a>
-          <a
-            href="#"
-            className="p-3 rounded-full bg-white text-custom-primary hover:text-white duration-300  hover:bg-custom-primary transition"
-          >
-            <FaInstagram className="w-4 h-4" />
-          </a>
-          <a
-            href="#"
-            className="p-3 rounded-full bg-white text-custom-primary hover:text-white duration-300  hover:bg-custom-primary transition"
-          >
-            <FaLinkedinIn className="w-4 h-4" />
-          </a>
+          {footerData?.social_links?.length > 0 ? (
+            footerData.social_links.map((social) => (
+              social.is_active && (
+                <a
+                  key={social.id}
+                  href={social.link || "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-custom-primary hover:text-white duration-300 hover:bg-custom-primary transition"
+                >
+                  {getSocialIcon(social.platform, social.logo_url)}
+                </a>
+              )
+            ))
+          ) : (
+            <>
+              <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-custom-primary hover:text-white duration-300 hover:bg-custom-primary transition">
+                <FaFacebookF className="w-4 h-4" />
+              </a>
+              <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-custom-primary hover:text-white duration-300 hover:bg-custom-primary transition">
+                <FaTwitter className="w-4 h-4" />
+              </a>
+              <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-custom-primary hover:text-white duration-300 hover:bg-custom-primary transition">
+                <FaInstagram className="w-4 h-4" />
+              </a>
+              <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-custom-primary hover:text-white duration-300 hover:bg-custom-primary transition">
+                <FaLinkedinIn className="w-4 h-4" />
+              </a>
+            </>
+          )}
         </div>
       </div>
 
@@ -80,7 +104,7 @@ const Footer = () => {
           </li>
         </ul>
         <p className="text-center lg:text-right">
-          © 2025 labonneroute.fr. All rights reserved.
+          {footerData?.copyright_text || "© 2025 labonneroute.fr. All rights reserved."}
         </p>
       </div>
     </footer>
