@@ -14,7 +14,7 @@ import FilterSection from "@/components/browseListingComponents/FilterSection";
 import DealerFilter from "./DealerFilter";
 import { Link } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
-
+import PaginationComponent from "@/components/common/PaginationComponent";
 
 const DealerListing = () => {
   const [params, setParams] = useState({
@@ -24,12 +24,13 @@ const DealerListing = () => {
     account_type: "",
     search: "",
   });
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, refetch } = useApiQuery({
-    queryKey: ["dealerData", params],
+    queryKey: ["dealerData", params, currentPage],
     url: "/delears/",
     secure: true,
-    params: params,
+    params: { ...params, page: currentPage },
   });
 
   const handleFilterApply = (newFilters) => {
@@ -37,7 +38,7 @@ const DealerListing = () => {
     const category = Object.keys(newFilters.categories)
       .filter((key) => newFilters.categories[key])
       .join(",");
-    
+
     const services = Object.keys(newFilters.services)
       .filter((key) => newFilters.services[key])
       .join(",");
@@ -52,6 +53,7 @@ const DealerListing = () => {
       services,
       account_type,
     });
+    setCurrentPage(1);
   };
 
   // console.log(data?.results);
@@ -78,7 +80,10 @@ const DealerListing = () => {
           <input
             type="text"
             value={params.search}
-            onChange={(e) => setParams(prev => ({ ...prev, search: e.target.value }))}
+            onChange={(e) => {
+              setParams((prev) => ({ ...prev, search: e.target.value }));
+              setCurrentPage(1);
+            }}
             className="w-full p-2 outline-none bg-transparent"
             placeholder="Search..."
           />
@@ -87,7 +92,7 @@ const DealerListing = () => {
         {/* Button Group - Stack on mobile, row on desktop */}
         <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-center">
           {/* Search Button - Full width on mobile, auto on larger screens */}
-          <button 
+          <button
             onClick={() => refetch()}
             className="w-full sm:w-auto bg-custom-primary text-white px-4 py-2 rounded-lg whitespace-nowrap"
           >
@@ -243,7 +248,8 @@ const DealerListing = () => {
                           className="text-black mt-1 flex items-center gap-2"
                         >
                           <CustomLocation />
-                          {item?.country}, {item?.street}, {item?.city}, {item?.zip_code}
+                          {item?.country}, {item?.street}, {item?.city},{" "}
+                          {item?.zip_code}
                         </motion.p>
                         <motion.div layout className=" my-2 ">
                           <Link to={`/dealer-profile/${item?.id}`}>
@@ -266,11 +272,22 @@ const DealerListing = () => {
                   No Search Result Found
                 </h3>
                 <p className="text-gray-500 max-w-xs mx-auto text-sm sm:text-base">
-                  We couldn't find any dealers matching your current filters. Try adjusting your preferences.
+                  We couldn't find any dealers matching your current filters.
+                  Try adjusting your preferences.
                 </p>
               </div>
             ) : null}
           </div>
+
+          {data?.count > 4 && (
+            <div className="mt-8 flex justify-center w-full">
+              <PaginationComponent
+                pageCount={Math.ceil(data.count / 4)}
+                setPageCount={setCurrentPage}
+                forcePage={currentPage}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

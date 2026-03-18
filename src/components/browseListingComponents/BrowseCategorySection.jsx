@@ -17,9 +17,11 @@ import {
 import PartListing from "./PartListing";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import PaginationComponent from "@/components/common/PaginationComponent";
 
 const BrowseCategorySection = () => {
   const [activeTab, setActiveTab] = useState("car");
+  const [currentPage, setCurrentPage] = useState(1);
   const [filterParams, setFilterParams] = useState({
     price_min: "",
     price_max: "",
@@ -44,10 +46,11 @@ const BrowseCategorySection = () => {
   });
 
   const { data, isLoading, refetch } = useApiQuery({
-    queryKey: ["store-filter", activeTab, filterParams],
+    queryKey: ["store-filter", activeTab, filterParams, currentPage],
     url: "/store/filter/",
     params: {
       type: activeTab,
+      page: currentPage,
       ...Object.fromEntries(
         Object.entries(filterParams).filter(
           ([_, v]) => v !== "" && v !== null && v !== undefined,
@@ -56,9 +59,11 @@ const BrowseCategorySection = () => {
     },
     secure: true,
   });
-console.log(data?.results)
+
+console.log(data)
   const handleFilterChange = (newParams) => {
     setFilterParams((prev) => ({ ...prev, ...newParams }));
+    setCurrentPage(1);
   };
 
   const mapCarData = (results) => {
@@ -202,7 +207,10 @@ console.log(data?.results)
         {categories.map((category) => (
           <button
             key={category.id}
-            onClick={() => setActiveTab(category.id)}
+            onClick={() => {
+              setActiveTab(category.id);
+              setCurrentPage(1);
+            }}
             className={`
                             flex flex-col items-center justify-center gap-3 p-6 
                             rounded-xl border-2 transition-all duration-200 
@@ -235,6 +243,16 @@ console.log(data?.results)
       {/* Tab Content */}
       <div className="bg-white border border-gray-200 rounded-xl p-8 min-h-[300px]">
         <div className="leading-relaxed">{getActiveContent()}</div>
+        
+        {data?.count > 4 && (
+          <div className="mt-8 flex justify-center">
+            <PaginationComponent
+              pageCount={Math.ceil(data.count / 4)}
+              setPageCount={setCurrentPage}
+              forcePage={currentPage}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
