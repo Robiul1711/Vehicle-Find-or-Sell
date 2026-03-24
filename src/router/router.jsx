@@ -47,6 +47,7 @@ import TermOfUse from "@/pages/tou/TermOfUse";
 import ProductComparison from "@/pages/comparePage/ProductComparison";
 import PartsDetails from "@/pages/detailsPage/PartsDetails";
 import PrivateRoute from "@/providers/PrivateRoute";
+import NotFoundPage from "@/pages/notFoundPage/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -154,6 +155,10 @@ const router = createBrowserRouter([
       {
         path: "/aditionalservices/partner-garage-directory",
         element: <PartnerGarageDirectory />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },

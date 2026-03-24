@@ -23,7 +23,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="section-padding-x section-padding-y bg-bg-custom text-white">
+    <footer className="section-padding-x pt-10 sm:pt-12 md:pt-16 lg:pt-20 pb-6 sm:pb-8  bg-bg-custom text-white">
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-8 pb-8 border-b border-white/10">
         {/* Logo */}

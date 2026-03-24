@@ -33,7 +33,7 @@ const DealerProfileListing = () => {
       search: search || undefined,
     },
   });
-
+console.log(adsData);
   // Determine item type correctly from results
   const items =
     adsData?.results?.map((item) => ({

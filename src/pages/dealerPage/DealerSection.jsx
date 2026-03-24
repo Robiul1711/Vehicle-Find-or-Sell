@@ -24,7 +24,7 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
-
+import ImageAvatar from "@/assets/images/dummy.png"
 const DealerSection = () => {
   const { user } = useAuth();
   const { id } = useParams();
@@ -33,6 +33,7 @@ const DealerSection = () => {
     url: `/delears/detail/${id}/`,
     secure: true,
   });
+  console.log(data)
   console.log(data?.profile?.services);
   const profileData = data?.profile;
 
@@ -68,7 +69,7 @@ const DealerSection = () => {
         <div className=" ">
           {/* Cover image or fallback */}
           <div className="w-full h-48 lg:h-64 bg-gray-100 overflow-hidden">
-            {console.log(profileData)}
+            {/* {console.log(profileData)} */}
             <img
               src={
                 profileData?.cover_image
@@ -87,7 +88,7 @@ const DealerSection = () => {
               src={
                 profileData?.profile_image
                   ? profileData.profile_image
-                  : ImageProvider.profileImg
+                  : ImageAvatar
               }
               alt={profileData?.full_name}
               className="w-full h-full object-cover"

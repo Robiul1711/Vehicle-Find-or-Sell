@@ -1,11 +1,18 @@
 import Title from '@/components/common/Title';
+import { useApiQuery } from '@/hooks/useApiQuery';
 import { CustomAdmin, CustomCalendar } from '@/utils/IconProvider';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-const RelatedPostsSection = () => {
+const RelatedPostsSection = ({data}) => {
+    console.log(data?.data?.related_blogs)
+    //   const { data:relatedBlogs, isLoading } = useApiQuery({
+    //     queryKey: ["relatedBlogs"],
+    //     url: `/blog/related-blogs/`,
+    //   });
+    //   console.log(relatedBlogs)
     const blogs = Array.from({ length: 3 }, (_, i) => ({
         id: i + 1,
         title: i % 2 === 0 ? "Safety Tips and Driving Techniques for Every Journey" : "Why Regular Inspections and Fluid Checks Matter",
@@ -41,7 +48,7 @@ const RelatedPostsSection = () => {
             <div className="">
                 {/* Blog Grid */}
                 <div className="grid md:grid-cols-3 gap-6">
-                    {blogs.map((blog) => (
+                    {data?.data?.related_blogs?.map((blog) => (
                         <div key={blog.id} className="rounded-xl overflow-hidden  hover:shadow-lg transition ">
                             <img src={blog.image} alt={blog.title} className="w-full rounded-xl h-80 object-cover" />
                             <div className="p-4">

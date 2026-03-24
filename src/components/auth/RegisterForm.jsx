@@ -39,6 +39,10 @@ const RegisterForm = ({ onSuccessSignup }) => {
     // Optional: Clean data before sending (e.g., remove confirm_password)
     const { terms, ...payload } = data;
 
+    if (payload.account_type === "private") {
+      delete payload.siren_number;
+    }
+
     // 3. Trigger the mutation
     registerUser(payload);
   };
@@ -158,22 +162,24 @@ const RegisterForm = ({ onSuccessSignup }) => {
         </div>
 
         {/* SIREN Number */}
-        <div className="space-y-4">
-          <Label className="text-lg">SIREN Number</Label>
-          <div className="border flex items-center gap-2 p-3 rounded-[10px]">
-            <input
-              type="text"
-              {...register("siren_number", { required: true })}
-              placeholder=""
-              className="w-full border-none outline-none bg-transparent"
-            />
+        {watch("account_type") === "business" && (
+          <div className="space-y-4">
+            <Label className="text-lg">SIREN Number</Label>
+            <div className="border flex items-center gap-2 p-3 rounded-[10px]">
+              <input
+                type="text"
+                {...register("siren_number", { required: true })}
+                placeholder=""
+                className="w-full border-none outline-none bg-transparent"
+              />
+            </div>
+            {errors.siren_number && (
+              <span className="text-red-500 text-sm">
+                SIREN Number is required
+              </span>
+            )}
           </div>
-          {errors.siren_number && (
-            <span className="text-red-500 text-sm">
-              SIREN Number is required
-            </span>
-          )}
-        </div>
+        )}
 
         {/* Terms & Conditions */}
         <div className="space-y-2">

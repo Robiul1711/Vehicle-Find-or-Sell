@@ -1,10 +1,11 @@
 import React from 'react'
 import { MessageCircle, ExternalLink } from 'lucide-react'
 import { OfferIcon } from '../common/SVGicons/CarSvg'
-import ImageAvatar from "@/assets/images/avatar1.png"
+import ImageAvatar from "@/assets/images/dummy.png"
 import { Link } from 'react-router-dom'
 
 const VehiclePriceDealer = ({data}) => {
+  // console.log(data)
   return (
     <div className="bg-white rounded-lg shadow-md p-10 ">
       {/* Price Section */}
@@ -20,22 +21,22 @@ const VehiclePriceDealer = ({data}) => {
       </div>
 
       {/* Make Offer Button */}
-      <button className="w-full bg-[#F88E08]  text-white font-medium py-3 px-4 rounded-lg mb-6 flex items-center justify-center gap-2 transition-colors">
+      <p className="w-full bg-[#F88E08]  text-white font-medium py-3 px-4 rounded-lg mb-6 flex items-center justify-center gap-2 transition-colors">
         <span className="text-lg"><OfferIcon /></span>
         Make An Offer Price
-      </button>
+      </p>
 
       {/* Dealer Info Section */}
       <div className="mb-6">
         <div className="flex flex-col items-start gap-3 mb-4">
           <img 
-            src={ImageAvatar}
+            src={data?.contact?.profile_image || ImageAvatar}
             alt="Katie Sims" 
             className="w-12 h-12 rounded-full object-cover"
           />
           <div>
-            <div className="font-medium text-gray-900">Katie Sims</div>
-            <div className="text-sm text-gray-500">Professional Seller</div>
+            <div className="font-medium text-gray-900">{data?.contact?.name}</div>
+            <div className="text-sm text-gray-500">{data?.contact?.account_type}</div>
           </div>
         </div>
 
@@ -48,7 +49,7 @@ const VehiclePriceDealer = ({data}) => {
           
           <button  onClick={() =>
     window.open(
-      "https://wa.me/8801777777777?text=Hi%2C%20I%27m%20interested%20in%20your%20car!",
+      `https://wa.me/${data?.contact?.phone}?text=Hi%2C%20I%27m%20interested%20in%20your%20car!`,
       "_blank"
     )
   } className="w-full border border-green-300 hover:border-green-400 bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
@@ -58,16 +59,16 @@ const VehiclePriceDealer = ({data}) => {
         </div>
 
         {/* View All Stock Link */}
-        <Link to="/dealer-profile" className="text-sm text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1 w-full">
+        <Link to={`/dealer-profile/${data?.profile_id}`} className="text-sm text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1 w-full">
           View All stock at this dealer
           <ExternalLink size={14} />
         </Link>
       </div>
 
       {/* Vehicle History Button */}
-      <button className="w-full bg-[#012853] hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+      <Link to={`https://gtac.fr/`} target='_blank' className="w-full bg-[#012853] block text-center hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-lg transition-colors">
         Get Vehicle History
-      </button>
+      </Link>
     </div>
   )
 }

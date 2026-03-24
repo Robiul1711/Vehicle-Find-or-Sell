@@ -65,7 +65,7 @@ const BlogDetailsPage = () => {
         {/* <BlogCommonForm /> */}
 
         {/* Related Post section  */}
-        <RelatedPostsSection />
+        <RelatedPostsSection data={data} />
       </CommonPageWrapper>
     </div>
   );
