@@ -11,7 +11,7 @@ const CommonNavbar = ({ open, setOpen }) => {
       <div className="flex items-center gap-4">
         <span
           onClick={() => setOpen(!open)}
-          className="xlg:hidden block cursor-pointer"
+          className="block cursor-pointer"
         >
           <GiHamburgerMenu color="black" size={26} />
         </span>

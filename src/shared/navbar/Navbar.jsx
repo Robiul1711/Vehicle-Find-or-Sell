@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ExternalLink } from "lucide-react";
-import logo from "@/assets/images/logo.png";
+import logo from "@/assets/images/logo1.png";
 import { Link, useLocation } from "react-router-dom";
 import CommonButton from "@/components/common/CommonButton";
 import { CompareIcon } from "@/components/common/SVGicons/MySvg";
@@ -67,7 +67,7 @@ const Navbar = () => {
           <div className="flex h-16 lg:h-20 items-center justify-between">
             {/* Logo */}
             <Link to="/">
-              <img src={logo} alt="Logo" className="" />
+              <img src={logo} alt="Logo" className="sm:w-32 w-24 md:w-36 lg:w-40 xl:w-48" />
             </Link>
 
             {/* Desktop Navigation */}

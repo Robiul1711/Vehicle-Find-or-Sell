@@ -27,7 +27,7 @@ const Footer = () => {
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-8 pb-8 border-b border-white/10">
         {/* Logo */}
-        <img src={footerData?.logo_url || logo} alt="Logo" className="w-24 object-contain h-auto max-h-16" />
+        <img src={footerData?.logo_url || logo} alt="Logo" className="w-36 sm:w-40 md:w-44 lg:w-48 object-contain" />
 
         {/* Navigation Links */}
         <ul className="flex flex-wrap justify-center gap-6 text-sm font-medium">

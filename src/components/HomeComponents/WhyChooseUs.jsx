@@ -6,6 +6,7 @@ import {
   SecureTrustedIcon,
   SmartPromotionsIcon,
 } from "../common/SVGicons/MySvg";
+import { motion } from "framer-motion";
 
 const WhyChooseUsData = [
   {
@@ -35,24 +36,63 @@ const WhyChooseUsData = [
 ];
 
 const WhyChooseUs = () => {
-  return (
-    <section className="section-padding-x section-padding-y bg-custom-primary text-white">
-      <div className="text-center">
-        <Title level="title40">Why Choose Us?</Title>
-      </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-12">
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  return (
+    <section className="section-padding-x section-padding-y bg-custom-primary text-white overflow-hidden">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center"
+      >
+        <Title level="title40">Why Choose Us?</Title>
+      </motion.div>
+
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-12"
+      >
         {WhyChooseUsData.map((item) => (
-          <div
+          <motion.div
             key={item.id}
-            className="flex flex-col items-center text-center gap-4 sm:gap-6 px-4"
+            variants={itemVariants}
+            className="flex flex-col items-center text-center gap-4 sm:gap-6 px-4 group"
           >
-            <div className="w-16 h-16 md:w-20 md:h-20">{item.icon}</div>
+            <motion.div 
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              className="w-16 h-16 md:w-20 md:h-20 transition-transform cursor-pointer"
+            >
+              {item.icon}
+            </motion.div>
             <Title level="title24">{item.title}</Title>
-            <p className="text-sm md:text-base text-gray-100">{item.desc}</p>
-          </div>
+            <p className="text-sm md:text-base text-gray-100 opacity-80 group-hover:opacity-100 transition-opacity">
+              {item.desc}
+            </p>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

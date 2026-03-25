@@ -4,6 +4,7 @@ import Title from "@/components/common/Title";
 import { CustomCheck } from "@/utils/IconProvider";
 
 const VehicleMaintenanceKeypoints = ({ data }) => {
+  // console.log(data)
   const sections = data?.sections || [];
 
   return (

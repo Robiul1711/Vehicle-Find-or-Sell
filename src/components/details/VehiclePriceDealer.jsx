@@ -4,8 +4,50 @@ import { OfferIcon } from '../common/SVGicons/CarSvg'
 import ImageAvatar from "@/assets/images/dummy.png"
 import { Link } from 'react-router-dom'
 
-const VehiclePriceDealer = ({data}) => {
-  // console.log(data)
+
+const VehiclePriceDealer = ({data, isLoading}) => {
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-10 animate-pulse">
+        {/* Price Section Skeleton */}
+        <div className="mb-6">
+          <div className="h-4 w-20 bg-gray-300 rounded mb-2" />
+          <div className="flex items-baseline gap-2 mb-2">
+            <div className="h-4 w-12 bg-gray-200 rounded" />
+            <div className="h-10 w-32 bg-gray-300 rounded" />
+          </div>
+          <div className="h-4 w-40 bg-gray-200 rounded" />
+        </div>
+
+        {/* Offer Button Skeleton */}
+        <div className="h-14 w-full bg-gray-300 rounded-lg mb-6" />
+
+        {/* Dealer Info Section Skeleton */}
+        <div className="mb-6">
+          <div className="flex flex-col items-start gap-4 mb-4">
+            <div className="w-16 h-16 bg-gray-300 rounded-full" />
+            <div className="space-y-2">
+              <div className="h-5 w-32 bg-gray-300 rounded" />
+              <div className="h-4 w-24 bg-gray-200 rounded" />
+            </div>
+          </div>
+
+          {/* Contact Buttons Skeleton */}
+          <div className="space-y-3 mb-4">
+            <div className="h-12 w-full bg-gray-200 rounded-lg" />
+            <div className="h-12 w-full bg-gray-200 rounded-lg" />
+          </div>
+
+          {/* View All Stock Link Skeleton */}
+          <div className="h-4 w-40 bg-gray-200 rounded mx-auto" />
+        </div>
+
+        {/* Vehicle History Button Skeleton */}
+        <div className="h-14 w-full bg-gray-300 rounded-lg" />
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-md p-10 ">
       {/* Price Section */}

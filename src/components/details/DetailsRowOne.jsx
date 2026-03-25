@@ -12,7 +12,42 @@ import { FaRegShareFromSquare } from "react-icons/fa6";
 import VehiclePriceDealer from "./VehiclePriceDealer";
 import { useApiMutation } from "@/hooks/useApiMutation";
 
-const DetailsRowOne = ({ details, data, refetch }) => {
+const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
+  if (isLoading) {
+    return (
+      <div className="flex w-full xmd:flex-row flex-col gap-5 mt-14">
+        <div className="xmd:w-[60%] w-full flex flex-col gap-6">
+          <div className="flex flex-col gap-4 animate-pulse">
+            {/* Title Skeleton */}
+            <div className="h-10 w-3/4 bg-gray-300 rounded-lg" />
+
+            <div className="flex w-full gap-6 justify-between items-center">
+              {/* Car Info Badges Skeleton */}
+              <div className="flex flex-wrap gap-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="h-9 w-28 bg-gray-200 rounded-lg" />
+                ))}
+              </div>
+
+              {/* Buttons Skeleton */}
+              <div className="flex gap-3">
+                <div className="h-10 w-12 bg-gray-200 rounded-lg" />
+                <div className="h-10 w-12 bg-gray-200 rounded-lg" />
+              </div>
+            </div>
+          </div>
+
+          <CarLeftSideImages isLoading={true} />
+        </div>
+
+        {/* Sidebar Skeleton (Price & Dealer) */}
+        <div className="xmd:w-[40%] w-full">
+          <VehiclePriceDealer isLoading={true} />
+        </div>
+      </div>
+    );
+  }
+
   // add favorite
   const { mutate, isPending } = useApiMutation({
     url: "/account/favorites/toggle/",
@@ -122,11 +157,11 @@ const DetailsRowOne = ({ details, data, refetch }) => {
           </div>
         </div>
 
-        <CarLeftSideImages details={details} data={data} />
+        <CarLeftSideImages details={details} data={data} isLoading={isLoading} />
       </div>
 
       <div className="xmd:w-[40%] w-full">
-        <VehiclePriceDealer data={data} />
+        <VehiclePriceDealer data={data} isLoading={isLoading} />
       </div>
     </div>
   );

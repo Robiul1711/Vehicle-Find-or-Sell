@@ -252,7 +252,7 @@ export default function BasicDetails() {
           >
             <option value="">Select Condition</option>
             <option value="new">Brand New</option>
-            <option value="used">Used - Like New</option>
+            <option value="used">Used</option>
           </select>
         </div>
 

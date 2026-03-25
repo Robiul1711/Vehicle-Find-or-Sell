@@ -17,12 +17,12 @@ import React, { useEffect, useState } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 
 const AdminLayout = () => {
-  const [Open, setOpen] = useState(false);
+  const [Open, setOpen] = useState(true);
 
   const sideBar = [
     {
       id: 1,
-      icon: <DashboardIcon className=" hover:text-red-500" />,
+      icon: <DashboardIcon />,
       text: "Dashboard",
       path: "/dashboard",
       activePaths: ["/dashboard"],

@@ -20,7 +20,7 @@ const DetailsPage = () => {
   const details = "car"; // car, truck, bike, scoter, parts
   return (
     <div className="section-padding-x pb-20 flex flex-col gap-10 ">
-      <DetailsRowOne details={details} data={data} refetch={refetch} />
+      <DetailsRowOne details={details} data={data} refetch={refetch} isLoading={isLoading} />
       <div className=" max-w-[950px]">
         {details === "parts" ? (
           <PartOverview />

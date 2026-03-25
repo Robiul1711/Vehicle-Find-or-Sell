@@ -22,13 +22,13 @@ import {
 import FilterSection from "./FilterSection";
 import { Link } from "react-router-dom";
 
-const options = [
-  "Newest",
-  "Featured",
-  "Make (A-Z)",
-  "Make (Z-A)",
-  "Last Update",
-];
+// const options = [
+//   "Newest",
+//   "Featured",
+//   "Make (A-Z)",
+//   "Make (Z-A)",
+//   "Last Update",
+// ];
 
 const PartListing = ({
   items,
@@ -105,7 +105,7 @@ const PartListing = ({
           </div>
 
           {/* Sort Dropdown */}
-          <div className="w-full sm:w-auto">
+          {/* <div className="w-full sm:w-auto">
             <div className="relative">
               <div
                 onClick={() => setIsFeatureModal((prev) => !prev)}
@@ -146,7 +146,7 @@ const PartListing = ({
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

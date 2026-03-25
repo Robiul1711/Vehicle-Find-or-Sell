@@ -3,6 +3,7 @@ import Title from "../common/Title";
 import CommonButton from "../common/CommonButton";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { CarOneIcon } from "../common/SVGicons/MySvg";
+import { motion } from "framer-motion";
 
 const heroData = [
   {
@@ -21,30 +22,59 @@ const heroData = [
 
 const Hero = () => {
   return (
-    <div className="bg-[#F9FAFB] section-padding-x section-padding-y grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-      {heroData.map((item) => (
-        <div
+    <div className="bg-[#F9FAFB] section-padding-x section-padding-y grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 overflow-hidden">
+      {heroData.map((item, index) => (
+        <motion.div
           key={item.id}
-          className="bg-[#E9F2FF] rounded-2xl p-8 md:p-16 flex flex-col justify-between"
+          initial={{ opacity: 0, x: index === 0 ? -50 : 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.2 }}
+          className="bg-[#E9F2FF] rounded-2xl p-8 md:p-16 flex flex-col justify-between hover:shadow-xl transition-shadow duration-300"
         >
           {/* Top Section */}
           <div className="flex flex-col gap-4">
-            <Title level="title32">{item.title}</Title>
-            <Title level="title18">{item.desc}</Title>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + index * 0.2 }}
+            >
+              <Title level="title32">{item.title}</Title>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + index * 0.2 }}
+            >
+              <Title level="title18">{item.desc}</Title>
+            </motion.div>
           </div>
 
           {/* Bottom Section */}
           <div className="flex items-center justify-between mt-6">
-            <CommonButton
-              link="/listings"
-              variant="primary"
-              className="flex items-center gap-2"
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5 + index * 0.2 }}
             >
-              Get Started <MdOutlineArrowOutward />
-            </CommonButton>
-            <div className="flex-shrink-0">{item.icon}</div>
+              <CommonButton
+                link="/listings"
+                variant="primary"
+                className="flex items-center gap-2 transition-transform hover:scale-105 active:scale-95"
+              >
+                Get Started <MdOutlineArrowOutward />
+              </CommonButton>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, rotate: index === 0 ? -10 : 10 }}
+              whileInView={{ opacity: 1, rotate: 0 }}
+              transition={{ delay: 0.6 + index * 0.2, type: "spring" }}
+              className="flex-shrink-0"
+            >
+              {item.icon}
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

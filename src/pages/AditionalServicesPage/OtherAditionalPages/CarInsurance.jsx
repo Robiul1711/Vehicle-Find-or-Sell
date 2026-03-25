@@ -14,7 +14,7 @@ const CarInsurance = () => {
     console.log(data?.data);
   return (
     <div >
-      <ServiceBanner image={data?.data?.hero_background_image_url} title={data?.data?.title} subText={data?.data?.subtitle} />
+      <ServiceBanner image={data?.data?.hero_background_image_url || s3} title={data?.data?.title} subText={data?.data?.subtitle} />
       <CommonPageWrapper>
         <CarInsuranceBannerKeypoints data={data?.data}/>
       </CommonPageWrapper>

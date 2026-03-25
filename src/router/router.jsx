@@ -48,6 +48,8 @@ import ProductComparison from "@/pages/comparePage/ProductComparison";
 import PartsDetails from "@/pages/detailsPage/PartsDetails";
 import PrivateRoute from "@/providers/PrivateRoute";
 import NotFoundPage from "@/pages/notFoundPage/NotFoundPage";
+import PaymentSuccess from "@/pages/payment/PaymentSuccess";
+import PaymentCancel from "@/pages/payment/PaymentCancel";
 
 const router = createBrowserRouter([
   {
@@ -155,6 +157,14 @@ const router = createBrowserRouter([
       {
         path: "/aditionalservices/partner-garage-directory",
         element: <PartnerGarageDirectory />,
+      },
+      {
+        path: "/payment/success",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "/payment/cancel",
+        element: <PaymentCancel />,
       },
       {
         path: "*",

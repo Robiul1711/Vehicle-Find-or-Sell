@@ -5,30 +5,29 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination"; // ✅ Add pagination CSS
 import homeads from "../../assets/images/ads.png";
+import { motion } from "framer-motion";
 
 const HomeAds = () => {
   return (
-    <div className="section-padding-x section-padding-y">
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="section-padding-x section-padding-y"
+    >
       <Swiper
         modules={[Autoplay, Pagination]}
-        autoplay={{ delay: 2000 }}
+        autoplay={{ delay: 3000 }}
+        speed={1000}
         loop={true}
         slidesPerView={1}
         spaceBetween={10}
         pagination={{ clickable: true }} // ✅ Enable dots
         breakpoints={{
-          640: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 1,
-            spaceBetween: 40,
-          },
-          1024: {
-            slidesPerView: 1,
-            spaceBetween: 50,
-          },
+          640: { slidesPerView: 1, spaceBetween: 20 },
+          768: { slidesPerView: 1, spaceBetween: 40 },
+          1024: { slidesPerView: 1, spaceBetween: 50 },
         }}
       >
         {[1, 2, 3, 4].map((item) => (
@@ -36,12 +35,12 @@ const HomeAds = () => {
             <img
               src={homeads}
               alt="Advertisement"
-              className="w-full h-[500px] object-cover"
+              className="w-full h-[500px] object-cover rounded-2xl"
             />
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </motion.div>
   );
 };
 

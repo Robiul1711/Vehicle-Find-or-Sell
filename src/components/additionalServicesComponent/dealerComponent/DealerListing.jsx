@@ -181,7 +181,40 @@ const DealerListing = () => {
                 : "space-y-6 md:w-[75%]"
             }`}
           >
-            {items && items.length > 0 ? (
+            {isLoading ? (
+              [...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-md bg-white shadow-lg overflow-hidden animate-pulse border border-gray-100"
+                >
+                  <div
+                    className={`${
+                      isGrid
+                        ? "p-5"
+                        : "p-4 flex flex-col lg:flex-row items-center w-full"
+                    }`}
+                  >
+                    <div
+                      className={`bg-gray-200 rounded-lg ${
+                        isGrid
+                          ? "w-full h-[200px] mb-5"
+                          : "w-44 h-44 mr-4 flex-shrink-0"
+                      }`}
+                    />
+                    <div className={`${isGrid ? "w-full" : "flex-1"} space-y-3`}>
+                      <div
+                        className={`h-6 bg-gray-200 rounded ${
+                          isGrid ? "w-3/4" : "w-1/2"
+                        }`}
+                      />
+                      <div className="h-4 bg-gray-200 rounded w-1/4" />
+                      <div className="h-4 bg-gray-200 rounded w-full" />
+                      <div className="h-10 bg-gray-200 rounded-lg w-full mt-4" />
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : items && items.length > 0 ? (
               items.map((item, i) => {
                 const waveDelay = isGrid
                   ? (i % 3) * 0.1 + Math.floor(i / 3) * 0.1
@@ -263,7 +296,7 @@ const DealerListing = () => {
                   </motion.div>
                 );
               })
-            ) : !isLoading ? (
+            ) : (
               <div className="flex flex-col items-center justify-center w-full py-20 px-4 text-center bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
                 <div className="bg-white p-4 rounded-full shadow-sm mb-4">
                   <Search className="w-10 h-10 text-gray-400" />
@@ -276,7 +309,7 @@ const DealerListing = () => {
                   Try adjusting your preferences.
                 </p>
               </div>
-            ) : null}
+            )}
           </div>
 
           {data?.count > 4 && (

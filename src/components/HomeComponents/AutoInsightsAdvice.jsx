@@ -6,86 +6,107 @@ import { RxCalendar } from "react-icons/rx";
 import car from '@/assets/images/car1.png'
 import { Link } from 'react-router-dom';
 import { useApiQuery } from '@/hooks/useApiQuery';
-
-// JSON Data
-const articles = [
-  {
-    id: 1,
-    author: "admin",
-    date: "5 Aug, 2025",
-    title: "How to Prepare Your Car for Sale and Get More Offers",
-  },
-  {
-    id: 2,
-    author: "john_doe",
-    date: "10 Aug, 2025",
-    title: "Top 5 Fuel-Efficient Cars to Buy in 2025",
-  },
-  {
-    id: 3,
-    author: "car_expert",
-    date: "15 Aug, 2025",
-    title: "Electric vs Hybrid: Which One Should You Choose?",
-  },
-  {
-    id: 4,
-    author: "auto_guru",
-    date: "20 Aug, 2025",
-    title: "The Future of Autonomous Cars in Everyday Life",
-  },
-]
+import { motion } from 'framer-motion';
 
 const AutoInsightsAdvice = () => {
     const { data, isLoading } = useApiQuery({
       queryKey: ["blog"],
       url: "/blog/",
     });
-    console.log(data?.data);
+
+    const containerVariants = {
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.15,
+        },
+      },
+    };
+
+    const cardVariants = {
+      hidden: { opacity: 0, y: 40 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: "easeOut" },
+      },
+    };
+
   return (
-    <div className='section-padding-x section-padding-y'>
+    <div className='section-padding-x section-padding-y overflow-hidden'>
       {/* Header */}
-      <div className='flex items-center justify-between'>
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className='flex items-center justify-between'
+      >
         <Title level="title40">Auto Insights & Advice</Title>
-        <Link to="/blog" className="flex items-center gap-2 text-custom-primary">
+        <Link to="/blog" className="flex items-center gap-2 text-custom-primary hover:gap-3 transition-all">
           View All <ArrowUpRight className="w-4 h-4" />
         </Link>
-      </div>
+      </motion.div>
 
-      <Title level="title20" className="mt-2">
-        Explore tips, reviews, and the latest trends in the automotive world to make smarter buying and selling decisions.
-      </Title>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <Title level="title20" className="mt-2 text-gray-500">
+          Explore tips, reviews, and the latest trends in the automotive world to make smarter buying and selling decisions.
+        </Title>
+      </motion.div>
 
       {/* Articles Grid */}
-      <div className='mt-16 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8'>
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        className='mt-16 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8'
+      >
         {data?.data?.slice(0, 4).map((article) => (
-          <div key={article.id} className='text-[#141414] overflow-hidden'>
-            <img 
-              src={article?.image} 
-              alt={`Article ${article.id}`} 
-              className='w-full h-68 object-cover rounded-lg' 
-            />
+          <motion.div 
+            key={article.id} 
+            variants={cardVariants}
+            className='text-[#141414] overflow-hidden group cursor-pointer'
+          >
+            <div className="overflow-hidden rounded-xl">
+              <motion.img 
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.4 }}
+                src={article?.image} 
+                alt={article.title} 
+                className='w-full h-64 object-cover' 
+              />
+            </div>
 
             <div className='my-5 space-y-4'>
               <div className='flex items-center gap-6 text-sm text-gray-600'>
-                {/* <p className='flex items-center gap-2'>
-                  <FaRegUser /> {article.author}
-                </p> */}
                 <p className='flex items-center gap-2'>
-                 <RxCalendar /> {article.created_at}
+                 <RxCalendar className="text-custom-primary" /> {article.created_at}
                 </p>
               </div>
 
-              <Title level="title20" className="line-clamp-1">{article.title}</Title>
+              <Title level="title20" className="line-clamp-2 min-h-[3.5rem] group-hover:text-custom-primary transition-colors">
+                {article.title}
+              </Title>
 
-              <Link to={`/blogDetails/${article.id}`} className='flex items-center gap-2 font-semibold text-custom-primary mb-4'>
-                Read More <ArrowUpRight className='w-4 h-4'/>
+              <Link to={`/blogDetails/${article.id}`} className='flex items-center gap-2 font-bold text-custom-primary mb-4 group/btn'>
+                Read More 
+                <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                  <ArrowUpRight className='w-4 h-4'/>
+                </motion.span>
               </Link>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   )
 }
 
-export default AutoInsightsAdvice
+export default AutoInsightsAdvice;
