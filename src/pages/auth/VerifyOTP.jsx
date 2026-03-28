@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import OTPInput from "otp-input-react";
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo1.png';
 import { Button } from '@/components/ui/button';
 import { useApiMutation } from '@/hooks/useApiMutation';
 import { useAuth } from '@/hooks/useAuth';
@@ -44,7 +44,7 @@ const VerifyOTP = () => {
     return (
         <div className="flex flex-col min-h-full">
             <Link to="/" className="flex items-center justify-center">
-                <img src={logo} alt="Logo" className="w-20 h-20" />
+                <img src={logo} alt="Logo" className="w-32 sm:w-40" />
             </Link>
 
             <div className="text-center mb-6 py-10 space-y-5">

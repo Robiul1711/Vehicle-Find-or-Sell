@@ -45,12 +45,11 @@ const DasCarCard = ({ car }) => {
             <h2 className="text-lg font-semibold text-gray-900 leading-tight">
               {car?.brand_name} {car?.model}
             </h2>
-    
+
             <div className="flex items-center gap-2 flex-shrink-0 ml-2">
               {car?.is_bump && <Bumpcon />}
               {car?.is_video && <VideoIcon />}
               {car?.is_featured && <ProfetionalIcon />}
-          
             </div>
           </div>
           <p className="text-gray-500 text-sm line-clamp-2">{car?.subtitle}</p>
@@ -59,29 +58,39 @@ const DasCarCard = ({ car }) => {
         {/* Bottom Section (Features + Price + Buttons) - This stays at the bottom */}
         <div className="mt-auto">
           {/* Features */}
-          <div className="flex items-center justify-between text-gray-700 text-sm mt-3 border-t pt-3 border-b pb-3">
-            <div className="flex flex-col items-center gap-1">
-              <MilageIcon />
-              <span>{car?.mileage}</span>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <FuelIcon />
-              <span>{car?.fuel_type}</span>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <AutomaticIcon />
-              <span>{car?.transmission}</span>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <NewIcon />
-              <span>{car?.condition}</span>
-            </div>
+          <div className="flex items-center justify-between gap-2 text-gray-700 text-sm mt-3 border-t pt-3 border-b pb-3">
+            {car?.mileage && (
+              <div className="flex flex-col items-center gap-1">
+                <MilageIcon />
+                <span>{car?.mileage}</span>
+              </div>
+            )}
+            {car?.fuel_type && (
+              <div className="flex flex-col items-center gap-1">
+                <FuelIcon />
+                <span>{car?.fuel_type}</span>
+              </div>
+            )}
+            {car?.transmission && (
+              <div className="flex flex-col items-center gap-1">
+                <AutomaticIcon />
+                <span>{car?.transmission}</span>
+              </div>
+            )}
+            {car?.condition && (
+              <div className="flex flex-col items-center gap-1">
+                <NewIcon />
+                <span>{car?.condition}</span>
+              </div>
+            )}
           </div>
 
           {/* Price */}
-          <p className="text-2xl font-bold text-gray-900 mt-3">
-            {car?.discount_price}
-          </p>
+          {car?.discount_price && (
+            <p className="text-2xl font-bold text-gray-900 mt-3">
+              {car?.discount_price}
+            </p>
+          )}
 
           {/* Buttons Grid */}
           <div className="grid grid-cols-2 gap-2 mt-3">
@@ -97,18 +106,22 @@ const DasCarCard = ({ car }) => {
             >
               Edit
             </Link>
-            <button 
-              onClick={() => pauseMutate()} 
-              disabled={pausePending} 
+            <button
+              onClick={() => pauseMutate()}
+              disabled={pausePending}
               className={`text-sm font-medium rounded-lg py-2 transition-colors ${
-                pausePending 
-                  ? "bg-gray-400 text-white cursor-not-allowed" 
-                  : car.is_pause 
-                    ? "bg-amber-500 text-white hover:bg-amber-600" 
+                pausePending
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : car.is_pause
+                    ? "bg-amber-500 text-white hover:bg-amber-600"
                     : "bg-gray-900 text-white hover:bg-gray-800"
               }`}
             >
-              {pausePending ? "Processing..." : car.is_pause ? "Paused" : "Pause Ad"}
+              {pausePending
+                ? "Processing..."
+                : car.is_pause
+                  ? "Paused"
+                  : "Pause Ad"}
             </button>
             <button
               onClick={() => mutate()}

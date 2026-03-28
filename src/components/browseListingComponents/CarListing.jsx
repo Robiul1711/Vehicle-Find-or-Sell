@@ -153,6 +153,7 @@ const CarListing = ({
         </div>
         <div className="flex-1 w-full md:w-3/4">
           <div
+            key={isLoading ? "loading" : "items"}
             className={`${
               isGrid
                 ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
@@ -275,13 +276,13 @@ const CarListing = ({
                               : "lg:text-xl xl:text-2xl font-semibold"
                           } text-gray-800 dark:text-[#d2e5f5]`}
                         >
-                          {item.name}
+                          <span>{item.name}</span>
                         </motion.h3>
                         <motion.p
                           layout
                           className="text-black mt-1 line-clamp-2"
                         >
-                          {item.description}
+                          <span>{item.description}</span>
                         </motion.p>
 
                         <motion.p
@@ -325,8 +326,9 @@ const CarListing = ({
                             className={`${
                               isGrid ? "text-xl" : "text-[1.1rem]"
                             } font-semibold text-gray-900 text-center`}
+                            translate="no"
                           >
-                            €{item?.price}
+                            <span>€</span><span>{item?.price}</span>
                           </motion.p>
                           <Link to={`/details/${item?.id}`}>
                             <motion.p

@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { CustomFilter } from "@/utils/IconProvider";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
 const FilterSection = ({ onFilterChange, filters }) => {
@@ -127,23 +120,23 @@ const FilterSection = ({ onFilterChange, filters }) => {
         </button>
         {openSection.price && (
           <div className="flex items-center gap-2">
-            <div>
+            <div className="flex-1">
               <label className="text-xs text-gray-600">Min Price (€)</label>
               <input
                 type="number"
                 value={localFilters.price_min}
                 onChange={(e) => handleChange("price_min", e.target.value)}
-                className="w-full border rounded-lg px-2 py-2 text-sm"
+                className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                 placeholder="0"
               />
             </div>
-            <div>
+            <div className="flex-1">
               <label className="text-xs text-gray-600">Max Price (€)</label>
               <input
                 type="number"
                 value={localFilters.price_max}
                 onChange={(e) => handleChange("price_max", e.target.value)}
-                className="w-full border rounded-lg px-2 py-2 text-sm"
+                className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                 placeholder="Max"
               />
             </div>
@@ -170,55 +163,49 @@ const FilterSection = ({ onFilterChange, filters }) => {
             {/* Body Type */}
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium">Body Type</label>
-              <Select
+              <select
                 value={localFilters.body_type}
-                onValueChange={(val) => handleChange("body_type", val)}
+                onChange={(e) => handleChange("body_type", e.target.value)}
+                className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Body Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="buggy">Buggy</SelectItem>
-                  <SelectItem value="convertible">Convertible</SelectItem>
-                  <SelectItem value="coupe">Coupe</SelectItem>
-                  <SelectItem value="fastback">Fastback</SelectItem>
-                  <SelectItem value="flower_car">Flower Car</SelectItem>
-                  <SelectItem value="hatchback">Hatchback</SelectItem>
-                  <SelectItem value="hearse">Hearse</SelectItem>
-                  <SelectItem value="limousine">Limousine</SelectItem>
-                  <SelectItem value="microvan">Microvan</SelectItem>
-                  <SelectItem value="minivan">Minivan</SelectItem>
-                  <SelectItem value="panel_van">Panel Van</SelectItem>
-                  <SelectItem value="panel_truck">Panel Truck</SelectItem>
-                  <SelectItem value="pickup_truck">Pickup Truck</SelectItem>
-                  <SelectItem value="roadster">Roadster</SelectItem>
-                  <SelectItem value="sedan">Sedan</SelectItem>
-                  <SelectItem value="shooting_brake">Shooting Brake</SelectItem>
-                  <SelectItem value="station_wagon">Station Wagon</SelectItem>
-                  <SelectItem value="targa_top">Targa Top</SelectItem>
-                  <SelectItem value="ute">Ute</SelectItem>
-                </SelectContent>
-              </Select>
+                <option value="">Select Body Type</option>
+                <option value="buggy">Buggy</option>
+                <option value="convertible">Convertible</option>
+                <option value="coupe">Coupe</option>
+                <option value="fastback">Fastback</option>
+                <option value="flower_car">Flower Car</option>
+                <option value="hatchback">Hatchback</option>
+                <option value="hearse">Hearse</option>
+                <option value="limousine">Limousine</option>
+                <option value="microvan">Microvan</option>
+                <option value="minivan">Minivan</option>
+                <option value="panel_van">Panel Van</option>
+                <option value="panel_truck">Panel Truck</option>
+                <option value="pickup_truck">Pickup Truck</option>
+                <option value="roadster">Roadster</option>
+                <option value="sedan">Sedan</option>
+                <option value="shooting_brake">Shooting Brake</option>
+                <option value="station_wagon">Station Wagon</option>
+                <option value="targa_top">Targa Top</option>
+                <option value="ute">Ute</option>
+              </select>
             </div>
 
             {/* Brand */}
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium">Brand</label>
-              <Select
+              <select
                 value={localFilters.brand}
-                onValueChange={(val) => handleChange("brand", val)}
+                onChange={(e) => handleChange("brand", e.target.value)}
+                className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Brand" />
-                </SelectTrigger>
-                <SelectContent>
-                  {brands?.data?.map((brand) => (
-                    <SelectItem key={brand.id} value={String(brand.id)}>
-                      {brand.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                <option value="">Select Brand</option>
+                {brands?.data?.map((brand) => (
+                  <option key={brand.id} value={String(brand.id)}>
+                    {brand.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Model */}
@@ -228,7 +215,7 @@ const FilterSection = ({ onFilterChange, filters }) => {
                 type="text"
                 value={localFilters.model}
                 onChange={(e) => handleChange("model", e.target.value)}
-                className="w-full border rounded-lg px-2 py-2 text-sm"
+                className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                 placeholder="Model (e.g. Civic)"
               />
             </div>
@@ -236,38 +223,32 @@ const FilterSection = ({ onFilterChange, filters }) => {
             {/* Fuel Type */}
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium">Fuel Type</label>
-              <Select
+              <select
                 value={localFilters.fuel_type}
-                onValueChange={(val) => handleChange("fuel_type", val)}
+                onChange={(e) => handleChange("fuel_type", e.target.value)}
+                className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Fuel Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="petrol">Petrol</SelectItem>
-                  <SelectItem value="diesel">Diesel</SelectItem>
-                  <SelectItem value="electric">Electric</SelectItem>
-                  <SelectItem value="hydrogen">Hydrogen</SelectItem>
-                  <SelectItem value="hybrid">Hybrid</SelectItem>
-                </SelectContent>
-              </Select>
+                <option value="">Select Fuel Type</option>
+                <option value="petrol">Petrol</option>
+                <option value="diesel">Diesel</option>
+                <option value="electric">Electric</option>
+                <option value="hydrogen">Hydrogen</option>
+                <option value="hybrid">Hybrid</option>
+              </select>
             </div>
 
             {/* Transmission */}
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium">Transmission</label>
-              <Select
+              <select
                 value={localFilters.transmission}
-                onValueChange={(val) => handleChange("transmission", val)}
+                onChange={(e) => handleChange("transmission", e.target.value)}
+                className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Transmission" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="automatic">Automatic</SelectItem>
-                  <SelectItem value="manual">Manual</SelectItem>
-                </SelectContent>
-              </Select>
+                <option value="">Select Transmission</option>
+                <option value="automatic">Automatic</option>
+                <option value="manual">Manual</option>
+              </select>
             </div>
 
             {/* Mileage Range */}
@@ -278,14 +259,14 @@ const FilterSection = ({ onFilterChange, filters }) => {
                   type="number"
                   value={localFilters.mileage_min}
                   onChange={(e) => handleChange("mileage_min", e.target.value)}
-                  className="w-full border rounded-lg px-2 py-2 text-sm"
+                  className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                   placeholder="Min"
                 />
                 <input
                   type="number"
                   value={localFilters.mileage_max}
                   onChange={(e) => handleChange("mileage_max", e.target.value)}
-                  className="w-full border rounded-lg px-2 py-2 text-sm"
+                  className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                   placeholder="Max"
                 />
               </div>
@@ -299,14 +280,14 @@ const FilterSection = ({ onFilterChange, filters }) => {
                   type="number"
                   value={localFilters.year_min}
                   onChange={(e) => handleChange("year_min", e.target.value)}
-                  className="w-full border rounded-lg px-2 py-2 text-sm"
+                  className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                   placeholder="Min"
                 />
                 <input
                   type="number"
                   value={localFilters.year_max}
                   onChange={(e) => handleChange("year_max", e.target.value)}
-                  className="w-full border rounded-lg px-2 py-2 text-sm"
+                  className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                   placeholder="Max"
                 />
               </div>
@@ -320,14 +301,14 @@ const FilterSection = ({ onFilterChange, filters }) => {
                   type="number"
                   value={localFilters.hp_cv_min}
                   onChange={(e) => handleChange("hp_cv_min", e.target.value)}
-                  className="w-full border rounded-lg px-2 py-2 text-sm"
+                  className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                   placeholder="Min"
                 />
                 <input
                   type="number"
                   value={localFilters.hp_cv_max}
                   onChange={(e) => handleChange("hp_cv_max", e.target.value)}
-                  className="w-full border rounded-lg px-2 py-2 text-sm"
+                  className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                   placeholder="Max"
                 />
               </div>
@@ -341,14 +322,14 @@ const FilterSection = ({ onFilterChange, filters }) => {
                   type="number"
                   value={localFilters.hp_din_min}
                   onChange={(e) => handleChange("hp_din_min", e.target.value)}
-                  className="w-full border rounded-lg px-2 py-2 text-sm"
+                  className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                   placeholder="Min"
                 />
                 <input
                   type="number"
                   value={localFilters.hp_din_max}
                   onChange={(e) => handleChange("hp_din_max", e.target.value)}
-                  className="w-full border rounded-lg px-2 py-2 text-sm"
+                  className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                   placeholder="Max"
                 />
               </div>
@@ -357,18 +338,15 @@ const FilterSection = ({ onFilterChange, filters }) => {
             {/* VAT */}
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium">Deductible VAT</label>
-              <Select
+              <select
                 value={localFilters.vat}
-                onValueChange={(val) => handleChange("vat", val)}
+                onChange={(e) => handleChange("vat", e.target.value)}
+                className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select VAT option" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
-                </SelectContent>
-              </Select>
+                <option value="">Select VAT option</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
             </div>
 
             {/* Country */}
@@ -378,7 +356,7 @@ const FilterSection = ({ onFilterChange, filters }) => {
                 type="text"
                 value={localFilters.country}
                 onChange={(e) => handleChange("country", e.target.value)}
-                className="w-full border rounded-lg px-2 py-2 text-sm"
+                className="w-full border rounded-lg px-2 py-2 text-sm outline-none"
                 placeholder="Country"
               />
             </div>
@@ -405,35 +383,29 @@ const FilterSection = ({ onFilterChange, filters }) => {
             {/* Condition */}
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium">Vehicle Condition</label>
-              <Select
+              <select
                 value={localFilters.condition}
-                onValueChange={(val) => handleChange("condition", val)}
+                onChange={(e) => handleChange("condition", e.target.value)}
+                className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Condition" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="new">New</SelectItem>
-                  <SelectItem value="used">Used</SelectItem>
-                </SelectContent>
-              </Select>
+                <option value="">Select Condition</option>
+                <option value="new">New</option>
+                <option value="used">Used</option>
+              </select>
             </div>
 
             {/* Seller Type */}
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium">Seller Type</label>
-              <Select
+              <select
                 value={localFilters.seller_type}
-                onValueChange={(val) => handleChange("seller_type", val)}
+                onChange={(e) => handleChange("seller_type", e.target.value)}
+                className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select Seller Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="professional">Professional</SelectItem>
-                  <SelectItem value="private">Private</SelectItem>
-                </SelectContent>
-              </Select>
+                <option value="">Select Seller Type</option>
+                <option value="professional">Professional</option>
+                <option value="private">Private</option>
+              </select>
             </div>
           </div>
         )}

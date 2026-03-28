@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CustomEmail } from "@/utils/IconProvider";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo1.png";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,7 +37,7 @@ const ForgetPassword = () => {
   return (
     <div className="flex flex-col min-h-full">
       <Link to="/" className="flex items-center justify-center">
-        <img src={logo} alt="" className="w-20 h-20" />
+        <img src={logo} alt="" className="w-32 sm:w-40" />
       </Link>
       {/* Header Section */}
       <div className="text-center mb-6 py-10">

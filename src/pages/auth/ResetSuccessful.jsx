@@ -2,12 +2,12 @@ import { Button } from '@/components/ui/button';
 import { ImageProvider } from '@/utils/ImageProvider';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo1.png';
 const ResetSuccessful = () => {
     return (
         <div className="flex flex-col min-h-full">
                   <Link to="/" className="flex items-center justify-center">
-                <img src={logo} alt="" className="w-20 h-20" />
+                <img src={logo} alt="" className="w-32 sm:w-40" />
             </Link>
             {/* Header Section */}
             <div className="text-center mb-6 py-10 space-y-5">

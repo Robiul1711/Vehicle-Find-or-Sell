@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 const TestimonialCard = ({testimonials, isLoading}) => {
-  console.log(testimonials?.data)
+  console.log(testimonials)
 
   return (
     <div className="w-full relative">
@@ -28,7 +28,7 @@ const TestimonialCard = ({testimonials, isLoading}) => {
         loop={true}
         className="testimonial-swiper"
       >
-        {testimonials?.data?.map((testimonial) => (
+        {testimonials?.map((testimonial) => (
           <SwiperSlide key={testimonial.id}>
             <div className="flex items-center">
               <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center w-full">

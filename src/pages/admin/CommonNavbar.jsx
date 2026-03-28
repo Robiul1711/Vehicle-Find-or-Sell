@@ -2,6 +2,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import NotificationDropdown from "@/shared/navbar/NotificationDropdown";
 import UserDropdown from "@/shared/navbar/UserDropdown";
 import { useAuth } from "@/hooks/useAuth";
+import LanguageArea from "@/components/common/LanguageArea";
 
 const CommonNavbar = ({ open, setOpen }) => {
   const { user } = useAuth();
@@ -15,14 +16,15 @@ const CommonNavbar = ({ open, setOpen }) => {
         >
           <GiHamburgerMenu color="black" size={26} />
         </span>
-        <div className="flex items-center gap-4">
-          <p className=" text-black sm:text-2xl md:text-3xl font-bold">
+        <div className=" items-center gap-4 hidden md:flex">
+          <p className=" text-black sm:text-xl xl:text-3xl font-bold">
             {user?.profile?.first_name} {user?.profile?.last_name}
           </p>
         </div>
       </div>
 
       <div className="flex items-center md:gap-4 gap-2">
+        <LanguageArea />
         <NotificationDropdown />
         <UserDropdown />
       </div>

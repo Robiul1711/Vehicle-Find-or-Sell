@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { CustomEmail } from '@/utils/IconProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeClosed } from 'lucide-react';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo1.png';
 import { useApiMutation } from '@/hooks/useApiMutation';
 import { useAuth } from '@/hooks/useAuth';
 const NewPassword = () => {
@@ -44,15 +44,15 @@ const NewPassword = () => {
     return (
         <div className="flex flex-col min-h-full">
                   <Link to="/" className="flex items-center justify-center">
-                <img src={logo} alt="" className="w-20 h-20" />
+                <img src={logo} alt="" className="w-32 sm:w-40" />
             </Link>
             {/* Header Section */}
-            <div className="text-center mb-6 py-10">
-                <h1 className="text-2xl lg:text-4xl font-bold mb-2">Set a New Password</h1>
-                <p className="text-sm lg:text-xl text-muted-foreground">
+            <div className="mb-6 py-10">
+                <h1 className="text-2xl lg:text-4xl font-bold mb-2 text-center ">Set a New Password</h1>
+                <p className="text-sm lg:text-xl text-muted-foreground text-center ">
                     Create a strong password you’ll remember.
                 </p>
-                <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+                <form className="space-y-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
                     <div className="space-y-4">
                         <Label className="text-lg">Password</Label>
                         <div className="border flex items-center gap-2 p-3 rounded-[10px]">

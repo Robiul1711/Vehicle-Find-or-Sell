@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "@/assets/images/logo.png";
+import logo from "@/assets/images/logo1.png";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";

@@ -60,7 +60,7 @@ const BrowseCategorySection = () => {
     secure: true,
   });
 
-console.log(data)
+  console.log(data);
   const handleFilterChange = (newParams) => {
     setFilterParams((prev) => ({ ...prev, ...newParams }));
     setCurrentPage(1);
@@ -193,10 +193,7 @@ console.log(data)
   };
 
   return (
-    <div
-      className="
-        "
-    >
+    <div className="">
       {/* Header */}
       <h2 className="text-2xl font-semibold mb-6 text-gray-900">
         Browse Categories
@@ -211,16 +208,11 @@ console.log(data)
               setActiveTab(category.id);
               setCurrentPage(1);
             }}
-            className={`
-                            flex flex-col items-center justify-center gap-3 p-6 
-                            rounded-xl border-2 transition-all duration-200 
-                            flex-shrink-0
-                            ${
-                              activeTab === category.id
-                                ? "border-orange-400 bg-orange-50 shadow-md"
-                                : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
-                            }
-                        `}
+            className={`flex flex-col items-center justify-center gap-3 p-6 rounded-xl border-2 transition-all duration-200 flex-shrink-0 ${
+              activeTab === category.id
+                ? "border-orange-400 bg-orange-50 shadow-md"
+                : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
+            }`}
           >
             <span
               className={`text-2xl ${
@@ -243,7 +235,7 @@ console.log(data)
       {/* Tab Content */}
       <div className="bg-white border border-gray-200 rounded-xl p-8 min-h-[300px]">
         <div className="leading-relaxed">{getActiveContent()}</div>
-        
+
         {data?.count > 4 && (
           <div className="mt-8 flex justify-center">
             <PaginationComponent

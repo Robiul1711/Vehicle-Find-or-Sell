@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useApiMutation } from "@/hooks/useApiMutation";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
 // Steps
@@ -101,6 +101,7 @@ import toast from "react-hot-toast";
 
 const CreateAds = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
@@ -274,6 +275,8 @@ const CreateAds = () => {
       setIsPostModalOpen(true);
       setIsModalOpen(false);
       console.log("Success:", data);
+      // toast.success("Ad posted successfully");
+      navigate("/dashboard/my-adds");
     },
     onError: (error) => {
       console.error("Submission failed:", error);
@@ -539,7 +542,7 @@ const CreateAds = () => {
                   disabled={isPending}
                   className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
                 >
-                  Back
+                  BACK
                 </button>
               )}
 
@@ -550,7 +553,7 @@ const CreateAds = () => {
                     onClick={nextStep}
                     className="px-4 py-2 bg-custom-primary text-white rounded"
                   >
-                    {currentStep === 0 ? "Continue" : "Next"}
+                    {currentStep === 0 ? "Continue" : "NEXT"}
                   </button>
                 ) : currentStep === steps.length - 2 ? (
                   <button
@@ -561,7 +564,7 @@ const CreateAds = () => {
                     })}
                     className="px-4 py-2 bg-custom-primary text-white rounded"
                   >
-                    Submit
+                    SUBMIT
                   </button>
                 ) : (
                   <>

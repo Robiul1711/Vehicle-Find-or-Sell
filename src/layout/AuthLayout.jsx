@@ -5,12 +5,12 @@ import { Outlet } from 'react-router-dom';
 
 const AuthLayout = () => {
     return (
-        <div className="min-h-screen border flex items-center  justify-center gap-10 bg-gray-100 p-6">
+        <div className="min-h-screen border flex items-center  justify-center gap-10 bg-gray-100 p-2 sm:p-6">
             <div className="flex flex-col-reverse justify-center lg:flex-row gap-5">
                 <div className="w-full hidden md:block lg:w-1/2 sticky top-6 h-fit">
                     <img src={ImageProvider.authImage} alt="" className='w-full' />
                 </div>
-                <div className="w-full lg:w-1/2 rounded-xl border p-6 shadow">
+                <div className="w-full lg:w-1/2 rounded-xl border p-4 sm:p-6 shadow">
                     <Outlet />
                 </div>
             </div>
