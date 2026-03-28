@@ -58,7 +58,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
               <input
                 {...register("account_type", { required: true })}
                 type="radio"
-                value="business"
+                value="professional"
               />
               <span className="text-sm lg:text-xl">Professionals Seller</span>
             </label>
@@ -162,7 +162,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
         </div>
 
         {/* SIREN Number */}
-        {watch("account_type") === "business" && (
+        {watch("account_type") === "professional" && (
           <div className="space-y-4">
             <Label className="text-lg">SIREN Number</Label>
             <div className="border flex items-center gap-2 p-3 rounded-[10px]">

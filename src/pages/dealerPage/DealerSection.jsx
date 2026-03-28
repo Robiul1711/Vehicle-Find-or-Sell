@@ -24,7 +24,7 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
-import ImageAvatar from "@/assets/images/dummy.png"
+import ImageAvatar from "@/assets/images/dummy.png";
 const DealerSection = () => {
   const { user } = useAuth();
   const { id } = useParams();
@@ -33,7 +33,7 @@ const DealerSection = () => {
     url: `/delears/detail/${id}/`,
     secure: true,
   });
-  console.log(data)
+  console.log(data);
   console.log(data?.profile?.services);
   const profileData = data?.profile;
 
@@ -101,24 +101,28 @@ const DealerSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="">
               <h2 className="text-2xl font-bold text-gray-900 mb-1">
-                {profileData?.full_name}
+                Name: {profileData?.full_name || "N/A"} 
               </h2>
-              <p className="text-gray-600 mb-4">
-                {profileData?.account_type || "Professional Seller"}
+              <p className="text-gray-600 mb-4 font-semibold">
+              Account Type:  {profileData?.account_type || "Professional Seller"}
               </p>
 
               <div className="space-y-3 text-sm text-gray-700">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-gray-500 mt-1 flex-shrink-0" />
-                  <span>
-                    {profileData?.street}, {profileData?.city},{" "}
-                    {profileData?.zip_code}, {profileData?.country}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                  <span>{profileData?.phone}</span>
-                </div>
+                {(profileData?.street || profileData?.city || profileData?.zip_code || profileData?.country) && (
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-4 h-4 text-gray-500 mt-1 flex-shrink-0" />
+                    <span>
+                      {profileData?.street}, {profileData?.city},{" "}
+                      {profileData?.zip_code}, {profileData?.country}
+                    </span>
+                  </div>
+                )}
+                {profileData?.phone && (
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                    <span>{profileData?.phone}</span>
+                  </div>
+                )}
                 <div className="text-xs space-y-1 pt-2">
                   <p>
                     <span className="font-semibold">SIREN Number:</span>{" "}
@@ -198,7 +202,7 @@ const DealerSection = () => {
         </div>
       </div>
       <div className="lg:w-1/4">
-     {/* {console.log(profileData?.user_id)} */}
+        {/* {console.log(profileData?.user_id)} */}
         <div className="border shadow-lg rounded-xl p-5 flex flex-col gap-5">
           <Link
             onClick={() =>
