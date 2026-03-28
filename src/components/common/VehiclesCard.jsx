@@ -58,12 +58,14 @@ const VehiclesCard = ({
         </div>
 
         {/* Subtitle */}
+        
         <p className="text-gray-600 text-sm  leading-relaxed line-clamp-1">
           {subtitle}
         </p>
 
         {/* Features */}
         <div className="flex justify-between items-center my-3 py-3 border-t border-b border-gray-200 ">
+          
           <Feature icon={<MilageIcon />} label={mileage} />
           <Feature icon={<FuelIcon />} label={fuelType} />
           <Feature icon={<AutomaticIcon />} label={transmission} />
@@ -88,12 +90,20 @@ const VehiclesCard = ({
 
 // small reusable feature component
 const Feature = ({ icon, label }) => (
-  <div className="flex flex-col items-center">
-    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-2">
-      {React.cloneElement(icon, { className: "w-5 h-5 text-gray-600" })}
-    </div>
-    <span className="text-sm text-gray-700 font-medium">{label}</span>
-  </div>
+  <>
+  {
+    label && (
+        <div className="flex flex-col items-center">
+  
+        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-2">
+          {React.cloneElement(icon, { className: "w-5 h-5 text-gray-600" })}
+        </div>
+        <span className="text-sm text-gray-700 font-medium">{label}</span>
+   </div>
+   
+      )
+    }
+  </>
 );
 
 export default VehiclesCard;
