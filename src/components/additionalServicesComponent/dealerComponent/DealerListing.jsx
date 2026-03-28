@@ -58,7 +58,7 @@ const DealerListing = () => {
 
   // console.log(data?.results);
   const items = data?.results;
-  const [isGrid, setIsGrid] = useState(false);
+  const [isGrid, setIsGrid] = useState(true);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
 
@@ -281,7 +281,7 @@ const DealerListing = () => {
                           className="text-black mt-1 flex items-center gap-2"
                         >
                           <CustomLocation />
-                          {item?.country}, {item?.street}, {item?.city},{" "}
+                        {item?.country}, {item?.street}, {item?.city},{" "}
                           {item?.zip_code}
                         </motion.p>
                         <motion.div layout className=" my-2 ">

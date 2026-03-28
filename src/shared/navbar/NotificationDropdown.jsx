@@ -17,7 +17,7 @@ const NotificationDropdown = () => {
     url: "/notification/notifications/",
     secure: true,
   });
-console.log(notificationsData)
+// console.log(notificationsData)
   const { data: specificNotification, isLoading: notificationLoading } =
     useApiQuery({
       queryKey: ["notification-detail", selectedId],
@@ -31,6 +31,7 @@ console.log(notificationsData)
     url: `/notification/notifications/${selectedId}/read/`,
     method: "POST",
     secure: true,
+    
     onSuccess: () => {
       refetch(); // Refresh list to update unread count/styles
     },
@@ -195,7 +196,7 @@ console.log(notificationsData)
                       onClick={() => {
                         setIsModalOpen(false);
                         // Optional: navigate to the item
-                        window.location.href = `/dashboard/car-details/${specificNotification.data.target_id}`;
+                        // window.location.href = `/dashboard/car-details/${specificNotification.data.target_id}`;
                       }}
                       className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-orange-600/20"
                     >

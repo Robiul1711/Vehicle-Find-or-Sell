@@ -34,7 +34,7 @@ const CarListing = ({
   isLoading,
   onAddFavorite,
 }) => {
-  const [isGrid, setIsGrid] = useState(false);
+  const [isGrid, setIsGrid] = useState(true);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
   const [searchText, setSearchText] = useState(filters?.search || "");
@@ -282,14 +282,17 @@ const CarListing = ({
                           layout
                           className="text-black mt-1 line-clamp-2"
                         >
-                          <span>{item.description}</span>
+                          <span className="capitalize">{item.description}</span>
                         </motion.p>
 
                         <motion.p
                           layout
                           className="text-black mt-1 flex text-sm items-start gap-1 "
                         >
-                          <CustomLocation />
+                          {item.location && (
+                            <CustomLocation />
+                          )}
+                          
                           <span className="flex-1 line-clamp-1">
                             {item.location}
                           </span>
@@ -304,16 +307,16 @@ const CarListing = ({
                         >
                           <div className="flex flex-col items-center">
                             <CustomMileage />
-                            <p className="">{item?.mileage}</p>
+                            <p className="capitalize">{item?.mileage}</p>
                           </div>
                           <div className="flex flex-col items-center">
                             <CustomPetrol />
-                            <p className="">{item?.fuelType}</p>
+                            <p className="capitalize">{item?.fuelType}</p>
                           </div>
 
                           <div className="flex flex-col items-center">
                             <CustomTransmission />
-                            <p className="">{item?.transmission}</p>
+                            <p className="capitalize">{item?.transmission}</p>
                           </div>
                         </motion.button>
                         <motion.div

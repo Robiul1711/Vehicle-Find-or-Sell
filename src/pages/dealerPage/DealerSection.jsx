@@ -9,6 +9,8 @@ import {
   Wrench,
   Droplets,
   MoveUpRight,
+  Check,
+  SquareCheckBig,
 } from "lucide-react";
 import { ImageProvider } from "@/utils/ImageProvider";
 import profile from "@/assets/images/profile.png";
@@ -25,6 +27,7 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
 import ImageAvatar from "@/assets/images/dummy.png";
+import { DeliveryIcon } from "@/components/common/SVGicons/DashboardIcon";
 const DealerSection = () => {
   const { user } = useAuth();
   const { id } = useParams();
@@ -58,6 +61,8 @@ const DealerSection = () => {
     "New Vehicle": <CustomNewVehicle />,
     "Auto Repair": <CustomAutoRepair />,
     "Car Wash": <CustomCarWash />,
+    "Other Services": <Check/>,
+    "Delivery": <DeliveryIcon />,
   };
 
   const services = profileData?.services || [];
@@ -184,7 +189,7 @@ const DealerSection = () => {
                       className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 bg-gray-50 transition hover:scale-[1.01] hover:shadow-sm"
                     >
                       {serviceIcons[service.name] || (
-                        <Wrench className="w-5 h-5" />
+                        <SquareCheckBig className="w-5 h-5" />
                       )}
                       <span className="text-sm font-medium text-gray-700">
                         {service.name}

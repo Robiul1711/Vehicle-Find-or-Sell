@@ -72,7 +72,7 @@ const FavouriteCard = ({ car }) => {
         <div className="flex items-center justify-between text-gray-700 text-sm mt-3 border-t pt-3 border-b pb-3">
           <div className="flex flex-col items-center gap-1">
             <MilageIcon />
-            <span>
+            <span className="capitalize">
               {car?.content_object?.mileage ||
                 car?.content_object?.warrenty_duration ||
                 "0"}
@@ -80,7 +80,7 @@ const FavouriteCard = ({ car }) => {
           </div>
           <div className="flex flex-col items-center gap-1">
             <FuelIcon />
-            <span>
+            <span className="capitalize">
               {car?.content_object?.fuel_type ||
                 car?.content_object?.weight ||
                 "N/A"}
@@ -88,7 +88,7 @@ const FavouriteCard = ({ car }) => {
           </div>
           <div className="flex flex-col items-center gap-1">
             <AutomaticIcon />
-            <span>
+            <span className="capitalize">
               {car?.content_object?.engine_type ||
                 car?.content_object?.material ||
                 "N/A"}
@@ -96,7 +96,7 @@ const FavouriteCard = ({ car }) => {
           </div>
           <div className="flex flex-col items-center gap-1">
             <NewIcon />
-            <span>{car?.content_object?.condition || "N/A"}</span>
+            <span className="capitalize">{car?.content_object?.condition || "N/A"}</span>
           </div>
         </div>
 

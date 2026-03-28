@@ -41,26 +41,26 @@ const VechleBoostCard = ({ car }) => {
           {car?.mileage && (
             <div className="flex flex-col items-center gap-1">
               <MilageIcon />
-              <span>{car.mileage}</span>
+              <span className="capitalize">{car.mileage}</span>
             </div>
           )}
 
           {car?.fuel_type && (
             <div className="flex flex-col items-center gap-1">
               <FuelIcon />
-              <span>{car.fuel_type}</span>
+              <span className="capitalize">{car.fuel_type}</span>
             </div>
           )}
           {car?.transmission && (
             <div className="flex flex-col items-center gap-1">
               <AutomaticIcon />
-              <span>{car.transmission}</span>
+              <span className="capitalize">{car.transmission}</span>
             </div>
           )}
           {car?.condition && (
             <div className="flex flex-col items-center gap-1">
               <NewIcon />
-              <span>{car.condition}</span>
+              <span className="capitalize">{car.condition}</span>
             </div>
           )}
         </div>

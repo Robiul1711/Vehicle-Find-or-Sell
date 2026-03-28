@@ -74,15 +74,24 @@ const UtilityTrucksPreview = ({ goToStep }) => {
             <div>
               <strong>Price:</strong> {formData.originalPrice}
             </div>
+     
             <div>
               <strong>Discount Price:</strong> {formData.discountPrice}
             </div>
+
             <div>
               <strong>Color:</strong> {formData.color}
             </div>
             <div>
+              <strong>Door:</strong> {formData.door}
+            </div>
+            <div>
               <strong>Registration Number:</strong>{" "}
               {formData.registrationNumber}
+            </div>
+            <div>
+              <strong>VIN Number:</strong>{" "}
+              {formData.vinNumber}
             </div>
           </div>
         }

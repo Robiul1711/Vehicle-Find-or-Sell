@@ -84,7 +84,7 @@ const UserDropdown = () => {
               {user?.profile?.user?.email}
             </p>
             <p className="text-xs text-gray-500 font-bold mt-0.5">
-              {user?.profile?.user?.account_type}
+             Account: <span className="text-custom-primary">{user?.profile?.user?.account_type || "N/A"}</span>
             </p>
           </div>
 

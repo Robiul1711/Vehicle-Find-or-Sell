@@ -86,9 +86,14 @@ const engineSpecs = [
       </div>
 
       {/* Price */}
-      <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
-        €{details?.discount_price}
-      </div>
+      {
+        details?.discount_price && (
+          <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 line-through">
+            €{details?.price}
+          </div>
+        )
+      }
+
 
       {/* Description */}
       <p className="text-gray-600 text-sm sm:text-base mb-8 leading-relaxed">
@@ -110,7 +115,7 @@ const engineSpecs = [
               <span className="text-gray-700 font-medium min-w-[110px] sm:min-w-[120px]">
                 {spec.label}
               </span>
-              <span className="text-gray-900 font-semibold">{spec.value}</span>
+              <span className="text-gray-900 font-semibold capitalize">{spec.value}</span>
             </div>
           ))}
         </div>
@@ -128,7 +133,7 @@ const engineSpecs = [
               <span className="text-gray-700 font-medium min-w-[110px] sm:min-w-[120px]">
                 {spec.label}
               </span>
-              <span className="text-gray-900 font-semibold">{spec.value}</span>
+              <span className="text-gray-900 font-semibold capitalize">{spec.value}</span>
             </div>
           ))}
         </div>
@@ -146,7 +151,7 @@ const engineSpecs = [
               className="flex justify-between items-center text-sm sm:text-base"
             >
               <span className="text-gray-700">{spec.label}</span>
-              <span className="text-gray-900 font-medium">{spec.value}</span>
+              <span className="text-gray-900 font-medium capitalize">{spec.value}</span>
             </div>
           ))}
         </div>

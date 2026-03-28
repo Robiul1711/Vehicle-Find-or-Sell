@@ -61,7 +61,7 @@ const rightSpecs = [
               <span className="text-gray-700 text-sm font-medium min-w-[120px]">
                 {spec.label}
               </span>
-              <span className="text-gray-900 text-sm font-semibold">
+              <span className="text-gray-900 text-sm font-semibold capitalize">
                 {spec.value}
               </span>
             </div>
@@ -78,7 +78,7 @@ const rightSpecs = [
               <span className="text-gray-700 text-sm font-medium min-w-[120px]">
                 {spec.label}
               </span>
-              <span className="text-gray-900 text-sm font-semibold">
+              <span className="text-gray-900 text-sm font-semibold capitalize">
                 {spec.value}
               </span>
             </div>

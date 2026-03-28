@@ -54,12 +54,24 @@ const VehiclePriceDealer = ({data, isLoading}) => {
       <div className="mb-6">
         <div className="text-sm text-gray-500 mb-1">Our Price</div>
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-sm text-gray-400 line-through">€{data?.original_price}</span>
-          <span className="text-2xl font-bold text-gray-900">€{data?.discount_price}</span>
+          {
+            data?.original_price  && (
+              <span className="text-sm text-gray-400 line-through">€{data?.original_price}</span>
+            )
+          }
+          {
+            data?.discount_price ? (
+              <span className="text-2xl font-bold text-gray-900">€{data?.discount_price}</span>
+            ) : (
+              <span className="text-2xl font-bold text-gray-900">€{data?.original_price}</span>
+            )
+          }
         </div>
+          {data?.discount_price && (
         <div className="text-sm text-orange-500 font-medium">
           Instant Saving €{data?.original_price - data?.discount_price}
         </div>
+          )}
       </div>
 
       {/* Make Offer Button */}

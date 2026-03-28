@@ -37,7 +37,7 @@ const PartListing = ({
   isLoading,
   onAddFavorite,
 }) => {
-  const [isGrid, setIsGrid] = useState(false);
+  const [isGrid, setIsGrid] = useState(true);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
   const [searchText, setSearchText] = useState(filters?.search || "");

@@ -7,6 +7,12 @@ export default function RegistrationNumber() {
 
   // Watch values from form context
   const uploadedFiles = watch("documents") || [];
+  const registrationNumber = watch("registrationNumber");
+  const vinNumber = watch("vinNumber");
+
+  const showRequiredMessage =
+    (!registrationNumber || registrationNumber.toString().trim() === "") &&
+    (!vinNumber || vinNumber.toString().trim() === "");
 
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -91,6 +97,16 @@ export default function RegistrationNumber() {
           </div>
         </div>
 
+        {showRequiredMessage && (
+          <div className="flex items-start space-x-3 bg-red-50 p-4 rounded-lg border-l-4 border-red-400">
+            <div className="flex-shrink-0 w-5 h-5 bg-red-400 rounded-full flex items-center justify-center mt-0.5">
+              <span className="text-white text-xs font-bold">!</span>
+            </div>
+            <p className="text-sm text-red-800">
+              Registration number or VIN number is required.
+            </p>
+          </div>
+        )}
         {/* Document Upload Section */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-900">
@@ -163,6 +179,7 @@ export default function RegistrationNumber() {
             </div>
           )}
         </div>
+
 
         {/* Security Notice */}
         <div className="flex items-start space-x-3 bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400">
