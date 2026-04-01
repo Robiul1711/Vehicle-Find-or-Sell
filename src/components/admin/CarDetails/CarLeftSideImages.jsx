@@ -5,11 +5,32 @@ import "swiper/css/navigation";
 import Title from "@/components/common/Title";
 import { PdfIcon } from "@/components/common/SVGicons/DashboardIcon";
 import { useLocation } from "react-router-dom";
-import { Image } from "antd";
+import { Image, Modal } from "antd";
+import { LeftOutlined, RightOutlined, CloseOutlined } from "@ant-design/icons";
 
 const CarLeftSideImages = ({ data, isLoading }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const location = useLocation();
+
+  const imageList = data?.media?.image ?? [];
+
+  const openPreview = () => {
+    if (imageList.length) setIsPreviewOpen(true);
+  };
+
+  const closePreview = () => setIsPreviewOpen(false);
+
+  const goPrev = () => {
+    if (!imageList.length) return;
+    setSelectedIndex((prev) => (prev - 1 + imageList.length) % imageList.length);
+  };
+
+  const goNext = () => {
+    if (!imageList.length) return;
+    setSelectedIndex((prev) => (prev + 1) % imageList.length);
+  };
+
 
   // 1. Loading State (Skeleton)
   if (isLoading) {
@@ -28,19 +49,52 @@ const CarLeftSideImages = ({ data, isLoading }) => {
   return (
     <div className="w-full flex flex-col justify-between h-full">
       <div>
-        {/* Main Image with Centered Preview */}
-        <div className="rounded-xl overflow-hidden relative group">
+        {/* Main Image with Custom Preview (with arrows) */}
+        <div className="rounded-xl overflow-hidden relative group cursor-pointer" onClick={openPreview}>
           <Image
-            width="100%" // Changed to 100% for responsiveness
+            width="100%"
             height={550}
-            preview={{
-              mask: <div className="flex items-center justify-center h-full w-full">Preview</div>
-            }}
-            src={data?.media?.image?.[selectedIndex]?.file}
+            preview={false}
+            src={imageList[selectedIndex]?.file}
             alt="Car"
             className="w-full h-full object-cover rounded-xl"
           />
+          <div className="absolute inset-0 flex items-center justify-center text-white bg-black/25 opacity-0 group-hover:opacity-100 transition">
+            <span className="px-4 py-2 bg-black/50 rounded">Click to preview</span>
+          </div>
         </div>
+
+        <Modal
+          open={isPreviewOpen}
+          onCancel={closePreview}
+          footer={null}
+          centered
+          width="80%"
+        >
+          <div className="relative flex items-center justify-center h-[80vh]">
+            <button
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 text-white hover:bg-black/70"
+              onClick={goPrev}
+              aria-label="Previous Image"
+            >
+              <LeftOutlined className="text-3xl"/>
+            </button>
+
+            <img
+              src={imageList[selectedIndex]?.file}
+              alt={`Car Preview ${selectedIndex + 1}`}
+              className="max-h-[80vh] max-w-full object-contain"
+            />
+
+            <button
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 text-white hover:bg-black/70"
+              onClick={goNext}
+              aria-label="Next Image"
+            >
+              <RightOutlined className="text-3xl"/>
+            </button>
+          </div>
+        </Modal>
 
         {/* Thumbnails Swiper */}
         <div className="mt-5">
@@ -76,7 +130,7 @@ const CarLeftSideImages = ({ data, isLoading }) => {
             href={data?.registration?.document} 
             target="_blank" 
             rel="noreferrer"
-            className="flex items-center gap-2 text-custom-primary bg-custom-primary/10 py-2 px-4 rounded-lg inline-flex hover:bg-custom-primary/20 transition"
+            className="inline-flex items-center gap-2 text-custom-primary bg-custom-primary/10 py-2 px-4 rounded-lg hover:bg-custom-primary/20 transition"
           >
             <PdfIcon />
             Car-Brochure.pdf

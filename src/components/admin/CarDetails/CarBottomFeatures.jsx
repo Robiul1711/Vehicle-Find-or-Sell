@@ -51,37 +51,47 @@ const CarBottomFeatures = ({ details }) => {
       </div>
 
       {/* === Contact Info === */}
-      <div className="">
-        <Title level="title20" className=" mb-3 md:mb-6">
-          Contact Information
-        </Title>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-          <div>
-            <Title level="title14" className="text-gray-500">
-              Name
-            </Title>
-            <Title level="title16">{details?.contact?.name}</Title>
-          </div>
-          <div>
-            <Title level="title14" className="text-gray-500">
-              Email
-            </Title>
-            <Title level="title16">{details?.contact?.email}</Title>
-          </div>
-          <div>
-            <Title level="title14" className="text-gray-500">
-              Contact Number
-            </Title>
-            <Title level="title16">{details?.contact?.phone}</Title>
-          </div>
-          <div>
-            <Title level="title14" className="text-gray-500">
-              WhatsApp Number
-            </Title>
-            <Title level="title16">{details?.contact?.whatsapp}</Title>
+      {(details?.contact?.name || details?.contact?.email || details?.contact?.phone || details?.contact?.whatsapp) && (
+        <div className="">
+          <Title level="title20" className=" mb-3 md:mb-6">
+            Contact Information
+          </Title>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            {details?.contact?.name && (
+              <div>
+                <Title level="title14" className="text-gray-500">
+                  Name
+                </Title>
+                <Title level="title16">{details?.contact?.name}</Title>
+              </div>
+            )}
+            {details?.contact?.email && (
+              <div>
+                <Title level="title14" className="text-gray-500">
+                  Email
+                </Title>
+                <Title level="title16">{details?.contact?.email}</Title>
+              </div>
+            )}
+            {details?.contact?.phone && (
+              <div>
+                <Title level="title14" className="text-gray-500">
+                  Contact Number
+                </Title>
+                <Title level="title16">{details?.contact?.phone}</Title>
+              </div>
+            )}
+            {details?.contact?.whatsapp && (
+              <div>
+                <Title level="title14" className="text-gray-500">
+                  WhatsApp Number
+                </Title>
+                <Title level="title16">{details?.contact?.whatsapp}</Title>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
