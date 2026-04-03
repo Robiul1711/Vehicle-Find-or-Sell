@@ -200,7 +200,7 @@ const BrowseCategorySection = () => {
       </h2>
 
       {/* Custom Tab Navigation */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-4 mb-8 pb-2">
+      <div className="flex overflow-x-auto gap-4 mb-8 pb-4 no-scrollbar lg:grid lg:grid-cols-5">
         {categories.map((category) => (
           <button
             key={category.id}
@@ -208,21 +208,21 @@ const BrowseCategorySection = () => {
               setActiveTab(category.id);
               setCurrentPage(1);
             }}
-            className={`flex flex-col items-center justify-center gap-3 p-6 rounded-xl border-2 transition-all duration-200 flex-shrink-0 ${
+            className={`flex flex-col items-center justify-center gap-3 p-4 sm:p-6 rounded-xl border-2 transition-all duration-200 flex-shrink-0 w-32 sm:w-auto ${
               activeTab === category.id
                 ? "border-orange-400 bg-orange-50 shadow-md"
                 : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
             }`}
           >
             <span
-              className={`text-2xl ${
+              className={`text-xl sm:text-2xl ${
                 activeTab === category.id ? "text-[#F88E08]" : "text-gray-700"
               } `}
             >
               {category.icon}
             </span>
             <span
-              className={` lg:text-2xl font-medium text-center ${
+              className={`text-sm lg:text-lg font-medium text-center ${
                 activeTab === category.id ? "text-orange-700" : "text-gray-700"
               }`}
             >
@@ -233,7 +233,7 @@ const BrowseCategorySection = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="bg-white border border-gray-200 rounded-xl p-8 min-h-[300px]">
+      <div className="">
         <div className="leading-relaxed">{getActiveContent()}</div>
 
         {data?.count > 4 && (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Loader } from "lucide-react";
+import { ArrowUpRight, Loader } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import Title from "../common/Title";
@@ -9,6 +9,7 @@ import { bikes, cars, Parts, Scoter, trucks } from "@/lib/cardata";
 import VehiclesCardDemo from "../common/VehiclesCardDemo";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import { Link } from "react-router-dom";
 
 const FeaturedListings = () => {
   const [activeTab, setActiveTab] = useState("car");
@@ -165,11 +166,18 @@ const FeaturedListings = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
+        className="flex justify-between items-center"
       >
+        <div>
+          
         <Title level="title40">Featured Listings</Title>
         <Title level="title18" className="mt-4 text-gray-500">
           Showcasing the latest and most popular ads on the platform.
         </Title>
+        </div>
+        <Link to="/listings" className="text-custom-primary font-semibold flex items-center gap-2">
+     View All<ArrowUpRight className="w-4 h-4" />
+        </Link>
       </motion.div>
       
       <motion.div 

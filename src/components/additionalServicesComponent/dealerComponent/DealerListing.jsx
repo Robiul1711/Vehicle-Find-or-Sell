@@ -1,9 +1,16 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ImageProvider } from "@/utils/ImageProvider";
 import { IoGrid } from "react-icons/io5";
 import { FaList } from "react-icons/fa6";
-import { ArrowUpRight, ChevronDown, ChevronUp, Search } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  ChevronUp,
+  Search,
+  Filter,
+  X,
+} from "lucide-react";
 import {
   CustomLocation,
   CustomMileage,
@@ -59,6 +66,7 @@ const DealerListing = () => {
   // console.log(data?.results);
   const items = data?.results;
   const [isGrid, setIsGrid] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFeatureModal, setIsFeatureModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Feature");
 
@@ -73,58 +81,72 @@ const DealerListing = () => {
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row justify-between items-center gap-4 lg:gap-5 mb-10">
-        {/* Search Bar - Full width on mobile, flexible on desktop */}
-        <div className="w-full lg:w-auto lg:flex-1 border rounded-xl flex items-center gap-3 px-4">
-          <Search />
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        {/* Professional Search Bar */}
+        <div className="w-full max-w-2xl relative group">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-custom-primary transition-colors">
+            <Search size={20} />
+          </div>
           <input
             type="text"
+            className="w-full bg-white border border-gray-200 group-focus-within:border-custom-primary group-focus-within:ring-4 group-focus-within:ring-orange-500/10 rounded-xl py-3 pl-12 pr-32 outline-none transition-all shadow-sm text-sm sm:text-base"
+            placeholder="Search dealers (e.g. name or city)..."
             value={params.search}
             onChange={(e) => {
               setParams((prev) => ({ ...prev, search: e.target.value }));
               setCurrentPage(1);
             }}
-            className="w-full p-2 outline-none bg-transparent"
-            placeholder="Search..."
+            onKeyDown={(e) => e.key === "Enter" && refetch()}
           />
-        </div>
-
-        {/* Button Group - Stack on mobile, row on desktop */}
-        <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-center">
-          {/* Search Button - Full width on mobile, auto on larger screens */}
           <button
             onClick={() => refetch()}
-            className="w-full sm:w-auto bg-custom-primary text-white px-4 py-2 rounded-lg whitespace-nowrap"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-custom-primary hover:bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-semibold transition-all shadow-md shadow-orange-500/20 active:scale-95"
           >
             Search
           </button>
+        </div>
 
-          {/* View Toggle Buttons */}
-          <div className="flex space-x-2 bg-gray-200 p-1.5 rounded-lg">
+        {/* Controls Group */}
+        <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+          {/* Mobile Filter Button */}
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="md:hidden flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors text-sm font-medium shadow-sm"
+          >
+            <Filter size={18} />
+            Filters
+          </button>
+
+          {/* View Toggle - Hidden on mobile, force grid */}
+          <div className="hidden sm:flex items-center bg-gray-100 p-1 rounded-xl">
             <button
               onClick={() => setIsGrid(true)}
-              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${
+              className={`p-2 rounded-lg transition-all ${
                 isGrid
-                  ? "bg-custom-primary text-white shadow-sm"
-                  : "text-black hover:bg-gray-300"
+                  ? "bg-white text-custom-primary shadow-sm"
+                  : "text-gray-500 hover:text-gray-700 hover:bg-gray-200/50"
               }`}
+              title="Grid View"
             >
-              <IoGrid />
+              <IoGrid size={20} />
             </button>
             <button
               onClick={() => setIsGrid(false)}
-              className={`px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium transition-colors ${
+              className={`p-2 rounded-lg transition-all ${
                 !isGrid
-                  ? "bg-custom-primary text-white shadow-sm"
-                  : "text-black hover:bg-gray-300"
+                  ? "bg-white text-custom-primary shadow-sm"
+                  : "text-gray-500 hover:text-gray-700 hover:bg-gray-200/50"
               }`}
+              title="List View"
             >
-              <FaList />
+              <FaList size={20} />
             </button>
           </div>
+        </div>
+      </div>
 
-          {/* Sort Dropdown */}
-          {/* <div className="w-full sm:w-auto">
+      {/* Sort Dropdown */}
+      {/* <div className="w-full sm:w-auto">
             <div className="relative">
               <div
                 onClick={() => setIsFeatureModal((prev) => !prev)}
@@ -166,8 +188,6 @@ const DealerListing = () => {
               )}
             </div>
           </div> */}
-        </div>
-      </div>
 
       <div className="flex gap-5">
         <div className="hidden md:block w-1/4 flex-shrink-0">
@@ -177,8 +197,8 @@ const DealerListing = () => {
           <div
             className={` ${
               isGrid
-                ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3  gap-4"
-                : "space-y-6 md:w-[75%]"
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3  gap-4"
+                : "grid grid-cols-1 sm:block sm:space-y-6 w-full"
             }`}
           >
             {isLoading ? (
@@ -201,7 +221,9 @@ const DealerListing = () => {
                           : "w-44 h-44 mr-4 flex-shrink-0"
                       }`}
                     />
-                    <div className={`${isGrid ? "w-full" : "flex-1"} space-y-3`}>
+                    <div
+                      className={`${isGrid ? "w-full" : "flex-1"} space-y-3`}
+                    >
                       <div
                         className={`h-6 bg-gray-200 rounded ${
                           isGrid ? "w-3/4" : "w-1/2"
@@ -235,7 +257,7 @@ const DealerListing = () => {
                         delay: waveDelay,
                       },
                     }}
-                    className={`rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${
+                    className={`h-full rounded-md dark:bg-slate-800 bg-white shadow-lg overflow-hidden ${
                       isGrid ? "" : ""
                     }`}
                   >
@@ -243,8 +265,8 @@ const DealerListing = () => {
                       layout
                       className={`${
                         isGrid
-                          ? "p-5"
-                          : "p-4 flex flex-col lg:flex-row items-center"
+                          ? "p-5 flex flex-col h-full"
+                          : "p-4 flex flex-col sm:flex-row items-start sm:items-center h-full sm:h-auto"
                       }`}
                       transition={{
                         type: "spring",
@@ -263,7 +285,9 @@ const DealerListing = () => {
                             : "w-44 h-44 mr-4 flex-shrink-0"
                         }`}
                       />
-                      <div className={`${isGrid ? "w-full" : "flex-1"}`}>
+                      <div
+                        className={`${isGrid ? "w-full flex-1 flex flex-col" : "flex-1"}`}
+                      >
                         <motion.h3
                           layout
                           className={`${
@@ -281,10 +305,10 @@ const DealerListing = () => {
                           className="text-black mt-1 flex items-center gap-2"
                         >
                           <CustomLocation />
-                        {item?.country}, {item?.street}, {item?.city},{" "}
+                          {item?.country}, {item?.street}, {item?.city},{" "}
                           {item?.zip_code}
                         </motion.p>
-                        <motion.div layout className=" my-2 ">
+                        <motion.div layout className="mt-auto pt-2">
                           <Link to={`/dealer-profile/${item?.id}`}>
                             <button className=" py-2  border border-black rounded-lg w-full">
                               View Dealer Profile
@@ -323,6 +347,45 @@ const DealerListing = () => {
           )}
         </div>
       </div>
+      {/* Mobile Sidebar */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSidebarOpen(false)}
+              className="fixed inset-0 bg-black/50 z-50 md:hidden"
+            />
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed left-0 top-0 bottom-0 w-[85%] max-w-[320px] bg-white z-[60] shadow-2xl md:hidden flex flex-col"
+            >
+              <div className="p-4 border-b flex justify-between items-center bg-white sticky top-0 z-10">
+                <h2 className="text-xl font-bold text-gray-900">Filters</h2>
+                <button
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X size={24} className="text-gray-600" />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto">
+                <DealerFilter
+                  onApplyFilters={(filters) => {
+                    handleFilterApply(filters);
+                    setIsSidebarOpen(false);
+                  }}
+                />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

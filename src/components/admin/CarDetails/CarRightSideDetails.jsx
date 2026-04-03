@@ -21,50 +21,66 @@ import {
 import { ProfetionalIcon, VideoIcon } from "@/components/common/SVGicons/MySvg";
 import { Link, useParams } from "react-router-dom";
 
-
-
-
-
-export default function CarRightSideDetails({details}) {
+export default function CarRightSideDetails({ details }) {
   // console.log(details)
   const { id } = useParams();
-  
-const specs = [
-  { icon: Car, label: "Body", value: details?.body },
-  { icon: Gauge, label: "Mileage", value: details?.mileage },
-  { icon: Fuel, label: "Fuel Type", value: details?.fuel_type },
-  { icon: Calendar, label: "Year", value: details?.exact_date },
-  { icon: Settings, label: "Transmission", value: details?.transmission },
-  { icon: Wind, label: "Air Criteria", value: details?.air_criteria },
-  { icon: Shield, label: "Warranty", value: details?.warrenty_duration },
-  { icon: Zap, label: "Horsepower (CV)", value: details?.horsepower_cv },
-  { icon: FileText, label: "Deductible VAT", value: details?.vat_percentage },
-];
 
-const rightSpecs = [
-  { icon: User, label: "Condition", value: details?.condition },
-  { icon: Wrench, label: "Engine Size", value: details?.engine_type },
-  { icon: DoorOpen, label: "Door", value: details?.door },
-  { icon: Palette, label: "Color", value: details?.color },
-  { icon: Hash, label: "VIN", value: details?.registration?.vin_number },
-  { icon: Leaf, label: "CO₂ Emissions", value: details?.co2_emission },
-  { icon: Users, label: "Previous Owners", value: "01" },
-  { icon: Activity, label: "Horsepower (DIN)", value: details?.horsepower_din },
-];
+  const specs = [
+    { icon: Car, label: "Body", value: details?.body },
+    { icon: Gauge, label: "Mileage", value: details?.mileage },
+    { icon: Fuel, label: "Fuel Type", value: details?.fuel_type },
+    { icon: Calendar, label: "Year", value: details?.exact_date },
+    { icon: Settings, label: "Transmission", value: details?.transmission },
+    { icon: Wind, label: "Air Criteria", value: details?.air_criteria },
+    { icon: Shield, label: "Warranty", value: details?.warrenty_duration },
+    { icon: Zap, label: "Horsepower (CV)", value: details?.horsepower_cv },
+    { icon: FileText, label: "Deductible VAT", value: details?.vat_percentage },
+  ];
 
+  const rightSpecs = [
+    { icon: User, label: "Condition", value: details?.condition },
+    { icon: Wrench, label: "Engine Size", value: details?.engine_type },
+    { icon: DoorOpen, label: "Door", value: details?.door },
+    { icon: Palette, label: "Color", value: details?.color },
+    { icon: Hash, label: "VIN", value: details?.registration?.vin_number },
+    { icon: Leaf, label: "CO₂ Emissions", value: details?.co2_emission },
+    { icon: Users, label: "Previous Owners", value: "01" },
+    {
+      icon: Activity,
+      label: "Horsepower (DIN)",
+      value: details?.horsepower_din,
+    },
+  ];
 
-const engineSpecs = [
-  { label: "Fuel Tank Capacity (Litres)", value: details?.engine_transmission?.fuelTankCapacity },
-  { label: "Minimum Kerbweight (kg)", value: details?.engine_transmission?.minimumKerWeight },
-  { label: "Max. Towing Weight - Braked (kg)", value: details?.engine_transmission?.maxTowingWeightBraked },
-  { label: "Max. Towing Weight - Unbraked (kg)", value: details?.engine_transmission?.maxTowingWeightUnbraked },
-  { label: "Turning Circle (m)", value: details?.engine_transmission?.turningCircle },
-];
+  const engineSpecs = [
+    {
+      label: "Fuel Tank Capacity (Litres)",
+      value: details?.engine_transmission?.fuelTankCapacity,
+    },
+    {
+      label: "Minimum Kerbweight (kg)",
+      value: details?.engine_transmission?.minimumKerWeight,
+    },
+    {
+      label: "Max. Towing Weight - Braked (kg)",
+      value: details?.engine_transmission?.maxTowingWeightBraked,
+    },
+    {
+      label: "Max. Towing Weight - Unbraked (kg)",
+      value: details?.engine_transmission?.maxTowingWeightUnbraked,
+    },
+    {
+      label: "Turning Circle (m)",
+      value: details?.engine_transmission?.turningCircle,
+    },
+  ];
   return (
     <div className="">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{details?.brand_name}</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+          {details?.brand_name}
+        </h1>
         <div className="flex flex-wrap gap-2">
           <Link
             to={`/dashboard/view-analytics/${id}`}
@@ -72,7 +88,10 @@ const engineSpecs = [
           >
             View Analytics
           </Link>
-          <Link to={`/dashboard/boost-your-ad-visibility/${id}`} className="bg-gray-800 text-white px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium flex items-center gap-2">
+          <Link
+            to={`/dashboard/boost-your-ad-visibility/${id}`}
+            className="bg-gray-800 text-white px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium flex items-center gap-2"
+          >
             <Zap className="w-4 h-4" />
             Boost Ads
           </Link>
@@ -86,18 +105,26 @@ const engineSpecs = [
       </div>
 
       {/* Price */}
-      {
-        details?.discount_price && (
-          <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 line-through">
-            €{details?.price}
+      <div className="flex items-baseline gap-2 mb-6">
+        {details?.original_price && details?.discount_price && (
+          <span className="text-sm sm:text-base text-gray-400 line-through">
+            €{details?.original_price}
+          </span>
+        )}
+        {details?.discount_price ? (
+          <div className="text-2xl sm:text-3xl font-bold text-gray-900">
+            €{details?.discount_price}
           </div>
-        )
-      }
-
+        ) : (
+          <div className="text-2xl sm:text-3xl font-bold text-gray-900">
+            €{details?.original_price}
+          </div>
+        )}
+      </div>
 
       {/* Description */}
       <p className="text-gray-600 text-sm sm:text-base mb-8 leading-relaxed">
-{details?.description}
+        {details?.description}
       </p>
 
       {/* Specs Grid */}
@@ -115,7 +142,9 @@ const engineSpecs = [
               <span className="text-gray-700 font-medium min-w-[110px] sm:min-w-[120px]">
                 {spec.label}
               </span>
-              <span className="text-gray-900 font-semibold capitalize">{spec.value}</span>
+              <span className="text-gray-900 font-semibold capitalize">
+                {spec.value}
+              </span>
             </div>
           ))}
         </div>
@@ -133,7 +162,9 @@ const engineSpecs = [
               <span className="text-gray-700 font-medium min-w-[110px] sm:min-w-[120px]">
                 {spec.label}
               </span>
-              <span className="text-gray-900 font-semibold capitalize">{spec.value}</span>
+              <span className="text-gray-900 font-semibold capitalize">
+                {spec.value}
+              </span>
             </div>
           ))}
         </div>
@@ -151,7 +182,9 @@ const engineSpecs = [
               className="flex justify-between items-center text-sm sm:text-base"
             >
               <span className="text-gray-700">{spec.label}</span>
-              <span className="text-gray-900 font-medium capitalize">{spec.value}</span>
+              <span className="text-gray-900 font-medium capitalize">
+                {spec.value}
+              </span>
             </div>
           ))}
         </div>

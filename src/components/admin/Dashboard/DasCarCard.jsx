@@ -42,7 +42,7 @@ const DasCarCard = ({ car }) => {
         {/* Top Content (Title + Subtitle) */}
         <div className="flex-grow space-y-2">
           <div className="flex justify-between items-start">
-            <h2 className="text-lg font-semibold text-gray-900 leading-tight">
+            <h2 className="text-lg font-semibold text-gray-900 leading-tight line-clamp-1">
               {car?.brand_name} {car?.model}
             </h2>
 
@@ -52,7 +52,7 @@ const DasCarCard = ({ car }) => {
               {car?.is_featured && <ProfetionalIcon />}
             </div>
           </div>
-          <p className="text-gray-500 text-sm line-clamp-2">{car?.subtitle}</p>
+          <p className="text-gray-500 text-sm line-clamp-1">{car?.subtitle}</p>
         </div>
 
         {/* Bottom Section (Features + Price + Buttons) - This stays at the bottom */}
@@ -88,7 +88,7 @@ const DasCarCard = ({ car }) => {
           {/* Price */}
           {car?.discount_price && (
             <p className="text-2xl font-bold text-gray-900 mt-3">
-              {car?.discount_price}
+             €{car?.discount_price}
             </p>
           )}
 
