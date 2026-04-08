@@ -1,29 +1,130 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormContext } from "react-hook-form";
-import { UploadCloud, File as FileIcon, X } from "lucide-react";
+import { UploadCloud, File as FileIcon, X, GripVertical } from "lucide-react";
+// DND Kit Imports
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
+// --- Sortable Item Component ---
+const SortablePhoto = ({ file, idx, onRemove }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: file.id || idx }); // Use unique ID or index
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 10 : 1,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  let src = "";
+  if (file instanceof File) {
+    src = URL.createObjectURL(file);
+  } else if (file?.file) {
+    src = file.file;
+  } else if (typeof file === "string") {
+    src = file;
+  }
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="relative group border rounded-md overflow-hidden bg-white"
+    >
+      <img src={src} alt="preview" className="w-full h-24 object-cover" />
+      
+      {/* Drag Handle */}
+      <div
+        {...attributes}
+        {...listeners}
+        className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 cursor-move transition-opacity"
+      >
+        <GripVertical className="text-white" />
+      </div>
+
+      {/* Remove Button */}
+      <button
+        type="button"
+        className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1 z-20 hover:bg-red-500"
+        onClick={() => onRemove(idx)}
+      >
+        <X size={14} />
+      </button>
+
+      {/* Badge for Order */}
+      <div className="absolute bottom-1 left-1 bg-custom-primary text-[10px] text-white px-1 rounded">
+        {idx + 1}
+      </div>
+    </div>
+  );
+};
+
+// --- Main Component ---
 const UploadMedia = () => {
-  const { register, setValue, watch } = useFormContext();
-
-  // Watch fields from react-hook-form
+  const { setValue, watch } = useFormContext();
   const images = watch("images") || [];
   const videos = watch("videos") || [];
-  // const documents = watch("documents") || [];
 
-  // Handle Images
+  // Sensors for Drag and Drop
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    const updated = [...images, ...files];
+    // Add a unique ID to each file to help DND-kit track them
+    const filesWithId = files.map(file => {
+        file.id = Math.random().toString(36).substr(2, 9);
+        return file;
+    });
+    const updated = [...images, ...filesWithId];
     setValue("images", updated, { shouldValidate: true });
   };
 
   const removeImage = (index) => {
-    const updated = [...images];
-    updated.splice(index, 1);
+    const updated = images.filter((_, i) => i !== index);
     setValue("images", updated);
   };
 
-  // Handle Videos
+  // Handle Drag End
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      const oldIndex = images.findIndex((img, idx) => (img.id || idx) === active.id);
+      const newIndex = images.findIndex((img, idx) => (img.id || idx) === over.id);
+
+      const reorderedImages = arrayMove(images, oldIndex, newIndex);
+      setValue("images", reorderedImages);
+    }
+  };
+
+  // ... Video functions remain same ...
   const handleVideoChange = (e) => {
     const files = Array.from(e.target.files);
     const updated = [...videos, ...files];
@@ -36,115 +137,65 @@ const UploadMedia = () => {
     setValue("videos", updated);
   };
 
-  // Handle Documents
-  // const handleDocChange = (e) => {
-  //   const files = Array.from(e.target.files);
-  //   const updated = [...documents, ...files];
-  //   setValue("documents", updated, { shouldValidate: true });
-  // };
-
-  // const removeDocument = (index) => {
-  //   const updated = [...documents];
-  //   updated.splice(index, 1);
-  //   setValue("documents", updated);
-  // };
-
   return (
-    <div className="space-y-6 ">
+    <div className="space-y-6">
       <h2 className="text-xl font-semibold">Upload Media</h2>
 
-      {/* Image Upload */}
       <div>
-        <h3 className="font-medium mb-2">Image</h3>
-        <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary">
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            className="hidden"
-            onChange={handleImageChange}
-          />
+        <h3 className="font-medium mb-1">Images</h3>
+        <p className="text-xs text-gray-400 mb-3">Drag and drop photos to change their order. The first photo will be the main cover.</p>
+        
+        <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary transition-colors mb-4">
+          <input type="file" accept="image/*" multiple className="hidden" onChange={handleImageChange} />
           <UploadCloud className="w-6 h-6 text-gray-400" />
           <p className="text-sm text-gray-500">
-            <span className="text-custom-primary">click to browse</span>
+            <span className="text-custom-primary font-medium">Click to browse</span>
           </p>
         </label>
 
-        {/* Image Preview */}
-        {images.length > 0 && (
-          <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3">
-            {images.map((file, idx) => {
-              let src = "";
-              if (file instanceof File) {
-                src = URL.createObjectURL(file);
-              } else if (file?.file) {
-                // Existing image from API
-                src = file.file;
-              } else if (typeof file === "string") {
-                // Fallback if string
-                src = file;
-              }
-
-              return (
-                <div key={idx} className="relative">
-                  <img
-                    src={src}
-                    alt="preview"
-                    className="w-full h-24 object-cover rounded-md border"
-                  />
-                  <button
-                    type="button"
-                    className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1"
-                    onClick={() => removeImage(idx)}
-                  >
-                    <X size={14} />
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
+        {/* Sortable Context */}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={images.map((img, idx) => img.id || idx)}
+            strategy={rectSortingStrategy}
+          >
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+              {images.map((file, idx) => (
+                <SortablePhoto
+                  key={file.id || idx}
+                  file={file}
+                  idx={idx}
+                  onRemove={removeImage}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
       </div>
 
-      {/* Video Upload */}
+      {/* Video Section */}
       <div>
         <h3 className="font-medium mb-2">Video</h3>
-        <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary">
-          <input
-            type="file"
-            accept="video/*"
-            multiple
-            className="hidden"
-            onChange={handleVideoChange}
-          />
+        <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary transition-colors">
+          <input type="file" accept="video/*" multiple className="hidden" onChange={handleVideoChange} />
           <UploadCloud className="w-6 h-6 text-gray-400" />
-          <p className="text-sm text-gray-500">
-            <span className="text-custom-primary">click to browse</span>
-          </p>
+          <p className="text-sm text-gray-500"><span className="text-custom-primary">Click to browse</span></p>
         </label>
 
         {videos.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 mt-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-3">
             {videos.map((file, idx) => {
-              let src = "";
-              if (file instanceof File) {
-                src = URL.createObjectURL(file);
-              } else if (file?.file) {
-                src = file.file;
-              } else if (typeof file === "string") {
-                src = file;
-              }
-
+              const src = file instanceof File ? URL.createObjectURL(file) : (file?.file || file);
               return (
-                <div key={idx} className="relative">
-                  <video
-                    controls
-                    className="w-full h-40 rounded-md border object-cover"
-                    src={src}
-                  />
+                <div key={idx} className="relative group border rounded-md overflow-hidden bg-black">
+                  <video controls className="w-full h-40 object-contain" src={src} />
                   <button
                     type="button"
-                    className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1"
+                    className="absolute top-1 right-1 bg-black/50 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
                     onClick={() => removeVideo(idx)}
                   >
                     <X size={14} />
@@ -154,53 +205,10 @@ const UploadMedia = () => {
             })}
           </div>
         )}
-        <p className="mt-2 text-xs text-orange-500 flex items-center gap-1">
-          <FileIcon size={14} /> Upload your video now. It will be published
-          after the add-on purchase.
+        <p className="mt-2 text-[10px] text-orange-500 flex items-center gap-1">
+          <FileIcon size={12} /> Uploaded videos appear after ad-on purchase.
         </p>
       </div>
-
-      {/* Document Upload */}
-      {/* <div>
-        <h3 className="font-medium mb-2">Document</h3>
-        <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary">
-          <input
-            type="file"
-            multiple
-            className="hidden"
-            onChange={handleDocChange}
-          />
-          <UploadCloud className="w-6 h-6 text-gray-400" />
-          <p className="text-sm text-gray-500">
-            Attach important documents (e.g., registration papers, service
-            history, warranty) or{" "}
-            <span className="text-custom-primary">click to browse</span>
-          </p>
-        </label>
-
-        {documents.length > 0 && (
-          <div className="mt-3 space-y-2">
-            {documents.map((file, idx) => (
-              <div
-                key={idx}
-                className="flex items-center justify-between text-sm text-gray-700 border p-2 rounded-md"
-              >
-                <div className="flex items-center gap-2">
-                  <File className="w-5 h-5 text-gray-500" />
-                  {file.name}
-                </div>
-                <button
-                  type="button"
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => removeDocument(idx)}
-                >
-                  <X size={16} />
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };

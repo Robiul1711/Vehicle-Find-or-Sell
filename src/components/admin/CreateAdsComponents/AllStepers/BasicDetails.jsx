@@ -14,7 +14,12 @@ export default function BasicDetails() {
     url: "/core/brands/",
     secure: true,
   });
-
+  const { data: adsChoice, isLoading: choiceLoading } = useApiQuery({
+    queryKey: ["ads-choice"],
+    url: "/ads/choices/",
+    secure: true,
+  });
+  console.log(data);
   const { mutate, isPending } = useApiMutation({
     url: "/core/brands/",
     method: "POST",
@@ -90,25 +95,11 @@ export default function BasicDetails() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Body Type</option>
-            <option value="buggy">Buggy</option>
-            <option value="convertible">Convertible</option>
-            <option value="coupe">Coupe</option>
-            <option value="fastback">Fastback</option>
-            <option value="flower_car">Flower Car</option>
-            <option value="hatchback">Hatchback</option>
-            <option value="hearse">Hearse</option>
-            <option value="limousine">Limousine</option>
-            <option value="microvan">Microvan</option>
-            <option value="minivan">Minivan</option>
-            <option value="panel_van">Panel Van</option>
-            <option value="panel_truck">Panel Truck</option>
-            <option value="pickup_truck">Pickup Truck</option>
-            <option value="roadster">Roadster</option>
-            <option value="sedan">Sedan</option>
-            <option value="shooting_brake">Shooting Brake</option>
-            <option value="station_wagon">Station Wagon</option>
-            <option value="targa_top">Targa Top</option>
-            <option value="ute">Ute</option>
+            {adsChoice?.data?.body_types?.map((body) => (
+              <option value={body?.value} key={body?.value}>
+                {body?.label}
+              </option>
+            ))}
           </select>
         </div>
         {watch().vehicle_type === "Motorcycle" ||
@@ -189,14 +180,11 @@ export default function BasicDetails() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Fuel Type</option>
-            <option value="petrol">Petrol</option>
-            <option value="diesel">Diesel</option>
-            <option value="hybrid">Hybrid</option>
-            <option value="electric">Electric</option>
-            <option value="cng">CNG</option>
-            <option value="lpg">LPG</option>
-            <option value="gasoline">Gasoline</option>
-            <option value="unknown">Unknown</option>
+         {adsChoice?.data?.fuel_types?.map((body) => (
+              <option value={body?.value} key={body?.value}>
+                {body?.label}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -223,8 +211,11 @@ export default function BasicDetails() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Transmission Type</option>
-            <option value="automatic">Automatic</option>
-            <option value="manual">Manual</option>
+            {adsChoice?.data?.transmissions?.map((body) => (
+              <option value={body?.value} key={body?.value}>
+                {body?.label}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -251,8 +242,11 @@ export default function BasicDetails() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Condition</option>
-            <option value="new">Brand New</option>
-            <option value="used">Used</option>
+            {adsChoice?.data?.conditions?.map((body) => (
+              <option value={body?.value} key={body?.value}>
+                {body?.label}
+              </option>
+            ))}
           </select>
         </div>
 
