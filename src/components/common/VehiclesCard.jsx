@@ -25,7 +25,7 @@ const VehiclesCard = ({
   isFavorite,
 }) => {
   return (
-    <div className="rounded-2xl shadow-lg overflow-hidden">
+    <div className="rounded-2xl shadow-lg overflow-hidden h-full flex flex-col">
       {/* Image */}
       <div className="relative">
         <img src={imageUrl} alt={title} className="w-full h-58 object-cover" />
@@ -45,7 +45,8 @@ const VehiclesCard = ({
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-6 flex flex-col flex-grow justify-between">
+        <div>
         {/* Title & Badge */}
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
@@ -72,6 +73,8 @@ const VehiclesCard = ({
           <Feature icon={<MilageIcon />} label={mileage} />
           <Feature icon={<FuelIcon />} label={fuelType} />
           <Feature icon={<AutomaticIcon />} label={transmission} />
+        </div>
+
         </div>
 
         {/* Price & Button */}

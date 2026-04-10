@@ -138,8 +138,7 @@ const VehiclePriceDealer = ({ data, isLoading }) => {
 
       {/* Vehicle History Button */}
       <Link
-        to={`https://gtac.fr/`}
-        target="_blank"
+        to={`/aditionalservices/vehicle-maintenance-history`}
         className="w-full bg-[#012853] block text-center hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-lg transition-colors"
       >
         Get Vehicle History

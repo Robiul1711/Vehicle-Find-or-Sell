@@ -49,10 +49,11 @@ const BoostYourAdVisibility = () => {
 
   const toggleBoost = (boostId) => {
     setSelectedBoosts((prev) => {
+      // If already selected, deselect it. Otherwise, set it as the only selection.
       if (prev.includes(boostId)) {
-        return prev.filter((id) => id !== boostId);
+        return [];
       } else {
-        return [...prev, boostId];
+        return [boostId];
       }
     });
   };
@@ -143,7 +144,7 @@ const BoostYourAdVisibility = () => {
             }`}
             disabled={selectedBoosts.length === 0 || isPending}
           >
-            {isPending ? "Processing..." : "Continue & Pay for Selected Boosts"}
+            {isPending ? "Processing..." : "Continue & Pay for Selected Boost"}
           </button>
         </div>
       </div>
@@ -151,7 +152,7 @@ const BoostYourAdVisibility = () => {
       {/* Selection summary */}
       {selectedBoosts.length > 0 && (
         <div className="mt-4 p-4 bg-orange-50 rounded-lg">
-          <h4 className="font-semibold text-gray-900 mb-2">Selected boosts:</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Selected boost:</h4>
           <ul className="text-sm text-gray-700">
             {selectedBoosts.map((boostId) => {
               const boost = boostOptions.find((b) => b.id === boostId);

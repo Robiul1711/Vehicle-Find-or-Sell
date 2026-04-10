@@ -39,11 +39,16 @@ const LookingFor = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="lg:w-1/2 w-full p-8 sm:p-12 lg:p-16 text-white flex flex-col gap-6 justify-center"
         >
+          <div className="flex items-center gap-2 mb-2">
+            <span className="bg-white text-custom-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+              Newsletter
+            </span>
+          </div>
           <Title level="title48" className="leading-tight">
-            Looking for a Car, Bike, Van, or Spare Parts?
+            Stay Updated with the Latest Listings
           </Title>
           <Title level="title20" className="text-gray-300">
-            Browse verified listings from private sellers and trusted professionals near you.
+            Subscribe to our newsletter to receive the newest ads, exclusive deals, and market insights directly in your inbox.
           </Title>
 
           {/* Email Input */}
@@ -51,7 +56,7 @@ const LookingFor = () => {
             <div className="flex flex-row gap-3">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Enter your email to subscribe"
                 className={`flex-1 p-4 rounded-full bg-white text-black outline-none focus:ring-4 transition-all duration-300 ${errors.email ? 'focus:ring-red-500/50 ring-2 ring-red-500' : 'focus:ring-custom-primary/30'}`}
                 {...register("email", {
                   required: "Email is required",

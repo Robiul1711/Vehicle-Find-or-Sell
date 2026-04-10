@@ -46,11 +46,19 @@ const DashStates = () => {
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",
     },
+    {
+      id: 5,
+      title: "Scheduled Ads",
+      value: data?.data?.scheduled_ads || "00",
+      icon: State4Icon,
+      iconBg: "bg-blue-100",
+      iconColor: "text-blue-600",
+    },
   ];
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (

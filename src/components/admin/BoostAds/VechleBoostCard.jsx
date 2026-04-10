@@ -77,13 +77,24 @@ const VechleBoostCard = ({ car }) => {
             >
               View Details
             </Link>
+            {/* {console.log(car)}   */}
             {/* Updated Boost Ads Link */}
-            <Link
-              to={`/dashboard/boost-your-ad-visibility/${car.id}?type=${car.ad_type}`}
-              className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800"
-            >
-              Boost Ads
-            </Link>
+            {car?.is_bumped || car?.is_featured || car?.is_video ? (
+              <Link
+                to={`/dashboard/boost-your-ad-visibility/${car.id}?type=${car.ad_type}`}
+                className="bg-orange-600 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-custom-primary duration-300"
+              >
+                Ads Boosted
+              </Link>
+            ) : (
+              <Link
+                to={`/dashboard/boost-your-ad-visibility/${car.id}?type=${car.ad_type}`}
+                className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800"
+              >
+                Boost Ads
+              </Link>
+            )}
+
           </div>
         </div>
       </div>

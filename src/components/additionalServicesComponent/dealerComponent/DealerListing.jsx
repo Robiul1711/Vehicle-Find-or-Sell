@@ -22,7 +22,7 @@ import DealerFilter from "./DealerFilter";
 import { Link } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import PaginationComponent from "@/components/common/PaginationComponent";
-
+import ImageAvatar from "@/assets/images/dummy.png";
 const DealerListing = () => {
   const [params, setParams] = useState({
     region: "",
@@ -277,10 +277,15 @@ const DealerListing = () => {
                     >
                       <motion.img
                         layout
-                        src={item?.profile_image}
+                          src={
+                                        item?.profile_image
+                                          ? item.profile_image
+                                          : ImageAvatar
+                                      }
+                        // src={item?.profile_image || ImageProvider.ImageAvatar}
                         alt={item.name}
                         className={`rounded-lg object-cover ${
-                          isGrid
+                          isGrid  
                             ? "w-full h-[200px] mb-5"
                             : "w-44 h-44 mr-4 flex-shrink-0"
                         }`}
@@ -300,14 +305,17 @@ const DealerListing = () => {
                           {item?.title}
                         </motion.p>
 
-                        <motion.p
-                          layout
-                          className="text-black mt-1 flex items-center gap-2"
-                        >
-                          <CustomLocation />
-                          {item?.country}, {item?.street}, {item?.city},{" "}
-                          {item?.zip_code}
-                        </motion.p>
+                        {(item?.city || item?.country || item?.street || item?.zip_code) && (
+                          <motion.p
+                            layout
+                            className="text-black mt-1 flex items-center gap-2 text-sm"
+                          >
+                            <CustomLocation />
+                            {[item?.street, item?.city, item?.country, item?.zip_code]
+                              .filter(Boolean)
+                              .join(", ")}
+                          </motion.p>
+                        )}
                         <motion.div layout className="mt-auto pt-2">
                           <Link to={`/dealer-profile/${item?.id}`}>
                             <button className=" py-2  border border-black rounded-lg w-full">

@@ -1,43 +1,22 @@
 import React, { useState } from "react";
 import { Search, ChevronDown, Plus, Heart } from "lucide-react";
-import DasCarCard from "../Dashboard/DasCarCard";
 import FavouriteCard from "./FavouriteCard";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import DasCarCardSkeleton from "../Dashboard/DasCarCardSkeleton";
-// const cars = [
-//   {
-//     id: 1,
-//     title: "BMW X3 M Sport",
-//     subtitle: "3.5 D5 PowerPulse Momentum 5dr AW...",
-//     image: "https://images.unsplash.com/photo-1502877338535-766e1452684a",
-//     Kilometer: "47 Kilometer",
-//     fuel: "Diesel",
-//     transmission: "Automatic",
-//     condition: "New",
-//     price: "€33,800",
-//   },
-//   {
-//     id: 2,
-//     title: "Audi A6 Premium",
-//     subtitle: "2.0 TDI Ultra SE Executive 4dr",
-//     image: "https://images.unsplash.com/photo-1549924231-f129b911e442",
-//     miles: "65 Kilometer",
-//     fuel: "Petrol",
-//     transmission: "Manual",
-//     condition: "Used",
-//     price: "€29,400",
-//   },
-// ];
+import PaginationComponent from "@/components/common/PaginationComponent";
+
 export default function MyFavorites() {
   const [search, setSearch] = useState("");
   const [type, setType] = useState("All Categories");
   const [condition, setCondition] = useState("Condition");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading, refetch } = useApiQuery({
-    queryKey: ["my-favorites", search, type, condition],
+    queryKey: ["my-favorites", search, type, condition, currentPage],
     url: "/account/favorites",
     secure: true,
     params: {
+      page: currentPage,
       search: search || undefined,
       type:
         type !== "All Categories"
@@ -71,7 +50,10 @@ export default function MyFavorites() {
             type="text"
             placeholder="Search by Car Name, Model, Year..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
             className="w-full pl-4 pr-12 py-3 border border-gray-200 rounded-lg bg-white text-sm sm:text-base"
           />
           <button className="absolute right-0 top-0 bottom-0 bg-custom-primary text-white px-4 rounded-r-lg transition-colors">
@@ -83,7 +65,10 @@ export default function MyFavorites() {
         <div className="relative w-full sm:w-auto">
           <select
             value={type}
-            onChange={(e) => setType(e.target.value)}
+            onChange={(e) => {
+              setType(e.target.value);
+              setCurrentPage(1);
+            }}
             className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-auto cursor-pointer text-sm sm:text-base"
           >
             <option>All Categories</option>
@@ -100,7 +85,10 @@ export default function MyFavorites() {
         <div className="relative w-full sm:w-auto">
           <select
             value={condition}
-            onChange={(e) => setCondition(e.target.value)}
+            onChange={(e) => {
+              setCondition(e.target.value);
+              setCurrentPage(1);
+            }}
             className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-auto cursor-pointer text-sm sm:text-base"
           >
             <option>Condition</option>
@@ -134,11 +122,22 @@ export default function MyFavorites() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-4 gap-4 sm:gap-6">
-          {data?.results?.map((car) => (
-            <FavouriteCard key={car.id} car={car} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-4 gap-4 sm:gap-6">
+            {data?.results?.map((car) => (
+              <FavouriteCard key={car.id} car={car} />
+            ))}
+          </div>
+          {data?.count > 0 && (
+            <div className="mt-8 flex justify-center w-full">
+              <PaginationComponent
+                pageCount={Math.ceil(data.count / 4)}
+                setPageCount={setCurrentPage}
+                forcePage={currentPage}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   );
