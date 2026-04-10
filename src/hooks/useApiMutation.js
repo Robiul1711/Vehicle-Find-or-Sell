@@ -62,18 +62,20 @@ export const useApiMutation = ({
 
       // 3. ✅ Run the extra logic from your component (Navigation, Modal Close, etc.)
       if (onSuccess) {
-        onSuccess(response);
+        onSuccess(response, context.toastId);
       }
     },
 
     onError: (error, variables, context) => {
+      // 4. ✅ Run external error logic if needed. 
+      // If it returns true, we skip the default error toast update.
+      if (onError) {
+        const handled = onError(error, context.toastId);
+        if (handled) return;
+      }
+
       const message = error?.response?.data?.message || errorMessage;
       updateToastError(context.toastId, message);
-
-      // 4. ✅ Run external error logic if needed
-      if (onError) {
-        onError(error);
-      }
     },
   });
 };

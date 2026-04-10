@@ -268,7 +268,7 @@ const CreateAds = () => {
     ? stepsConfig[selectedCategory]
     : [{ id: 0, label: "Category", component: SelectCategory }];
   const CurrentComponent = steps[currentStep]?.component;
-  console.log(methods.watch().vehicle_type);
+  // console.log(methods.watch().vehicle_type);
 
   const { mutate, isPending } = useApiMutation({
     url: id
@@ -286,7 +286,7 @@ const CreateAds = () => {
       // toast.success("Ad posted successfully");
       navigate("/dashboard/my-adds");
     },
-    onError: (error) => {
+    onError: (error, toastId) => {
       console.error("Submission failed:", error);
       if (error?.response?.data) {
         const errorData = error.response.data;
@@ -326,10 +326,12 @@ const CreateAds = () => {
                 ))}
               </ul>
             </div>,
-            { duration: 6000 },
+            { id: toastId, duration: 6000 },
           );
+          return true; // Mark as handled to skip default generic toast
         }
       }
+      return false;
     },
     errorMessage: "Submission failed. Please check the fields.",
     secure: true,

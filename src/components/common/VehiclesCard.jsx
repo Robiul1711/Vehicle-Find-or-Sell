@@ -18,6 +18,8 @@ const VehiclesCard = ({
   fuelType,
   transmission,
   price,
+  originalPrice,
+  discountPrice,
   isNew,
   onViewDetails,
   onFavorite,
@@ -49,7 +51,7 @@ const VehiclesCard = ({
         <div>
         {/* Title & Badge */}
         <div className="flex items-start justify-between mb-2">
-          <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
+          <h3 className="text-xl font-semibold text-gray-900 line-clamp-1">{title}</h3>
           {isNew && (
             <span className="size-8 bg-gray-100 rounded-full flex items-center justify-center">
               {" "}
@@ -57,7 +59,7 @@ const VehiclesCard = ({
             </span>
           )}
         </div>
-
+         
         {/* Subtitle */}
         {
           subtitle && (
@@ -79,11 +81,21 @@ const VehiclesCard = ({
 
         {/* Price & Button */}
         <div className="flex items-center justify-between">
-          {
-            price && (
-              <span className="text-2xl font-bold text-gray-900">€{price}</span>
-            )
-          }
+          {/* Price Section */}
+
+        <div className="flex items-baseline gap-2 mb-2">
+ 
+          {discountPrice ? (
+            <span className="text-xl sm:text-2xl font-bold text-gray-900">
+              €{discountPrice}
+            </span>
+          ) : (
+            <span className="text-xl sm:text-2xl font-bold text-gray-900">
+              €{originalPrice}
+            </span>
+          )}
+        </div>
+    
           <Link
             to={`/${path || "details"}/${id}`}
             onClick={onViewDetails}

@@ -21,23 +21,9 @@ const PartsDetails = () => {
       <div className=" max-w-[950px]">
         <PartOverview data={data} />
 
-        <div className="flex flex-col gap-3">
-          <h1 className="text-2xl font-semibold">Description</h1>
-          <p>{data?.description}</p>
-          <h1 className="text-2xl font-semibold">Document</h1>
-          <a
-            href={data?.registration?.document}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 text-custom-primary bg-custom-primary/10 py-2 px-4 rounded-lg  hover:bg-custom-primary/20 transition"
-          >
-            <PdfIcon />
-            Car-Brochure.pdf
-          </a>
-        </div>
         <Location data={data} />
       </div>
-      <RealatedCars />
+      {/* <RealatedCars items={data?.related_parts} title="Related Parts" path="/parts-details"/> */}
     </div>
   );
 };

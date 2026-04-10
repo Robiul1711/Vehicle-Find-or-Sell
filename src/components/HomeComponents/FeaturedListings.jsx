@@ -21,7 +21,7 @@ const FeaturedListings = () => {
     },
     secure: true,
   });
-
+console.log(data)
   // add favorite
   const { mutate, isPending } = useApiMutation({
     url: "/account/favorites/toggle/",
@@ -49,7 +49,8 @@ const FeaturedListings = () => {
         mileage: item.warrenty_duration,
         fuelType: item.weight,
         transmission: item.material,
-        price: item.discount_price,
+        originalPrice: item.original_price,
+        discountPrice: item.discount_price,
         isNew: false,
         isFavorite: item.is_favorite,
       }));
@@ -62,7 +63,8 @@ const FeaturedListings = () => {
         mileage: item.mileage,
         fuelType: item.fuel_type,
         transmission: item.transmission,
-        price: item.discount_price,
+        originalPrice: item.original_price,
+        discountPrice: item.discount_price,
         isNew: false,
         isFavorite: item.is_favorite,
       }));

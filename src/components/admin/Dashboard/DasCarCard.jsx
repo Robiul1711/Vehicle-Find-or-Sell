@@ -9,14 +9,31 @@ import {
 } from "@/components/common/SVGicons/MySvg";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const DasCarCard = ({ car }) => {
   const { mutate, isPending } = useApiMutation({
     url: `${car?.ad_type === "parts" ? `/ads/parts/${car?.id}/` : `/ads/vehicles/${car?.id}/`}`,
     method: "DELETE",
     secure: true,
-    invalidateKeys: ["my-ads", "search-ads"],
+    invalidateKeys: ["my-ads", "search-ads","dashboardStats","my-favorites"],
   });
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutate();
+      }
+    });
+  };
   // pause ads mutation
   const { mutate: pauseMutate, isPending: pausePending } = useApiMutation({
     url: `${car?.ad_type === "parts" ? `/ads/pause/parts/${car?.id}/` : `/ads/pause/vehicle/${car?.id}/`}`,
@@ -124,7 +141,7 @@ const DasCarCard = ({ car }) => {
                   : "Pause Ad"}
             </button>
             <button
-              onClick={() => mutate()}
+              onClick={handleDelete}
               disabled={isPending}
               className={`text-white text-sm font-medium rounded-lg py-2 transition-colors ${
                 isPending

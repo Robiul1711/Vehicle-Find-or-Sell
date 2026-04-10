@@ -67,12 +67,12 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
       mutate({ id: data.id, type: favType });
     }
   };
-
+// console.log(data)
   const carInfo = [
     { id: 1, icon: MilesIcons, value: data?.mileage },
     { id: 2, icon: ManualIcon, value: data?.transmission },
     { id: 3, icon: PetrolIcon, value: data?.fuel_type },
-    { id: 4, icon: WarrentiesIcon, value: data?.warrenty_duration },
+    { id: 4, icon: WarrentiesIcon, value: data?.exact_date },
   ];
 
   // Favorite Toggle Function

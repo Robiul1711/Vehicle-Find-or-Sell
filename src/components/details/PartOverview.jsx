@@ -1,8 +1,9 @@
 import React from "react";
 import Title from "../common/Title";
+import { FileText } from "lucide-react";
 
-const PartOverview = ({data}) => {
-  console.log(data)
+const PartOverview = ({ data }) => {
+  console.log(data);
   const overviewData = [
     { label: "Vehicle Type", value: data?.vehicle_type },
     { label: "Brand / Manufacturer", value: data?.brand },
