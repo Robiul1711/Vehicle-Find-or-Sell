@@ -123,9 +123,9 @@ export default function CarRightSideDetails({ details }) {
       </div>
 
       {/* Description */}
-      <p className="text-gray-600 text-sm sm:text-base mb-8 leading-relaxed">
+      {/* <p className="text-gray-600 text-sm sm:text-base mb-8 leading-relaxed">
         {details?.description}
-      </p>
+      </p> */}
 
       {/* Specs Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">

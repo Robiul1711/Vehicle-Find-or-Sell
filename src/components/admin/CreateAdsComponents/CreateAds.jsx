@@ -214,6 +214,15 @@ const CreateAds = () => {
         vinNumber:
           data.registration?.[0]?.vin_number || data.registration?.vin_number,
 
+        // Documents
+        documents:
+          data.documents?.map((doc) => ({
+            id: doc.id,
+            name: doc.document.split("/").pop(),
+            file: doc.document,
+            isExisting: true,
+          })) || [],
+
         // Parts specific
         part_name: data.part_name,
         part_number_sku: data.part_number_sku,
@@ -241,7 +250,6 @@ const CreateAds = () => {
         // Media
         images: data.media?.image || [],
         videos: data.media?.video || [],
-        documents: data.media?.document || [],
       };
 
       // If features comes as array of IDs:
@@ -431,11 +439,11 @@ const CreateAds = () => {
     append("position_on_vehicle", data.position_on_vehicle);
     append("quantity_in_stock", data.quantity_in_stock);
     append("description", data.description);
-    // Registration Documents
+    // Documents
     if (Array.isArray(data.documents)) {
       data.documents.forEach((doc) => {
-        if (doc.file) {
-          append("registration[document]", doc.file);
+        if (doc.file instanceof File) {
+          append("documents", doc.file);
         }
       });
     }
@@ -451,11 +459,6 @@ const CreateAds = () => {
     }
 
     // Media Uploads
-    // Images
-    // IMPORTANT: Only append new files. Existing images are likely URLs and shouldn't be re-uploaded unless backend expects something else.
-    // If backend replaces all images, we need to handle existing ones.
-    // Usually standard is: uploaded_images adds to list, or simple replace.
-    // Assuming standard "append new files" here. If replacing is needed, might need deleted_ids.
 
     if (Array.isArray(data.images)) {
       data.images.forEach((file) => {
@@ -474,14 +477,6 @@ const CreateAds = () => {
       });
     }
 
-    // Documents (General)
-    if (Array.isArray(data.documents)) {
-      data.documents.forEach((file) => {
-        if (file instanceof File) {
-          append("uploaded_documents", file);
-        }
-      });
-    }
 
     // Schedule keys
     if (data.scheduled_date) {

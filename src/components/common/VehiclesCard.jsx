@@ -58,10 +58,13 @@ const VehiclesCard = ({
         </div>
 
         {/* Subtitle */}
-        
-        <p className="text-gray-600 text-sm  leading-relaxed line-clamp-1">
-          {subtitle}
-        </p>
+        {
+          subtitle && (
+            <p className="text-gray-600 text-sm  leading-relaxed line-clamp-1">
+              {subtitle}
+            </p>
+          )
+        }
 
         {/* Features */}
         <div className="flex justify-between items-center my-3 py-3 border-t border-b border-gray-200 ">
@@ -73,7 +76,11 @@ const VehiclesCard = ({
 
         {/* Price & Button */}
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900">€{price}</span>
+          {
+            price && (
+              <span className="text-2xl font-bold text-gray-900">€{price}</span>
+            )
+          }
           <Link
             to={`/${path || "details"}/${id}`}
             onClick={onViewDetails}

@@ -3,7 +3,7 @@
   import { Upload, X } from "lucide-react";
 
   export default function RegistrationNumber() {
-    const { register, control, setValue, watch } = useFormContext();
+    const { register, setValue, watch } = useFormContext();
 
     // Watch values from form context
     const uploadedFiles = watch("documents") || [];
@@ -58,7 +58,7 @@
     };
 
     const formatFileSize = (bytes) => {
-      if (bytes === 0) return "0 Bytes";
+      if (!bytes || bytes === 0) return "0 Bytes";
       const k = 1024;
       const sizes = ["Bytes", "KB", "MB", "GB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));

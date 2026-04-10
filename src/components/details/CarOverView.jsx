@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 const CarOverView = ({ details, data }) => {
+  console.log(data)
   const specs = [
     { icon: Car, label: "Body", value: data?.body },
     { icon: Gauge, label: "Mileage", value: data?.mileage },
@@ -99,41 +100,41 @@ const CarOverView = ({ details, data }) => {
           dangerouslySetInnerHTML={{ __html: data?.description || "" }}
         />
       </div>
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-700">
-        <Title level="title40" className="!font-bold mb-4">
-          Documents
-        </Title>
-
-        <div className="flex flex-col gap-3">
-          <a
-            href={data?.registration?.document}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-between p-3 rounded-xl 
-      hover:bg-slate-50 dark:hover:bg-slate-800 
-      transition-all duration-200 group"
-          >
-            <div className="flex items-center gap-3">
-              <div
-                className="p-2 rounded-lg bg-blue-50 dark:bg-slate-800 
-        group-hover:scale-105 transition"
-              >
-                <FileText className="w-4 h-4 text-blue-500" />
+    {/* Documents Section */}
+      {data?.documents && data.documents.length > 0 && (
+        <div>
+           <Title level="title20" className="!font-bold">
+            Documents
+          </Title>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-6">
+            {data.documents.map((doc, index) => (
+              <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <Title level="title16" className="truncate">
+                    {doc.name || `Document ${index + 1}`}
+                  </Title>
+                  <Title level="title14" className="text-gray-500 line-clamp-1">
+                    {doc.document}
+                  </Title>
+                </div>
+                <a
+                  href={doc.document}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 font-medium text-sm whitespace-nowrap"
+                >
+                  View
+                </a>
               </div>
-
-              <span className="text-slate-700 dark:text-slate-300 text-sm font-medium">
-                {data?.registration?.document
-                  ? "Registration Certificate"
-                  : "Document"}
-              </span>
-            </div>
-
-            <span className="text-xs text-slate-400 group-hover:text-blue-500 transition">
-              View
-            </span>
-          </a>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

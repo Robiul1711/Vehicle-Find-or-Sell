@@ -26,7 +26,7 @@ const VechleBoostCard = ({ car }) => {
         {/* Title + Subtitle */}
         <div>
           <div className="flex  justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">{car.title}</h2>
+            <h2 className="text-lg font-semibold text-gray-900 line-clamp-1">{car.title}</h2>
             <div className="flex items-center gap-2 ">
               {car?.is_bump && <Bumpcon />}
               {car?.is_video && <VideoIcon />}
@@ -67,7 +67,7 @@ const VechleBoostCard = ({ car }) => {
 
         <div className="mt-auto">
           {/* Price */}
-          <p className="text-2xl font-bold text-gray-900 mt-2">{car.price}</p>
+          <p className="text-2xl font-bold text-gray-900 mt-2">€{car.discount_price}</p>
 
           {/* Buttons */}
           <div className="grid grid-cols-2 gap-2 mt-3">

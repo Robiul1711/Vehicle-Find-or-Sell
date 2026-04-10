@@ -53,7 +53,7 @@ const FavouriteCard = ({ car }) => {
         <div>
           <div className="flex justify-between">
             <h2 className="text-lg font-semibold text-gray-900">
-              {car?.content_object?.model ||
+            {car?.content_object?.brand_name}  {car?.content_object?.model ||
                 car?.content_object?.part_name ||
                 "N/A"}
             </h2>
