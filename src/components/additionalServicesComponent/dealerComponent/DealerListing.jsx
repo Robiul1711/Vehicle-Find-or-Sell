@@ -64,7 +64,7 @@ const DealerListing = () => {
   };
 
   // console.log(data?.results);
-  const items = data?.results;
+  const items = data?.data;
   const [isGrid, setIsGrid] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFeatureModal, setIsFeatureModal] = useState(false);

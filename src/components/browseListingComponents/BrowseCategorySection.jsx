@@ -120,7 +120,7 @@ const BrowseCategorySection = () => {
       icon: <CustomCar />,
       content: (
         <CarListing
-          items={mapCarData(data?.results)}
+          items={mapCarData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
@@ -134,7 +134,7 @@ const BrowseCategorySection = () => {
       icon: <CustomTruck />,
       content: (
         <CarListing
-          items={mapCarData(data?.results)}
+          items={mapCarData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
@@ -148,7 +148,7 @@ const BrowseCategorySection = () => {
       icon: <CustomBike />,
       content: (
         <CarListing
-          items={mapCarData(data?.results)}
+          items={mapCarData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
@@ -162,7 +162,7 @@ const BrowseCategorySection = () => {
       icon: <CustomScoter />,
       content: (
         <CarListing
-          items={mapCarData(data?.results)}
+          items={mapCarData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
@@ -176,7 +176,7 @@ const BrowseCategorySection = () => {
       icon: <CustomPart />,
       content: (
         <PartListing
-          items={mapPartData(data?.results)}
+          items={mapPartData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
           isLoading={isLoading}
@@ -236,10 +236,10 @@ const BrowseCategorySection = () => {
       <div className="">
         <div className="leading-relaxed">{getActiveContent()}</div>
 
-        {data?.count > 4 && (
+        {data?.count > 8 && (
           <div className="mt-8 flex justify-center">
             <PaginationComponent
-              pageCount={Math.ceil(data.count / 4)}
+              pageCount={Math.ceil(data.count / 8)}
               setPageCount={setCurrentPage}
               forcePage={currentPage}
             />

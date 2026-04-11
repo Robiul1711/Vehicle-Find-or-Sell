@@ -5,6 +5,7 @@ import {
   State4Icon,
 } from "@/components/common/SVGicons/DashboardIcon";
 import { useApiQuery } from "@/hooks/useApiQuery";
+import { Calendar } from "lucide-react";
 import React from "react";
 
 const DashStates = () => {
@@ -50,7 +51,7 @@ const DashStates = () => {
       id: 5,
       title: "Scheduled Ads",
       value: data?.data?.scheduled_ads || "00",
-      icon: State4Icon,
+      icon:  Calendar,
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",
     },

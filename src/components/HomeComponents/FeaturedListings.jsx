@@ -21,7 +21,7 @@ const FeaturedListings = () => {
     },
     secure: true,
   });
-console.log(data)
+// console.log(data)
   // add favorite
   const { mutate, isPending } = useApiMutation({
     url: "/account/favorites/toggle/",
@@ -38,10 +38,10 @@ console.log(data)
   };
 
   const getMappedData = () => {
-    if (!data?.results) return [];
+    if (!data?.data) return [];
 
     if (activeTab === "parts") {
-      return data.results.map((item) => ({
+      return data.data.map((item) => ({
         id: item.id,
         imageUrl: item.first_image,
         title: item.part_name,
@@ -52,10 +52,10 @@ console.log(data)
         originalPrice: item.original_price,
         discountPrice: item.discount_price,
         isNew: false,
-        isFavorite: item.is_favorite,
+        isFavorite: item.is_favourite,
       }));
     } else {
-      return data.results.map((item) => ({
+      return data.data.map((item) => ({
         id: item.id,
         imageUrl: item.first_image,
         title: `${item.brand_name} ${item.model}`,
@@ -66,7 +66,7 @@ console.log(data)
         originalPrice: item.original_price,
         discountPrice: item.discount_price,
         isNew: false,
-        isFavorite: item.is_favorite,
+        isFavorite: item.is_favourite,
       }));
     }
   };

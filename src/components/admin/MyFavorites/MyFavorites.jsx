@@ -26,6 +26,7 @@ export default function MyFavorites() {
         condition !== "Condition" ? condition.toLowerCase() : undefined,
     },
   });
+  console.log(data)
   // console.log(data?.results);
   return (
     <div className="space-y-6 md:space-y-9 ">
@@ -109,7 +110,7 @@ export default function MyFavorites() {
             <DasCarCardSkeleton key={index} />
           ))}
         </div>
-      ) : data?.results?.length === 0 ? (
+      ) : data?.data?.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 px-4 bg-white rounded-lg border border-gray-100 mt-6">
           <div className="bg-gray-50 p-4 rounded-full mb-4">
             <Heart className="w-12 h-12 text-gray-400" strokeWidth={1.5} />
@@ -124,7 +125,7 @@ export default function MyFavorites() {
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2  xl:grid-cols-4 gap-4 sm:gap-6">
-            {data?.results?.map((car) => (
+            {data?.data?.map((car) => (
               <FavouriteCard key={car.id} car={car} />
             ))}
           </div>

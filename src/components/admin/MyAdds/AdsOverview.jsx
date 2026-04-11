@@ -207,7 +207,7 @@ export default function AdsOverview() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
-          {data?.map((car) => (
+          {data?.data?.map((car) => (
             <DasCarCard key={car.id} car={car} />
           ))}
         </div>
