@@ -1,15 +1,17 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Search, ChevronDown, Plus, SearchX } from "lucide-react";
 import DasCarCard from "../Dashboard/DasCarCard";
 import { Link } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import DasCarCardSkeleton from "../Dashboard/DasCarCardSkeleton";
 import { useDebounce } from "@/hooks/useDebounce";
+import PaginationComponent from "../../common/PaginationComponent";
 
 export default function AdsOverview() {
   const [searchInput, setSearchInput] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Debounce search input so we don't fire on every keystroke
   const debouncedSearch = useDebounce(searchInput, 400);
@@ -24,16 +26,34 @@ export default function AdsOverview() {
         ...(selectedStatus && { status: selectedStatus }),
       }
     : {
+        page: currentPage,
         ...(selectedCategory && { vehicle_type: selectedCategory }),
         ...(selectedStatus && { status: selectedStatus }),
       };
 
+  if (isSearching) {
+    searchParams.page = currentPage;
+  }
+
   const { data, isLoading, isFetching } = useApiQuery({
-    queryKey: isSearching ? ["search-ads"] : ["my-ads"],
+    queryKey: isSearching
+      ? ["search-ads", debouncedSearch, selectedCategory, selectedStatus, currentPage]
+      : ["my-ads", selectedCategory, selectedStatus, currentPage],
     url: isSearching ? "/ads/search/" : "/ads/my-ads/",
     params: searchParams,
     secure: true,
   });
+
+  const { data: statsData } = useApiQuery({
+    queryKey: ["dashboardStats"],
+    url: "/ads/dashboard/stats/",
+    secure: true,
+  });
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearch, selectedCategory, selectedStatus]);
 
   const showSkeleton = isLoading || isFetching;
   const hasNoResults =
@@ -116,23 +136,13 @@ export default function AdsOverview() {
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-auto cursor-pointer text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition"
+            className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-[200px] cursor-pointer text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition shadow-sm hover:border-gray-300"
           >
-            <option value="" >
-              All Status
-            </option>
-            <option value="active" >
-              Active
-            </option>
-            <option value="paused" >
-              Paused
-            </option>
-            <option value="draft" >
-              Draft
-            </option>
-            <option value="expired" >
-              Expired
-            </option>
+            <option value="">All Status ({statsData?.data?.total_listings || 0})</option>
+            <option value="active">Active ({statsData?.data?.active_listings || 0})</option>
+            <option value="pending">Pending ({statsData?.data?.pending_ads || 0})</option>
+            <option value="scheduled">Scheduled ({statsData?.data?.scheduled_ads || 0})</option>
+            <option value="favourite">Favourite ({statsData?.data?.favourites_saved || 0})</option>
           </select>
           <ChevronDown
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
@@ -165,6 +175,7 @@ export default function AdsOverview() {
               setSearchInput("");
               setSelectedCategory("");
               setSelectedStatus("");
+              setCurrentPage(1);
             }}
             className="text-red-500 hover:text-red-700 underline ml-1 transition-colors"
           >
@@ -206,10 +217,22 @@ export default function AdsOverview() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
-          {data?.data?.map((car) => (
-            <DasCarCard key={car.id} car={car} />
-          ))}
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
+            {data?.data?.map((car) => (
+              <DasCarCard key={car.id} car={car} />
+            ))}
+          </div>
+
+          {data?.count > 8 && (
+            <div className="flex justify-center mt-8 pb-10">
+              <PaginationComponent
+                pageCount={Math.ceil((data?.count || 0) / 8)}
+                setPageCount={setCurrentPage}
+                forcePage={currentPage}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>

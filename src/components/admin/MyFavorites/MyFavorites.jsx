@@ -129,10 +129,10 @@ export default function MyFavorites() {
               <FavouriteCard key={car.id} car={car} />
             ))}
           </div>
-          {data?.count > 0 && (
+          {data?.count > 12 && (
             <div className="mt-8 flex justify-center w-full">
               <PaginationComponent
-                pageCount={Math.ceil(data.count / 4)}
+                pageCount={Math.ceil(data.count / 12)}
                 setPageCount={setCurrentPage}
                 forcePage={currentPage}
               />

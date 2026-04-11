@@ -235,16 +235,17 @@ const BrowseCategorySection = () => {
       {/* Tab Content */}
       <div className="">
         <div className="leading-relaxed">{getActiveContent()}</div>
+{/* // Example of the updated pagination calculation */}
+{data?.count > 12 && (
+  <div className="mt-8 flex justify-center pb-12">
+    <PaginationComponent
+      pageCount={Math.ceil(data.count / 12)}
+      setPageCount={setCurrentPage}
+      forcePage={currentPage}
+    />
+  </div>
+)}
 
-        {data?.count > 8 && (
-          <div className="mt-8 flex justify-center">
-            <PaginationComponent
-              pageCount={Math.ceil(data.count / 8)}
-              setPageCount={setCurrentPage}
-              forcePage={currentPage}
-            />
-          </div>
-        )}
       </div>
     </div>
   );

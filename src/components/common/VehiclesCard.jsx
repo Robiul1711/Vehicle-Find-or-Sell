@@ -40,7 +40,7 @@ const VehiclesCard = ({
           className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-300 group z-10"
         >
           <Heart
-            className={`w-5 h-5 transition-all duration-300 ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-600 group-hover:text-red-500 group-hover:fill-red-500"}`}
+            className={`w-5 h-5 transition-all duration-300 ${isFavorite ? "text-custom-primary fill-custom-primary" : "text-gray-600 group-hover:text-custom-primary group-hover:fill-custom-primary"}`}
             fill={isFavorite ? "currentColor" : "none"}
           />
         </button>

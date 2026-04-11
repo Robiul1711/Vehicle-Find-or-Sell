@@ -344,10 +344,10 @@ const DealerListing = () => {
             )}
           </div>
 
-          {data?.count > 4 && (
+          {data?.count > 9 && (
             <div className="mt-8 flex justify-center w-full">
               <PaginationComponent
-                pageCount={Math.ceil(data.count / 4)}
+                pageCount={Math.ceil(data.count / 9)}
                 setPageCount={setCurrentPage}
                 forcePage={currentPage}
               />

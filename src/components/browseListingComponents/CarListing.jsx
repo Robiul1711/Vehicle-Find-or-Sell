@@ -269,18 +269,19 @@ const CarListing = ({
                               : "w-44 h-44 mr-4 flex-shrink-0"
                           }`}
                         />
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onAddFavorite(item.id);
-                          }}
-                          className={`absolute ${isGrid ? "top-2 right-2" : "top-2 right-6"} p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-all duration-200 z-10 group`}
-                        >
-                          <Heart
-                            className={`w-5 h-5 transition-all duration-300 ${item.isFavorite ? "text-red-500 fill-red-500" : "text-gray-600 group-hover:text-red-500 group-hover:fill-red-500"}`}
-                            fill={item.isFavorite ? "currentColor" : "none"}
-                          />
-                        </button>
+                     <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onAddFavorite(item.id);
+                            }}
+                           className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-300 group z-10"
+                                  >
+                                    {/* {console.log(item)} */}
+                                    <Heart
+                                      className={`w-5 h-5 transition-all duration-300 ${item.isFavorite ? "text-custom-primary fill-custom-primary" : "text-gray-600 group-hover:text-custom-primary group-hover:fill-custom-primary"}`}
+                                      fill={item.isFavorite ? "currentColor" : "none"}
+                                    />
+                          </button>
                       </div>
                       <div
                         className={`${isGrid ? "w-full flex-1 flex flex-col" : "flex-1"}`}

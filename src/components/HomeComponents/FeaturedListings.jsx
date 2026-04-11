@@ -10,14 +10,18 @@ import VehiclesCardDemo from "../common/VehiclesCardDemo";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { Link } from "react-router-dom";
+import PaginationComponent from "../common/PaginationComponent";
 
 const FeaturedListings = () => {
+
+  const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("car");
   const { data, isLoading, refetch } = useApiQuery({
-    queryKey: ["store-filter", activeTab],
+    queryKey: ["store-filter", activeTab, currentPage],
     url: "/store/filter/",
     params: {
       type: activeTab,
+      page: currentPage,
     },
     secure: true,
   });
@@ -161,6 +165,11 @@ const FeaturedListings = () => {
     },
   ];
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setCurrentPage(1);
+  };
+
   return (
     <section className="section-padding-x section-padding-y bg-[#F9FAFB] overflow-hidden">
       <motion.div
@@ -189,8 +198,17 @@ const FeaturedListings = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="mt-5 md:mt-10"
       >
-        <Tabs items={tabData} activeTab={activeTab} onChange={setActiveTab} />
+        <Tabs items={tabData} activeTab={activeTab} onChange={handleTabChange} />
       </motion.div>
+      {data?.count > 12 && (
+        <div className="mt-8 flex justify-center pb-12">
+          <PaginationComponent
+            pageCount={Math.ceil((data?.count || 0) / 12)}
+            setPageCount={setCurrentPage}
+            forcePage={currentPage}
+          />
+        </div>
+      )}
     </section>
   );
 };
