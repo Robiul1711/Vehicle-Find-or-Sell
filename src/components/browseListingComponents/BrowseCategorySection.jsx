@@ -78,7 +78,7 @@ const BrowseCategorySection = () => {
       transmission: item.transmission,
       image: item.first_image, // Handle null/default image in component
       price: item.discount_price || item.original_price,
-      isFavorite: item.is_favorite,
+      isFavorite: item.is_favourite,
     }));
   };
 
@@ -94,7 +94,7 @@ const BrowseCategorySection = () => {
       transmission: item.color, // Reusing transmission for color
       image: item.first_image,
       price: item.discount_price || item.original_price,
-      isFavorite: item.is_favorite,
+      isFavorite: item.is_favourite,
     }));
   };
 

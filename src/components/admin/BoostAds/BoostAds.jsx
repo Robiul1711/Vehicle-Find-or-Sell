@@ -19,21 +19,15 @@ export default function BoostAds() {
   // Determine which endpoint and params to use
   const isSearching = debouncedSearch.trim().length > 0;
 
-  const searchParams = isSearching
-    ? {
-        q: debouncedSearch,
-        ...(selectedCategory && { vehicle_type: selectedCategory }),
-        ...(selectedStatus && { status: selectedStatus }),
-      }
-    : {
-        page: currentPage,
-        ...(selectedCategory && { vehicle_type: selectedCategory }),
-        ...(selectedStatus && { status: selectedStatus }),
-      };
-
-  if (isSearching) {
-    searchParams.page = currentPage;
-  }
+  const searchParams = {
+    page: currentPage,
+    ...(selectedCategory && { vehicle_type: selectedCategory }),
+    ...(isSearching && { q: debouncedSearch }),
+    ...(selectedStatus &&
+      (["is_favourite", "is_pause", "is_boost"].includes(selectedStatus)
+        ? { [selectedStatus]: true }
+        : { status: selectedStatus })),
+  };
 
   const { data, isLoading, isFetching } = useApiQuery({
     queryKey: isSearching
@@ -142,7 +136,9 @@ export default function BoostAds() {
             <option value="active">Active ({statsData?.data?.active_listings || 0})</option>
             <option value="pending">Pending ({statsData?.data?.pending_ads || 0})</option>
             <option value="scheduled">Scheduled ({statsData?.data?.scheduled_ads || 0})</option>
-            <option value="favourite">Favourite ({statsData?.data?.favourites_saved || 0})</option>
+            <option value="is_favourite">Favourite ({statsData?.data?.favourites_saved || 0})</option>
+            <option value="is_pause">Paused Ads ({statsData?.data?.paused_ads || 0})</option>
+            <option value="is_boost">Boosted Ads ({statsData?.data?.boosted_ads || 0})</option>
           </select>
           <ChevronDown
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
@@ -167,7 +163,7 @@ export default function BoostAds() {
           )}
           {selectedStatus && (
             <span className="bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-full capitalize">
-              {selectedStatus}
+              {selectedStatus.replace(/is_|_/g, " ")}
             </span>
           )}
           <button

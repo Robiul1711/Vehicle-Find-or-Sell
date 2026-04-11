@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ImageProvider } from "@/utils/ImageProvider";
 import { IoGrid } from "react-icons/io5";
 import { FaList } from "react-icons/fa6";
 import {
   ArrowUpRight,
-  ChevronDown,
-  ChevronUp,
   Search,
   Heart,
   Filter,
@@ -21,14 +18,6 @@ import {
 import FilterSection from "./FilterSection";
 import { Link } from "react-router-dom";
 
-// const options = [
-//   "Newest",
-//   "Featured",
-//   "Make (A-Z)",
-//   "Make (Z-A)",
-//   "Last Update",
-// ];
-
 const CarListing = ({
   items,
   onFilterChange,
@@ -36,23 +25,13 @@ const CarListing = ({
   isLoading,
   onAddFavorite,
 }) => {
+  console.log(items)
   const [isGrid, setIsGrid] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isFeatureModal, setIsFeatureModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Feature");
   const [searchText, setSearchText] = useState(filters?.search || "");
 
   const handleSearch = () => {
     onFilterChange({ search: searchText });
-  };
-
-  const handleSelect = (option) => {
-    handleSortSelect(option);
-  };
-
-  const handleSortSelect = (option) => {
-    setSelectedOption(option);
-    setIsFeatureModal(false);
   };
 
   return (
@@ -118,50 +97,7 @@ const CarListing = ({
         </div>
       </div>
 
-      {/* Sort Dropdown */}
-      {/* <div className="w-full sm:w-auto">
-            <div className="relative">
-              <div
-                onClick={() => setIsFeatureModal((prev) => !prev)}
-                className="flex justify-between items-center px-4 py-2 border border-[#E5E5E5] rounded-lg cursor-pointer whitespace-nowrap"
-              >
-                <p className="font-light text-sm sm:text-base">
-                  Sort by:{" "}
-                  <span className="text-[#1B1B1B] font-medium">
-                    {selectedOption}
-                  </span>
-                </p>
-                {isFeatureModal ? (
-                  <ChevronUp size={18} />
-                ) : (
-                  <ChevronDown size={18} />
-                )}
-              </div>
-
-              {isFeatureModal && (
-                <div className="absolute left-0 right-0 sm:left-auto sm:right-0 w-full sm:w-48 bg-[#FFFFFF] px-5 py-4 mt-2 rounded-lg shadow-md text-[14px] font-light space-y-3 z-50">
-                  {options.map((option, index) => (
-                    <div key={index}>
-                      <p
-                        onClick={() => handleSelect(option)}
-                        className={`hover:text-[#1B1B1B] cursor-pointer ${
-                          selectedOption === option
-                            ? "text-Primary font-medium"
-                            : ""
-                        }`}
-                      >
-                        {option}
-                      </p>
-                      {index !== options.length - 1 && (
-                        <hr className="text-[#E5E5E5]" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div> */}
-
+   
       <div className="flex gap-5">
         <div className="hidden md:block w-1/4 flex-shrink-0">
           <FilterSection onFilterChange={onFilterChange} filters={filters} />
@@ -276,7 +212,7 @@ const CarListing = ({
                             }}
                            className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-300 group z-10"
                                   >
-                                    {/* {console.log(item)} */}
+                                    {console.log(item)}
                                     <Heart
                                       className={`w-5 h-5 transition-all duration-300 ${item.isFavorite ? "text-custom-primary fill-custom-primary" : "text-gray-600 group-hover:text-custom-primary group-hover:fill-custom-primary"}`}
                                       fill={item.isFavorite ? "currentColor" : "none"}

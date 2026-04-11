@@ -1,11 +1,12 @@
 import {
+  BoostAddsIcon,
   State1Icon,
   State2Icon,
   State3Icon,
   State4Icon,
 } from "@/components/common/SVGicons/DashboardIcon";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { Calendar } from "lucide-react";
+import { Calendar, CirclePause } from "lucide-react";
 import React from "react";
 
 const DashStates = () => {
@@ -55,11 +56,27 @@ const DashStates = () => {
       iconBg: "bg-blue-100",
       iconColor: "text-blue-600",
     },
+    {
+      id: 6,
+      title: "Boosted Ads",
+      value: data?.data?.boosted_ads || "00",
+      icon:  BoostAddsIcon,
+      iconBg: "bg-green-100",
+      iconColor: "text-green-600",
+    },
+    {
+      id: 7,
+      title: "Paused Ads",
+      value: data?.data?.paused_ads || "00",
+      icon:  CirclePause,
+      iconBg: "bg-red-100",
+      iconColor: "text-red-600",
+    },
   ];
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
