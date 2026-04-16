@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 const TestimonialCard = ({testimonials, isLoading}) => {
-  console.log(testimonials)
+  // console.log(testimonials)
 
   return (
     <div className="w-full relative">

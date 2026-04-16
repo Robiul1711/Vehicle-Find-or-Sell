@@ -12,7 +12,7 @@ const BoostYourAdVisibility = () => {
   const queryParams = new URLSearchParams(location.search);
   const vehicleType = queryParams.get("type");
 
-  console.log(id, vehicleType); // 17, "car"
+  // console.log(id, vehicleType); // 17, "car"
   const { data: boostOptions = [], isLoading } = useApiQuery({
     queryKey: ["boost-packages"],
     url: `/subscription/boost-packages/`,

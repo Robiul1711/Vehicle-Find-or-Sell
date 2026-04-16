@@ -19,7 +19,7 @@ export default function BasicDetails() {
     url: "/ads/choices/",
     secure: true,
   });
-  console.log(data);
+  // console.log(data);
   const { mutate, isPending } = useApiMutation({
     url: "/core/brands/",
     method: "POST",

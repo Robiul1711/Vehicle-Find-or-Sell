@@ -10,12 +10,23 @@ import { useAuth } from "@/hooks/useAuth";
 
 import NotificationDropdown from "./NotificationDropdown";
 import UserDropdown from "./UserDropdown";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { user, loading } = useAuth();
+
+
+
+    const { data } = useApiQuery({
+      queryKey: ["footer"],
+      url: "/cms/footer/",
+    });
+  
+    const footerData = data?.data;
+    // console.log(footerData)
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -67,7 +78,7 @@ const Navbar = () => {
           <div className="flex h-16 lg:h-20 items-center justify-between">
             {/* Logo */}
             <Link to="/">
-              <img src={logo} alt="Logo" className="sm:w-32 w-24 md:w-36 lg:w-40 xl:w-48" />
+              <img src={footerData?.logo_url || logo} alt="Logo" className="sm:w-32 w-24 md:w-36 lg:w-40 xl:w-48" />
             </Link>
 
             {/* Desktop Navigation */}

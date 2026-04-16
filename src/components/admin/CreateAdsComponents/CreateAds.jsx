@@ -129,7 +129,7 @@ const CreateAds = () => {
   useEffect(() => {
     const data = existingData || existingPartData;
     if (data && id) {
-      console.log("Populating form with:", data);
+      // console.log("Populating form with:", data);
 
       // Determine standardized category ID
       let categoryId = "car";
@@ -282,7 +282,7 @@ const CreateAds = () => {
     onSuccess: (data) => {
       setIsPostModalOpen(true);
       setIsModalOpen(false);
-      console.log("Success:", data);
+      // console.log("Success:", data);
       // toast.success("Ad posted successfully");
       navigate("/dashboard/my-adds");
     },
@@ -346,7 +346,7 @@ const CreateAds = () => {
   };
 
   const onSubmit = (data) => {
-    console.log("Raw form data:", data);
+    // console.log("Raw form data:", data);
 
     const formData = new FormData();
 
@@ -488,7 +488,7 @@ const CreateAds = () => {
       append("scheduled_time", data.scheduled_time);
     }
 
-    console.log("FormData created.");
+    // console.log("FormData created.");
     // Log entries for debugging
     for (const pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
@@ -556,7 +556,7 @@ const CreateAds = () => {
                   <button
                     type="button"
                     onClick={methods.handleSubmit((data) => {
-                      console.log("Submitted at Contact Info:", data);
+                      // console.log("Submitted at Contact Info:", data);
                       nextStep();
                     })}
                     className="px-4 py-2 bg-custom-primary text-white rounded"

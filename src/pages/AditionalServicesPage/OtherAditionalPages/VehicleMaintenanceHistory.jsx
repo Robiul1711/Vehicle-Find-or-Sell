@@ -11,7 +11,7 @@ const { data, isLoading } = useApiQuery({
   url: "/cms/vehicle-maintenance-history/",
   secure: false
 });
-  console.log(data?.data)
+  // console.log(data?.data)
   return (
     <div >
       <ServiceBanner image={data?.data?.hero_background_image_url || s1} title={data?.data?.title} subText={data?.data?.subtitle} />

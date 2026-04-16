@@ -36,8 +36,8 @@ const DealerSection = () => {
     url: `/delears/detail/${id}/`,
     secure: true,
   });
-  console.log(data);
-  console.log(data?.profile?.services);
+  // console.log(data);
+  // console.log(data?.profile?.services);
   const profileData = data?.profile;
 
   const { mutate, isPending } = useApiMutation({

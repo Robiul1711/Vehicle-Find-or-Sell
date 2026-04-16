@@ -13,7 +13,7 @@ const DealerFilter = ({ onApplyFilters }) => {
     url: "/delears/cities/",
     secure: true,
   });
-    console.log(citiesData?.cities)
+    // console.log(citiesData?.cities)
     // State for all filter options
     const [filters, setFilters] = useState({
         location: {
@@ -104,7 +104,7 @@ const DealerFilter = ({ onApplyFilters }) => {
 
     // Apply filters (API call would go here)
     const applyFilters = () => {
-        console.log("Applying filters:", filters);
+        // console.log("Applying filters:", filters);
         if (onApplyFilters) {
             onApplyFilters(filters);
         }

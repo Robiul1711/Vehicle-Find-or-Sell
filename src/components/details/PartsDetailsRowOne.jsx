@@ -47,7 +47,7 @@ const PartsDetailsRowOne = ({ details, data, refetch }) => {
           url: shareUrl,
         });
       } catch (error) {
-        console.log("Share canceled");
+        // console.log("Share canceled");
       }
     } else {
       // ✅ Desktop – Copy to Clipboard

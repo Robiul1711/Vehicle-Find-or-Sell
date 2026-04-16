@@ -160,7 +160,7 @@ const MessageInbox = ({ selectedConversation, onBack, queryClient }) => {
     socketRef.current = socket;
 
     socket.onopen = () => {
-      console.log("WebSocket Connected");
+      // console.log("WebSocket Connected");
     };
 
     socket.onmessage = (event) => {

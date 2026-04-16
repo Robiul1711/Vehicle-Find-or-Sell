@@ -10,7 +10,7 @@ const ChangePassword = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Password Changed:", data);
+    // console.log("Password Changed:", data);
     // Call your API here
   };
 

@@ -26,7 +26,7 @@ const ViewAnalytics = () => {
     url: `/ads/analytics/vehicle/${id}`,
     secure: true,
   });
-  console.log(data?.data);
+  // console.log(data?.data);
   const chartData = data?.data?.chart_data || [];
 
   // Custom Y-axis labels

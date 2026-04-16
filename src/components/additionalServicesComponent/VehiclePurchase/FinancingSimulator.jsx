@@ -55,7 +55,7 @@ const FinancingSimulator = ({ data }) => {
       monthlyPayment: monthlyPayment.toFixed(2),
     };
 
-    console.log(results);
+    // console.log(results);
     setResults(results);
   };
 

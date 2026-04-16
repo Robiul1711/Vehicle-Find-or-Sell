@@ -3,7 +3,7 @@ import Title from "@/components/common/Title";
 import React from "react";
 
 const CarBottomFeatures = ({ details }) => {
-  console.log(details);
+  // console.log(details);
   const featuresData = details?.features_grouped || {};
   const { city, country, street, zip_code } = details?.seller_address || {};
   const fullAddress = [street, city, zip_code, country]

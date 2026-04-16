@@ -60,7 +60,7 @@ const BrowseCategorySection = () => {
     secure: true,
   });
 
-  console.log(data);
+  // console.log(data);
   const handleFilterChange = (newParams) => {
     setFilterParams((prev) => ({ ...prev, ...newParams }));
     setCurrentPage(1);

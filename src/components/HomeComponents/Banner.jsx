@@ -4,8 +4,16 @@ import banner from "@/assets/images/banner.png";
 import Title from "../common/Title";
 import CommonButton from "../common/CommonButton";
 import { motion } from "framer-motion";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const Banner = () => {
+    const { data } = useApiQuery({
+    queryKey: ["home"],
+    url: "cms/home/",
+  });
+
+  const BannerData = data?.data;
+  // console.log(BannerData)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -40,12 +48,12 @@ const Banner = () => {
         {/* Left Content */}
         <div className="w-1/2 flex flex-col justify-center space-y-6 text-left">
           <motion.p variants={itemVariants} className="text-lg font-medium text-gray-600 dark:text-gray-300">
-            Buy or sell vehicles today – fast, simple, trusted.
+            {BannerData?.subtitle || "Buy or sell vehicles today – fast, simple, trusted."}
           </motion.p>
 
           <motion.div variants={itemVariants}>
             <Title level="title70" className="max-w-[750px]">
-              Find or Sell Your Vehicle Fast & Easy!
+              {BannerData?.title || "Find or Sell Your Vehicle Fast & Easy!"}
             </Title>
           </motion.div>
 
@@ -70,7 +78,7 @@ const Banner = () => {
         {/* Right Content */}
         <motion.div variants={imageVariants} className="w-1/2 flex justify-end">
           <img
-            src={banner}
+            src={BannerData?.hero_background_image_url || banner}
             alt="Car banner"
             className="w-full max-w-full object-contain"
           />

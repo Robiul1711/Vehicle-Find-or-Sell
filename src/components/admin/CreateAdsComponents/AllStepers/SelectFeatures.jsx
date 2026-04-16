@@ -11,7 +11,7 @@ export const SelectFeatures = () => {
     url: "/ads/features/",
     secure: true,
   });
-console.log(watch("vehicle_type"), "selected vehicle type in features step");
+// console.log(watch("vehicle_type"), "selected vehicle type in features step");
   // The API returns { features_grouped: { ... } }
   // So we access data.features_grouped if it exists, otherwise fallback to data (just in case)
   const featuresData = data?.features_grouped || data;

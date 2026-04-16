@@ -9,7 +9,7 @@ const UserReviews = () => {
       queryKey: ["testimonials"],
       url: "/cms/testimonials/",
     });
-    console.log(testimonials);
+    // console.log(testimonials);
   return (
     <div className="section-padding-x section-padding-y bg-[#000E1D] text-white overflow-hidden">
       <motion.div

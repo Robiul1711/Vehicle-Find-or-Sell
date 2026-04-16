@@ -26,7 +26,7 @@ export default function MyFavorites() {
         condition !== "Condition" ? condition.toLowerCase() : undefined,
     },
   });
-  console.log(data)
+  // console.log(data)
   // console.log(data?.results);
   return (
     <div className="space-y-6 md:space-y-9 ">

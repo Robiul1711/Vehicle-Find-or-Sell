@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { CarArrowIcon } from "../common/SVGicons/CarSvg";
 
 const RealatedCars = ({ items, title,path}) => {
-    console.log(path)
+    // console.log(path)
   return (
     <div className=" flex flex-col gap-6">
       <div className=" w-full flex items-center justify-between gap-3">

@@ -73,7 +73,7 @@ export default function SimpleDropdown() {
   const [error1, setError1] = useState("");
   const [error2, setError2] = useState("");
 
-  console.log("results1", results1, "results2", results2);
+  // console.log("results1", results1, "results2", results2);
 
   const handleSelect1 = (item) => {
     setValue1(item.title);
@@ -106,7 +106,7 @@ export default function SimpleDropdown() {
     }
 
     if (!hasError) {
-      console.log("Comparing", value1, "and", value2);
+      // console.log("Comparing", value1, "and", value2);
       // Logic for comparison can go here
     }
   };

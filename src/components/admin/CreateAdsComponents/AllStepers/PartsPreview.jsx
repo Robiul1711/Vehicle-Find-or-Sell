@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 const PartsPreview = ({ goToStep }) => {
   const { watch } = useFormContext();
   const formData = watch();
-  console.log(formData);
+  // console.log(formData);
   const EditButton = ({ onClick }) => (
     <button
       onClick={onClick}

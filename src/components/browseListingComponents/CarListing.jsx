@@ -25,7 +25,7 @@ const CarListing = ({
   isLoading,
   onAddFavorite,
 }) => {
-  console.log(items)
+  // console.log(items)
   const [isGrid, setIsGrid] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchText, setSearchText] = useState(filters?.search || "");

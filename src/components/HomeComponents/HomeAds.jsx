@@ -6,8 +6,16 @@ import "swiper/css/autoplay";
 import "swiper/css/pagination"; // ✅ Add pagination CSS
 import homeads from "../../assets/images/ads.png";
 import { motion } from "framer-motion";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const HomeAds = () => {
+    const { data } = useApiQuery({
+    queryKey: ["sliders"],
+    url: "/cms/sliders/",
+  });
+
+  const AdsData = data?.data;
+
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
@@ -30,15 +38,17 @@ const HomeAds = () => {
           1024: { slidesPerView: 1, spaceBetween: 50 },
         }}
       >
-        {[1, 2, 3, 4].map((item) => (
-          <SwiperSlide key={item}>
-            <img
-              src={homeads}
-              alt="Advertisement"
-              className="w-full h-[500px] object-cover rounded-2xl"
-            />
-          </SwiperSlide>
-        ))}
+    {AdsData?.map((slider) =>
+  slider?.images?.map((item) => (
+    <SwiperSlide key={item.id}>
+      <img
+        src={item.image_url || homeads}
+        alt={item.alt_text || "Advertisement"}
+        className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover rounded-2xl"
+      />
+    </SwiperSlide>
+  ))
+)}
       </Swiper>
     </motion.div>
   );

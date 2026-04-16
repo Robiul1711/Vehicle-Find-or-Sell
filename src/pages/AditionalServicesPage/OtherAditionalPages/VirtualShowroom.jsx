@@ -12,7 +12,7 @@ const VirtualShowroom = () => {
         url: "/cms/virtual-showroom/",
         secure: false,
       });
-      console.log(data?.data);
+      // console.log(data?.data);
   return (
     <div >
       <ScrollRestoration />

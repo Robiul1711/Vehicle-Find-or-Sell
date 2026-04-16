@@ -7,7 +7,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 const RelatedPostsSection = ({data}) => {
-    console.log(data?.data?.related_blogs)
+    // console.log(data?.data?.related_blogs)
     //   const { data:relatedBlogs, isLoading } = useApiQuery({
     //     queryKey: ["relatedBlogs"],
     //     url: `/blog/related-blogs/`,

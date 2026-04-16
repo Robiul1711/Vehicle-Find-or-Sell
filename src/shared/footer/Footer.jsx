@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
 const Footer = () => {
-  const { data, isLoading } = useApiQuery({
+  const { data } = useApiQuery({
     queryKey: ["footer"],
     url: "/cms/footer/",
   });
@@ -104,7 +104,7 @@ const Footer = () => {
           </li>
         </ul>
         <p className="text-center lg:text-right">
-          {footerData?.copyright_text || "© 2025 labonneroute.fr. All rights reserved."}
+          {footerData?.copyright_text || `©${new Date().getFullYear()} ronpoin.fr. All rights reserved.`}
         </p>
       </div>
     </footer>

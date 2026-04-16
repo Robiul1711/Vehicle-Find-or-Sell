@@ -11,7 +11,7 @@ const CarInsurance = () => {
       url: "/cms/car-insurance/",
       secure: false,
     });
-    console.log(data?.data);
+    // console.log(data?.data);
   return (
     <div >
       <ServiceBanner image={data?.data?.hero_background_image_url || s3} title={data?.data?.title} subText={data?.data?.subtitle} />

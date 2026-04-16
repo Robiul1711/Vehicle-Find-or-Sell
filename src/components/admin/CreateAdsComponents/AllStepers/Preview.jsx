@@ -23,7 +23,7 @@ const Preview = ({ goToStep }) => {
   const [editingSection, setEditingSection] = useState(null);
   const { watch } = useFormContext();
   const formData = watch();
-  console.log(formData);
+  // console.log(formData);
   // ✅ Convert checkbox-style features into arrays
   const getFeatures = (prefix) => {
     return Object.keys(formData)
