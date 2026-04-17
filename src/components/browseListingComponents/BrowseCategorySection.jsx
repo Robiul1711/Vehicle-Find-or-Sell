@@ -123,6 +123,7 @@ const BrowseCategorySection = () => {
           items={mapCarData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
+          type={activeTab}
           isLoading={isLoading}
           onAddFavorite={(id) => onAddFavorite(id, "vehicle")}
         />
@@ -137,6 +138,7 @@ const BrowseCategorySection = () => {
           items={mapCarData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
+          type={activeTab}
           isLoading={isLoading}
           onAddFavorite={(id) => onAddFavorite(id, "vehicle")}
         />
@@ -151,6 +153,7 @@ const BrowseCategorySection = () => {
           items={mapCarData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
+          type={activeTab}
           isLoading={isLoading}
           onAddFavorite={(id) => onAddFavorite(id, "vehicle")}
         />
@@ -165,6 +168,7 @@ const BrowseCategorySection = () => {
           items={mapCarData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
+          type={activeTab}
           isLoading={isLoading}
           onAddFavorite={(id) => onAddFavorite(id, "vehicle")}
         />
@@ -179,6 +183,7 @@ const BrowseCategorySection = () => {
           items={mapPartData(data?.data)}
           onFilterChange={handleFilterChange}
           filters={filterParams}
+          type={activeTab}
           isLoading={isLoading}
           onAddFavorite={(id) => onAddFavorite(id, "parts")}
         />

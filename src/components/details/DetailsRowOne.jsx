@@ -161,7 +161,7 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
       </div>
 
       <div className="xmd:w-[40%] w-full">
-        <VehiclePriceDealer data={data} isLoading={isLoading} />
+        <VehiclePriceDealer data={data} isLoading={isLoading} details={details} />
       </div>
     </div>
   );

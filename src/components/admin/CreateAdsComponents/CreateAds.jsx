@@ -290,6 +290,14 @@ const CreateAds = () => {
       console.error("Submission failed:", error);
       if (error?.response?.data) {
         const errorData = error.response.data;
+
+        // Redirect to subscription if not subscribed
+        if (errorData.is_subscribed === false) {
+          navigate("/dashboard/subscription");
+          toast.error(errorData.message || "Please purchase a package to publish ads.", { id: toastId });
+          return true;
+        }
+
         const errorMessages = [];
 
         const processErrors = (data, parentKey = "") => {

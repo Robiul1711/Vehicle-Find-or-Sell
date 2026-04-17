@@ -1,10 +1,39 @@
 import React from "react";
-import { MessageCircle, ExternalLink } from "lucide-react";
+import { MessageCircle, ExternalLink, Bell } from "lucide-react";
 import { OfferIcon } from "../common/SVGicons/CarSvg";
 import ImageAvatar from "@/assets/images/dummy.png";
 import { Link } from "react-router-dom";
+import { useApiMutation } from "@/hooks/useApiMutation";
 
-const VehiclePriceDealer = ({ data, isLoading }) => {
+const VehiclePriceDealer = ({ data, isLoading, details }) => {
+  const { mutate: mutatePriceDrop, isPending: isPendingPriceDrop } = useApiMutation({
+    url: "/alerts/price-drop/",
+    method: "POST",
+    secure: true,
+    successMessage: "Price drop alert set successfully!",
+  });
+
+  const onNotifyPriceDrop = () => {
+    if (data?.id) {
+      mutatePriceDrop({
+        ad_type: details === "parts" ? "parts" : "vehicle",
+        ad_id: data.id,
+      });
+    }
+  };
+
+  const { mutate: mutateSimilar, isPending: isPendingSimilar } = useApiMutation({
+    url: `/alerts/similar/${details === "parts" ? "parts" : "vehicle"}/${data?.id}/`,
+    method: "POST",
+    secure: true,
+    successMessage: "Similar listings alert set successfully!",
+  });
+
+  const onNotifySimilar = () => {
+    if (data?.id) {
+      mutateSimilar({});
+    }
+  };
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow-md p-10 animate-pulse">
@@ -48,10 +77,10 @@ const VehiclePriceDealer = ({ data, isLoading }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-10 ">
+    <div className="bg-white rounded-lg shadow-md md:p-10 p-5 ">
       {/* Price Section */}
       <div className="mb-6">
-        {console.log(data)}
+        {/* {console.log(data)} */}
         <div className="text-sm text-gray-500 mb-1">Our Price</div>
         <div className="flex items-baseline gap-2 mb-2">
           {data?.original_price && data?.discount_price && (
@@ -74,7 +103,33 @@ const VehiclePriceDealer = ({ data, isLoading }) => {
             Instant Saving €{data?.original_price - data?.discount_price}
           </div>
         )}
+
       </div>
+
+      <div className="mb-6">
+        <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">Stay Informed</h4>
+        <div className="grid sm:grid-cols-2 grid-cols-1 gap-3">
+        <button
+          onClick={onNotifyPriceDrop}
+          disabled={isPendingPriceDrop}
+          title="Price Drop Alert"
+          className="flex  items-center justify-center gap-2 p-3 rounded-xl border border-custom-primary/20 bg-custom-primary/5 hover:bg-custom-primary text-custom-primary hover:text-white transition-all duration-300 group shadow-sm hover:shadow-orange-500/20"
+        >
+          <Bell size={20} className="animate-bounce" />
+          <span className="font-bold text-[11px] uppercase tracking-wider">Alert on Price Drop</span>
+        </button>
+
+        <button
+          onClick={onNotifySimilar}
+          disabled={isPendingSimilar}
+          title={`Similar ${details === "parts" ? "Parts" : "Vehicles"}`}
+          className="flex  items-center justify-center gap-2 p-3 rounded-xl border border-blue-600/20 bg-blue-600/5 hover:bg-blue-600 text-blue-600 hover:text-white transition-all duration-300 group shadow-sm hover:shadow-blue-500/10"
+        >
+          <Bell size={20} className="animate-bounce" />
+          <span className="font-bold text-[11px] uppercase tracking-wider">Alert on Similar {details === "parts" ? "Parts" : "Vehicles"}</span>
+        </button>
+      </div>
+    </div>
 
       {/* Make Offer Button */}
       <p className="w-full bg-[#F88E08]  text-white font-medium py-3 px-4 rounded-lg mb-6 flex items-center justify-center gap-2 transition-colors">

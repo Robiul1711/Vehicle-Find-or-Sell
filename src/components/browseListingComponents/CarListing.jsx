@@ -17,11 +17,13 @@ import {
 } from "@/utils/IconProvider";
 import FilterSection from "./FilterSection";
 import { Link } from "react-router-dom";
+import NoVehicleFound from "./NoVehicleFound";
 
 const CarListing = ({
   items,
   onFilterChange,
   filters,
+  type,
   isLoading,
   onAddFavorite,
 }) => {
@@ -152,9 +154,7 @@ const CarListing = ({
                 </div>
               ))
             ) : items.length === 0 ? (
-              <div className="col-span-full text-center py-20 text-gray-500">
-                No Vehicle Found
-              </div>
+              <NoVehicleFound filters={filters} type={type} />
             ) : (
               items.map((item, i) => {
                 const waveDelay = isGrid

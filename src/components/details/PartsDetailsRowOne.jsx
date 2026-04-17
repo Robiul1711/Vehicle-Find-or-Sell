@@ -114,7 +114,7 @@ const PartsDetailsRowOne = ({ details, data, refetch }) => {
       </div>
 
       <div className="xmd:w-[40%] w-full">
-        <VehiclePriceDealer data={data} />
+        <VehiclePriceDealer data={data} details={details} />
       </div>
     </div>
   );
