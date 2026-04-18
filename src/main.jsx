@@ -11,6 +11,7 @@ import HomePageSpecialOffer from "./components/HomeComponents/HomePageSpecialOff
 import { Toaster } from "react-hot-toast";
 const queryClient = new QueryClient();
 
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
