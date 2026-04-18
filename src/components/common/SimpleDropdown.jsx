@@ -53,22 +53,32 @@ export default function SimpleDropdown() {
   const [selectedId1, setSelectedId1] = useState(null);
   const [selectedId2, setSelectedId2] = useState(null);
 
-  const debouncedValue1 = useDebounce(value1, 500);
-  const debouncedValue2 = useDebounce(value2, 500);
+  const debouncedValue1 = useDebounce(value1, 300);
+  const debouncedValue2 = useDebounce(value2, 300);
 
   const { data: results1 } = useApiQuery({
     queryKey: ["ads-search", 1, debouncedValue1],
     url: "/ads/compare/search/",
     params: { q: debouncedValue1 },
-    enabled: !!debouncedValue1 && debouncedValue1.length >= 2,
+    enabled: !!debouncedValue1 && debouncedValue1.length >= 1,
   });
 
   const { data: results2 } = useApiQuery({
     queryKey: ["ads-search", 2, debouncedValue2],
     url: "/ads/compare/search/",
     params: { q: debouncedValue2 },
-    enabled: !!debouncedValue2 && debouncedValue2.length >= 2,
+    enabled: !!debouncedValue2 && debouncedValue2.length >= 1,
   });
+
+  // Helper to get suggestions array regardless of nesting
+  const getSuggestions = (data) => {
+    if (!data) return [];
+    if (Array.isArray(data)) return data;
+    return data.results || data.data || [];
+  };
+
+  const suggestions1 = getSuggestions(results1);
+  const suggestions2 = getSuggestions(results2);
 
   const [error1, setError1] = useState("");
   const [error2, setError2] = useState("");
@@ -76,14 +86,14 @@ export default function SimpleDropdown() {
   // console.log("results1", results1, "results2", results2);
 
   const handleSelect1 = (item) => {
-    setValue1(item.title);
+    setValue1(`${item.title} (${item?.ad_type})`);
     setSelectedId1(item.id);
     setShowSuggestions1(false);
     setError1("");
   };
 
   const handleSelect2 = (item) => {
-    setValue2(item.title);
+    setValue2(`${item.title} (${item?.ad_type})`);
     setSelectedId2(item.id);
     setShowSuggestions2(false);
     setError2("");
@@ -133,7 +143,7 @@ export default function SimpleDropdown() {
         <div className="">
           <Title level="title24">Product Comparison</Title>
           <Title level="title14" className="mb-5">
-            You have not chosen any products to compare.
+            Choose similar type of products to compare.
           </Title>
         </div>
         <div className="flex flex-col gap-3">
@@ -151,20 +161,25 @@ export default function SimpleDropdown() {
               }}
               onFocus={() => setShowSuggestions1(true)}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-                error1 ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-custom-primary"
+                error1
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-custom-primary"
               }`}
             />
             {error1 && <p className="text-xs text-red-500 mt-1">{error1}</p>}
-            {showSuggestions1 && results1?.length > 0 && (
-              <div className="absolute z-20 w-full bg-white shadow-xl rounded-md border mt-1 max-h-60 overflow-y-auto">
-                {results1.map((item) => (
+            {showSuggestions1 && suggestions1.length > 0 && (
+              <div className="absolute left-0 right-0 z-[60] bg-white shadow-2xl rounded-md border mt-1 max-h-60 overflow-y-auto">
+                {suggestions1.map((item) => (
                   <div
                     key={item.id}
-                    className="p-2 hover:bg-gray-50 cursor-pointer transition-colors border-b last:border-0"
+                    className="p-3 hover:bg-gray-100 cursor-pointer transition-colors border-b last:border-0"
                     onClick={() => handleSelect1(item)}
                   >
-                    <span className="text-sm font-medium text-gray-900 line-clamp-2">
-                      {item.title}
+                    <span className="text-sm font-medium text-gray-900">
+                      {item.title}{" "}
+                      <span className="text-xs text-green-600">
+                        ({item?.ad_type})
+                      </span>
                     </span>
                   </div>
                 ))}
@@ -188,20 +203,25 @@ export default function SimpleDropdown() {
               }}
               onFocus={() => setShowSuggestions2(true)}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-                error2 ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-custom-primary"
+                error2
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-custom-primary"
               }`}
             />
             {error2 && <p className="text-xs text-red-500 mt-1">{error2}</p>}
-            {showSuggestions2 && results2?.length > 0 && (
-              <div className="absolute z-20 w-full bg-white shadow-xl rounded-md border mt-1 max-h-60 overflow-y-auto">
-                {results2.map((item) => (
+            {showSuggestions2 && suggestions2.length > 0 && (
+              <div className="absolute left-0 right-0 z-[60] bg-white shadow-2xl rounded-md border mt-1 max-h-60 overflow-y-auto">
+                {suggestions2.map((item) => (
                   <div
                     key={item.id}
-                    className="p-2 hover:bg-gray-50 cursor-pointer transition-colors border-b last:border-0"
+                    className="p-3 hover:bg-gray-100 cursor-pointer transition-colors border-b last:border-0"
                     onClick={() => handleSelect2(item)}
                   >
-                    <span className="text-sm font-medium text-gray-900 line-clamp-2">
-                      {item.title}
+                    <span className="text-sm font-medium text-gray-900">
+                      {item.title}{" "}
+                      <span className="text-xs text-green-600">
+                        ({item?.ad_type})
+                      </span>
                     </span>
                   </div>
                 ))}
@@ -210,7 +230,11 @@ export default function SimpleDropdown() {
           </div>
 
           <CommonButton
-            link={selectedId1 && selectedId2 ? `/compare?id1=${selectedId1}&id2=${selectedId2}` : null}
+            link={
+              selectedId1 && selectedId2
+                ? `/compare?id1=${selectedId1}&id2=${selectedId2}`
+                : null
+            }
             variant="primary"
             className="w-full"
             onClick={handleCompare}
