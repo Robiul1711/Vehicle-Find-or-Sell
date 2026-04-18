@@ -1,32 +1,17 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CustomEmail } from "@/utils/IconProvider";
 import { Eye, EyeClosed } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
-import { FcGoogle } from "react-icons/fc";
-import { useApiMutation } from "@/hooks/useApiMutation"; // Import your custom hook
+import { useNavigate } from "react-router-dom";
+import { useApiMutation } from "@/hooks/useApiMutation";
+import SocialLogin from "./SocialLogin";
 
 const RegisterForm = ({ onSuccessSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
-
-  // 1. Setup the Mutation
-  const { mutate: registerUser, isPending } = useApiMutation({
-    url: "/account/signup/",
-    method: "POST",
-    successMessage: "Account created successfully! Please log in.",
-    // secure: false, // Usually false for signup (no token needed yet)
-    onSuccess: (data) => {
-      // 2. Handle Success (e.g., switch to login tab)
-      if (onSuccessSignup) {
-        onSuccessSignup();
-      }
-    },
-  });
 
   const {
     register,
@@ -35,15 +20,23 @@ const RegisterForm = ({ onSuccessSignup }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    // Optional: Clean data before sending (e.g., remove confirm_password)
-    const { terms, ...payload } = data;
+  // 1. Setup the Mutation
+  const { mutate: registerUser, isPending } = useApiMutation({
+    url: "/account/signup/",
+    method: "POST",
+    successMessage: "Account created successfully! Please log in.",
+    onSuccess: (data) => {
+      if (onSuccessSignup) {
+        onSuccessSignup();
+      }
+    },
+  });
 
+  const onSubmit = (data) => {
+    const { terms, ...payload } = data;
     if (payload.account_type === "private") {
       delete payload.siren_number;
     }
-
-    // 3. Trigger the mutation
     registerUser(payload);
   };
 
@@ -72,9 +65,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
             </label>
           </div>
           {errors.account_type && (
-            <span className="text-red-500 text-sm">
-              Account Type is required
-            </span>
+            <span className="text-red-500 text-sm">Account Type is required</span>
           )}
         </div>
 
@@ -124,7 +115,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
           )}
         </div>
 
-        {/* Confirm Password with Validation */}
+        {/* Confirm Password */}
         <div className="space-y-4">
           <Label className="text-lg">Confirm Password</Label>
           <div className="border flex items-center gap-2 p-3 rounded-[10px]">
@@ -155,8 +146,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
           </div>
           {errors.confirm_password && (
             <span className="text-red-500 text-sm">
-              {errors.confirm_password.message ||
-                "Confirm Password is required"}
+              {errors.confirm_password.message || "Confirm Password is required"}
             </span>
           )}
         </div>
@@ -174,9 +164,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
               />
             </div>
             {errors.siren_number && (
-              <span className="text-red-500 text-sm">
-                SIREN Number is required
-              </span>
+              <span className="text-red-500 text-sm">SIREN Number is required</span>
             )}
           </div>
         )}
@@ -190,7 +178,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
                 {...register("terms", { required: true })}
                 className="rounded accent-custom-primary"
               />
-              <span className="text-sm lg:text-xl">
+              <span className="text-sm">
                 I agree to the Terms & Conditions and Privacy Policy.
               </span>
             </label>
@@ -202,7 +190,6 @@ const RegisterForm = ({ onSuccessSignup }) => {
           )}
         </div>
 
-        {/* Submit Button */}
         <Button
           disabled={isPending}
           className="w-full !h-12 text-lg bg-custom-primary disabled:opacity-50"
@@ -218,15 +205,11 @@ const RegisterForm = ({ onSuccessSignup }) => {
         <div className="flex-1 h-px bg-gray-300" />
       </div>
 
-      {/* Social Login */}
-      <div className="flex justify-center">
-        <button className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center hover:bg-slate-300 transition">
-          <FcGoogle className="w-6 h-6" />
-        </button>
-      </div>
+      {/* Reusable Social Login Component */}
+      <SocialLogin />
 
       <p className="mt-10 text-center">
-        Already have an account?
+        Already have an account?{" "}
         <button
           type="button"
           onClick={() => onSuccessSignup && onSuccessSignup()}

@@ -47,6 +47,7 @@ import TermOfUse from "@/pages/tou/TermOfUse";
 import ProductComparison from "@/pages/comparePage/ProductComparison";
 import PartsDetails from "@/pages/detailsPage/PartsDetails";
 import PrivateRoute from "@/providers/PrivateRoute";
+import PublicRoute from "@/providers/PublicRoute";
 import NotFoundPage from "@/pages/notFoundPage/NotFoundPage";
 import PaymentSuccess from "@/pages/payment/PaymentSuccess";
 import PaymentCancel from "@/pages/payment/PaymentCancel";
@@ -173,10 +174,13 @@ const router = createBrowserRouter([
     ],
   },
 
-  // auth related pages
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <PublicRoute>
+        <AuthLayout />
+      </PublicRoute>
+    ),
     children: [
       {
         path: "/auth",

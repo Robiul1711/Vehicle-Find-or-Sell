@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CustomEmail } from "@/utils/IconProvider";
 import { Eye, EyeClosed } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
+import SocialLogin from "./SocialLogin";
 
 const LoginForm = ({ onRegisterClick }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,16 +17,28 @@ const LoginForm = ({ onRegisterClick }) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: localStorage.getItem("remember_email") || "",
+      remember: !!localStorage.getItem("remember_email"),
+    }
+  });
 
   const { mutate, isPending } = useApiMutation({
     url: "/account/signin/",
     method: "POST",
     secure: false,
     successMessage: "Welcome back!",
-    // ✅ This now works because we passed it in the hook above
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
+      // Remember Me logic
+      if (variables.remember) {
+        localStorage.setItem("remember_email", variables.email);
+      } else {
+        localStorage.removeItem("remember_email");
+      }
+
       saveAuth({
         access: data.tokens.access,
         user: data.user || data.userdata,
@@ -39,6 +50,7 @@ const LoginForm = ({ onRegisterClick }) => {
   const onSubmit = (data) => {
     mutate(data);
   };
+
   return (
     <div className="space-y-6">
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -88,8 +100,12 @@ const LoginForm = ({ onRegisterClick }) => {
 
         {/* Remember & Forgot */}
         <div className="flex items-center justify-between text-sm">
-          <label className="flex items-center space-x-2">
-            <input type="checkbox" className="rounded" />
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <input 
+              type="checkbox" 
+              {...register("remember")}
+              className="rounded accent-custom-primary" 
+            />
             <span>Remember me</span>
           </label>
           <Link
@@ -101,8 +117,8 @@ const LoginForm = ({ onRegisterClick }) => {
         </div>
 
         {/* Submit Button */}
-        <Button className="w-full h-12 text-lg bg-custom-primary">
-          Sign In
+        <Button disabled={isPending} className="w-full h-12 text-lg bg-custom-primary">
+          {isPending ? "Signing In..." : "Sign In"}
         </Button>
       </form>
 
@@ -113,12 +129,8 @@ const LoginForm = ({ onRegisterClick }) => {
         <div className="flex-1 h-px bg-gray-300" />
       </div>
 
-      {/* Social Login */}
-      <div className="flex justify-center">
-        <button className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center hover:bg-slate-300 transition">
-          <FcGoogle className="w-6 h-6" />
-        </button>
-      </div>
+      {/* Reusable Social Login Component */}
+      <SocialLogin />
 
       {/* Register Section */}
       <p className="text-center text-sm">
