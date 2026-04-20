@@ -153,19 +153,29 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
 
       {/* Dealer Info Section */}
       <div className="mb-6">
+        {console.log(data.seller_details)}
         <div className="flex flex-col items-start gap-3 mb-4">
           <img
-            src={data?.contact?.profile_image || ImageAvatar}
+            src={data?.seller_details?.profile_image || ImageAvatar}
             alt="Katie Sims"
             className="w-12 h-12 rounded-full object-cover"
           />
-          <div>
-            <div className="font-medium text-gray-900">
-              {data?.contact?.name}
-            </div>
+          <div className="w-full flex flex-col gap-1">
+             {
+              data?.seller_details?.name && 
+            <p className="text-sm text-gray-500"><span className="text-sm text-gray-500 font-bold">Name: </span> {data?.seller_details?.name}</p>
+            }
+            {
+              data?.seller_details?.seller_type && 
             <div className="text-sm text-gray-500">
-              {data?.contact?.account_type}
+           <span className="text-sm text-gray-500 font-bold">Account Type: </span>    {data?.seller_details?.seller_type}
             </div>
+            }
+            {
+              data?.seller_details?.phone && 
+            <p className="text-sm text-gray-500"><span className="text-sm text-gray-500 font-bold">Phone: </span> {data?.seller_details?.phone}</p>
+            }
+            
           </div>
         </div>
 
@@ -182,7 +192,7 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
           <button
             onClick={() =>
               window.open(
-                `https://wa.me/${data?.contact?.phone}?text=Hi%2C%20I%27m%20interested%20in%20your%20car!`,
+                `https://wa.me/${data?.seller_details?.phone}?text=Hi%2C%20I%27m%20interested%20in%20your%20car!`,
                 "_blank",
               )
             }

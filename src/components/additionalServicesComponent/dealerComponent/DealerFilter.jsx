@@ -223,7 +223,7 @@ const DealerFilter = ({ onApplyFilters }) => {
                 </div>
 
                 {/* Dealer Type Section */}
-                <div>
+                {/* <div>
                     <h3 className="font-semibold text-gray-900 mb-3">Dealer Type</h3>
                     <div className="space-y-2">
                         <label className="flex items-center">
@@ -245,7 +245,7 @@ const DealerFilter = ({ onApplyFilters }) => {
                             <span className="ml-2 text-sm text-gray-700">Personal Seller</span>
                         </label>
                     </div>
-                </div>
+                </div> */}
             </div>
 
             {/* Apply Filter Button */}
