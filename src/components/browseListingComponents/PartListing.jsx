@@ -110,6 +110,8 @@ const PartListing = ({
               <option value="">Default</option>
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
+
+
               
             </select>
           </div>
