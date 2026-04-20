@@ -94,7 +94,24 @@ const PartListing = ({
             <Filter size={18} />
             Filters
           </button>
-
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-gray-600 hidden sm:block">
+              Sort by:
+            </label>
+            <select
+              className="border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none cursor-pointer bg-white shadow-sm hover:border-custom-primary transition-colors"
+              // Set the value based on the current filters.ordering state
+              value={filters?.ordering || ""}
+              onChange={(e) => {
+                // Directly update the 'ordering' key with the selected value
+                onFilterChange({ ordering: e.target.value });
+              }}
+            >
+              <option value="">Default</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+            </select>
+          </div>
           {/* View Toggle - Hidden on mobile, force grid */}
           <div className="hidden sm:flex items-center bg-gray-100 p-1 rounded-xl">
             <button

@@ -7,6 +7,7 @@ import "swiper/css/pagination"; // ✅ Add pagination CSS
 import homeads from "../../assets/images/ads.png";
 import { motion } from "framer-motion";
 import { useApiQuery } from "@/hooks/useApiQuery";
+import { Link } from "react-router-dom";
 
 const HomeAds = () => {
     const { data } = useApiQuery({
@@ -41,11 +42,15 @@ const HomeAds = () => {
     {AdsData?.map((slider) =>
   slider?.images?.map((item) => (
     <SwiperSlide key={item.id}>
+      <Link to={item.link} target="_blank">
+
       <img
         src={item.image_url || homeads}
         alt={item.alt_text || "Advertisement"}
         className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover rounded-2xl"
       />
+        
+      </Link>
     </SwiperSlide>
   ))
 )}

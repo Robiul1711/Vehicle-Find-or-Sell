@@ -31,20 +31,7 @@ const DetailsPage = () => {
         {details !== "parts" && <EngineSpec data={data} />}
         <Location data={data} />
       </div>
-      {/* <RealatedCars
-        items={
-          details === "car"
-            ? cars
-            : details === "truck"
-            ? trucks
-            : details === "bike"
-            ? bikes
-            : details === "scooter"
-            ? Scoter
-            : Parts
-        }
-        title="Related Cars"
-      /> */}
+    
     </div>
   );
 };

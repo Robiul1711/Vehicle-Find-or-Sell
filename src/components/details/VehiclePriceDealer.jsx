@@ -4,8 +4,12 @@ import { OfferIcon } from "../common/SVGicons/CarSvg";
 import ImageAvatar from "@/assets/images/dummy.png";
 import { Link } from "react-router-dom";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import { useAuth } from "@/hooks/useAuth";
+import toast from "react-hot-toast";
 
 const VehiclePriceDealer = ({ data, isLoading, details }) => {
+  const { user } = useAuth();
+  
   const { mutate: mutatePriceDrop, isPending: isPendingPriceDrop } = useApiMutation({
     url: "/alerts/price-drop/",
     method: "POST",
@@ -14,6 +18,10 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
   });
 
   const onNotifyPriceDrop = () => {
+    if (!user) {
+      toast.error("Please create an account to set alerts.");
+      return;
+    }
     if (data?.id) {
       mutatePriceDrop({
         ad_type: details === "parts" ? "parts" : "vehicle",
@@ -30,6 +38,10 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
   });
 
   const onNotifySimilar = () => {
+    if (!user) {
+      toast.error("Please create an account to set alerts.");
+      return;
+    }
     if (data?.id) {
       mutateSimilar({});
     }

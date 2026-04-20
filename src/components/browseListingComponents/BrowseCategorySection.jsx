@@ -43,6 +43,7 @@ const BrowseCategorySection = () => {
     condition: "",
     seller_type: "",
     search: "",
+    ordering: "",
   });
 
   const { data, isLoading, refetch } = useApiQuery({
