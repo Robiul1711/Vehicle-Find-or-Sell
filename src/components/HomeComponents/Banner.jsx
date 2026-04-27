@@ -12,11 +12,11 @@ const Banner = () => {
   });
 
   const BannerData = data?.data;
-
+// console.log(BannerData)
   return (
     <section className="w-full relative bg-white overflow-hidden">
       {/* Desktop layout */}
-      <div className="hidden md:flex flex-row justify-between items-center section-padding-x section-padding-y">
+      <div className="hidden md:flex flex-row md:gap-6 justify-between items-center section-padding-x section-padding-y">
         {/* Left Content */}
         <div className="w-1/2 flex flex-col justify-center space-y-6 text-left">
           <p className="text-lg font-medium text-gray-600 dark:text-gray-300">
@@ -58,13 +58,13 @@ const Banner = () => {
               loop
               muted
               playsInline
-              className="w-full max-w-full object-contain rounded-xl"
+              className="w-full h-auto max-h-[300px] lg:max-h-[500px] xl:max-h-[600px] object-fill rounded-xl shadow-2xl transition-all duration-700"
             />
           ) : (
             <img
               src={BannerData?.hero_background_image_url || banner}
               alt="Car banner"
-              className="w-full max-w-full object-contain"
+              className="w-full h-auto max-h-[300px] lg:max-h-[500px] xl:max-h-[600px] object-cover rounded-xl shadow-2xl transition-all duration-700"
             />
           )}
         </div>

@@ -121,7 +121,7 @@ export default function Settings() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -10 }}
           transition={{ duration: 0.3 }}
-          className="p-4 md:p-6 h-[calc(100vh-150px)] overflow-y-auto"
+          className="p-4 md:p-6 h-[calc(100vh-150px)] overflow-y-auto custom-scrollbar"
         >
           <h3 className="text-lg font-semibold flex items-center gap-2 mb-4 text-gray-900">
             <span>{tabs.find((t) => t.id === activeTab)?.icon}</span>
