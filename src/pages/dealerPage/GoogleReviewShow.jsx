@@ -13,7 +13,7 @@ const GoogleReviewShow = () => {
     queryKey: ["googleReview", id],
     url: `/account/google-reviews/${id}/`,
   });
-console.log(reviewData)
+
   const reviews = reviewData?.data?.reviews || [];
   const stats = reviewData?.data || {};
 
