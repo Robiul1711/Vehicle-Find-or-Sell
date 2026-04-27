@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaStar } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 import { FaLock } from "react-icons/fa";
 import ManageNotification from "./ManageNotification";
@@ -10,6 +10,7 @@ import AddServices from "./AddServices";
 import Subscription from "./Subscription";
 import { GrServices } from "react-icons/gr";
 import { LuPackage2 } from "react-icons/lu";
+import AddGoogleReview from "./AddGoogleReview";
 export default function Settings() {
   const [activeTab, setActiveTab] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,6 +58,13 @@ export default function Settings() {
       icon: <IoIosNotifications  className="size-6"/>,
       type: "content",
       content: <ManageNotification />,
+    },
+    {
+      id: 6,
+      name: "Add Google Review",
+      icon: <FaStar />,
+      type: "content",
+      content: <AddGoogleReview />,
     },
   
   ];

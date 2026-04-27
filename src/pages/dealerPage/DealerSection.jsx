@@ -28,6 +28,7 @@ import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
 import ImageAvatar from "@/assets/images/dummy.png";
 import { DeliveryIcon } from "@/components/common/SVGicons/DashboardIcon";
+import GoogleReviewShow from "./GoogleReviewShow";
 const DealerSection = () => {
   const { user } = useAuth();
   const { id } = useParams();
@@ -206,7 +207,7 @@ const DealerSection = () => {
           </div>
         </div>
       </div>
-      <div className="lg:w-1/4">
+      <div className="lg:w-1/4 flex flex-col gap-5">
         {/* {console.log(profileData?.user_id)} */}
         <div className="border shadow-lg rounded-xl p-5 flex flex-col gap-5">
           <Link
@@ -232,6 +233,9 @@ const DealerSection = () => {
           >
             Chat Via WhatsApp <MoveUpRight />
           </button>
+        </div>
+        <div>
+          <GoogleReviewShow/>
         </div>
       </div>
     </div>

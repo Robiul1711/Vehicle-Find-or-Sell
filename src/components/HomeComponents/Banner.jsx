@@ -74,7 +74,7 @@ const Banner = () => {
       <div className="md:hidden relative w-full h-[400px] flex items-center justify-center">
         {/* Blurred Background with Loading State */}
         {isLoading ? (
-          <div className="absolute inset-0 bg-gray-300 "></div>
+          <div className="absolute inset-0 bg-gray-300"></div>
         ) : BannerData?.hero_media_type === "video" ? (
           <video
             src={BannerData?.hero_background_image_url}
