@@ -268,6 +268,28 @@ const CreateAds = () => {
         try {
           const draft = JSON.parse(draftStr);
           if (draft.data) {
+            // Restore images if they were saved as base64
+            if (draft.data.images && Array.isArray(draft.data.images)) {
+              draft.data.images = draft.data.images.map((img) => {
+                if (typeof img === "object" && img.base64) {
+                  // Convert base64 back to File object
+                  const byteString = atob(img.base64.split(",")[1]);
+                  const mimeString = img.base64
+                    .split(",")[0]
+                    .split(":")[1]
+                    .split(";")[0];
+                  const ab = new ArrayBuffer(byteString.length);
+                  const ia = new Uint8Array(ab);
+                  for (let i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                  }
+                  const blob = new Blob([ab], { type: mimeString });
+                  return new File([blob], img.name, { type: mimeString });
+                }
+                return img;
+              });
+            }
+
             methods.reset(draft.data);
             if (draft.category) setSelectedCategory(draft.category);
             if (draft.step !== undefined) setCurrentStep(draft.step);
@@ -313,23 +335,54 @@ const CreateAds = () => {
           (errorData.message &&
             errorData.message.includes("Active ads limit reached"))
         ) {
-          // Save form data to localStorage (excluding files)
+          // Save form data to localStorage
           const formData = methods.getValues();
-          const dataToSave = { ...formData };
-          delete dataToSave.images;
-          delete dataToSave.videos;
-          delete dataToSave.documents;
 
-          localStorage.setItem(
-            "draftAd",
-            JSON.stringify({
-              data: dataToSave,
-              category: selectedCategory,
-              step: currentStep,
-            }),
-          );
+          const saveDraft = async () => {
+            const dataToSave = { ...formData };
 
-          window.open("/dashboard/subscription");
+            // Helper to convert File to Base64
+            const fileToBase64 = (file) =>
+              new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () =>
+                  resolve({
+                    base64: reader.result,
+                    name: file.name,
+                    type: file.type,
+                  });
+                reader.onerror = (error) => reject(error);
+              });
+
+            // Convert images to base64 for storage
+            if (dataToSave.images && Array.isArray(dataToSave.images)) {
+              const base64Images = await Promise.all(
+                dataToSave.images.map((img) =>
+                  img instanceof File ? fileToBase64(img) : img,
+                ),
+              );
+              dataToSave.images = base64Images;
+            }
+
+            // Keep videos and documents deleted as they are likely too large for localStorage
+            delete dataToSave.videos;
+            delete dataToSave.documents;
+
+            localStorage.setItem(
+              "draftAd",
+              JSON.stringify({
+                data: dataToSave,
+                category: selectedCategory,
+                step: currentStep,
+              }),
+            );
+
+            navigate("/dashboard/subscription");
+          };
+
+          saveDraft();
+
           toast.error(
             errorData.message || "Please purchase a package to publish ads.",
             { id: toastId },
