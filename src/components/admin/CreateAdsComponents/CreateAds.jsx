@@ -261,6 +261,21 @@ const CreateAds = () => {
       }
 
       methods.reset(formattedData);
+    } else if (!id) {
+      // Check for draft ad on mount if no id (not editing an existing one)
+      const draftStr = localStorage.getItem("draftAd");
+      if (draftStr) {
+        try {
+          const draft = JSON.parse(draftStr);
+          if (draft.data) {
+            methods.reset(draft.data);
+            if (draft.category) setSelectedCategory(draft.category);
+            if (draft.step !== undefined) setCurrentStep(draft.step);
+          }
+        } catch (e) {
+          console.error("Error parsing draft ad:", e);
+        }
+      }
     }
   }, [existingData, existingPartData, id, methods]);
 
@@ -282,6 +297,7 @@ const CreateAds = () => {
     onSuccess: (data) => {
       setIsPostModalOpen(true);
       setIsModalOpen(false);
+      localStorage.removeItem("draftAd");
       // console.log("Success:", data);
       // toast.success("Ad posted successfully");
       navigate("/dashboard/my-adds");
@@ -292,9 +308,32 @@ const CreateAds = () => {
         const errorData = error.response.data;
 
         // Redirect to subscription if not subscribed
-        if (errorData.is_subscribed === false) {
-          navigate("/dashboard/subscription");
-          toast.error(errorData.message || "Please purchase a package to publish ads.", { id: toastId });
+        if (
+          errorData.is_subscribed === false ||
+          (errorData.message &&
+            errorData.message.includes("Active ads limit reached"))
+        ) {
+          // Save form data to localStorage (excluding files)
+          const formData = methods.getValues();
+          const dataToSave = { ...formData };
+          delete dataToSave.images;
+          delete dataToSave.videos;
+          delete dataToSave.documents;
+
+          localStorage.setItem(
+            "draftAd",
+            JSON.stringify({
+              data: dataToSave,
+              category: selectedCategory,
+              step: currentStep,
+            }),
+          );
+
+          window.open("/dashboard/subscription", "_blank");
+          toast.error(
+            errorData.message || "Please purchase a package to publish ads.",
+            { id: toastId },
+          );
           return true;
         }
 
@@ -486,7 +525,6 @@ const CreateAds = () => {
         }
       });
     }
-
 
     // Schedule keys
     if (data.scheduled_date) {
