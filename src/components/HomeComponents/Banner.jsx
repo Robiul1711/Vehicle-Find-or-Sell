@@ -50,7 +50,7 @@ const Banner = () => {
         {/* Right Content - Media with Loading State */}
         <div className="w-1/2 flex justify-end min-h-[300px]">
           {isLoading ? (
-            <div className="w-full h-64 lg:h-96 xl:h-110 bg-gray-200 animate-pulse rounded-xl"></div>
+            <div className="w-full h-64 lg:h-96 xl:h-130 bg-gray-200 animate-pulse rounded-xl"></div>
           ) : BannerData?.hero_media_type === "video" ? (
             <video
               src={BannerData?.hero_background_image_url}
@@ -58,7 +58,7 @@ const Banner = () => {
               loop
               muted
               playsInline
-              className="w-full h-auto max-h-[300px] lg:max-h-[500px] xl:max-h-[600px] object-fill rounded-xl shadow-2xl transition-all duration-700"
+              className="w-full h-auto max-h-[300px] lg:max-h-[500px] xl:max-h-[600px] object-fill rounded-xl"
             />
           ) : (
             <img

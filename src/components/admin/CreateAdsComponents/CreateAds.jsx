@@ -329,7 +329,7 @@ const CreateAds = () => {
             }),
           );
 
-          window.open("/dashboard/subscription", "_blank");
+          window.open("/dashboard/subscription");
           toast.error(
             errorData.message || "Please purchase a package to publish ads.",
             { id: toastId },
