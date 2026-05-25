@@ -6,10 +6,10 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 import { useParams } from "react-router-dom";
 
 const CarDetailsPage = () => {
-  const { id } = useParams();
+  const { id,slug } = useParams();
   const { data, isLoading, isError } = useApiQuery({
-    queryKey: ["profile", id],
-    url: `/ads/vehicles/${id}`,
+    queryKey: ["profile", id,slug],
+    url: `/ads/vehicles/${id}/${slug}`,
     secure: true,
   });
 

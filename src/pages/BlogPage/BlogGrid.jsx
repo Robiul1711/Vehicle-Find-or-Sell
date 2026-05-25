@@ -81,12 +81,12 @@ const BlogGrid = ({ data, isLoading }) => {
                       : "N/A"}
                   </span>
                 </div>
-                <h3 className="font-bold text-xl mb-4 line-clamp-2 hover:text-custom-primary transition-colors cursor-pointer">
-                  {blog.title}
+                <h3 className="font-bold text-xl mb-4 line-clamp-2 hover:text-custom-primary transition-colors cursor-pointer" dangerouslySetInnerHTML={{ __html: blog.title }} >
+                 
                 </h3>
                 <div className="mt-auto">
                   <Link
-                    to={`/blogDetails/${blog.id}`}
+                    to={`/blogdetails/${blog.id}/${blog.slug}`}
                     className="text-custom-primary font-semibold flex items-center gap-2 group transition-all"
                   >
                     Read More

@@ -71,6 +71,7 @@ const BrowseCategorySection = () => {
     if (!results) return [];
     return results.map((item) => ({
       id: item.id,
+      slug: item.slug,
       name: `${item.brand_name || ""} ${item.model || ""}`,
       description: item.body || item.model,
       location: item.seller_address,
@@ -87,6 +88,7 @@ const BrowseCategorySection = () => {
     if (!results) return [];
     return results.map((item) => ({
       id: item.id,
+      slug: item.slug,
       name: item.part_name,
       description: item.description,
       location: item.seller_address,
@@ -112,7 +114,7 @@ const BrowseCategorySection = () => {
   const onAddFavorite = (id, type) => {
     mutate({ id, type });
   };
-
+console.log(data?.data)
   // Define categories data
   const categories = [
     {

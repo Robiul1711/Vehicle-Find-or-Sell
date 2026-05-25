@@ -25,6 +25,8 @@ const Subscription = () => {
   const [activeButtonLeft, setActiveButtonLeft] = useState(0);
   const [activeButtonWidth, setActiveButtonWidth] = useState(0);
   const [loadingPlanId, setLoadingPlanId] = useState(null);
+
+  // Fetch all available plans
   const { data, isLoading, refetch } = useApiQuery({
     queryKey: ["subscription"],
     url: "/subscription/plans/",
@@ -33,6 +35,20 @@ const Subscription = () => {
       package_type: isMonthly ? "vehicle" : "parts",
     },
   });
+
+  // Fetch current active plan
+  const { data: myPlanData } = useApiQuery({
+    queryKey: ["myplan"],
+    url: "/subscription/myplan/",
+    secure: true,
+  });
+
+  // Get currently active plan IDs
+  const activePlanIds = Array.isArray(myPlanData)
+    ? myPlanData.filter((p) => p.is_active).map((p) => p.plan.id)
+    : [];
+
+  // Subscribe mutation (for new users without a plan)
   const { mutate: subscribe, isPending } = useApiMutation({
     url: "/subscription/subscribe/",
     method: "POST",
@@ -47,9 +63,31 @@ const Subscription = () => {
     },
   });
 
+  // Upgrade mutation (for users with an existing plan)
+  const { mutate: upgradePlan, isPending: isUpgrading } = useApiMutation({
+    url: "/subscription/upgrade/",
+    method: "POST",
+    secure: true,
+    invalidateKeys: ["myplan", "subscription"],
+    onSuccess: (response) => {
+      setLoadingPlanId(null);
+      if (response?.checkout_url) {
+        window.location.href = response.checkout_url;
+      }
+    },
+    onError: () => {
+      setLoadingPlanId(null);
+    },
+  });
+
   const handlePurchase = (planId) => {
     setLoadingPlanId(planId);
-    subscribe({ plan_id: planId });
+    // If user already has an active plan, use upgrade API
+    if (activePlanIds.length > 0) {
+      upgradePlan({ plan_id: planId });
+    } else {
+      subscribe({ plan_id: planId });
+    }
   };
 
   useEffect(() => {
@@ -90,6 +128,9 @@ const Subscription = () => {
 
   // Switch data based on tab
   const displayedTiers = Array.isArray(data) ? data : [];
+
+  const isButtonLoading = (tierId) =>
+    (isPending || isUpgrading) && loadingPlanId === tierId;
 
   return (
     <div className="w-full relative overflow-hidden">
@@ -150,87 +191,110 @@ const Subscription = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#01244B]"></div>
               </div>
             ) : (
-              displayedTiers.map((tier) => (
-                <motion.div
-                  key={tier.id}
-                  className={`relative flex flex-col p-8 rounded-xl border transition-all duration-300 ${
-                    tier.is_popular
-                      ? "border-[#01244B] bg-white"
-                      : "border-gray-200 bg-white/90"
-                  }`}
-                  variants={cardVariants}
-                  whileHover={{
-                    y: -8,
-                    boxShadow:
-                      "0 25px 50px -12px rgba(0,0,0,0.15), 0 10px 10px -5px rgba(0,0,0,0.05)",
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  <div className="flex justify-between items-start">
-                    <h3 className="text-lg sm:text-2xl font-bold text-gray-900">
-                      {tier.name}
-                    </h3>
-                    {tier.is_recommended && (
-                      <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
-                        Recommended
-                      </span>
+              displayedTiers.map((tier) => {
+                const isCurrentPlan = activePlanIds.includes(tier.id);
+
+                return (
+                  <motion.div
+                    key={tier.id}
+                    className={`relative flex flex-col p-8 rounded-xl border transition-all duration-300 ${
+                      isCurrentPlan
+                        ? "border-[#F88E08] bg-orange-50/50 ring-2 ring-[#F88E08]/30"
+                        : tier.is_popular
+                        ? "border-[#01244B] bg-white"
+                        : "border-gray-200 bg-white/90"
+                    }`}
+                    variants={cardVariants}
+                    whileHover={{
+                      y: -8,
+                      boxShadow:
+                        "0 25px 50px -12px rgba(0,0,0,0.15), 0 10px 10px -5px rgba(0,0,0,0.05)",
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    {/* Current Plan Badge */}
+                    {isCurrentPlan && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span className="inline-flex items-center px-4 py-1 rounded-full text-xs font-bold bg-[#F88E08] text-white shadow-md whitespace-nowrap">
+                          ✓ Current Plan
+                        </span>
+                      </div>
                     )}
-                  </div>
-                  {tier.description && (
-                    <p className="mt-2 text-sm text-gray-500">
-                      {tier.description}
-                    </p>
-                  )}
-                  <div className="mt-4 flex justify-between items-baseline">
-                    <div>
-                      <span className="text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-extrabold text-gray-900">
-                        <AnimatedPrice price={`€ ${tier.price}`} />
-                      </span>
-                    </div>
-                    <p className="xl:text-2xl text-[#F88E08]">Excl. VAT</p>
-                  </div>
 
-                  <ul role="list" className="mt-5 md:mt-8 space-y-3 flex-grow">
-                    {tier.features
-                      ?.filter((f) => f.is_enabled)
-                      .map((featureObj) => (
-                        <li key={featureObj.id} className="flex items-start">
-                          <IoIosCheckmarkCircleOutline className="w-5 h-5 mt-0.5 text-[#01244B] shrink-0" />
-                          <p className="ml-2 text-sm sm:text-base text-gray-700">
-                            {featureObj.limit_value
-                              ? `${featureObj.limit_value} `
-                              : ""}
-                            {featureObj.feature?.name}
-                          </p>
-                        </li>
-                      ))}
-                  </ul>
-
-                  <div className="mt-8">
-                    <motion.button
-                      onClick={() => handlePurchase(tier.id)}
-                      disabled={isPending && loadingPlanId === tier.id}
-                      className="w-full h-10 py-2 px-4 rounded-md text-sm sm:text-base font-medium text-white bg-[#01244B] border border-[#01244B] hover:bg-[#001E3C] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center"
-                      whileHover={
-                        !(isPending && loadingPlanId === tier.id)
-                          ? { scale: 1.02 }
-                          : {}
-                      }
-                      whileTap={
-                        !(isPending && loadingPlanId === tier.id)
-                          ? { scale: 0.98 }
-                          : {}
-                      }
-                    >
-                      {isPending && loadingPlanId === tier.id ? (
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      ) : (
-                        "Purchase Plan"
+                    <div className="flex justify-between items-start">
+                      <h3 className="text-lg sm:text-2xl font-bold text-gray-900">
+                        {tier.name}
+                      </h3>
+                      {tier.is_recommended && (
+                        <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
+                          Recommended
+                        </span>
                       )}
-                    </motion.button>
-                  </div>
-                </motion.div>
-              ))
+                    </div>
+                    {tier.description && (
+                      <p className="mt-2 text-sm text-gray-500">
+                        {tier.description}
+                      </p>
+                    )}
+                    <div className="mt-4 flex justify-between items-baseline">
+                      <div>
+                        <span className="text-4xl font-extrabold text-gray-900">
+                          <AnimatedPrice price={`€ ${tier.price}`} />
+                        </span>
+                      </div>
+                      <p className="xl:text-2xl text-[#F88E08]">Excl. VAT</p>
+                    </div>
+
+                    <ul role="list" className="mt-5 md:mt-8 space-y-3 flex-grow">
+                      {tier.features
+                        ?.filter((f) => f.is_enabled)
+                        .map((featureObj) => (
+                          <li key={featureObj.id} className="flex items-start">
+                            <IoIosCheckmarkCircleOutline className="w-5 h-5 mt-0.5 text-[#01244B] shrink-0" />
+                            <p className="ml-2 text-sm sm:text-base text-gray-700">
+                              {featureObj.limit_value
+                                ? `${featureObj.limit_value} `
+                                : ""}
+                              {featureObj.feature?.name}
+                            </p>
+                          </li>
+                        ))}
+                    </ul>
+
+                    <div className="mt-8">
+                      <motion.button
+                        onClick={() => handlePurchase(tier.id)}
+                        disabled={isCurrentPlan || isButtonLoading(tier.id)}
+                        className={`w-full h-10 py-2 px-4 rounded-md text-sm sm:text-base font-medium transition-all duration-300 flex justify-center items-center ${
+                          isCurrentPlan
+                            ? "bg-gray-300 text-gray-500 border border-gray-300 cursor-not-allowed"
+                            : "text-white bg-[#01244B] border border-[#01244B] hover:bg-[#001E3C] disabled:opacity-70 disabled:cursor-not-allowed"
+                        }`}
+                        whileHover={
+                          !isCurrentPlan && !isButtonLoading(tier.id)
+                            ? { scale: 1.02 }
+                            : {}
+                        }
+                        whileTap={
+                          !isCurrentPlan && !isButtonLoading(tier.id)
+                            ? { scale: 0.98 }
+                            : {}
+                        }
+                      >
+                        {isButtonLoading(tier.id) ? (
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        ) : isCurrentPlan ? (
+                          "Current Plan"
+                        ) : activePlanIds.length > 0 ? (
+                          "Upgrade Plan"
+                        ) : (
+                          "Purchase Plan"
+                        )}
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                );
+              })
             )}
           </motion.div>
         </div>

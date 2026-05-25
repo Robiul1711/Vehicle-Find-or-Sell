@@ -17,6 +17,7 @@ import {
   Leaf,
   Users,
   Activity,
+  Rocket,
 } from "lucide-react";
 import { ProfetionalIcon, VideoIcon } from "@/components/common/SVGicons/MySvg";
 import { Link, useParams } from "react-router-dom";
@@ -27,6 +28,8 @@ export default function CarRightSideDetails({ details }) {
 
   const specs = [
     { icon: Car, label: "Body", value: details?.body },
+    { icon: Shield, label: "Model", value: details?.model },
+    { icon: Rocket, label: "Version", value: details?.version },
     { icon: Gauge, label: "Mileage", value: details?.mileage },
     { icon: Fuel, label: "Fuel Type", value: details?.fuel_type },
     { icon: Calendar, label: "Year", value: details?.exact_date },

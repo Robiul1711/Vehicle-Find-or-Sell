@@ -4,8 +4,19 @@ import { FaAngleDown } from "react-icons/fa6";
 const setGoogleTranslateCookie = (langCode) => {
   const cookieName = "googtrans";
   const cookieValue = `/en/${langCode}`;
-  document.cookie = `${cookieName}=${cookieValue}; path=/`;
-  document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+  const domain = window.location.hostname;
+  
+  // Set for current hostname
+  document.cookie = `${cookieName}=${cookieValue}; path=/; domain=${domain}`;
+  
+  // Set for root domain if it's not an IP address or localhost
+  const domainParts = domain.split(".");
+  if (domainParts.length > 1) {
+    const rootDomain = "." + domainParts.slice(-2).join(".");
+    document.cookie = `${cookieName}=${cookieValue}; path=/; domain=${rootDomain}`;
+  }
+
+  // Also set without domain for local/simple cases
   document.cookie = `${cookieName}=${cookieValue}; path=/`;
 };
 
@@ -77,7 +88,7 @@ const LanguageArea = () => {
          English
         </option>
         <option value="fr">
-         Franch
+          French
         </option>
       </select>
 

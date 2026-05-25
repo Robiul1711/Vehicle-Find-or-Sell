@@ -8,11 +8,6 @@ const FeaturesComponent = ({ data }) => {
   return (
     <div className=" max-w-4xl  py-6 bg-white">
       <h2 className="text-2xl font-bold text-gray-800 mb-8">Features</h2>
-      {
-        Object.keys(features).length === 0 && (
-          <p className="text-gray-500 text-sm italic">No features available.</p>
-        )
-      }
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {Object.entries(features).map(([category, items]) => (

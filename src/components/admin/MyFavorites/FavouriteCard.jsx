@@ -111,7 +111,7 @@ const FavouriteCard = ({ car }) => {
               "0"}
           </span>
           <Link
-            to={`${detailsPath}/${car?.content_object?.id}`}
+            to={`${detailsPath}/${car?.content_object?.id}/${car?.content_object?.slug}`}
             className="flex items-center text-custom-primary font-medium hover:text-blue-700 transition-colors"
           >
             <span className="mr-2">View Details</span>

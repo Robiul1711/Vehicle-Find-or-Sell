@@ -11,6 +11,8 @@ import {
   MoveUpRight,
   Check,
   SquareCheckBig,
+  MessageCircleCode,
+  MessageCircleIcon,
 } from "lucide-react";
 import { ImageProvider } from "@/utils/ImageProvider";
 import profile from "@/assets/images/profile.png";
@@ -29,6 +31,7 @@ import { useAuth } from "@/hooks/useAuth";
 import ImageAvatar from "@/assets/images/dummy.png";
 import { DeliveryIcon } from "@/components/common/SVGicons/DashboardIcon";
 import GoogleReviewShow from "./GoogleReviewShow";
+import { BsWhatsapp } from "react-icons/bs";
 const DealerSection = () => {
   const { user } = useAuth();
   const { id } = useParams();
@@ -178,7 +181,7 @@ const DealerSection = () => {
             </div>
           </div>
 
-          <div className="mt-8 border-t pt-6">
+          <div className="md:mt-8 mt-3 border-t md:pt-6 pt-3">
             {/* Services */}
             <div>
               <h3 className="font-semibold text-gray-900 mb-4">Services</h3>
@@ -209,7 +212,7 @@ const DealerSection = () => {
       </div>
       <div className="lg:w-1/4 flex flex-col gap-5">
         {/* {console.log(profileData?.user_id)} */}
-        <div className="border shadow-lg rounded-xl p-5 flex flex-col gap-5">
+        <div className="border shadow-lg rounded-xl p-3 flex sm:flex-row lg:flex-col xl:flex-row gap-3">
           <Link
             onClick={() =>
               mutate({
@@ -217,9 +220,9 @@ const DealerSection = () => {
               })
             }
             to="/dashboard/message"
-            className="flex w-full py-3   xl:py-5 text-sm lg:text-xl xl:text-2xl items-center justify-center gap-2 bg-blue-100 text-custom-primary px-4 rounded-lg  font-medium border-2 border-custom-primary transition-colors "
+            className="flex w-full py-2    text-sm   items-center justify-center gap-2 bg-blue-100 text-custom-primary px-4 rounded-lg  font-medium border-2 border-custom-primary transition-colors "
           >
-            Message Dealer <MoveUpRight />{" "}
+            Message Dealer <MessageCircleIcon className="w-5 h-5" />{" "}
           </Link>
 
           <button
@@ -229,9 +232,9 @@ const DealerSection = () => {
                 "_blank",
               )
             }
-            className="flex w-full py-3 xl:py-5 text-sm lg:text-xl xl:text-2xl items-center justify-center gap-2 bg-green-100 text-green-500 px-4 rounded-lg font-medium border-2 border-custom-primary transition-colors"
+            className="flex w-full py-2    text-sm  items-center justify-center gap-2 bg-green-100 text-green-500 px-4 rounded-lg font-medium border-2 border-custom-primary transition-colors"
           >
-            Chat Via WhatsApp <MoveUpRight />
+            Chat Via WhatsApp <BsWhatsapp />
           </button>
         </div>
         <div>

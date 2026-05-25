@@ -11,10 +11,10 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 import { useParams } from "react-router-dom";
 
 const BlogDetailsPage = () => {
-  const { id } = useParams();
+  const { id, slug } = useParams();
   const { data, isLoading } = useApiQuery({
-    queryKey: ["blog", id],
-    url: `/blog/${id}/`,
+    queryKey: ["blog", id, slug],
+    url: `/blog/${id}/${slug}/`,
   });
   const descriptionRef = useRef(null);
   useEffect(() => {

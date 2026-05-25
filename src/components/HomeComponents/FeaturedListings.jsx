@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import PaginationComponent from "../common/PaginationComponent";
 
 const FeaturedListings = () => {
-
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("car");
   const { data, isLoading, refetch } = useApiQuery({
@@ -25,7 +24,7 @@ const FeaturedListings = () => {
     },
     secure: true,
   });
-// console.log(data)
+  // console.log(data)
   // add favorite
   const { mutate, isPending } = useApiMutation({
     url: "/account/favorites/toggle/",
@@ -47,6 +46,7 @@ const FeaturedListings = () => {
     if (activeTab === "parts") {
       return data.data.map((item) => ({
         id: item.id,
+        slug:item.slug,
         imageUrl: item.first_image,
         title: item.part_name,
         subtitle: item.brand_name,
@@ -61,6 +61,7 @@ const FeaturedListings = () => {
     } else {
       return data.data.map((item) => ({
         id: item.id,
+        slug:item.slug,
         imageUrl: item.first_image,
         title: `${item.brand_name} ${item.model}`,
         subtitle: item.seller_address,
@@ -89,7 +90,7 @@ const FeaturedListings = () => {
 
     if (!currentData || currentData.length === 0) {
       return (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center justify-center py-16 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100 min-h-[400px]"
@@ -180,25 +181,32 @@ const FeaturedListings = () => {
         className="flex justify-between items-center"
       >
         <div>
-          
-        <Title level="title40">Featured Listings</Title>
-        <Title level="title18" className="mt-4 text-gray-500">
-          Showcasing the latest and most popular ads on the platform.
-        </Title>
+          <Title level="title40">Featured Listings</Title>
+          <Title level="title18" className="mt-4 text-gray-500">
+            Showcasing the latest and most popular ads on the platform.
+          </Title>
         </div>
-        <Link to="/listings" className="text-custom-primary font-semibold flex items-center gap-2">
-     View All<ArrowUpRight className="w-4 h-4" />
+        <Link
+          to="/listings"
+          className="text-custom-primary font-semibold flex items-center gap-2"
+        >
+          View All
+          <ArrowUpRight className="w-4 h-4" />
         </Link>
       </motion.div>
-      
-      <motion.div 
+
+      <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="mt-5 md:mt-10"
       >
-        <Tabs items={tabData} activeTab={activeTab} onChange={handleTabChange} />
+        <Tabs
+          items={tabData}
+          activeTab={activeTab}
+          onChange={handleTabChange}
+        />
       </motion.div>
       {data?.count > 12 && (
         <div className="mt-8 flex justify-center pb-12">

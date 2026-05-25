@@ -9,9 +9,13 @@ export default function PartsDetails() {
     register,
     formState: { errors },
   } = useFormContext();
+  const vehicleType = watch("vehicle_type");
+
   const { data, isLoading } = useApiQuery({
-    queryKey: ["brands"],
+    queryKey: ["brands", vehicleType],
     url: "/core/brands/",
+    params: { vehicle_type: vehicleType?.toLowerCase() },
+    enabled: !!vehicleType,
     secure: true,
   });
 

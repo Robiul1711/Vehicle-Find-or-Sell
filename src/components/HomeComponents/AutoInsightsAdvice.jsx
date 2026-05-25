@@ -92,7 +92,7 @@ const AutoInsightsAdvice = () => {
               </div>
 
               <Title level="title20" className="line-clamp-2 min-h-[3.5rem] group-hover:text-custom-primary transition-colors">
-                {article.title}
+                <div dangerouslySetInnerHTML={{ __html: article.title }}></div>
               </Title>
 
               <Link to={`/blogDetails/${article.id}`} className='flex items-center gap-2 font-bold text-custom-primary mb-4 group/btn'>

@@ -110,9 +110,6 @@ const PartListing = ({
               <option value="">Default</option>
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
-
-
-              
             </select>
           </div>
           {/* View Toggle - Hidden on mobile, force grid */}
@@ -332,32 +329,33 @@ const PartListing = ({
                           <CustomLocation />
                           {item.location}
                         </motion.p>
+                        <motion.div layout className=" my-2 "></motion.div>
                         <motion.div
-                          layout
-                          className="border-[1px] my-2 border-gray-300"
-                        ></motion.div>
-                        <motion.button
                           layout
                           className="px-4 py-2 flex justify-between items-center gap-4 w-full rounded-lg"
                         >
-                          <div className="flex flex-col items-center">
-                            <CustomTime />
-                            <p className="">{item?.mileage}</p>
-                          </div>
-                          <div className="flex flex-col items-center">
-                            <CustomWeight />
-                            <p className="">{item?.fuelType}</p>
-                          </div>
+                          {item?.mileage && (
+                            <div className="flex flex-col items-center">
+                              <CustomTime />
+                              <p>{item.mileage}</p>
+                            </div>
+                          )}
 
-                          <div className="flex flex-col items-center">
-                            <CustomElement />
-                            <p className="">{item?.transmission}</p>
-                          </div>
-                        </motion.button>
-                        <motion.div
-                          layout
-                          className="border-[1px] my-2 border-gray-300"
-                        ></motion.div>
+                          {item?.fuelType && (
+                            <div className="flex flex-col items-center">
+                              <CustomWeight />
+                              <p>{item.fuelType}</p>
+                            </div>
+                          )}
+
+                          {item?.transmission && (
+                            <div className="flex flex-col items-center">
+                              <CustomElement />
+                              <p>{item.transmission}</p>
+                            </div>
+                          )}
+                        </motion.div>
+                        <motion.div layout className="my-2"></motion.div>
                         <motion.div
                           layout
                           className="flex justify-between mt-auto pt-2"
@@ -370,7 +368,7 @@ const PartListing = ({
                           >
                             €{item?.price}
                           </motion.p>
-                          <Link to={`/parts-details/${item?.id}`}>
+                          <Link to={`/parts-details/${item?.id}/${item?.slug}`}>
                             <motion.p
                               layout
                               className={`${

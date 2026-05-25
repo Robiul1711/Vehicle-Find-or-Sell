@@ -163,7 +163,7 @@ const Navbar = () => {
           {/* Mobile Menu Header */}
           <div className="flex items-center justify-between px-3 border-b border-gray-200">
             <Link to="/" onClick={() => setIsMenuOpen(false)}>
-              <img src={logo} alt="Logo" className="h-16" />
+              <img src={logo} alt="Logo" className="h-16 py-3" />
             </Link>
             <button
               onClick={() => setIsMenuOpen(false)}

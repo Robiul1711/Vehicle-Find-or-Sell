@@ -142,7 +142,7 @@ const UploadMedia = () => {
       <h2 className="text-xl font-semibold">Upload Media</h2>
 
       <div>
-        <h3 className="font-medium mb-1">Images</h3>
+        <h3 className="font-medium mb-1">Images <span className="text-gray-500 text-xs">(Required)</span></h3>
         <p className="text-xs text-gray-400 mb-3">Drag and drop photos to change their order. The first photo will be the main cover.</p>
         
         <label className="flex flex-col items-center justify-center w-full border-2 border-dashed border-gray-300 rounded-lg h-32 cursor-pointer hover:border-custom-primary transition-colors mb-4">

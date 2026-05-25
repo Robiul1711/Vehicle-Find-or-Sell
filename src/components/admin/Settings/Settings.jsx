@@ -40,7 +40,7 @@ export default function Settings() {
     },
     {
       id: 3,
-      name: "Add Services",
+      name: "Manage Services",
       icon: <GrServices />,
       type: "content",
       content:<AddServices/>,

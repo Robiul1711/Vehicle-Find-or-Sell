@@ -16,7 +16,7 @@ const DasCarCard = ({ car }) => {
     url: `${car?.ad_type === "parts" ? `/ads/parts/${car?.id}/` : `/ads/vehicles/${car?.id}/`}`,
     method: "DELETE",
     secure: true,
-    invalidateKeys: ["my-ads", "search-ads","dashboardStats","my-favorites"],
+    invalidateKeys: ["my-ads", "search-ads", "dashboardStats", "my-favorites"],
   });
 
   const handleDelete = () => {
@@ -75,7 +75,7 @@ const DasCarCard = ({ car }) => {
         {/* Bottom Section (Features + Price + Buttons) - This stays at the bottom */}
         <div className="mt-auto">
           {/* Features */}
-          <div className="flex items-center justify-between gap-2 text-gray-700 text-sm mt-3 border-t pt-3 border-b pb-3">
+          <div className="flex items-center justify-between gap-2 text-gray-700 text-sm mt-3  pb-3">
             {car?.mileage && (
               <div className="flex flex-col items-center gap-1">
                 <MilageIcon />
@@ -85,7 +85,7 @@ const DasCarCard = ({ car }) => {
             {car?.fuel_type && (
               <div className="flex flex-col items-center gap-1">
                 <FuelIcon />
-                <span className="capitalize">{car?.fuel_type}</span>
+                <span>{car?.fuel_type}</span>
               </div>
             )}
             {car?.transmission && (
@@ -105,20 +105,20 @@ const DasCarCard = ({ car }) => {
           {/* Price */}
           {car?.discount_price && (
             <p className="text-2xl font-bold text-gray-900 mt-3">
-             €{car?.discount_price}
+              €{car?.discount_price}
             </p>
           )}
 
           {/* Buttons Grid */}
           <div className="grid grid-cols-2 gap-2 mt-3">
             <Link
-              to={`/dashboard/car-details/${car?.id}`}
+              to={`/dashboard/car-details/${car?.id}/${car?.slug}`}
               className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800 transition-colors"
             >
               View Details
             </Link>
             <Link
-              to={`/dashboard/edit-ads/${car?.id}`}
+              to={`/dashboard/edit-ads/${car?.id}/${car?.slug}`}
               className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800 transition-colors"
             >
               Edit

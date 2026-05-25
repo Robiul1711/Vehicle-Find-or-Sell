@@ -25,7 +25,7 @@ const PartOverview = ({ data }) => {
   ];
 
   return (
-    <div className="flex flex-col gap-6 p-6 bg-white">
+    <div className="flex flex-col gap-6">
       <Title level="title40" className=" !font-bold">
         Parts Overview
       </Title>
@@ -58,7 +58,7 @@ const PartOverview = ({ data }) => {
           dangerouslySetInnerHTML={{ __html: data?.description || "" }}
         />
       </div>
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-700">
+      {data?.registration?.document && <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-700">
         <Title level="title40" className="!font-bold mb-4">
           Documents
         </Title>
@@ -92,7 +92,8 @@ const PartOverview = ({ data }) => {
             </span>
           </a>
         </div>
-      </div>
+      </div>}
+   
     </div>
   );
 };

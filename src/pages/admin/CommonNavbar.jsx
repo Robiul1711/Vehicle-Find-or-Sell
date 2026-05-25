@@ -3,6 +3,7 @@ import NotificationDropdown from "@/shared/navbar/NotificationDropdown";
 import UserDropdown from "@/shared/navbar/UserDropdown";
 import { useAuth } from "@/hooks/useAuth";
 import LanguageArea from "@/components/common/LanguageArea";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const CommonNavbar = ({ open, setOpen }) => {
   const { user } = useAuth();
@@ -10,12 +11,36 @@ const CommonNavbar = ({ open, setOpen }) => {
   return (
     <div className="flex items-center gap-5 justify-between w-full py-3 md:py-6 px-4 sm:px-8 bg-white ">
       <div className="flex items-center gap-4">
-        <span
-          onClick={() => setOpen(!open)}
-          className="block cursor-pointer"
-        >
-          <GiHamburgerMenu color="black" size={26} />
-        </span>
+       <span
+  onClick={() => setOpen(!open)}
+  className="block cursor-pointer"
+>
+  {/* Mobile Menu Icon */}
+  <div className="block md:hidden">
+    <GiHamburgerMenu
+      color="black"
+      size={28}
+      className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
+    />
+  </div>
+
+  {/* Desktop Arrow Icon */}
+  <div className="hidden md:block">
+    {open ? (
+      <FaChevronLeft
+        color="black"
+        size={26}
+        className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
+      />
+    ) : (
+      <FaChevronRight
+        color="black"
+        size={26}
+        className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
+      />
+    )}
+  </div>
+</span>
         <div className=" items-center gap-4 hidden md:flex">
           <p className=" text-black sm:text-xl xl:text-3xl font-bold">
             {user?.profile?.first_name} {user?.profile?.last_name}

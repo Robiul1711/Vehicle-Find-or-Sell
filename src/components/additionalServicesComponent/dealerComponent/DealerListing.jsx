@@ -317,7 +317,7 @@ const DealerListing = () => {
                           </motion.p>
                         )}
                         <motion.div layout className="mt-auto pt-2">
-                          <Link to={`/dealer-profile/${item?.id}`}>
+                          <Link to={`/dealer-profile/${item?.id}/${item?.slug}`}>
                             <button className=" py-2  border border-black rounded-lg w-full">
                               View Dealer Profile
                             </button>

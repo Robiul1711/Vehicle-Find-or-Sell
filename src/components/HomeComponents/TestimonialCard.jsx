@@ -49,7 +49,7 @@ const TestimonialCard = ({testimonials, isLoading}) => {
 
                 {/* Image Side */}
                 <div className="flex justify-center md:justify-end">
-                  <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden border-4 ">
+                  <div className="relative w-64 h-64 md:w-80 md:h-80 lg:h-96 lg:w-96 rounded-xl  md:rounded-2xl overflow-hidden border-2 ">
                     <img
                       src={testimonial.image_url}
                       alt={testimonial.name}

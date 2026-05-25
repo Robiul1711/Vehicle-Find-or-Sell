@@ -31,9 +31,7 @@ const MessageBubble = memo(({ message, isCurrentUser }) => {
       <div className="flex items-end gap-2 max-w-[80%]">
         {!isCurrentUser && (
           <img
-            src={
-              (message.senderProfile?.avatar || "/default-avatar.png")
-            }
+            src={message.senderProfile?.avatar || "/default-avatar.png"}
             alt="Profile"
             className="w-8 h-8 rounded-full object-cover flex-shrink-0"
             onError={(e) => {
@@ -70,9 +68,7 @@ const MessageBubble = memo(({ message, isCurrentUser }) => {
 
         {isCurrentUser && (
           <img
-            src={
-              (message.senderProfile?.avatar || "/default-avatar.png")
-            }
+            src={message.senderProfile?.avatar || "/default-avatar.png"}
             alt="Profile"
             className="w-8 h-8 rounded-full object-cover flex-shrink-0"
             onError={(e) => {
@@ -413,9 +409,7 @@ const MessageInbox = ({ selectedConversation, onBack, queryClient }) => {
           </button>
           <div className="relative">
             <img
-              src={
-                (selectedConversation?.avatar || "/default-avatar.png")
-              }
+              src={selectedConversation?.avatar || "/default-avatar.png"}
               className="w-10 h-10 rounded-full object-cover"
               alt={selectedConversation?.name}
               onError={(e) => {

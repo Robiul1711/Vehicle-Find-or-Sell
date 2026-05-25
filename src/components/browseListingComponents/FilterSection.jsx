@@ -29,9 +29,35 @@ const FilterSection = ({ onFilterChange, filters }) => {
 
   const { data: brands } = useApiQuery({
     queryKey: ["brands"],
-    url: "/core/brands/",
+    url: "/core/brands/?has_active_ads=true",
     secure: true,
   });
+  const { data: fuelTypes } = useApiQuery({
+    queryKey: ["fuelTypes"],
+    url: "/core/fuel-types/?has_active_ads=true",
+    secure: true,
+  });
+
+  const { data: transmissionTypes } = useApiQuery({
+    queryKey: ["transmissionTypes"],
+    url: "/core/transmissions/?has_active_ads=true",
+    secure: true,
+  });
+
+
+  const { data: conditions } = useApiQuery({
+    queryKey: ["conditions"],
+    url: "/core/conditions/?has_active_ads=true",
+    secure: true,
+  });
+
+  const { data: bodyTypes } = useApiQuery({
+    queryKey: ["bodyTypes"],
+    url: "/core/body-types/?has_active_ads=true",
+    secure: true,
+  });
+
+  console.log(bodyTypes)
 
   const [openSection, setOpenSection] = useState({
     price: true,
@@ -169,25 +195,12 @@ const FilterSection = ({ onFilterChange, filters }) => {
                 className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
                 <option value="">Select Body Type</option>
-                <option value="buggy">Buggy</option>
-                <option value="convertible">Convertible</option>
-                <option value="coupe">Coupe</option>
-                <option value="fastback">Fastback</option>
-                <option value="flower_car">Flower Car</option>
-                <option value="hatchback">Hatchback</option>
-                <option value="hearse">Hearse</option>
-                <option value="limousine">Limousine</option>
-                <option value="microvan">Microvan</option>
-                <option value="minivan">Minivan</option>
-                <option value="panel_van">Panel Van</option>
-                <option value="panel_truck">Panel Truck</option>
-                <option value="pickup_truck">Pickup Truck</option>
-                <option value="roadster">Roadster</option>
-                <option value="sedan">Sedan</option>
-                <option value="shooting_brake">Shooting Brake</option>
-                <option value="station_wagon">Station Wagon</option>
-                <option value="targa_top">Targa Top</option>
-                <option value="ute">Ute</option>
+                {bodyTypes?.data?.map((bodyType) => (
+                  <option key={bodyType.id} value={bodyType.name}>
+                    {bodyType.name}
+                  </option>
+                ))}
+
               </select>
             </div>
 
@@ -229,11 +242,11 @@ const FilterSection = ({ onFilterChange, filters }) => {
                 className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
                 <option value="">Select Fuel Type</option>
-                <option value="petrol">Petrol</option>
-                <option value="diesel">Diesel</option>
-                <option value="electric">Electric</option>
-                <option value="hydrogen">Hydrogen</option>
-                <option value="hybrid">Hybrid</option>
+                {fuelTypes?.data?.map((fuel) => (
+                  <option key={fuel.id} value={String(fuel.id)}>
+                    {fuel.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -246,8 +259,11 @@ const FilterSection = ({ onFilterChange, filters }) => {
                 className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
                 <option value="">Select Transmission</option>
-                <option value="automatic">Automatic</option>
-                <option value="manual">Manual</option>
+                {transmissionTypes?.data?.map((transmission) => (
+                  <option key={transmission.id} value={String(transmission.id)}>
+                    {transmission.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -389,8 +405,11 @@ const FilterSection = ({ onFilterChange, filters }) => {
                 className="w-full border rounded-lg px-2 py-2 text-sm bg-white outline-none cursor-pointer"
               >
                 <option value="">Select Condition</option>
-                <option value="new">New</option>
-                <option value="used">Used</option>
+                {conditions?.data?.map((condition) => (
+                  <option key={condition.id} value={String(condition.id)}>
+                    {condition.name}
+                  </option>
+                ))}
               </select>
             </div>
 

@@ -47,8 +47,8 @@ const ContactForm = () => {
           <div className="border bg-gray-100 rounded-lg group hover:bg-custom-primary p-5 flex items-center gap-5 ">
           <img src={item.icon} className="w-14 group group-hover:text-white h-14 rounded-full border flex items-center justify-center"/>
           <div className="group group-hover:text-white">
-            <p className="text-sm">{item.title}</p>
-            <p className="">{item.value}</p>
+            <p className="text-sm" dangerouslySetInnerHTML={{ __html: item.title }} ></p>
+            <p className="" dangerouslySetInnerHTML={{ __html: item.value }} ></p>
           </div>
         </div>
         ))

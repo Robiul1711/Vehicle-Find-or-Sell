@@ -72,6 +72,9 @@ const Preview = ({ goToStep }) => {
               <strong>Model:</strong> {formData.model}
             </div>
             <div>
+              <strong>Version:</strong> {formData.version}
+            </div>
+            <div>
               <strong>Body:</strong> {formData.body}
             </div>
             <div>
@@ -96,7 +99,7 @@ const Preview = ({ goToStep }) => {
               <strong>Transmission:</strong> {formData.transmission}
             </div>
             <div>
-              <strong>Exact Date:</strong> {formData.exactDate}
+              <strong>Exact Date:</strong> {formData.exactDate instanceof Date ? formData.exactDate.toLocaleDateString("en-GB") : formData.exactDate}
             </div>
             <div>
               <strong>Condition:</strong> {formData.condition}

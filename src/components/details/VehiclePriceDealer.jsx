@@ -46,6 +46,13 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
       mutateSimilar({});
     }
   };
+
+    const { mutate, isPending } = useApiMutation({
+      url: "/message/conversations/get-or-create/",
+      method: "POST",
+      secure: true,
+    });
+  
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow-md p-10 animate-pulse">
@@ -153,7 +160,7 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
 
       {/* Dealer Info Section */}
       <div className="mb-6">
-        {console.log(data.seller_details)}
+        {/* {console.log(data.seller_details)} */}
         <div className="flex flex-col items-start gap-3 mb-4">
           <img
             src={data?.seller_details?.profile_image || ImageAvatar}
@@ -182,13 +189,18 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
         {/* Contact Buttons */}
         <div className="space-y-3 mb-4">
           <Link
-            to="/dashboard/message"
+          to="/dashboard/message"
+            onClick={() =>
+              mutate({
+                user_id: data?.user,
+              })
+            }
             className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
           >
             <MessageCircle size={18} />
             Message Dealer
           </Link>
-
+{/* {console.log(data)} */}
           <button
             onClick={() =>
               window.open(

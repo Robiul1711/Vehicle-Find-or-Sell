@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import banner from "@/assets/images/banner.png";
 import Title from "../common/Title";
@@ -6,6 +7,57 @@ import CommonButton from "../common/CommonButton";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
 const Banner = () => {
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [volume, setVolume] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
+  const videoRef = useRef(null);
+  const mobileVideoRef = useRef(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const videos = [videoRef.current, mobileVideoRef.current].filter(Boolean);
+    videos.forEach((video) => {
+      video.muted = isMuted;
+      video.volume = volume;
+      if (isPlaying) {
+        video.play().catch(() => {
+          // Autoplay might be blocked by browser if not muted or without user interaction
+          setIsPlaying(false);
+        });
+      } else {
+        video.pause();
+      }
+    });
+  }, [isMuted, isPlaying, volume]);
+
+  const handleVolumeChange = (e) => {
+    const value = parseFloat(e.target.value);
+    setVolume(value);
+    if (value > 0) {
+      setIsMuted(false);
+    } else {
+      setIsMuted(true);
+    }
+  };
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    if (isMuted && volume === 0) {
+      setVolume(1);
+    }
+  };
+
   const { data, isLoading } = useApiQuery({
     queryKey: ["home"],
     url: "cms/home/",
@@ -51,15 +103,45 @@ const Banner = () => {
         <div className="w-1/2 flex justify-end min-h-[300px]">
           {isLoading ? (
             <div className="w-full h-64 lg:h-96 xl:h-130 bg-gray-200 animate-pulse rounded-xl"></div>
-          ) : BannerData?.hero_media_type === "video" ? (
-            <video
-              src={BannerData?.hero_background_image_url}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-auto max-h-[300px] lg:max-h-[500px] xl:max-h-[600px] object-fill rounded-xl"
-            />
+          ) : BannerData?.hero_media_type === "video" && !isMobile ? (
+            <div className="relative group w-full flex justify-end">
+              <video
+                ref={videoRef}
+                src={BannerData?.hero_background_image_url}
+                loop
+                autoPlay
+                playsInline
+                muted={isMuted}
+                className="w-full h-auto max-h-[300px] lg:max-h-[500px] xl:max-h-[600px] object-fill rounded-xl cursor-pointer"
+                onClick={togglePlay}
+              />
+              <div className="absolute bottom-4 right-4 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-md p-2 rounded-full">
+                <div className="flex items-center gap-2 px-2">
+                  <button
+                    onClick={toggleMute}
+                    className="text-white hover:text-primary transition-colors"
+                  >
+                    {isMuted || volume === 0 ? <FaVolumeMute /> : <FaVolumeUp />}
+                  </button>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={isMuted ? 0 : volume}
+                    onChange={handleVolumeChange}
+                    className="w-20 h-1.5 bg-white/30 rounded-lg appearance-none cursor-pointer accent-white"
+                  />
+                </div>
+                <div className="w-[1px] h-4 bg-white/20"></div>
+                <button
+                  onClick={togglePlay}
+                  className="p-2 text-white hover:text-primary transition-colors"
+                >
+                  {isPlaying ? <FaPause /> : <FaPlay />}
+                </button>
+              </div>
+            </div>
           ) : (
             <img
               src={BannerData?.hero_background_image_url || banner}
@@ -75,16 +157,44 @@ const Banner = () => {
         {/* Blurred Background with Loading State */}
         {isLoading ? (
           <div className="absolute inset-0 bg-gray-300"></div>
-        ) : BannerData?.hero_media_type === "video" ? (
-          <video
-            src={BannerData?.hero_background_image_url}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ filter: "blur(2px)", transform: "scale(1.1)" }}
-          />
+        ) : BannerData?.hero_media_type === "video" && isMobile ? (
+          <div className="absolute inset-0 w-full h-full">
+            <video
+              ref={mobileVideoRef}
+              src={BannerData?.hero_background_image_url}
+              loop
+              autoPlay
+              muted={isMuted}
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ transform: "scale(1.1)" }}
+              onClick={togglePlay}
+            />
+            <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md p-1.5 rounded-full">
+              <button
+                onClick={toggleMute}
+                className="text-white p-1"
+              >
+                {isMuted || volume === 0 ? <FaVolumeMute size={14} /> : <FaVolumeUp size={14} />}
+              </button>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                value={isMuted ? 0 : volume}
+                onChange={handleVolumeChange}
+                className="w-16 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-white"
+              />
+              <div className="w-[1px] h-3 bg-white/20"></div>
+              <button
+                onClick={togglePlay}
+                className="text-white p-1"
+              >
+                {isPlaying ? <FaPause size={14} /> : <FaPlay size={14} />}
+              </button>
+            </div>
+          </div>
         ) : (
           <div
             className="absolute inset-0 bg-cover bg-center"

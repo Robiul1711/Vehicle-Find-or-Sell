@@ -9,15 +9,17 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthProvider from "./providers/AuthProvider";
 import HomePageSpecialOffer from "./components/HomeComponents/HomePageSpecialOffer";
 import { Toaster } from "react-hot-toast";
-const queryClient = new QueryClient();
+import CookieConsent from "./components/common/CookieConsent";
 
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-      <Toaster position="top-center" reverseOrder={false} />
-      <HomePageSpecialOffer />
       <QueryClientProvider client={queryClient}>
+        <Toaster position="top-center" reverseOrder={false} />
+        <CookieConsent />
+        <HomePageSpecialOffer />
         <AuthProvider>
           <RouterProvider router={router} />
         </AuthProvider>

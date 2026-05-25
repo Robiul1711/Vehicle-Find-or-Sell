@@ -73,9 +73,9 @@ const UserDropdown = () => {
           alt="user profile"
         />
       </button>
-
+{/* dropdown */}
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 text-gray-800 overflow-hidden transform origin-top-right transition-all">
+        <div className="absolute right-0 bottom-full mb-3 md:bottom-auto md:top-full md:mt-3 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 text-gray-800 overflow-hidden transform origin-bottom-right md:origin-top-right transition-all">
           <div className="px-4 py-4 bg-gray-50/50 border-b border-gray-100">
             <p className="font-bold text-gray-900 truncate">
               {user?.profile?.first_name} {user?.profile?.last_name}

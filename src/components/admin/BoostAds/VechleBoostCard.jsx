@@ -66,13 +66,15 @@ const VechleBoostCard = ({ car }) => {
         </div>
 
         <div className="mt-auto">
-          {/* Price */}
-          <p className="text-2xl font-bold text-gray-900 mt-2">€{car.discount_price}</p>
-
+          {/* {console.log(car)} */}
+     {/* Price */}
+<p className="text-2xl font-bold text-gray-900 mt-2">
+  €{car.discount_price ? car.discount_price : car.original_price}
+</p>
           {/* Buttons */}
           <div className="grid grid-cols-2 gap-2 mt-3">
             <Link
-              to={`/dashboard/car-details/${car.id}`}
+              to={`/dashboard/car-details/${car.id}/${car.slug}`}
               className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800"
             >
               View Details

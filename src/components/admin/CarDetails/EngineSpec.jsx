@@ -14,7 +14,7 @@ const EngineSpec = ({data}) => {
         Engine & Transmission Specs
       </h3>
       <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-        {engineSpecs.map((spec, index) => (
+        {engineSpecs.filter(spec => spec.value).map((spec, index) => (
           <div key={index} className="flex flex-col gap-3">
             <span className="text-gray-700 text-sm">{spec.label}</span>
             <span className="text-gray-900 text-sm font-medium">

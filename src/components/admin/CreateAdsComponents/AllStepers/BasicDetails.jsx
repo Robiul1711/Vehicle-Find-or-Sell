@@ -1,45 +1,86 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function BasicDetails() {
   const {
     watch,
+    control,
     register,
+    setValue,
     formState: { errors },
   } = useFormContext();
-  const { data, isLoading } = useApiQuery({
-    queryKey: ["brands"],
-    url: "/core/brands/",
-    secure: true,
+
+  const vehicleType = watch("vehicle_type");
+  const selectedBrand = watch("brand");
+  const currentModel = watch("model");
+  const currentVersion = watch("version");
+  const currentBody = watch("body");
+  const currentFuelType = watch("fuelType");
+  const currentTransmission = watch("transmission");
+  const currentCondition = watch("condition");
+
+  const { data: fuelTypes } = useApiQuery({
+    queryKey: ["fuel-types"],
+    url: "core/fuel-types/",
   });
-  const { data: adsChoice, isLoading: choiceLoading } = useApiQuery({
-    queryKey: ["ads-choice"],
-    url: "/ads/choices/",
-    secure: true,
+
+  const { data: transmissions } = useApiQuery({
+    queryKey: ["transmissions"],
+    url: "core/transmissions/",
   });
-  // console.log(data);
-  const { mutate, isPending } = useApiMutation({
-    url: "/core/brands/",
-    method: "POST",
-    secure: true,
-    invalidateKeys: ["brands"],
-    onSuccess: () => {
-      setIsBrandModalOpen(false);
-      setNewBrandName("");
+
+  const { data: conditions } = useApiQuery({
+    queryKey: ["conditions"],
+    url: "core/conditions/",
+  });
+
+  const { data: bodyTypesData } = useApiQuery({
+    queryKey: ["body-types", vehicleType],
+    url: "core/body-types/",
+    params: { vehicle_type: vehicleType?.toLowerCase() },
+    enabled: !!vehicleType,
+  });
+
+  const { data: brandsData } = useApiQuery({
+    queryKey: ["brands", vehicleType],
+    url: "core/brands/",
+    params: { vehicle_type: vehicleType?.toLowerCase() },
+    enabled: !!vehicleType,
+  });
+
+  const { data: modelsData } = useApiQuery({
+    queryKey: ["models", selectedBrand, vehicleType],
+    url: "core/models/",
+    params: {
+      brand_id: selectedBrand,
+      vehicle_type: vehicleType?.toLowerCase(),
     },
+    enabled: !!selectedBrand && !!vehicleType,
   });
 
-  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
-  const [newBrandName, setNewBrandName] = useState("");
+  const { data: versionsData } = useApiQuery({
+    queryKey: ["versions", selectedBrand, currentModel, vehicleType],
+    url: "core/versions/",
+    params: {
+      brand_id: selectedBrand,
+      model_name: currentModel,
+      vehicle_type: vehicleType?.toLowerCase(),
+    },
+    enabled: !!selectedBrand && !!currentModel && !!vehicleType,
+  });
 
-  const handleCreateBrand = () => {
-    if (!newBrandName.trim()) return;
-    mutate({ name: newBrandName });
-  };
+  const brands = brandsData?.data || [];
+  const models = modelsData?.data || [];
+  const versions = versionsData?.data || [];
+  const bodyTypes = bodyTypesData?.data || bodyTypesData || [];
+  const fuelTypesList = fuelTypes?.data || fuelTypes || [];
+  const transmissionsList = transmissions?.data || transmissions || [];
+  const conditionsList = conditions?.data || conditions || [];
 
-  // console.log(data?.data)
   return (
     <div className="">
       <h2 className="text-xl font-medium text-gray-800 mb-6">Basic Details</h2>
@@ -47,61 +88,97 @@ export default function BasicDetails() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Brand */}
         <div>
-          <div className="flex justify-between items-center mb-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Brand
-            </label>
-            <button
-              type="button"
-              onClick={() => setIsBrandModalOpen(true)}
-              className="text-xs text-custom-primary hover:underline"
-            >
-              + Add Brand
-            </button>
-          </div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Brand <span className="text-gray-500 text-xs">(Required)</span>
+          </label>
           <select
-            {...register("brand")}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
+            {...register("brand", {
+              onChange: (e) => {
+                setValue("model", "");
+                setValue("version", "");
+              },
+            })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
           >
             <option value="">Select Brand</option>
-            {data?.data?.map((brand) => (
-              <option key={brand.id} value={brand.id}>
-                {brand.name}
+            {brands.map((brand) => (
+              <option value={brand?.id} key={brand?.id}>
+                {brand?.name}
               </option>
             ))}
+            {selectedBrand && !brands.some((b) => b?.id == selectedBrand) && (
+              <option value={selectedBrand}>{selectedBrand}</option>
+            )}
           </select>
         </div>
 
         {/* Model */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Model
+            Model <span className="text-gray-500 text-xs">(Required)</span>
+          </label>
+          <select
+            {...register("model", {
+              onChange: (e) => {
+                setValue("version", "");
+              },
+            })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+            disabled={!selectedBrand}
+          >
+            <option value="">Select Model</option>
+            {models.map((model) => (
+              <option value={model?.name} key={model?.id}>
+                {model?.name}
+              </option>
+            ))}
+            {currentModel && !models.some((m) => m?.name == currentModel) && (
+              <option value={currentModel}>{currentModel}</option>
+            )}
+          </select>
+        </div>
+
+        {/* Version */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Version
           </label>
           <input
-            {...register("model")}
-            type="text"
-            placeholder="Type your vehicle model"
+            {...register("version")}
+            list="version-list"
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+            placeholder="Select or type version"
+            disabled={!currentModel}
           />
+          <datalist id="version-list">
+            {versions.map((v) => (
+              <option value={v?.name || v?.version} key={v?.id} />
+            ))}
+          </datalist>
         </div>
 
         {/* Body */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Body
-          </label>
-          <select
-            {...register("body")}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
-          >
-            <option value="">Select Body Type</option>
-            {adsChoice?.data?.body_types?.map((body) => (
-              <option value={body?.value} key={body?.value}>
-                {body?.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        {vehicleType !== "Motorcycle" && vehicleType !== "Scooter" && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Body
+            </label>
+            <select
+              {...register("body")}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+            >
+              <option value="">Select Body Type</option>
+              {bodyTypes?.map((body) => (
+                <option value={body?.name} key={body?.id}>
+                  {body?.name}
+                </option>
+              ))}
+              {currentBody && !bodyTypes?.some((b) => b?.name == currentBody) && (
+                <option value={currentBody}>{currentBody}</option>
+              )}
+            </select>
+          </div>
+        )}
         {watch().vehicle_type === "Motorcycle" ||
         watch().vehicle_type === "Scooter" ? (
           // Seat Height for motorcycles and scoters
@@ -134,7 +211,7 @@ export default function BasicDetails() {
         {/* Original Price */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Original Price
+            Original Price <span className="text-gray-500 text-xs">(Required)</span>
           </label>
           <input
             {...register("originalPrice")}
@@ -180,11 +257,15 @@ export default function BasicDetails() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Fuel Type</option>
-         {adsChoice?.data?.fuel_types?.map((body) => (
-              <option value={body?.value} key={body?.value}>
-                {body?.label}
+            {fuelTypesList?.map((fuel) => (
+              <option value={fuel?.name} key={fuel?.id}>
+                {fuel?.name}
               </option>
             ))}
+            {currentFuelType &&
+              !fuelTypesList?.some((f) => f?.name == currentFuelType) && (
+                <option value={currentFuelType}>{currentFuelType}</option>
+              )}
           </select>
         </div>
 
@@ -211,24 +292,39 @@ export default function BasicDetails() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Transmission Type</option>
-            {adsChoice?.data?.transmissions?.map((body) => (
-              <option value={body?.value} key={body?.value}>
-                {body?.label}
+            {transmissionsList?.map((transmission) => (
+              <option value={transmission?.name} key={transmission?.id}>
+                {transmission?.name}
               </option>
             ))}
+            {currentTransmission &&
+              !transmissionsList?.some(
+                (t) => t?.name == currentTransmission,
+              ) && (
+                <option value={currentTransmission}>
+                  {currentTransmission}
+                </option>
+              )}
           </select>
         </div>
 
         {/* Exact date */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Exact date
+            Exact date <span className="text-gray-500 text-xs">(Required)</span>
           </label>
-          <input
-            {...register("exactDate")}
-            type="date"
-            placeholder="dd/mm/yyyy"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+          <Controller
+            name="exactDate"
+            control={control}
+            render={({ field }) => (
+              <DatePicker
+                placeholderText="DD/MM/YYYY"
+                dateFormat="dd/MM/yyyy"
+                selected={field.value ? new Date(field.value) : null}
+                onChange={(date) => field.onChange(date)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+              />
+            )}
           />
         </div>
 
@@ -237,16 +333,20 @@ export default function BasicDetails() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Condition
           </label>
-          <select
-            {...register("condition")}
+            <select
+              {...register("condition")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Condition</option>
-            {adsChoice?.data?.conditions?.map((body) => (
-              <option value={body?.value} key={body?.value}>
-                {body?.label}
+            {conditionsList?.map((condition) => (
+              <option value={condition?.name} key={condition?.id}>
+                {condition?.name}
               </option>
             ))}
+            {currentCondition &&
+              !conditionsList?.some((c) => c?.name == currentCondition) && (
+                <option value={currentCondition}>{currentCondition}</option>
+              )}
           </select>
         </div>
 
@@ -331,7 +431,7 @@ export default function BasicDetails() {
         {/* Color */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Color
+            Color <span className="text-gray-500 text-xs">(Required)</span>
           </label>
           <input
             {...register("color")}
@@ -394,44 +494,6 @@ export default function BasicDetails() {
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm resize-vertical"
         />
       </div>
-
-      {/* Brand Creation Modal */}
-      {isBrandModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
-            <h3 className="text-lg font-bold mb-4">Add New Brand</h3>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Brand Name
-              </label>
-              <input
-                type="text"
-                value={newBrandName}
-                onChange={(e) => setNewBrandName(e.target.value)}
-                placeholder="Enter brand name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
-              />
-            </div>
-            <div className="flex justify-end space-x-2">
-              <button
-                type="button"
-                onClick={() => setIsBrandModalOpen(false)}
-                className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-md"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleCreateBrand}
-                disabled={isPending}
-                className="px-4 py-2 text-sm text-white bg-custom-primary hover:opacity-90 rounded-md disabled:opacity-50"
-              >
-                {isPending ? "Adding..." : "Add Brand"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

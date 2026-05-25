@@ -25,7 +25,7 @@ const BlogDetailsBanner = ({ data, isLoading }) => {
         <p className="flex items-center gap-2">
           Blog <CustomArrow /> Blog Details
         </p>
-        <h1 className="text-3xl font-semibold">{data?.data?.title}</h1>
+        <h1 className="text-3xl font-semibold" dangerouslySetInnerHTML={{ __html: data?.data?.title }}></h1>
         <div ref={bannerImgRef} className="">
           <img
             src={

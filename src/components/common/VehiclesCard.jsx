@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 
 const VehiclesCard = ({
   id,
+  slug,
   imageUrl,
   title,
   subtitle,
@@ -70,7 +71,7 @@ const VehiclesCard = ({
         }
 
         {/* Features */}
-        <div className="flex justify-between items-center my-3 py-3 border-t border-b border-gray-200 ">
+        <div className={` flex justify-between items-center my-3 py-3 `} >
           
           <Feature icon={<MilageIcon />} label={mileage} />
           <Feature icon={<FuelIcon />} label={fuelType} />
@@ -97,7 +98,7 @@ const VehiclesCard = ({
         </div>
     
           <Link
-            to={`/${path || "details"}/${id}`}
+            to={`/${path || "details"}/${id}/${slug}`}
             onClick={onViewDetails}
             className="flex items-center text-custom-primary font-medium hover:text-blue-700 transition-colors"
           >

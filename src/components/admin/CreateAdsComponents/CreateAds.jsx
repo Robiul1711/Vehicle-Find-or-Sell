@@ -10,7 +10,7 @@ import RegistrationNumber from "./AllStepers/RegistrationNumber";
 import BasicDetails from "./AllStepers/BasicDetails";
 import EngineTransmissionSpaces from "./AllStepers/EngineTransmissionSpaces";
 import UploadMedia from "./AllStepers/UploadMedia";
-import SellerAddress from "./AllStepers/SellerAddress";
+import SellerAddress from "./AllStepers/SellerAddress"; 
 import ContactInformation from "./AllStepers/ContactInformation";
 import Preview from "./AllStepers/Preview";
 import StepProgressBar from "./StepProgressBar";
@@ -100,7 +100,7 @@ const stepsConfig = {
 import toast from "react-hot-toast";
 
 const CreateAds = () => {
-  const { id } = useParams();
+  const { id ,slug } = useParams();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -110,8 +110,8 @@ const CreateAds = () => {
 
   // Fetch data if dealing with an edit
   const { data: existingData, isLoading: isFetching } = useApiQuery({
-    queryKey: ["ads-vehicle-details", id],
-    url: `/ads/vehicles/${id}/`,
+    queryKey: ["ads-vehicle-details", id,slug],
+    url: `/ads/vehicles/${id}/${slug}/`,
     enabled: !!id,
     secure: true,
   });
@@ -120,8 +120,8 @@ const CreateAds = () => {
   // Usually the ID would be unique across types or we try 404 handling.
   // For now assuming vehicles endpoint serves vehicles. If parts are separate:
   const { data: existingPartData, isLoading: isFetchingPart } = useApiQuery({
-    queryKey: ["ads-part-details", id],
-    url: `/ads/parts/${id}/`,
+    queryKey: ["ads-part-details", id,slug],
+    url: `/ads/parts/${id}/${slug}/`,
     enabled: !!id && !existingData, // Simple fallback logic, might need refinement
     secure: true,
   });
@@ -157,8 +157,9 @@ const CreateAds = () => {
       // Map API response to form fields
       // Common fields
       const formattedData = {
-        brand: data.brand || data.brand_name, // API might return brand_name or brand
+        brand: data.brand_name, // API might return brand_name or brand
         model: data.model,
+        version: data.version,
         vehicle_type: categoryId,
         body: data.body,
         originalPrice: data.original_price,
@@ -241,11 +242,26 @@ const CreateAds = () => {
         quantity_in_stock: data.quantity_in_stock,
 
         // Features - map back to { [id]: true }
-        features:
-          data.features_obj?.reduce(
-            (acc, feat) => ({ ...acc, [feat.id]: true }),
-            {},
-          ) || {},
+        features: (() => {
+          if (data.features_obj) {
+            return data.features_obj.reduce(
+              (acc, feat) => ({ ...acc, [feat.id]: true }),
+              {},
+            );
+          }
+          if (data.features_grouped) {
+            const acc = {};
+            Object.values(data.features_grouped)
+              .flat()
+              .forEach((feat) => {
+                if (!feat.is_custom) acc[feat.id] = true;
+              });
+            return acc;
+          }
+          return {};
+        })(),
+
+        custom_features: data.custom_features || {},
 
         // Media
         images: data.media?.image || [],
@@ -459,6 +475,7 @@ const CreateAds = () => {
     append("brand", data.brand);
     append("brand_name", data.brand);
     append("model", data.model);
+    append("version", data.version);
     append("vehicle_type", selectedCategory?.toLowerCase() || "car");
     append("body", data.body);
     append("original_price", data.originalPrice);
@@ -560,6 +577,22 @@ const CreateAds = () => {
       });
     }
 
+    // Custom Features
+    if (data.custom_features) {
+      Object.keys(data.custom_features).forEach((category) => {
+        const catFeatures = data.custom_features[category];
+        if (Array.isArray(catFeatures)) {
+          catFeatures.forEach((featureName, index) => {
+            append(`custom_features[${category}][${index}]`, featureName);
+          });
+        }
+      });
+    }
+
+    if (data.additionalFeatures) {
+      append("additional_features", data.additionalFeatures);
+    }
+
     // Media Uploads
 
     if (Array.isArray(data.images)) {
@@ -638,7 +671,7 @@ const CreateAds = () => {
                   disabled={isPending}
                   className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
                 >
-                  BACK
+                  <span>RETURN</span>
                 </button>
               )}
 
@@ -649,7 +682,7 @@ const CreateAds = () => {
                     onClick={nextStep}
                     className="px-4 py-2 bg-custom-primary text-white rounded"
                   >
-                    {currentStep === 0 ? "Continue" : "NEXT"}
+                    <span>{currentStep === 0 ? "Continue" : "NEXT"}</span>
                   </button>
                 ) : currentStep === steps.length - 2 ? (
                   <button
@@ -660,7 +693,7 @@ const CreateAds = () => {
                     })}
                     className="px-4 py-2 bg-custom-primary text-white rounded"
                   >
-                    SUBMIT
+                    <span>SUBMIT</span>
                   </button>
                 ) : (
                   <>
@@ -670,7 +703,7 @@ const CreateAds = () => {
                       disabled={isPending}
                       className="px-4 py-2 bg-custom-secondary text-white rounded disabled:opacity-50"
                     >
-                      Schedule for Later
+                      <span>Schedule for Later</span>
                     </button>
                     <ScheduleLaterModal
                       isModalOpen={isModalOpen}
@@ -684,7 +717,9 @@ const CreateAds = () => {
                       disabled={isPending}
                       className="px-4 py-2 bg-custom-primary text-white rounded disabled:opacity-50 flex items-center gap-2"
                     >
-                      {isPending ? "Posting..." : "Post Immediately"}
+                      <span>
+                        {isPending ? "Posting..." : "Post Immediately"}
+                      </span>
                     </button>
                   </>
                 )}

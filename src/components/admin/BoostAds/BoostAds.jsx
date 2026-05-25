@@ -31,7 +31,13 @@ export default function BoostAds() {
 
   const { data, isLoading, isFetching } = useApiQuery({
     queryKey: isSearching
-      ? ["search-ads", debouncedSearch, selectedCategory, selectedStatus, currentPage]
+      ? [
+          "search-ads",
+          debouncedSearch,
+          selectedCategory,
+          selectedStatus,
+          currentPage,
+        ]
       : ["my-ads", selectedCategory, selectedStatus, currentPage],
     url: isSearching ? "/ads/search/" : "/ads/my-ads/",
     params: searchParams,
@@ -132,13 +138,27 @@ export default function BoostAds() {
             onChange={(e) => setSelectedStatus(e.target.value)}
             className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-[200px] cursor-pointer text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition shadow-sm hover:border-gray-300"
           >
-            <option value="">All Status ({statsData?.data?.total_listings || 0})</option>
-            <option value="active">Active ({statsData?.data?.active_listings || 0})</option>
-            <option value="pending">Pending ({statsData?.data?.pending_ads || 0})</option>
-            <option value="scheduled">Scheduled ({statsData?.data?.scheduled_ads || 0})</option>
-            <option value="is_favourite">Favourite ({statsData?.data?.favourites_saved || 0})</option>
-            <option value="is_pause">Paused Ads ({statsData?.data?.paused_ads || 0})</option>
-            <option value="is_boost">Boosted Ads ({statsData?.data?.boosted_ads || 0})</option>
+            <option value="">
+              All Status ({statsData?.data?.total_listings || 0})
+            </option>
+            <option value="active">
+              Active ({statsData?.data?.active_listings || 0})
+            </option>
+            <option value="pending">
+              Pending ({statsData?.data?.pending_ads || 0})
+            </option>
+            <option value="scheduled">
+              Scheduled ({statsData?.data?.scheduled_ads || 0})
+            </option>
+            <option value="is_favourite">
+              Favourite ({statsData?.data?.favourites_saved || 0})
+            </option>
+            <option value="is_pause">
+              Paused Ads ({statsData?.data?.paused_ads || 0})
+            </option>
+            <option value="is_boost">
+              Boosted Ads ({statsData?.data?.boosted_ads || 0})
+            </option>
           </select>
           <ChevronDown
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"

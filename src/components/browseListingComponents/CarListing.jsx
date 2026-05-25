@@ -2,13 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoGrid } from "react-icons/io5";
 import { FaList } from "react-icons/fa6";
-import {
-  ArrowUpRight,
-  Search,
-  Heart,
-  Filter,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, Search, Heart, Filter, X } from "lucide-react";
 import {
   CustomLocation,
   CustomMileage,
@@ -21,13 +15,14 @@ import NoVehicleFound from "./NoVehicleFound";
 
 const CarListing = ({
   items,
+  
   onFilterChange,
   filters,
   type,
   isLoading,
   onAddFavorite,
 }) => {
-  // console.log(items)
+  console.log(items)
   const [isGrid, setIsGrid] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchText, setSearchText] = useState(filters?.search || "");
@@ -70,30 +65,32 @@ const CarListing = ({
             <Filter size={18} />
             Filters
           </button>
-<div className="flex items-center gap-2">
-  <label className="text-sm font-medium text-gray-600 hidden sm:block">Sort by:</label>
-  <select 
-    className="border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none cursor-pointer bg-white shadow-sm hover:border-custom-primary transition-colors"
-    // Set the value based on the current filters.ordering state
-    value={filters?.ordering || ""} 
-    onChange={(e) => {
-      // Directly update the 'ordering' key with the selected value
-      onFilterChange({ ordering: e.target.value });
-    }}
-  >
-    <option value="">Default</option>
-    <option value="price_asc">Price: Low to High</option>
-    <option value="price_desc">Price: High to Low</option>
-    
-    {/* Only show mileage options if the type is NOT 'parts' */}
-    {type !== "parts" && (
-      <>
-        <option value="mileage_asc">Mileage: Low to High</option>
-        <option value="mileage_desc">Mileage: High to Low</option>
-      </>
-    )}
-  </select>
-</div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-gray-600 hidden sm:block">
+              Sort by:
+            </label>
+            <select
+              className="border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none cursor-pointer bg-white shadow-sm hover:border-custom-primary transition-colors"
+              // Set the value based on the current filters.ordering state
+              value={filters?.ordering || ""}
+              onChange={(e) => {
+                // Directly update the 'ordering' key with the selected value
+                onFilterChange({ ordering: e.target.value });
+              }}
+            >
+              <option value="">Default</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+
+              {/* Only show mileage options if the type is NOT 'parts' */}
+              {type !== "parts" && (
+                <>
+                  <option value="mileage_asc">Mileage: Low to High</option>
+                  <option value="mileage_desc">Mileage: High to Low</option>
+                </>
+              )}
+            </select>
+          </div>
           {/* View Toggle - Hidden on mobile, force grid */}
           <div className="hidden sm:flex items-center bg-gray-100 p-1 rounded-xl">
             <button
@@ -122,7 +119,6 @@ const CarListing = ({
         </div>
       </div>
 
-   
       <div className="flex gap-5">
         <div className="hidden md:block w-1/4 flex-shrink-0">
           <FilterSection onFilterChange={onFilterChange} filters={filters} />
@@ -228,19 +224,19 @@ const CarListing = ({
                               : "w-44 h-44 mr-4 flex-shrink-0"
                           }`}
                         />
-                     <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onAddFavorite(item.id);
-                            }}
-                           className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-300 group z-10"
-                                  >
-                                    {console.log(item)}
-                                    <Heart
-                                      className={`w-5 h-5 transition-all duration-300 ${item.isFavorite ? "text-custom-primary fill-custom-primary" : "text-gray-600 group-hover:text-custom-primary group-hover:fill-custom-primary"}`}
-                                      fill={item.isFavorite ? "currentColor" : "none"}
-                                    />
-                          </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAddFavorite(item.id);
+                          }}
+                          className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-300 group z-10"
+                        >
+                          {/* {console.log(item)} */}
+                          <Heart
+                            className={`w-5 h-5 transition-all duration-300 ${item.isFavorite ? "text-custom-primary fill-custom-primary" : "text-gray-600 group-hover:text-custom-primary group-hover:fill-custom-primary"}`}
+                            fill={item.isFavorite ? "currentColor" : "none"}
+                          />
+                        </button>
                       </div>
                       <div
                         className={`${isGrid ? "w-full flex-1 flex flex-col" : "flex-1"}`}
@@ -276,29 +272,34 @@ const CarListing = ({
                         </motion.p>
                         <motion.div
                           layout
-                          className="border-[1px] my-2 border-gray-300"
+                          className=" my-2 "
                         ></motion.div>
-                        <motion.button
-                          layout
-                          className="px-4 py-2 flex justify-between items-center gap-4 w-full rounded-lg"
-                        >
-                          <div className="flex flex-col items-center">
-                            <CustomMileage />
-                            <p className="capitalize">{item?.mileage}</p>
-                          </div>
-                          <div className="flex flex-col items-center">
-                            <CustomPetrol />
-                            <p className="capitalize">{item?.fuelType}</p>
-                          </div>
-
-                          <div className="flex flex-col items-center">
-                            <CustomTransmission />
-                            <p className="capitalize">{item?.transmission}</p>
-                          </div>
-                        </motion.button>
                         <motion.div
                           layout
-                          className="border-[1px] my-2 border-gray-300"
+                          className="py-2 flex justify-between items-center gap-4 w-full"
+                        >
+                          {item?.mileage && (
+                            <div className="flex flex-col items-center ">
+                              <CustomMileage className="bg-gray-50 p-2 rounded-full"/>
+                              <p className="capitalize">{item?.mileage}</p>
+                            </div>
+                          )}
+                          {item?.fuelType && (
+                            <div className="flex flex-col items-center">
+                              <CustomPetrol />
+                              <p className="capitalize">{item?.fuelType}</p>
+                            </div>
+                          )}
+                          {item?.transmission && (
+                            <div className="flex flex-col items-center">
+                              <CustomTransmission />
+                              <p className="capitalize">{item?.transmission}</p>
+                            </div>
+                          )}
+                        </motion.div>
+                        <motion.div
+                          layout
+                          className="my-2 "
                         ></motion.div>
                         <motion.div
                           layout
@@ -314,7 +315,7 @@ const CarListing = ({
                             <span>€</span>
                             <span>{item?.price}</span>
                           </motion.p>
-                          <Link to={`/details/${item?.id}`}>
+                          <Link to={`/details/${item?.id}/${item?.slug}`}>
                             <motion.p
                               layout
                               className={`${

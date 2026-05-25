@@ -236,8 +236,8 @@ const DealerProfileListing = () => {
                     <Link
                       to={
                         isPartItem
-                          ? `/parts-details/${item.id}`
-                          : `/details/${item.id}`
+                          ? `/parts-details/${item.id}/${item.slug}`
+                          : `/details/${item.id}/${item.slug}`
                       }
                       className="inline-flex items-center gap-2 px-4 py-2 bg-custom-primary text-white rounded-lg text-sm font-bold hover:bg-custom-primary/90 transition-all active:scale-95 shadow-lg shadow-custom-primary/20"
                     >

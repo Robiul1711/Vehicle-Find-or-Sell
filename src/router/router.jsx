@@ -66,11 +66,11 @@ const router = createBrowserRouter([
         element: <BrouseListing />,
       },
       {
-        path: "/details/:id",
+        path: "/details/:id/:slug",
         element: <DetailsPage />,
       },
       {
-        path: "/parts-details/:id",
+        path: "/parts-details/:id/:slug",
         element: <PartsDetails />,
       },
       {
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
         element: <BlogPage />,
       },
       {
-        path: "/blogDetails/:id",
+        path: "/blogdetails/:id/:slug",
         element: <BlogDetailsPage />,
       },
       {
@@ -86,7 +86,7 @@ const router = createBrowserRouter([
         element: <DealerPage />,
       },
       {
-        path: "/dealer-profile/:id",
+        path: "/dealer-profile/:id/:slug",
         element: <DealerProfile />,
       },
       {
@@ -228,11 +228,11 @@ const router = createBrowserRouter([
         element: <CreateAds />,
       },
       {
-        path: "/dashboard/edit-ads/:id",
+        path: "/dashboard/edit-ads/:id/:slug",
         element: <CreateAds />,
       },
       {
-        path: "/dashboard/car-details/:id",
+        path: "/dashboard/car-details/:id/:slug",
         element: <CarDetailsPage />,
       },
       {

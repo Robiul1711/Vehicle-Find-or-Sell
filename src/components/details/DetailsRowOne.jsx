@@ -13,6 +13,7 @@ import VehiclePriceDealer from "./VehiclePriceDealer";
 import { useApiMutation } from "@/hooks/useApiMutation";
 
 const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
+  console.log(data);
   if (isLoading) {
     return (
       <div className="flex w-full xmd:flex-row flex-col gap-5 mt-14">
@@ -67,7 +68,7 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
       mutate({ id: data.id, type: favType });
     }
   };
-// console.log(data)
+  // console.log(data)
   const carInfo = [
     { id: 1, icon: MilesIcons, value: data?.mileage },
     { id: 2, icon: ManualIcon, value: data?.transmission },
@@ -118,15 +119,17 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
           <div className="flex w-full gap-6 justify-between">
             {/* Car Info Badges */}
             <div className="flex flex-wrap gap-3">
-              {carInfo.map((info) => (
-                <div
-                  key={info.id}
-                  className="flex items-center bg-[rgba(248,142,8,0.10)] gap-2 border px-3 py-1 rounded-lg"
-                >
-                  <info.icon />
-                  <span className="text-[#F88E08]">{info.value}</span>
-                </div>
-              ))}
+              {carInfo
+                .filter((info) => info.value)
+                .map((info) => (
+                  <div
+                    key={info.id}
+                    className="flex items-center bg-[rgba(248,142,8,0.10)] gap-2 border px-3 py-1 rounded-lg"
+                  >
+                    <info.icon />
+                    <span className="text-[#F88E08]">{info.value}</span>
+                  </div>
+                ))}
             </div>
 
             {/* Buttons Section */}
@@ -135,11 +138,11 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
               <button
                 onClick={onAddFavorite}
                 disabled={isPending}
-                className={`flex items-center gap-2 border px-3 py-1 rounded-lg transition ${
-                  isFavorite ? "bg-red-100 border-red-400" : ""
+                className={`flex items-center gap-2 border px-3 py-1 rounded-lg transition hover:scale-[1.1] ${
+                  data?.is_favourite ? "bg-red-100 border-red-400" : ""
                 }`}
               >
-                {isFavorite ? (
+                {data?.is_favourite ? (
                   <MdFavorite size={22} className="text-red-500" />
                 ) : (
                   <MdFavoriteBorder size={22} />
@@ -157,11 +160,19 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
           </div>
         </div>
 
-        <CarLeftSideImages details={details} data={data} isLoading={isLoading} />
+        <CarLeftSideImages
+          details={details}
+          data={data}
+          isLoading={isLoading}
+        />
       </div>
 
       <div className="xmd:w-[40%] w-full">
-        <VehiclePriceDealer data={data} isLoading={isLoading} details={details} />
+        <VehiclePriceDealer
+          data={data}
+          isLoading={isLoading}
+          details={details}
+        />
       </div>
     </div>
   );

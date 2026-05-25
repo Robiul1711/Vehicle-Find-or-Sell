@@ -119,7 +119,8 @@ export default function MyFavorites() {
             No favorites added yet
           </h3>
           <p className="text-gray-500 text-center max-w-sm">
-            When you find a car you like, click the heart icon to save it here for later.
+            When you find a car you like, click the heart icon to save it here
+            for later.
           </p>
         </div>
       ) : (

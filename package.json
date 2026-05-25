@@ -35,6 +35,7 @@
     "motion": "^12.16.0",
     "otp-input-react": "^0.3.0",
     "react": "^19.1.0",
+    "react-datepicker": "^9.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.63.0",
     "react-hot-toast": "^2.6.0",
