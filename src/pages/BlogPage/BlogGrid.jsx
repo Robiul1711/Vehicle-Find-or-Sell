@@ -62,11 +62,9 @@ const BlogGrid = ({ data, isLoading }) => {
       <div className="grid md:grid-cols-3 gap-6">
         {currentBlogs.length > 0 ? (
           currentBlogs.map((blog) => (
-            <div
-              key={blog.id}
-              className="rounded-xl overflow-hidden hover:shadow-lg transition flex flex-col h-full border border-gray-100"
+            <Link to={`/blogdetails/${blog.id}/${blog.slug}`} key={blog.id} className="rounded-xl overflow-hidden hover:shadow-lg transition flex flex-col h-full border border-gray-100"
             >
-              {console.log(blog)}
+              {/* {console.log(blog)} */}
               <img
                 src={blog.image}
                 alt={blog.title}
@@ -96,7 +94,7 @@ const BlogGrid = ({ data, isLoading }) => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <div className="col-span-3 text-center py-20 text-gray-500">

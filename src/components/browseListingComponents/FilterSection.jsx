@@ -1,31 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown } from "lucide-react";
 import { CustomFilter } from "@/utils/IconProvider";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
 const FilterSection = ({ onFilterChange, filters }) => {
-  // Local state to hold filter values before applying
+  // Local state to hold filter values, initialized from filters prop
   const [localFilters, setLocalFilters] = useState({
-    price_min: "",
-    price_max: "",
-    body_type: "",
-    brand: "",
-    model: "",
-    fuel_type: "",
-    transmission: "",
-    mileage_min: "",
-    mileage_max: "",
-    year_min: "",
-    year_max: "",
-    hp_cv_min: "",
-    hp_cv_max: "",
-    hp_din_min: "",
-    hp_din_max: "",
-    vat: "",
-    country: "",
-    condition: "",
-    seller_type: "",
+    price_min: filters?.price_min || "",
+    price_max: filters?.price_max || "",
+    body_type: filters?.body_type || "",
+    brand: filters?.brand || "",
+    model: filters?.model || "",
+    fuel_type: filters?.fuel_type || "",
+    transmission: filters?.transmission || "",
+    mileage_min: filters?.mileage_min || "",
+    mileage_max: filters?.mileage_max || "",
+    year_min: filters?.year_min || "",
+    year_max: filters?.year_max || "",
+    hp_cv_min: filters?.hp_cv_min || "",
+    hp_cv_max: filters?.hp_cv_max || "",
+    hp_din_min: filters?.hp_din_min || "",
+    hp_din_max: filters?.hp_din_max || "",
+    vat: filters?.vat || "",
+    country: filters?.country || "",
+    condition: filters?.condition || "",
+    seller_type: filters?.seller_type || "",
   });
+
+  const debounceTimeoutRef = useRef(null);
+
+  // Sync localFilters with filters prop
+  useEffect(() => {
+    setLocalFilters({
+      price_min: filters?.price_min || "",
+      price_max: filters?.price_max || "",
+      body_type: filters?.body_type || "",
+      brand: filters?.brand || "",
+      model: filters?.model || "",
+      fuel_type: filters?.fuel_type || "",
+      transmission: filters?.transmission || "",
+      mileage_min: filters?.mileage_min || "",
+      mileage_max: filters?.mileage_max || "",
+      year_min: filters?.year_min || "",
+      year_max: filters?.year_max || "",
+      hp_cv_min: filters?.hp_cv_min || "",
+      hp_cv_max: filters?.hp_cv_max || "",
+      hp_din_min: filters?.hp_din_min || "",
+      hp_din_max: filters?.hp_din_max || "",
+      vat: filters?.vat || "",
+      country: filters?.country || "",
+      condition: filters?.condition || "",
+      seller_type: filters?.seller_type || "",
+    });
+  }, [filters]);
+
+  // Clean up debounce timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const { data: brands } = useApiQuery({
     queryKey: ["brands"],
@@ -70,12 +106,40 @@ const FilterSection = ({ onFilterChange, filters }) => {
   };
 
   const handleChange = (key, value) => {
+    // 1. Instantly update local state so the input UI is fluid and reactive
     setLocalFilters((prev) => ({ ...prev, [key]: value }));
-  };
 
-  const handleApply = () => {
-    if (onFilterChange) {
-      onFilterChange(localFilters);
+    // 2. Prepare the updated filters
+    const updatedFilters = { ...localFilters, [key]: value };
+
+    // Select options (like body_type, condition) filter instantly
+    const instantKeys = [
+      "body_type",
+      "brand",
+      "fuel_type",
+      "transmission",
+      "vat",
+      "condition",
+      "seller_type",
+    ];
+
+    if (instantKeys.includes(key)) {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      if (onFilterChange) {
+        onFilterChange(updatedFilters);
+      }
+    } else {
+      // Debounce typing/number inputs to prevent backend api spamming
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+      debounceTimeoutRef.current = setTimeout(() => {
+        if (onFilterChange) {
+          onFilterChange(updatedFilters);
+        }
+      }, 500);
     }
   };
 
@@ -120,12 +184,6 @@ const FilterSection = ({ onFilterChange, filters }) => {
             className="text-sm text-gray-500 hover:text-black hover:underline transition-all"
           >
             Clear All
-          </button>
-          <button
-            onClick={handleApply}
-            className="bg-custom-primary text-white text-sm px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors shadow-sm"
-          >
-            Apply Filter
           </button>
         </div>
       </div>

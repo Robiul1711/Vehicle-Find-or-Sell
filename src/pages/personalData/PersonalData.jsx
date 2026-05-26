@@ -2,6 +2,7 @@ import Title from "@/components/common/Title";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import React from "react";
 import { ScrollRestoration } from "react-router-dom";
+import SEO from "@/components/common/SEO";
 
 const PersonalData = () => {
   const { data, isLoading } = useApiQuery({
@@ -26,6 +27,7 @@ const PersonalData = () => {
   if (isLoading) {
     return (
       <div className="section-padding-x section-padding-y flex justify-center items-center min-h-[400px]">
+        <SEO title="Personal Data Protection Policy" />
         <p className="lg:text-lg">Loading...</p>
       </div>
     );
@@ -35,6 +37,10 @@ const PersonalData = () => {
 
   return (
     <div>
+      <SEO 
+        title="Personal Data Protection Policy"
+        description="Learn how Ronpoin protects and manages your personal data and privacy settings."
+      />
       <ScrollRestoration />
       <div className="section-padding-x section-padding-y max-w-7xl mx-auto flex flex-col gap-[45px] xmd:gap-[40px]">
         {/* Main Title */}

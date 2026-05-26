@@ -9,6 +9,8 @@ import { bikes, cars, Parts, Scoter, trucks } from "@/lib/cardata";
 import PartOverview from "@/components/details/PartOverview";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useParams } from "react-router-dom";
+import SEO from "@/components/common/SEO";
+
 const DetailsPage = () => {
   const { id, slug} = useParams();
   const { data, isLoading, refetch } = useApiQuery({
@@ -18,8 +20,20 @@ const DetailsPage = () => {
   });
   // console.log(data);
   const details = "car"; // car, truck, bike, scoter, parts
+  const vehicle = data?.data;
+
   return (
     <div className="section-padding-x pb-20 flex flex-col gap-10 ">
+      {vehicle ? (
+        <SEO
+          title={`${vehicle.brand_name} ${vehicle.model} ${vehicle.exact_date ? `(${vehicle.exact_date})` : ""}`}
+          description={`Buy this ${vehicle.brand_name} ${vehicle.model} on Ronpoin. Transmission: ${vehicle.transmission || 'N/A'}, Fuel Type: ${vehicle.fuel_type || 'N/A'}, Mileage: ${vehicle.mileage || 'N/A'}.`}
+          image={vehicle.first_image}
+          keywords={[vehicle.brand_name, vehicle.model, vehicle.fuel_type, 'car details', 'buy car']}
+        />
+      ) : (
+        <SEO title="Loading Vehicle Details..." />
+      )}
       <DetailsRowOne details={details} data={data?.data} refetch={refetch} isLoading={isLoading} />
       <div className=" max-w-[950px]">
         {details === "parts" ? (

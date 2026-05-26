@@ -74,6 +74,54 @@ const Navbar = () => {
             : "bg-white/90 backdrop-blur-md"
         } `}
       >
+        {/* Top Announcement Marquee Bar */}
+        <div className="w-full bg-gradient-to-r from-custom-primary to-custom-secondary text-white py-2 text-xs sm:text-sm font-semibold tracking-wide shadow-sm flex overflow-hidden select-none border-b border-white/10 marquee-container">
+          <div className="animate-marquee whitespace-nowrap flex gap-10 items-center pr-10">
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Please be patient, Ronpoin.fr is coming soon to your screens!
+            </span>
+            <span className="text-white/40">•</span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Veuillez patienter, Ronpoin.fr arrive bientôt sur vos écrans !
+            </span>
+            <span className="text-white/40">•</span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Please be patient, Ronpoin.fr is coming soon to your screens!
+            </span>
+            <span className="text-white/40">•</span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Veuillez patienter, Ronpoin.fr arrive bientôt sur vos écrans !
+            </span>
+            <span className="text-white/40">•</span>
+          </div>
+          <div className="animate-marquee whitespace-nowrap flex gap-10 items-center pr-10" aria-hidden="true">
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Please be patient, Ronpoin.fr is coming soon to your screens!
+            </span>
+            <span className="text-white/40">•</span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Veuillez patienter, Ronpoin.fr arrive bientôt sur vos écrans !
+            </span>
+            <span className="text-white/40">•</span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Please be patient, Ronpoin.fr is coming soon to your screens!
+            </span>
+            <span className="text-white/40">•</span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              Veuillez patienter, Ronpoin.fr arrive bientôt sur vos écrans !
+            </span>
+            <span className="text-white/40">•</span>
+          </div>
+        </div>
+
         <div className="section-padding-x">
           <div className="flex h-16 lg:h-20 items-center justify-between">
             {/* Logo */}

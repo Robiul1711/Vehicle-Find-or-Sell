@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import { ScrollRestoration } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
+import SEO from "@/components/common/SEO";
 
 const BlogPage = () => {
   const LookingRef = useRef(null);
@@ -37,6 +38,11 @@ const BlogPage = () => {
   }, []);
   return (
     <div>
+      <SEO 
+        title="Auto Insights & Blog"
+        description="Get the latest advice, car maintenance tips, and vehicle purchase guides from our automotive experts on Ronpoin."
+        keywords={["auto blog", "car advice", "vehicle tips", "maintenance guides", "automotive news"]}
+      />
       <ScrollRestoration />
       <BlogBanner />
       <CommonPageWrapper>

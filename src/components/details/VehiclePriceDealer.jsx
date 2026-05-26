@@ -217,8 +217,8 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
 
         {/* View All Stock Link */}
         <Link
-          to={`/dealer-profile/${data?.profile_id}`}
-          className="text-sm text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1 w-full"
+          to={`/dealer-profile/${data?.profile_id}/${data?.slug}`}
+          className="text-sm text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1 w-full border border-gray-200 py-2 px-4 rounded-lg"
         >
           View All stock at this dealer
           <ExternalLink size={14} />

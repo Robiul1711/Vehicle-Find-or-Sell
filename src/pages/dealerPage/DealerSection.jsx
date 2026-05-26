@@ -32,6 +32,8 @@ import ImageAvatar from "@/assets/images/dummy.png";
 import { DeliveryIcon } from "@/components/common/SVGicons/DashboardIcon";
 import GoogleReviewShow from "./GoogleReviewShow";
 import { BsWhatsapp } from "react-icons/bs";
+import SEO from "@/components/common/SEO";
+
 const DealerSection = () => {
   const { user } = useAuth();
   const { id } = useParams();
@@ -53,6 +55,7 @@ const DealerSection = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
+        <SEO title="Loading Dealer Profile..." />
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-custom-primary"></div>
       </div>
     );
@@ -73,6 +76,15 @@ const DealerSection = () => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-10">
+      {profileData && (
+        <SEO 
+          title={`${profileData.full_name} (${profileData.account_type || 'Professional Seller'})`}
+          description={`Connect with ${profileData.full_name} located in ${profileData.city || ''}, ${profileData.country || ''}. Specializing in professional seller services on Ronpoin.`}
+          image={profileData.profile_image}
+          type="profile"
+          keywords={[profileData.full_name, 'dealer profile', 'ronpoin seller', 'professional seller']}
+        />
+      )}
       <div className="bg-white relative lg:w-3/4 rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         {/* Header with geometric design */}
         <div className=" ">

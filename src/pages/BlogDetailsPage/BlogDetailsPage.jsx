@@ -9,6 +9,7 @@ import BlogCommonForm from "@/components/blogComponents/blogDetails/BlogCommonFo
 import RelatedPostsSection from "@/components/blogComponents/blogDetails/RelatedPostsSection";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useParams } from "react-router-dom";
+import SEO from "@/components/common/SEO";
 
 const BlogDetailsPage = () => {
   const { id, slug } = useParams();
@@ -40,13 +41,27 @@ const BlogDetailsPage = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-[60vh]">
+        <SEO title="Loading Blog Details..." />
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-custom-primary"></div>
       </div>
     );
   }
 
+  const post = data?.data;
+
   return (
     <div className="">
+      {post && (
+        <SEO 
+          title={post.title}
+          description={post.content}
+          image={post.image}
+          type="article"
+          author={post.user}
+          publishedTime={post.created_at}
+          keywords={[post.title, 'blog post', 'auto advice', 'ronpoin']}
+        />
+      )}
       <ScrollRestoration />
       <CommonPageWrapper className="!gap-10">
         <BlogDetailsBanner data={data} isLoading={isLoading} />

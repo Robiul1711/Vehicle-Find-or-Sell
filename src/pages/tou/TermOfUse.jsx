@@ -2,6 +2,7 @@ import Title from "@/components/common/Title";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import React from "react";
 import { ScrollRestoration } from "react-router-dom";
+import SEO from "@/components/common/SEO";
 
 const TermOfUse = () => {
   const { data, isLoading } = useApiQuery({
@@ -31,6 +32,7 @@ const TermOfUse = () => {
   if (isLoading) {
     return (
       <div className="section-padding-x section-padding-y flex justify-center items-center min-h-[400px]">
+        <SEO title="Terms of Use" />
         <p className="lg:text-lg">Loading...</p>
       </div>
     );
@@ -40,6 +42,10 @@ const TermOfUse = () => {
 
   return (
     <div>
+      <SEO 
+        title="Terms of Use"
+        description="Read the Terms of Use policy to learn about rights, obligations, and restrictions on Ronpoin."
+      />
       <ScrollRestoration />
       <div className="section-padding-x section-padding-y max-w-7xl mx-auto flex flex-col gap-[45px] xmd:gap-[40px]">
         {/* Main Title */}

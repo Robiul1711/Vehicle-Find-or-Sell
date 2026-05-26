@@ -28,7 +28,7 @@ const VehiclesCard = ({
   isFavorite,
 }) => {
   return (
-    <div className="rounded-2xl shadow-lg overflow-hidden h-full flex flex-col">
+    <Link to={`/${path || "details"}/${id}/${slug}`} className="rounded-2xl shadow-lg overflow-hidden h-full flex flex-col">
       {/* Image */}
       <div className="relative">
         <img src={imageUrl} alt={title} className="w-full h-58 object-cover" />
@@ -107,7 +107,7 @@ const VehiclesCard = ({
           </Link>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

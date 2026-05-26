@@ -3,6 +3,7 @@ import Title from "@/components/common/Title";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import React from "react";
 import { ScrollRestoration } from "react-router-dom";
+import SEO from "@/components/common/SEO";
 
 const TermAndCondition = () => {
   const { data, isLoading } = useApiQuery({
@@ -32,6 +33,7 @@ const TermAndCondition = () => {
   if (isLoading) {
     return (
       <div className="section-padding-x section-padding-y flex justify-center items-center min-h-[400px]">
+        <SEO title="Terms & Conditions" />
         <p className="lg:text-lg">Loading...</p>
       </div>
     );
@@ -41,6 +43,10 @@ const TermAndCondition = () => {
 
   return (
     <div>
+      <SEO 
+        title="Terms & Conditions"
+        description="Read the Terms and Conditions of using the Ronpoin platform for buying and selling vehicles and parts."
+      />
       <ScrollRestoration />
       <div className="section-padding-x section-padding-y max-w-7xl mx-auto flex flex-col gap-[45px] xmd:gap-[40px]">
         {/* Header Section */}

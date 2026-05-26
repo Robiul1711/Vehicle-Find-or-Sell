@@ -4,6 +4,7 @@ import { CommonPageWrapper } from "@/components/common/CommonPageWrapper";
 import { Link, useSearchParams } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import SEO from "@/components/common/SEO";
 
 const ProductComparison = () => {
   const [searchParams] = useSearchParams();
@@ -198,6 +199,10 @@ const ProductComparison = () => {
 
   return (
     <CommonPageWrapper>
+      <SEO 
+        title="Compare Vehicles"
+        description="Compare vehicles side-by-side to evaluate specifications, price, fuel type, transmission, and features on Ronpoin."
+      />
       <div className=" ">
         {/* Header */}
         <div className="mb-10">

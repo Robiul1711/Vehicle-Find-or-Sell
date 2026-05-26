@@ -263,7 +263,8 @@ const PartListing = ({
                       isGrid ? "w-full mx-auto" : ""
                     }`}
                   >
-                    <motion.div
+                    <Link 
+                      to={`/parts-details/${item.id}/${item.slug}`}
                       layout
                       className={`${
                         isGrid
@@ -380,7 +381,7 @@ const PartListing = ({
                           </Link>
                         </motion.div>
                       </div>
-                    </motion.div>
+                    </Link>
                   </motion.div>
                 );
               })
@@ -430,7 +431,7 @@ const PartListing = ({
                   onClick={() => setIsSidebarOpen(false)}
                   className="w-full bg-custom-primary text-white py-3 rounded-xl font-semibold shadow-lg shadow-orange-500/20"
                 >
-                  Apply Filters
+                  Show Results
                 </button>
               </div>
             </motion.div>

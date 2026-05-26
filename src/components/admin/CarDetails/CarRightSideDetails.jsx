@@ -23,7 +23,7 @@ import { ProfetionalIcon, VideoIcon } from "@/components/common/SVGicons/MySvg";
 import { Link, useParams } from "react-router-dom";
 
 export default function CarRightSideDetails({ details }) {
-  // console.log(details)
+  console.log(details)
   const { id } = useParams();
 
   const specs = [
@@ -103,8 +103,8 @@ export default function CarRightSideDetails({ details }) {
 
       {/* Status Icons */}
       <div className="flex gap-3 mb-4">
-        <VideoIcon />
-        <ProfetionalIcon />
+        {details?.is_video ? <VideoIcon /> : null}
+        {details?.is_bumped ? <ProfetionalIcon /> : null}
       </div>
 
       {/* Price */}

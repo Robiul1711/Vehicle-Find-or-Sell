@@ -378,8 +378,24 @@ iframe.goog-te-banner-frame {
   background-color: #94a3b8;
 }
 
-
-
 .react-datepicker-wrapper {
   width: 100% !important;
+}
+
+/* Marquee Announcement Animation */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+
+.marquee-container:hover .animate-marquee {
+  animation-play-state: paused;
 }

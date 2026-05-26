@@ -69,10 +69,11 @@ const AutoInsightsAdvice = () => {
         className='mt-16 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8'
       >
         {data?.data?.slice(0, 4).map((article) => (
-          <motion.div 
+          <Link 
+            to={`/blogDetails/${article.id}/${article.slug}`} 
             key={article.id} 
             variants={cardVariants}
-            className='text-[#141414] overflow-hidden group cursor-pointer'
+            className='text-[#141414] overflow-hidden group '
           >
             <div className="overflow-hidden rounded-xl">
               <motion.img 
@@ -95,14 +96,14 @@ const AutoInsightsAdvice = () => {
                 <div dangerouslySetInnerHTML={{ __html: article.title }}></div>
               </Title>
 
-              <Link to={`/blogDetails/${article.id}`} className='flex items-center gap-2 font-bold text-custom-primary mb-4 group/btn'>
+              <Link to={`/blogDetails/${article.id}/${article.slug}`} className='flex items-center gap-2 font-bold text-custom-primary mb-4 group/btn'>
                 Read More 
                 <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
                   <ArrowUpRight className='w-4 h-4'/>
                 </motion.span>
               </Link>
             </div>
-          </motion.div>
+          </Link>
         ))}
       </motion.div>
     </div>
