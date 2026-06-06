@@ -37,7 +37,7 @@ const VechleBoostCard = ({ car }) => {
         </div>
 
         {/* Features */}
-        <div className="flex items-center justify-between gap-2 text-gray-700 text-sm mt-3 mb-2 border-t pt-3 border-b pb-3">
+        <div className="flex items-center justify-between gap-2 text-gray-700 text-sm mt-3 mb-2 pt-3  pb-3">
           {car?.mileage && (
             <div className="flex flex-col items-center gap-1">
               <MilageIcon />

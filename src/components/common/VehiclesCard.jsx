@@ -7,7 +7,7 @@ import {
   FuelIcon,
   MilageIcon,
 } from "./SVGicons/MySvg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const VehiclesCard = ({
   id,
@@ -27,8 +27,14 @@ const VehiclesCard = ({
   path,
   isFavorite,
 }) => {
+const navigate = useNavigate();
+  const detailPath = `/${path || "details"}/${id}/${slug}`;
+  const handleCardClick = (e) => {
+    navigate(detailPath);
+  };
   return (
-    <Link to={`/${path || "details"}/${id}/${slug}`} className="rounded-2xl shadow-lg overflow-hidden h-full flex flex-col">
+    <div 
+      onClick={handleCardClick} className="rounded-2xl shadow-lg overflow-hidden h-full flex flex-col cursor-pointer">
       {/* Image */}
       <div className="relative">
         <img src={imageUrl} alt={title} className="w-full h-58 object-cover" />
@@ -107,7 +113,7 @@ const VehiclesCard = ({
           </Link>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

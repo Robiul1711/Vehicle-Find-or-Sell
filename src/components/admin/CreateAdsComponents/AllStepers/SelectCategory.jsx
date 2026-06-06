@@ -24,8 +24,8 @@ export default function SelectCategory({ onCategorySelect }) {
   return (
     <div>
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+      <div className="mb-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
           Post Your Ad
         </h1>
         <p className="text-gray-600">
@@ -35,8 +35,8 @@ export default function SelectCategory({ onCategorySelect }) {
       </div>
 
       {/* Category Selection */}
-      <div className="mb-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">
+      <div className="mb-4">
+        <h2 className="text-lg font-medium text-gray-900 mb-2">
           Select Category
         </h2>
 

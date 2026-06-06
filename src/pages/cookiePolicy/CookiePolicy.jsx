@@ -26,9 +26,9 @@ const CookiePolicy = () => {
 
   if (isLoading) {
     return (
-      <div className="section-padding-x section-padding-y flex justify-center items-center min-h-[400px]">
+      <div className="section-padding-x section-padding-y flex justify-center items-center min-h-screen">
         <SEO title="Cookie Policy" />
-        <p className="lg:text-lg">Loading...</p>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary" />
       </div>
     );
   }
@@ -42,7 +42,7 @@ const CookiePolicy = () => {
         description="Learn how Ronpoin uses cookies and web technologies to improve your user experience."
       />
       <ScrollRestoration />
-      <div className="section-padding-x section-padding-y max-w-7xl mx-auto flex flex-col gap-[45px] xmd:gap-[40px]">
+      <div className="section-padding-x py-6 md:py-10 max-w-7xl mx-auto flex flex-col gap-10 min-h-screen">
         {/* Main Title */}
         {pageData?.title && (
           <div className="space-y-2">
@@ -53,10 +53,8 @@ const CookiePolicy = () => {
         {/* Dynamic Sections */}
         {pageData?.sections?.map((section) => (
           <div key={section.section_id} className="space-y-2">
-            <Title level="title24" className="font-semibold">
-              {section.title}
-            </Title>
-            <p className="lg:text-lg">
+            <Title level="title24" className="font-semibold! text-black">{section.title}</Title>
+            <p className="lg:text-lg font-medium! text-black">
               {renderDescription(section.description)}
             </p>
           </div>

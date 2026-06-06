@@ -6,7 +6,7 @@ import { matchPath } from "react-router-dom";
 import logo from "@/assets/images/logo1.png";
 import { useAuth } from "@/hooks/useAuth";
 import Swal from "sweetalert2";
-
+import fav from "@/assets/images/fav.png";
 const SideBar = ({ sidebar, open, setOpen }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const SideBar = ({ sidebar, open, setOpen }) => {
     sidebar.forEach((item, index) => {
       if (item.sublink) {
         const activeSub = item.sublink.find(
-          (sub) => sub.path === location.pathname
+          (sub) => sub.path === location.pathname,
         );
         if (activeSub) {
           setActiveParentIndex(index);
@@ -31,7 +31,7 @@ const SideBar = ({ sidebar, open, setOpen }) => {
     const pathArray = Array.isArray(paths) ? paths : [paths];
 
     return pathArray.some((p) =>
-      matchPath({ path: p, end: true }, location.pathname)
+      matchPath({ path: p, end: true }, location.pathname),
     );
   };
 
@@ -75,25 +75,24 @@ const SideBar = ({ sidebar, open, setOpen }) => {
 
       {/* Sidebar */}
       <div
-        className={`h-full py-6 transition-all duration-300 ease-in-out overflow-x-hidden ${
+        className={`h-full py-6 transition-all duration-300 ease-in-out overflow-x-hidden custom-scrollbar ${
           open
             ? "w-[300px] left-0 shadow-lg"
             : "xlg:w-[85px] w-[300px] -left-full xlg:left-0"
         } bg-white backdrop-blur-md flex flex-col gap-8 shadow-md xlg:static fixed z-[220]`}
       >
         {/* Logo */}
-<div
-  className={`${
-    open ? "px-8" : "flex justify-center px-2"
-  }`}
->
-  <Link
-    to={"/"}
-    className="inline-flex items-center cursor-pointer"
-  >
-    <img src={logo} alt="logo" className="min-w-[40px]" />
-  </Link>
-</div>
+        <div className={`${open ? "px-8" : "flex justify-center px-2"}`}>
+          {open ? (
+            <Link to={"/"} className="inline-flex items-center cursor-pointer">
+              <img src={logo} alt="logo" className="min-w-[40px] h-8 md:h-10" />
+            </Link>
+          ) : (
+            <Link to={"/"} className="inline-flex items-center cursor-pointer">
+              <img src={fav} alt="fav" className="size-10" />
+            </Link>
+          )}
+        </div>
 
         {/* Navigation */}
         <div className={`flex flex-col gap-1 ${open ? "px-4" : "px-2"}`}>
@@ -188,21 +187,21 @@ const SideBar = ({ sidebar, open, setOpen }) => {
           })}
         </div>
         {/* Logout */}
-  <div
-  className={`mt-auto  ${
-    open ? "px-4 py-3 xl:px-8" : "py-4 text-center"
-  }`}
->
-  <div
-    onClick={handleLogout}
-    className="inline-flex items-center gap-3 cursor-pointer transition rounded-lg hover:text-red-500"
-  >
-    <span className="shrink-0">
-      <IoLogOutOutline size={24} />
-    </span>
-    {open && <p className="font-medium whitespace-nowrap">Log Out</p>}
-  </div>
-</div>
+        <div
+          className={`mt-auto  ${
+            open ? "px-4 py-3 xl:px-8" : "py-4 text-center"
+          }`}
+        >
+          <div
+            onClick={handleLogout}
+            className="inline-flex items-center gap-3 cursor-pointer transition rounded-lg hover:text-red-500"
+          >
+            <span className="shrink-0">
+              <IoLogOutOutline size={24} />
+            </span>
+            {open && <p className="font-medium whitespace-nowrap">Log Out</p>}
+          </div>
+        </div>
       </div>
     </>
   );

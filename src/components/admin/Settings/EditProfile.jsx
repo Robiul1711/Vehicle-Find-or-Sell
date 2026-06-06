@@ -8,13 +8,14 @@ import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
 
 const days = [
-  "saturday",
-  "sunday",
+ 
   "monday",
   "tuesday",
   "wednesday",
   "thursday",
   "friday",
+   "saturday",
+  "sunday",
 ];
 
 const EditProfile = () => {

@@ -39,7 +39,7 @@ const StepProgressBar = ({ steps, currentStep, onStepClick, category }) => {
   const activeIcons = category === "Parts" ? partsstepIcons : stepIcons;
 
   return (
-    <div className="flex items-center justify-between pb-10 mx-auto w-full overflow-x-auto">
+    <div className="flex items-center justify-between pb-4 sm:pb-6 md:pb-8  mx-auto w-full overflow-x-auto custom-scrollbar">
       {steps.map((step, index) => {
         const isActive = index + 1 === currentStep;
         const isCompleted = index + 1 < currentStep;

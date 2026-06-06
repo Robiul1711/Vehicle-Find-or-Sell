@@ -11,9 +11,9 @@ const SEO = ({
   author,
   publishedTime,
 }) => {
-  const siteName = "Ronpoin";
-  const defaultTitle = "Ronpoin - The only roundabout leading to the right road";
-  const defaultDescription = "Buy and sell cars, motorcycles, scooters, utility vehicles and spare parts easily, wherever you are.";
+  const siteName = "Ronpoin.fr";
+  const defaultTitle = "Ronpoin.fr - Achetez et Vendez Votre Véhicule en Toute Confiance";
+  const defaultDescription = "Le seul rond-point qui mène à la bonne route. Une nouvelle plateforme automobile dédiée aux particuliers et professionnels.";
   const defaultImage = "/fav.png";
 
   const currentUrl = typeof window !== "undefined" ? window.location.href : (url || "");

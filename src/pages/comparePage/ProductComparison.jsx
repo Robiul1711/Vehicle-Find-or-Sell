@@ -137,6 +137,8 @@ const ProductComparison = () => {
             onClick={() =>
               mutate({
                 user_id: product?.user,
+                ad_id: product?.id,
+                ad_type: product?.vehicle_type,
               })
             }
             to="/dashboard/message"

@@ -34,11 +34,11 @@ export default function MyFavorites() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            Ads Overview
+            My Favorites
           </h1>
           <p className="text-gray-600 text-sm sm:text-base">
-            Manage all your ads in one place. Edit, pause, or create new ads
-            easily.
+            Manage all your favorite ads in one place. View, save, and organize
+            ads you're interested in.
           </p>
         </div>
       </div>

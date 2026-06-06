@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CustomEmail } from "@/utils/IconProvider";
 import { Eye, EyeClosed } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import SocialLogin from "./SocialLogin";
 
@@ -172,14 +172,14 @@ const RegisterForm = ({ onSuccessSignup }) => {
         {/* Terms & Conditions */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center space-x-2 cursor-pointer">
+            <label className="flex items-center space-x-2 r py-2">
               <input
                 type="checkbox"
                 {...register("terms", { required: true })}
                 className="rounded accent-custom-primary"
               />
               <span className="text-sm">
-                I agree to the Terms & Conditions and Privacy Policy.
+                I agree to the <Link to="/term-and-conditions" className="text-custom-primary">Terms & Conditions</Link> and <Link to="/legal-notice" className="text-custom-primary">Privacy Policy</Link>.
               </span>
             </label>
           </div>

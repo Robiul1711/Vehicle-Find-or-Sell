@@ -200,7 +200,8 @@ const CarListing = ({
                     }`}
                   >
                     <Link 
-                      to={`/details/${item.id}/${item.slug}`}
+      // onClick={handleCardClick}
+                      to={`/details/${item?.id}/${item?.slug}`}
                       layout
                       className={`${
                         isGrid
@@ -226,10 +227,11 @@ const CarListing = ({
                           }`}
                         />
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onAddFavorite(item.id);
-                          }}
+                       onClick={(e) => {
+    e.preventDefault(); 
+    e.stopPropagation(); 
+    onAddFavorite(item.id);
+  }}
                           className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-300 group z-10"
                         >
                           {/* {console.log(item)} */}

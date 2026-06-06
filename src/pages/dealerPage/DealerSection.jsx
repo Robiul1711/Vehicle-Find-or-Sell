@@ -122,16 +122,13 @@ const DealerSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="">
               <h2 className="text-2xl font-bold text-gray-900 mb-1">
-                Name: {profileData?.full_name || "N/A"} 
+             {profileData?.full_name || "N/A"} <span className="text-gray-600 capitalize text-sm">({profileData?.account_type})</span>
               </h2>
-              <p className="text-gray-600 mb-4 font-semibold">
-              Account Type:  {profileData?.account_type || "Professional Seller"}
-              </p>
-
-              <div className="space-y-3 text-sm text-gray-700">
+  
+              <div className="space-y-1 text-sm text-gray-700 ">
                 {(profileData?.street || profileData?.city || profileData?.zip_code || profileData?.country) && (
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-4 h-4 text-gray-500 mt-1 flex-shrink-0" />
+                  <div className="flex items-start gap-1">
+                    <MapPin className="w-4 h-4 text-gray-500  flex-shrink-0" />
                     <span>
                       {profileData?.street}, {profileData?.city},{" "}
                       {profileData?.zip_code}, {profileData?.country}
@@ -223,12 +220,14 @@ const DealerSection = () => {
         </div>
       </div>
       <div className="lg:w-1/4 flex flex-col gap-5">
-        {/* {console.log(profileData?.user_id)} */}
+        {console.log(profileData)}
         <div className="border shadow-lg rounded-xl p-3 flex sm:flex-row lg:flex-col xl:flex-row gap-3">
           <Link
             onClick={() =>
               mutate({
                 user_id: profileData?.user_id,
+                // ad_id: id,
+                // ad_type: "dealer",
               })
             }
             to="/dashboard/message"

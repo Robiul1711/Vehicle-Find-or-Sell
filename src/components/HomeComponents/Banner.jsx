@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import banner from "@/assets/images/banner.png";
+import banner from "@/assets/images/showroom1.png";
 import Title from "../common/Title";
 import CommonButton from "../common/CommonButton";
 import { useApiQuery } from "@/hooks/useApiQuery";

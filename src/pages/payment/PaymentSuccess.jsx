@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, Home, LayoutDashboard, Download } from 'lucide-react';
+import { CheckCircle, Home, LayoutDashboard, PenLine } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const PaymentSuccess = () => {
+    const hasDraftAd = !!localStorage.getItem("draftAd");
+
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8 overflow-hidden">
             <motion.div 
@@ -45,14 +47,25 @@ const PaymentSuccess = () => {
                         transition={{ delay: 0.5 }}
                         className="mt-4 text-base text-gray-500 leading-relaxed max-w-xs mx-auto"
                     >
-                        Thank you for your purchase. Your payment has been successfully processed.
+                        {hasDraftAd
+                            ? "Your subscription is now active! You can continue posting the ad you were working on."
+                            : "Thank you for your purchase. Your payment has been successfully processed."}
                     </motion.p>
                 </div>
 
                 <div className="mt-10 space-y-4 pt-10 border-t border-gray-100">
+                    {hasDraftAd && (
+                        <Link
+                            to="/dashboard/create-ads"
+                            className="group relative w-full flex justify-center gap-2 py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white bg-green-600 hover:bg-green-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg active:scale-95 shadow-md shadow-green-600/20"
+                        >
+                            <PenLine className="h-5 w-5 text-white opacity-70 group-hover:opacity-100 transition-opacity" />
+                            Continue Posting Your Ad
+                        </Link>
+                    )}
                     <Link
                         to="/dashboard"
-                        className="group relative w-full flex justify-center gap-2 py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white bg-custom-primary hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg active:scale-95 shadow-md shadow-custom-primary/20 "
+                        className={`group relative w-full flex justify-center gap-2 py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white bg-custom-primary hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg active:scale-95 shadow-md shadow-custom-primary/20`}
                     >
                      
                             <LayoutDashboard className="h-5 w-5 text-white opacity-40 group-hover:opacity-100 transition-opacity" />

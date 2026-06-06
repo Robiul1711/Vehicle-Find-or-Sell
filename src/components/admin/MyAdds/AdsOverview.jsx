@@ -56,8 +56,19 @@ export default function AdsOverview() {
   }, [debouncedSearch, selectedCategory, selectedStatus]);
 
   const showSkeleton = isLoading || isFetching;
+
+  const hasNoAdsAtAll =
+    !showSkeleton &&
+    (statsData?.data?.total_listings === 0 ||
+      ((!data?.data || data?.data?.length === 0) &&
+        !isSearching &&
+        !selectedCategory &&
+        !selectedStatus));
+
   const hasNoResults =
-    !showSkeleton && Array.isArray(data) && data.length === 0;
+    !showSkeleton &&
+    !hasNoAdsAtAll &&
+    (Array.isArray(data) ? data.length === 0 : data?.data?.length === 0);
 
   const handleClearSearch = useCallback(() => {
     setSearchInput("");
@@ -86,89 +97,91 @@ export default function AdsOverview() {
       </div>
 
       {/* Search & Filters */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-4">
-        {/* Search */}
-        <div className="relative flex-1 w-full sm:max-w-md">
-          <input
-            type="text"
-            placeholder="Search by Car Name, Model, Year..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full pl-4 pr-12 py-3 border border-gray-200 rounded-lg bg-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition"
-          />
-          {searchInput ? (
-            <button
-              onClick={handleClearSearch}
-              className="absolute right-0 top-0 bottom-0 bg-gray-400 hover:bg-gray-500 text-white px-4 rounded-r-lg transition-colors"
-              title="Clear search"
+      {!hasNoAdsAtAll && (
+        <div className="flex flex-col sm:flex-row gap-4 mb-4">
+          {/* Search */}
+          <div className="relative flex-1 w-full sm:max-w-md">
+            <input
+              type="text"
+              placeholder="Search by Car Name, Model, Year..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="w-full pl-4 pr-12 py-3 border border-gray-200 rounded-lg bg-white text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition"
+            />
+            {searchInput ? (
+              <button
+                onClick={handleClearSearch}
+                className="absolute right-0 top-0 bottom-0 bg-gray-400 hover:bg-gray-500 text-white px-4 rounded-r-lg transition-colors"
+                title="Clear search"
+              >
+                ✕
+              </button>
+            ) : (
+              <button className="absolute right-0 top-0 bottom-0 bg-custom-primary text-white px-4 rounded-r-lg transition-colors">
+                <Search size={18} />
+              </button>
+            )}
+          </div>
+
+          {/* Category Dropdown */}
+          <div className="relative w-full sm:w-auto">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-auto cursor-pointer text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition"
             >
-              ✕
-            </button>
-          ) : (
-            <button className="absolute right-0 top-0 bottom-0 bg-custom-primary text-white px-4 rounded-r-lg transition-colors">
-              <Search size={18} />
-            </button>
-          )}
-        </div>
+              <option value="">All Categories</option>
+              <option value="car">Cars</option>
+              <option value="motorcycle">Motorcycles</option>
+              <option value="scooter">Scooters</option>
+              <option value="truck">Trucks</option>
+              <option value="parts">Parts</option>
+            </select>
+            <ChevronDown
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+              size={16}
+            />
+          </div>
 
-        {/* Category Dropdown */}
-        <div className="relative w-full sm:w-auto">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-auto cursor-pointer text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition"
-          >
-            <option value="">All Categories</option>
-            <option value="car">Cars</option>
-            <option value="motorcycle">Motorcycles</option>
-            <option value="scooter">Scooters</option>
-            <option value="truck">Trucks</option>
-            <option value="parts">Parts</option>
-          </select>
-          <ChevronDown
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
-            size={16}
-          />
+          {/* Status Dropdown */}
+          <div className="relative w-full sm:w-auto">
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-[200px] cursor-pointer text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition shadow-sm hover:border-gray-300"
+            >
+              <option value="">
+                All Status ({statsData?.data?.total_listings || 0})
+              </option>
+              <option value="active">
+                Active ({statsData?.data?.active_listings || 0})
+              </option>
+              <option value="pending">
+                Pending ({statsData?.data?.pending_ads || 0})
+              </option>
+              <option value="scheduled">
+                Scheduled ({statsData?.data?.scheduled_ads || 0})
+              </option>
+              <option value="is_favourite">
+                Favourite ({statsData?.data?.favourites_saved || 0})
+              </option>
+              <option value="is_pause">
+                Paused Ads ({statsData?.data?.paused_ads || 0})
+              </option>
+              <option value="is_boost">
+                Boosted Ads ({statsData?.data?.boosted_ads || 0})
+              </option>
+            </select>
+            <ChevronDown
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+              size={16}
+            />
+          </div>
         </div>
-
-        {/* Status Dropdown */}
-        <div className="relative w-full sm:w-auto">
-          <select
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-            className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-3 pr-10 w-full sm:w-[200px] cursor-pointer text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-custom-primary focus:border-transparent transition shadow-sm hover:border-gray-300"
-          >
-            <option value="">
-              All Status ({statsData?.data?.total_listings || 0})
-            </option>
-            <option value="active">
-              Active ({statsData?.data?.active_listings || 0})
-            </option>
-            <option value="pending">
-              Pending ({statsData?.data?.pending_ads || 0})
-            </option>
-            <option value="scheduled">
-              Scheduled ({statsData?.data?.scheduled_ads || 0})
-            </option>
-            <option value="is_favourite">
-              Favourite ({statsData?.data?.favourites_saved || 0})
-            </option>
-            <option value="is_pause">
-              Paused Ads ({statsData?.data?.paused_ads || 0})
-            </option>
-            <option value="is_boost">
-              Boosted Ads ({statsData?.data?.boosted_ads || 0})
-            </option>
-          </select>
-          <ChevronDown
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
-            size={16}
-          />
-        </div>
-      </div>
+      )}
 
       {/* Active filter indicators */}
-      {(debouncedSearch || selectedCategory || selectedStatus) && (
+      {!hasNoAdsAtAll && (debouncedSearch || selectedCategory || selectedStatus) && (
         <div className="flex items-center gap-2 flex-wrap text-sm text-gray-500">
           <span className="font-medium">Active filters:</span>
           {debouncedSearch && (
@@ -206,6 +219,26 @@ export default function AdsOverview() {
           {Array.from({ length: 8 }).map((_, i) => (
             <DasCarCardSkeleton key={i} />
           ))}
+        </div>
+      ) : hasNoAdsAtAll ? (
+        /* New User / No Ads State */
+        <div className="flex flex-col items-center justify-center py-10 px-4 text-center bg-gradient-to-br from-white to-gray-50/50 rounded-2xl border border-gray-100 shadow-sm">
+          <div className="bg-blue-50/80 rounded-full p-6 mb-6 ring-8 ring-blue-50/30 animate-pulse">
+            <Plus size={48} className="text-custom-primary" />
+          </div>
+          <h3 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">
+            No Ads Posted Yet
+          </h3>
+          <p className="text-gray-500 text-sm sm:text-base max-w-md mb-8 leading-relaxed">
+            You haven't posted any listings yet. Start selling your vehicle today by posting your very first ad!
+          </p>
+          <Link
+            to="/dashboard/create-ads"
+            className="inline-flex items-center gap-2 bg-custom-primary hover:bg-blue-800 text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-md hover:shadow-lg text-sm sm:text-base font-semibold"
+          >
+            <Plus size={18} />
+            Post Your First Ad
+          </Link>
         </div>
       ) : hasNoResults ? (
         /* No Results State */

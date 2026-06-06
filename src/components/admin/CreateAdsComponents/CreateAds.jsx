@@ -160,6 +160,7 @@ const CreateAds = () => {
         brand: data.brand_name, // API might return brand_name or brand
         model: data.model,
         version: data.version,
+        trim_versions: data.trim_versions || [],
         vehicle_type: categoryId,
         body: data.body,
         originalPrice: data.original_price,
@@ -341,15 +342,16 @@ const CreateAds = () => {
       navigate("/dashboard/my-adds");
     },
     onError: (error, toastId) => {
-      console.error("Submission failed:", error);
       if (error?.response?.data) {
         const errorData = error.response.data;
+        console.error("Submission failed:", errorData);
 
         // Redirect to subscription if not subscribed
         if (
           errorData.is_subscribed === false ||
           (errorData.message &&
-            errorData.message.includes("Active ads limit reached"))
+            (errorData.message.includes("No active subscription package found. Please purchase a package to post ads.") ||
+            errorData.message.includes("No active subscription package found. Please purchase a package to post ads.")))
         ) {
           // Save form data to localStorage
           const formData = methods.getValues();
@@ -652,7 +654,7 @@ const CreateAds = () => {
         )}
 
         {/* Step Component */}
-        <div className="xl:px-14 ">
+        <div className="">
           <CurrentComponent
             goToStep={setCurrentStep}
             onCategorySelect={(cat) => {
@@ -663,7 +665,7 @@ const CreateAds = () => {
 
           {/* Navigation */}
           {selectedCategory && (
-            <div className="flex justify-between mt-6">
+            <div className="flex flex-col  md:flex-row gap-4 md:gap-0 justify-between mt-6">
               {currentStep > 0 && (
                 <button
                   type="button"
@@ -718,7 +720,7 @@ const CreateAds = () => {
                       className="px-4 py-2 bg-custom-primary text-white rounded disabled:opacity-50 flex items-center gap-2"
                     >
                       <span>
-                        {isPending ? "Posting..." : "Post Immediately"}
+                        {isPending ? "Posting Immediately..." : "Post Immediately"}
                       </span>
                     </button>
                   </>

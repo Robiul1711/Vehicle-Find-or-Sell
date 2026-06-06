@@ -61,7 +61,7 @@ const PartsDetailsRowOne = ({ details, data, refetch }) => {
   };
 
   return (
-    <div className="flex w-full xmd:flex-row flex-col gap-5 mt-14">
+    <div className="flex w-full xmd:flex-row flex-col gap-5 mt-6">
       <div className="xmd:w-[60%] w-full flex flex-col gap-5">
         <div className="flex flex-col gap-4">
           <Title level="title40" className="!font-bold">

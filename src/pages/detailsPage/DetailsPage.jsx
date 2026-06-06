@@ -23,7 +23,7 @@ const DetailsPage = () => {
   const vehicle = data?.data;
 
   return (
-    <div className="section-padding-x pb-20 flex flex-col gap-10 ">
+    <div className="section-padding-x md:pb-20 pb-10 flex flex-col gap-10 ">
       {vehicle ? (
         <SEO
           title={`${vehicle.brand_name} ${vehicle.model} ${vehicle.exact_date ? `(${vehicle.exact_date})` : ""}`}

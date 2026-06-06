@@ -59,14 +59,15 @@ const ViewAnalytics = () => {
     <div className="min-h-screen bg-gray-50/30 ">
       <div className="">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6">
+          {/* {console.log(data)}
           <Link
             to={`/dashboard/car-details/${id}`}
             className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200 mb-6 group"
           >
             <ArrowLeft className="w-4 h-4 mr-2 transition-transform duration-200 group-hover:-translate-x-1" />
             <span className="text-sm font-medium">Back to Details</span>
-          </Link>
+          </Link> */}
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 mb-2">

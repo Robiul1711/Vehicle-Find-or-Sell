@@ -1,17 +1,41 @@
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 export default function PartsDetails() {
   const {
     watch,
     register,
-    formState: { errors },
+    setValue,
   } = useFormContext();
   const vehicleType = watch("vehicle_type");
+  const { data: partsCategories } = useApiQuery({
+    queryKey: ["part-categories"],
+    url: `/core/part-categories/`,
+    secure: true,
+  });
+  console.log(partsCategories?.data)
 
-  const { data, isLoading } = useApiQuery({
+  const selectedMainSystemId = watch("main_system");
+  const selectedSubSystemId = watch("sub_system");
+
+  const selectedCategory = partsCategories?.data?.find(
+    (category) => String(category.id) === String(selectedMainSystemId)
+  );
+
+  useEffect(() => {
+    if (selectedCategory && selectedSubSystemId) {
+      const hasPart = selectedCategory.parts?.some(
+        (part) => String(part.id) === String(selectedSubSystemId)
+      );
+      if (!hasPart) {
+        setValue("sub_system", "");
+      }
+    }
+  }, [selectedCategory, selectedSubSystemId, setValue]);
+
+  const { data } = useApiQuery({
     queryKey: ["brands", vehicleType],
     url: "/core/brands/",
     params: { vehicle_type: vehicleType?.toLowerCase() },
@@ -136,12 +160,17 @@ export default function PartsDetails() {
             <label className="block text-xs text-gray-600 mb-1.5">
               Main System
             </label>
-            <input
+            <select
               {...register("main_system")}
-              type="text"
-              placeholder="e.g. Braking System"
-              className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-            />
+              className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 bg-white focus:ring-blue-500 focus:border-blue-500 bg-white"
+            >
+              <option value="">Select Main System</option>
+              {partsCategories?.data?.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Sub-System / Sub-Part */}
@@ -149,12 +178,17 @@ export default function PartsDetails() {
             <label className="block text-xs text-gray-600 mb-1.5">
               Sub-System / Sub-Part
             </label>
-            <input
+            <select
               {...register("sub_system")}
-              type="text"
-              placeholder="e.g. Piston Components"
-              className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none bg-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-            />
+              className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 bg-white focus:ring-blue-500 focus:border-blue-500 bg-white"
+            >
+              <option value="">Select Sub-System / Sub-Part</option>
+              {selectedCategory?.parts?.map((part) => (
+                <option key={part.id} value={part.id}>
+                  {part.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Compatible Make */}

@@ -105,7 +105,7 @@ const NotificationDropdown = () => {
         onClick={() => setOpen(!open)}
         className="relative p-2 rounded-full hover:bg-gray-100 transition"
       >
-        <FiBell size={22} className="text-gray-700" />
+        <FiBell  className="text-gray-700 sm:size-6 size-5" />
         {/* Badge */}
         {unreadCount > 0 && (
           <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full leading-none">
@@ -116,7 +116,7 @@ const NotificationDropdown = () => {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute right-0 mt-3 w-80 bg-white shadow-xl border rounded-lg overflow-hidden z-50">
+        <div className="absolute right-0 mt-3 w-80 bg-white shadow-xl border rounded-lg overflow-hidden  z-50">
           <div className="px-4 py-3 border-b flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900">
               Notifications
@@ -130,7 +130,7 @@ const NotificationDropdown = () => {
               </span>
             )}
           </div>
-          <div className="max-h-96 overflow-y-auto">
+          <div className="max-h-96 overflow-y-auto custom-scrollbar">
             {notificationsList.length > 0 ? (
               notificationsList.map((n) => (
                 <div

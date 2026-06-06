@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import { useAuth } from "@/hooks/useAuth";
 
 const AnimatedPrice = ({ price }) => {
   return (
@@ -19,7 +20,8 @@ const AnimatedPrice = ({ price }) => {
 };
 
 const Subscription = () => {
-  const [isMonthly, setIsMonthly] = useState(true); // true = Vehicle, false = Spare Parts
+  const {user} = useAuth();
+  const [isMonthly, setIsMonthly] = useState(user?.profile?.user?.account_type === "vehicle" ? true : false); // true = Vehicle, false = Spare Parts
   const monthlyButtonRef = useRef(null);
   const yearlyButtonRef = useRef(null);
   const [activeButtonLeft, setActiveButtonLeft] = useState(0);
@@ -59,35 +61,14 @@ const Subscription = () => {
       }
     },
     onError: () => {
-      setLoadingPlanId(null);
-    },
-  });
-
-  // Upgrade mutation (for users with an existing plan)
-  const { mutate: upgradePlan, isPending: isUpgrading } = useApiMutation({
-    url: "/subscription/upgrade/",
-    method: "POST",
-    secure: true,
-    invalidateKeys: ["myplan", "subscription"],
-    onSuccess: (response) => {
-      setLoadingPlanId(null);
-      if (response?.checkout_url) {
-        window.location.href = response.checkout_url;
-      }
-    },
-    onError: () => {
+    
       setLoadingPlanId(null);
     },
   });
 
   const handlePurchase = (planId) => {
     setLoadingPlanId(planId);
-    // If user already has an active plan, use upgrade API
-    if (activePlanIds.length > 0) {
-      upgradePlan({ plan_id: planId });
-    } else {
-      subscribe({ plan_id: planId });
-    }
+    subscribe({ plan_id: planId });
   };
 
   useEffect(() => {
@@ -130,24 +111,24 @@ const Subscription = () => {
   const displayedTiers = Array.isArray(data) ? data : [];
 
   const isButtonLoading = (tierId) =>
-    (isPending || isUpgrading) && loadingPlanId === tierId;
+    isPending && loadingPlanId === tierId;
 
   return (
     <div className="w-full relative overflow-hidden">
-      <div className="relative z-10 min-h-screen">
+      <div className="relative z-10">
         <div className="w-full">
           <div className="text-center sm:text-left ">
-            <h1 className="text-2xl sm:text-4xl xl:text-5xl font-extrabold text-gray-900 tracking-tight leading-snug sm:leading-tight">
-              Choose Your Professional Subscription Plan
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight leading-snug sm:leading-tight">
+              Choose Your <span className="capitalize">{user?.profile?.user?.account_type}</span> {isMonthly ? "Vehicle" : "Spare Parts"} Subscription Plan
             </h1>
-            <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
+            <p className="mt-2 text-base sm:text-lg text-gray-600 leading-relaxed">
               Access advanced tools, statistics, and premium ad packs to grow
               your visibility and sales.
             </p>
           </div>
 
           {/* Toggle Buttons */}
-          <div className=" mt-5 md:mt-10 flex justify-center">
+          <div className=" mt-5 flex justify-center">
             <div className="relative flex items-center p-1 rounded-lg border border-gray-300 bg-[#E6EAEE] backdrop-blur-md">
               <button
                 ref={monthlyButtonRef}
@@ -181,7 +162,7 @@ const Subscription = () => {
 
           {/* Pricing Cards */}
           <motion.div
-            className="mt-8 md:mt-16 grid grid-cols-1 gap-4 xl:gap-8 md:grid-cols-2 xlg:grid-cols-3 xl:grid-cols-4"
+            className="mt-8 grid grid-cols-1 gap-4 xl:gap-8 md:grid-cols-2 xlg:grid-cols-3 xl:grid-cols-4"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -264,29 +245,21 @@ const Subscription = () => {
                     <div className="mt-8">
                       <motion.button
                         onClick={() => handlePurchase(tier.id)}
-                        disabled={isCurrentPlan || isButtonLoading(tier.id)}
-                        className={`w-full h-10 py-2 px-4 rounded-md text-sm sm:text-base font-medium transition-all duration-300 flex justify-center items-center ${
-                          isCurrentPlan
-                            ? "bg-gray-300 text-gray-500 border border-gray-300 cursor-not-allowed"
-                            : "text-white bg-[#01244B] border border-[#01244B] hover:bg-[#001E3C] disabled:opacity-70 disabled:cursor-not-allowed"
-                        }`}
+                        disabled={isButtonLoading(tier.id)}
+                        className="w-full h-10 py-2 px-4 rounded-md text-sm sm:text-base font-medium transition-all duration-300 flex justify-center items-center text-white bg-[#01244B] border border-[#01244B] hover:bg-[#001E3C] disabled:opacity-70 disabled:cursor-not-allowed"
                         whileHover={
-                          !isCurrentPlan && !isButtonLoading(tier.id)
+                          !isButtonLoading(tier.id)
                             ? { scale: 1.02 }
                             : {}
                         }
                         whileTap={
-                          !isCurrentPlan && !isButtonLoading(tier.id)
+                          !isButtonLoading(tier.id)
                             ? { scale: 0.98 }
                             : {}
                         }
                       >
                         {isButtonLoading(tier.id) ? (
                           <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        ) : isCurrentPlan ? (
-                          "Current Plan"
-                        ) : activePlanIds.length > 0 ? (
-                          "Upgrade Plan"
                         ) : (
                           "Purchase Plan"
                         )}

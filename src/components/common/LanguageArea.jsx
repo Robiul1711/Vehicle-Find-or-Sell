@@ -82,7 +82,7 @@ const LanguageArea = () => {
       <select
         value={selectedLanguage}
         onChange={(e) => changeLanguage(e.target.value)}
-        className="appearance-none border border-custom-primary rounded-md px-3 py-2 hover:bg-custom-primary hover:text-white pr-8 shadow-md "
+        className="appearance-none border border-custom-primary rounded-md px-3 sm:py-2 py-1 hover:bg-custom-primary hover:text-white sm:pr-8 pr-6 shadow-md "
       >
         <option value="en">
          English

@@ -69,6 +69,12 @@ export default function RegistrationNumber({ goToStep }) {
           setValue("technicalSpecs", vehicle.extra);
         }
 
+        if (response.data.trim_versions) {
+          setValue("trim_versions", response.data.trim_versions);
+        } else {
+          setValue("trim_versions", []);
+        }
+
         goToStep(2);
       }
     },
@@ -155,7 +161,7 @@ export default function RegistrationNumber({ goToStep }) {
                 type="text"
                 {...register("registrationNumber")}
                 placeholder="Enter your registration number..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors placeholder-gray-400"
+                className="w-full px-4 md:py-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors placeholder-gray-400"
               />
             </div>
           </div>
@@ -165,18 +171,18 @@ export default function RegistrationNumber({ goToStep }) {
             <label className="block text-sm font-medium text-gray-900">
               VIN Number (optional)
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap md:flex-nowrap gap-2">
               <input
                 type="text"
                 {...register("vinNumber")}
                 placeholder="0"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors placeholder-gray-400"
+                className="flex-1 px-4 md:py-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors placeholder-gray-400"
               />
               <button
                 type="button"
                 onClick={handleLookup}
                 disabled={isDecoding}
-                className="px-6 py-3 bg-custom-primary text-white rounded-lg hover:bg-opacity-90 transition-all flex items-center gap-2 disabled:opacity-50 whitespace-nowrap"
+                className="px-6 md:py-3 py-2 bg-custom-primary text-white rounded-lg hover:bg-opacity-90 transition-all flex items-center gap-2 disabled:opacity-50 whitespace-nowrap"
               >
                 {isDecoding ? (
                   <Loader2 className="w-5 h-5 animate-spin" />

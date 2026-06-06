@@ -18,6 +18,7 @@ export default function BasicDetails() {
   const selectedBrand = watch("brand");
   const currentModel = watch("model");
   const currentVersion = watch("version");
+  const trimVersions = watch("trim_versions");
   const currentBody = watch("body");
   const currentFuelType = watch("fuelType");
   const currentTransmission = watch("transmission");
@@ -96,6 +97,7 @@ export default function BasicDetails() {
               onChange: (e) => {
                 setValue("model", "");
                 setValue("version", "");
+                setValue("trim_versions", []);
               },
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
@@ -121,6 +123,7 @@ export default function BasicDetails() {
             {...register("model", {
               onChange: (e) => {
                 setValue("version", "");
+                setValue("trim_versions", []);
               },
             })}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
@@ -143,18 +146,37 @@ export default function BasicDetails() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Version
           </label>
-          <input
-            {...register("version")}
-            list="version-list"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
-            placeholder="Select or type version"
-            disabled={!currentModel}
-          />
-          <datalist id="version-list">
-            {versions.map((v) => (
-              <option value={v?.name || v?.version} key={v?.id} />
-            ))}
-          </datalist>
+          {trimVersions && trimVersions.length > 0 ? (
+            <select
+              {...register("version")}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+            >
+              <option value="">Select Version</option>
+              {trimVersions.map((tv, idx) => (
+                <option value={tv.version} key={idx}>
+                  {tv.version}
+                </option>
+              ))}
+              {currentVersion && !trimVersions.some((tv) => tv.version === currentVersion) && (
+                <option value={currentVersion}>{currentVersion}</option>
+              )}
+            </select>
+          ) : (
+            <>
+              <input
+                {...register("version")}
+                list="version-list"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+                placeholder="Select or type version"
+                disabled={!currentModel}
+              />
+              <datalist id="version-list">
+                {versions.map((v) => (
+                  <option value={v?.name || v?.version} key={v?.id} />
+                ))}
+              </datalist>
+            </>
+          )}
         </div>
 
         {/* Body */}

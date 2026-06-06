@@ -20,7 +20,7 @@ const CommonNavbar = ({ open, setOpen }) => {
     <GiHamburgerMenu
       color="black"
       size={28}
-      className="p-1 bg-gray-200 rounded-full hover:bg-gray-300"
+      className="p-1 rounded-sm bg-gray-200 hover:bg-gray-300"
     />
   </div>
 

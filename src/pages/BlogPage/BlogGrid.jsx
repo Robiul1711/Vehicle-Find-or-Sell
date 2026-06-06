@@ -74,9 +74,7 @@ const BlogGrid = ({ data, isLoading }) => {
                 <div className="flex items-center gap-3 mb-3 text-sm text-gray-500">
                   <span className="flex items-center gap-2">
                     <CustomCalendar />{" "}
-                    {blog.created_at
-                      ? new Date(blog.created_at).toLocaleDateString()
-                      : "N/A"}
+                    {blog.created_at}
                   </span>
                 </div>
                 <h3 className="font-bold text-xl mb-4 line-clamp-2 hover:text-custom-primary transition-colors cursor-pointer" dangerouslySetInnerHTML={{ __html: blog.title }} >

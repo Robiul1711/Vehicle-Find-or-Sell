@@ -338,12 +338,19 @@ button {
   display: none !important;
 }
 
-/* Hide Google Translate banner */
+/* Hide Google Translate banner and dynamic widgets/logos */
 #goog-gt-tt,
 .goog-te-banner-frame,
 .goog-logo-link,
-.goog-te-gadget {
+.goog-te-gadget,
+.goog-te-gadget-icon,
+.goog-te-gadget span,
+.goog-te-spinner-pos,
+iframe.skiptranslate,
+.skiptranslate,
+[class*="VIpgJd-"] {
   display: none !important;
+  visibility: hidden !important;
 }
 /* Prevent iframe balloon from affecting layout */
 iframe.goog-te-banner-frame {

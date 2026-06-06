@@ -6,7 +6,7 @@ import {
   State4Icon,
 } from "@/components/common/SVGicons/DashboardIcon";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { Calendar, CirclePause } from "lucide-react";
+import { BanknoteX, Calendar, CirclePause } from "lucide-react";
 import React from "react";
 
 const DashStates = () => {
@@ -69,6 +69,14 @@ const DashStates = () => {
       title: "Paused Ads",
       value: data?.data?.paused_ads || "00",
       icon:  CirclePause,
+      iconBg: "bg-red-100",
+      iconColor: "text-red-600",
+    },
+    {
+      id: 8,
+      title: "Declined Ads",
+      value: data?.data?.declined_ads || "00",
+      icon:  BanknoteX,
       iconBg: "bg-red-100",
       iconColor: "text-red-600",
     },

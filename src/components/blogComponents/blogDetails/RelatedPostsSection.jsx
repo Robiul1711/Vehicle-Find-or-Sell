@@ -57,7 +57,7 @@ const RelatedPostsSection = ({data}) => {
                                     <span className="flex items-center gap-2"><CustomCalendar /> {blog.date}</span>
                                 </div>
                                 <h3 className="font-semibold text-xl mb-2" dangerouslySetInnerHTML={{ __html: blog.title }} ></h3>
-                                <Link to={`/blogDetails/${blog.id}`} className=" hover:underline text-lg flex items-center gap-1">
+                                <Link to={`/blogDetails/${blog.id}/${blog.slug}`} className=" hover:underline text-lg flex items-center gap-1">
                                     Read More ↗
                                 </Link>
                             </div>

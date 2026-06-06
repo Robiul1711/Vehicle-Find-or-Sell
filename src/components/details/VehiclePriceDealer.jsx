@@ -9,13 +9,14 @@ import toast from "react-hot-toast";
 
 const VehiclePriceDealer = ({ data, isLoading, details }) => {
   const { user } = useAuth();
-  
-  const { mutate: mutatePriceDrop, isPending: isPendingPriceDrop } = useApiMutation({
-    url: "/alerts/price-drop/",
-    method: "POST",
-    secure: true,
-    successMessage: "Price drop alert set successfully!",
-  });
+
+  const { mutate: mutatePriceDrop, isPending: isPendingPriceDrop } =
+    useApiMutation({
+      url: "/alerts/price-drop/",
+      method: "POST",
+      secure: true,
+      successMessage: "Price drop alert set successfully!",
+    });
 
   const onNotifyPriceDrop = () => {
     if (!user) {
@@ -30,12 +31,14 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
     }
   };
 
-  const { mutate: mutateSimilar, isPending: isPendingSimilar } = useApiMutation({
-    url: `/alerts/similar/${details === "parts" ? "parts" : "vehicle"}/${data?.id}/`,
-    method: "POST",
-    secure: true,
-    successMessage: "Similar listings alert set successfully!",
-  });
+  const { mutate: mutateSimilar, isPending: isPendingSimilar } = useApiMutation(
+    {
+      url: `/alerts/similar/${details === "parts" ? "parts" : "vehicle"}/${data?.id}/`,
+      method: "POST",
+      secure: true,
+      successMessage: "Similar listings alert set successfully!",
+    },
+  );
 
   const onNotifySimilar = () => {
     if (!user) {
@@ -47,12 +50,12 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
     }
   };
 
-    const { mutate, isPending } = useApiMutation({
-      url: "/message/conversations/get-or-create/",
-      method: "POST",
-      secure: true,
-    });
-  
+  const { mutate, isPending } = useApiMutation({
+    url: "/message/conversations/get-or-create/",
+    method: "POST",
+    secure: true,
+  });
+
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow-md p-10 animate-pulse">
@@ -96,7 +99,7 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md md:p-10 p-5 ">
+    <div className="bg-white rounded-lg md:shadow-md md:p-6 ">
       {/* Price Section */}
       <div className="mb-6">
         {/* {console.log(data)} */}
@@ -122,39 +125,42 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
             Instant Saving €{data?.original_price - data?.discount_price}
           </div>
         )}
-
       </div>
 
-      <div className="mb-6">
-        <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">Stay Informed</h4>
+      <div className="md:mb-6 mb-4">
+        <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 border-b pb-1">
+          Stay Informed
+        </h4>
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-3">
-        <button
-          onClick={onNotifyPriceDrop}
-          disabled={isPendingPriceDrop}
-          title="Price Drop Alert"
-          className="flex  items-center justify-center gap-2 p-3 rounded-xl border border-custom-primary/20 bg-custom-primary/5 hover:bg-custom-primary text-custom-primary hover:text-white transition-all duration-300 group shadow-sm hover:shadow-orange-500/20"
-        >
-          <Bell size={20} className="animate-bounce" />
-          <span className="font-bold text-[11px] uppercase tracking-wider">Alert on Price Drop</span>
-        </button>
+          <button
+            onClick={onNotifyPriceDrop}
+            disabled={isPendingPriceDrop}
+            title="Price Drop Alert"
+            className="flex  items-center justify-center gap-2 p-3 rounded-xl border border-custom-primary/20 bg-custom-primary/5 hover:bg-custom-primary text-custom-primary hover:text-white transition-all duration-300 group shadow-sm hover:shadow-orange-500/20"
+          >
+            <Bell size={20} className="animate-bounce" />
+            <span className="font-bold text-[11px] uppercase tracking-wider">
+              Alert on Price Drop
+            </span>
+          </button>
 
-        <button
-          onClick={onNotifySimilar}
-          disabled={isPendingSimilar}
-          title={`Similar ${details === "parts" ? "Parts" : "Vehicles"}`}
-          className="flex  items-center justify-center gap-2 p-3 rounded-xl border border-blue-600/20 bg-blue-600/5 hover:bg-blue-600 text-blue-600 hover:text-white transition-all duration-300 group shadow-sm hover:shadow-blue-500/10"
-        >
-          <Bell size={20} className="animate-bounce" />
-          <span className="font-bold text-[11px] uppercase tracking-wider">Alert on Similar {details === "parts" ? "Parts" : "Vehicles"}</span>
-        </button>
+          <button
+            onClick={onNotifySimilar}
+            disabled={isPendingSimilar}
+            title={`Similar ${details === "parts" ? "Parts" : "Vehicles"}`}
+            className="flex  items-center justify-center gap-2 p-3 rounded-xl border border-blue-600/20 bg-blue-600/5 hover:bg-blue-600 text-blue-600 hover:text-white transition-all duration-300 group shadow-sm hover:shadow-blue-500/10"
+          >
+            <Bell size={20} className="animate-bounce" />
+            <span className="font-bold text-[11px] uppercase tracking-wider">
+              Alert on Similar {details === "parts" ? "Parts" : "Vehicles"}
+            </span>
+          </button>
+        </div>
       </div>
-    </div>
 
       {/* Make Offer Button */}
-      <p className="w-full bg-[#F88E08]  text-white font-medium py-3 px-4 rounded-lg mb-6 flex items-center justify-center gap-2 transition-colors">
-        <span className="text-lg">
-          <OfferIcon />
-        </span>
+      <p className="w-full bg-[#F88E08]  text-white font-medium md:py-3 py-2 px-4 rounded-lg md:mb-6 mb-3 flex items-center justify-center gap-2 transition-colors">
+        <OfferIcon />
         Make An Offer Price
       </p>
 
@@ -167,32 +173,33 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
             alt="Katie Sims"
             className="w-12 h-12 rounded-full object-cover"
           />
-          <div className="w-full flex flex-col gap-1">
-             {
-              data?.seller_details?.name && 
-            <p className="text-sm text-gray-500"><span className="text-sm text-gray-500 font-bold">Name: </span> {data?.seller_details?.name}</p>
-            }
-            {
-              data?.seller_details?.seller_type && 
-            <div className="text-sm text-gray-500">
-           <span className="text-sm text-gray-500 font-bold">Account Type: </span>    {data?.seller_details?.seller_type}
-            </div>
-            }
-            {
-              data?.seller_details?.phone && 
-            <p className="text-sm text-gray-500"><span className="text-sm text-gray-500 font-bold">Phone: </span> {data?.seller_details?.phone}</p>
-            }
-            
-          </div>
+    <div className="w-full flex flex-col gap-1">
+  {(data?.seller_details?.name || data?.seller_details?.seller_type) && (
+    <p className="text-sm text-gray-500 font-bold">
+      {[data?.seller_details?.name, data?.seller_details?.seller_type]
+        .filter(Boolean)
+        .join(", ")}
+    </p>
+  )}
+
+  {data?.seller_details?.phone && (
+    <p className="text-sm text-gray-500 font-bold">
+      {data?.seller_details?.phone}
+    </p>
+  )}
+</div>
         </div>
 
         {/* Contact Buttons */}
         <div className="space-y-3 mb-4">
+          {console.log(data)}
           <Link
-          to="/dashboard/message"
+            to="/dashboard/message"
             onClick={() =>
               mutate({
                 user_id: data?.user,
+                ad_id: data?.id,
+                ad_type: data?.vehicle_type,
               })
             }
             className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
@@ -200,7 +207,7 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
             <MessageCircle size={18} />
             Message Dealer
           </Link>
-{/* {console.log(data)} */}
+          {/* {console.log(data)} */}
           <button
             onClick={() =>
               window.open(
@@ -218,7 +225,7 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
         {/* View All Stock Link */}
         <Link
           to={`/dealer-profile/${data?.profile_id}/${data?.slug}`}
-          className="text-sm text-gray-600 hover:text-gray-800 flex items-center justify-center gap-1 w-full border border-gray-200 py-2 px-4 rounded-lg"
+          className="text-sm bg-gray-200 hover:bg-gray-300 hover:border-gray-300 text-gray-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-1 w-full border border-gray-200 duration-300"
         >
           View All stock at this dealer
           <ExternalLink size={14} />
