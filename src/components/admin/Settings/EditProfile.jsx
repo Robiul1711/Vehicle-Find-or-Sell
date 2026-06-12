@@ -20,6 +20,7 @@ const days = [
 
 const EditProfile = () => {
   const { getProfile } = useAuth();
+
   const { data, isLoading, refetch } = useApiQuery({
     queryKey: ["profile"],
     url: "/account/profile/",
@@ -27,6 +28,7 @@ const EditProfile = () => {
   });
 
   const profile = data?.profile;
+
   const acType = profile?.user?.account_type;
 
   const {
@@ -351,7 +353,8 @@ const EditProfile = () => {
           </div>
         </div>
       )}
-
+{
+acType == "professional" && (
       <div className="flex justify-end pt-6">
         <Button
           type="submit"
@@ -362,6 +365,8 @@ const EditProfile = () => {
           {isPendingOpeningHours ? "Saving..." : "Save Opening Hours"}
         </Button>
       </div>
+  
+)}
     </form>
   );
 };

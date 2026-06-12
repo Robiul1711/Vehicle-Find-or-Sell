@@ -5,6 +5,7 @@ import MessageInbox from "./MessageInbox";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useAuth } from "@/hooks/useAuth";
 import { useQueryClient } from "@tanstack/react-query";
+import profileFallback from "@/assets/images/dummy.png";
 
 const Message = () => {
   const { user } = useAuth();
@@ -182,7 +183,7 @@ const Message = () => {
                           alt={conversation.name}
                           className={`w-12 h-12 rounded-full object-cover border-2 ${isActive ? "border-blue-400" : "border-gray-100"} shadow-sm`}
                           onError={(e) => {
-                            e.target.src = "https://i.pravatar.cc/150";
+                            e.target.src = profileFallback;
                           }}
                         />
                         <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>

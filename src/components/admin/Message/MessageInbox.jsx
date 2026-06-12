@@ -12,10 +12,12 @@ import {
   Check,
   CheckCheck,
   File,
+  ShieldAlert,
 } from "lucide-react";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useAuth } from "@/hooks/useAuth";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
+import profileFallback from "@/assets/images/dummy.png";
 
 /* ================= ATTACHMENT RENDERER ================= */
 
@@ -174,7 +176,7 @@ const MessageBubble = memo(({ message, isCurrentUser }) => {
             alt="Profile"
             className="w-8 h-8 rounded-full object-cover flex-shrink-0 shadow-sm border border-gray-100"
             onError={(e) => {
-              e.target.src = "https://i.pravatar.cc/150";
+              e.target.src = profileFallback;
             }}
           />
         )}
@@ -231,7 +233,7 @@ const MessageBubble = memo(({ message, isCurrentUser }) => {
             alt="Profile"
             className="w-8 h-8 rounded-full object-cover flex-shrink-0 shadow-sm border border-gray-100"
             onError={(e) => {
-              e.target.src = "https://i.pravatar.cc/150";
+              e.target.src = profileFallback;
             }}
           />
         )}
@@ -252,6 +254,7 @@ const MessageInbox = ({ selectedConversation, onBack, queryClient }) => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
+  const [showSafetyAlert, setShowSafetyAlert] = useState(true);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -494,7 +497,7 @@ const MessageInbox = ({ selectedConversation, onBack, queryClient }) => {
               className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-sm"
               alt={selectedConversation?.name}
               onError={(e) => {
-                e.target.src = "https://i.pravatar.cc/150";
+                e.target.src = profileFallback;
               }}
             />
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse" />
@@ -510,6 +513,39 @@ const MessageInbox = ({ selectedConversation, onBack, queryClient }) => {
           </div>
         </div>
       </div>
+
+      {/* ── Safety Alert Banner ── */}
+      <AnimatePresence>
+        {showSafetyAlert && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="mx-5 mt-4 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3 shadow-sm">
+              <div className="flex-shrink-0 mt-0.5">
+                <ShieldAlert size={18} className="text-amber-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-amber-800 leading-relaxed">
+                  <span>
+                    ⚠️ Never share personal documents (ID card, vehicle registration, bank details, etc.) in the messaging system. RONPOIN will never ask for them. Stay vigilant against scams.
+                  </span>
+                </p>
+              </div>
+              <button
+                onClick={() => setShowSafetyAlert(false)}
+                className="flex-shrink-0 p-1 hover:bg-amber-100 rounded-full transition-colors text-amber-500 hover:text-amber-700"
+                aria-label="Dismiss alert"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Message List ── */}
       <div
