@@ -9,8 +9,9 @@ import EditProfile from "./EditProfile";
 import AddServices from "./AddServices";
 import Subscription from "./Subscription";
 import { GrServices } from "react-icons/gr";
-import { LuPackage2 } from "react-icons/lu";
+import { LuPackage2, LuDownload } from "react-icons/lu";
 import AddGoogleReview from "./AddGoogleReview";
+import DangerZone from "./DangerZone";
 export default function Settings() {
   const [activeTab, setActiveTab] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +66,13 @@ export default function Settings() {
       icon: <FaStar />,
       type: "content",
       content: <AddGoogleReview />,
+    },
+    {
+      id: 7,
+      name: "Data & Privacy",
+      icon: <LuDownload className="size-6" />,
+      type: "content",
+      content: <DangerZone />,
     },
   
   ];

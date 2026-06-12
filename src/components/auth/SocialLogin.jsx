@@ -5,7 +5,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 
 const SocialLogin = () => {
@@ -16,7 +16,8 @@ const SocialLogin = () => {
   const { register, watch, getValues, formState: { errors } } = useForm({
     defaultValues: {
       google_account_type: "",
-      google_siren_number: ""
+      google_siren_number: "",
+      accept_terms: false
     }
   });
 
@@ -41,6 +42,7 @@ const SocialLogin = () => {
     const payload = {
       token: credentialResponse.credential,
       account_type: type,
+      accept_terms: getValues("accept_terms"),
       ...(type === "professional" && { siren_number: siren }),
     };
 
@@ -146,7 +148,29 @@ const SocialLogin = () => {
             </div>
           )}
 
-          <div className="flex justify-center pt-4">
+          {/* Terms & Conditions */}
+          <div className="space-y-2">
+            <label className="flex items-start gap-2 cursor-pointer">
+              <input
+                {...register("accept_terms", { required: true })}
+                type="checkbox"
+                className="mt-0.5 rounded accent-custom-primary"
+              />
+              <span className="text-sm text-gray-700 font-medium leading-relaxed">
+                I agree to the{" "}
+                <Link to="/term-and-conditions" target="_blank" className="text-custom-primary hover:underline font-semibold">
+                  Terms & Conditions
+                </Link>{" "}
+                and{" "}
+                <Link to="/term-and-conditions" target="_blank" className="text-custom-primary hover:underline font-semibold">
+                  Privacy Policy
+                </Link>
+                .
+              </span>
+            </label>
+          </div>
+
+          <div className="flex justify-center pt-2">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={() => console.log("Login Failed")}
@@ -158,6 +182,7 @@ const SocialLogin = () => {
               size="large"
               disabled={
                 !selectedType ||
+                !watch("accept_terms") ||
                 (selectedType === "professional" &&
                   !watch("google_siren_number")) ||
                   isGooglePending
