@@ -29,21 +29,23 @@ const AdminLayout = () => {
       sublink: false,
     },
     {
- 
       id: 2,
-      icon:    <Plus size={24} />,
+      icon: <Plus size={24} />,
       text: "Post New Ad",
       path: "/dashboard/create-ads",
-      activePaths: ["/dashboard/create-ads", ],
+      activePaths: ["/dashboard/create-ads"],
       sublink: false,
-    
     },
     {
       id: 3,
       icon: <MyAddsIcon className=" hover:text-primaryColor" />,
       text: "My Ads",
       path: "/dashboard/my-adds",
-      activePaths: ["/dashboard/my-adds", "/dashboard/car-details/:id", "/dashboard/view-analytics/:id"],
+      activePaths: [
+        "/dashboard/my-adds",
+        "/dashboard/car-details/:id",
+        "/dashboard/view-analytics/:id",
+      ],
       sublink: false,
     },
     {
@@ -51,7 +53,10 @@ const AdminLayout = () => {
       icon: <BoostAddsIcon className=" hover:text-primaryColor" />,
       text: "Boost Ads ",
       path: "/dashboard/boost-ads",
-      activePaths: ["/dashboard/boost-ads", "/dashboard/boost-your-ad-visibility/:id"],
+      activePaths: [
+        "/dashboard/boost-ads",
+        "/dashboard/boost-your-ad-visibility/:id",
+      ],
       sublink: false,
     },
     {
@@ -110,7 +115,9 @@ const AdminLayout = () => {
         <div className="flex-1 bg-dark bg-[#F8F8F8]   flex flex-col overflow-auto custom-scrollbar">
           <div className=" flex flex-col  ">
             <CommonNavbar open={Open} setOpen={setOpen} />
-            <div className={`${location.pathname === "/dashboard/message" ? "sm:p-4 " : "p-4 sm:p-6 md:p-9"} `}  >
+            <div
+              className={`${location.pathname === "/dashboard/message" ? "sm:p-4 " : "p-4 sm:p-6 md:p-9"} `}
+            >
               <Outlet />
             </div>
           </div>

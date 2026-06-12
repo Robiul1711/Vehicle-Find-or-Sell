@@ -4,23 +4,31 @@ import CommonButton from "../common/CommonButton";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { CarOneIcon } from "../common/SVGicons/MySvg";
 import { motion } from "framer-motion";
+import { useAuth } from "@/hooks/useAuth";
 
-const heroData = [
+
+
+const Hero = () => {
+  const {user}=useAuth()
+  const heroData = [
   {
     id: 1,
     title: "Looking for a Car, Bike, Van, or  Parts?",
     desc: "Browse verified listings from private sellers and trusted professionals near you.",
     icon: <CarOneIcon className="size-10 sm:size-12 lg:size-16 xl:size-auto" />,
+    link: user?.profile?.user ? "/listings" : "/listings",
+    type:"Browse"
   },
   {
     id: 2,
     title: "Want to Sell Your Car, Bike, Van, or Spare Parts?",
     desc: "Create your listing in minutes and connect with thousands of potential buyers.",
     icon: <CarOneIcon className="size-10 sm:size-12 lg:size-16 xl:size-auto" />,
+    link: user?.profile?.user ? "/dashboard" : "/auth",
+    type:"Sell"
   },
 ];
-
-const Hero = () => {
+  console.log(user?.profile?.user)
   return (
     <div className="bg-[#F9FAFB] section-padding-x section-padding-y grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 overflow-hidden">
       {heroData.map((item, index) => (
@@ -58,11 +66,11 @@ const Hero = () => {
               transition={{ delay: 0.5 + index * 0.2 }}
             >
               <CommonButton
-                link="/listings"
+                link={item.link}
                 variant="primary"
                 className="flex items-center gap-2 transition-transform hover:scale-105 active:scale-95"
               >
-                Get Started <MdOutlineArrowOutward />
+                {item.type === "Browse" ? "Get Started" : "Dashboard"} <MdOutlineArrowOutward />
               </CommonButton>
             </motion.div>
             <motion.div 

@@ -1,13 +1,21 @@
 import { RxCross1 } from "react-icons/rx";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { RiTimer2Line } from "react-icons/ri";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { TimePicker } from "antd";
+import dayjs from "dayjs";
 
 const ScheduleLaterModal = ({ isModalOpen, setIsModalOpen, onConfirm }) => {
-  const { register, handleSubmit } = useFormContext();
+  const { control, handleSubmit, setValue } = useFormContext();
   if (!isModalOpen) return null;
 
   // Handles submitting the react-hook-form data and closing the modal
   const handleConfirmSubmit = (data) => {
+    // Automatically set the user's UTC offset in minutes (e.g. +06:00 = 360)
+    const utcOffset = new Date().getTimezoneOffset() * -1;
+    setValue("utc_offset_minutes", utcOffset);
+    data.utc_offset_minutes = utcOffset;
     onConfirm(data);
     setIsModalOpen(false);
   };
@@ -50,10 +58,18 @@ const ScheduleLaterModal = ({ isModalOpen, setIsModalOpen, onConfirm }) => {
             <div className="relative">
               <label className="block text-sm font-semibold text-gray-700 mb-2.5 ml-1">Date</label>
               <div className="relative group">
-                <input
-                  type="date"
-                  {...register("scheduled_date")}
-                  className="w-full border-2 border-gray-100 bg-gray-50/50 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 focus:outline-none focus:ring-4 focus:ring-[#002b55]/5 focus:border-[#002b55]/30 focus:bg-white transition-all text-gray-800 font-medium"
+                <Controller
+                  name="scheduled_date"
+                  control={control}
+                  render={({ field }) => (
+                    <DatePicker
+                      placeholderText="DD/MM/YYYY"
+                      dateFormat="dd/MM/yyyy"
+                      selected={field.value ? new Date(field.value) : null}
+                      onChange={(date) => field.onChange(date)}
+                      className="w-full border-2 border-gray-100 bg-gray-50/50 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 focus:outline-none focus:ring-4 focus:ring-[#002b55]/5 focus:border-[#002b55]/30 focus:bg-white transition-all text-gray-800 font-medium"
+                    />
+                  )}
                 />
               </div>
             </div>
@@ -61,10 +77,21 @@ const ScheduleLaterModal = ({ isModalOpen, setIsModalOpen, onConfirm }) => {
             <div className="relative">
               <label className="block text-sm font-semibold text-gray-700 mb-2.5 ml-1">Time</label>
               <div className="relative group">
-                <input
-                  type="time"
-                  {...register("scheduled_time")}
-                  className="w-full border-2 border-gray-100 bg-gray-50/50 rounded-2xl px-4 py-3.5 sm:px-5 sm:py-4 focus:outline-none focus:ring-4 focus:ring-[#002b55]/5 focus:border-[#002b55]/30 focus:bg-white transition-all text-gray-800 font-medium"
+                <Controller
+                  name="scheduled_time"
+                  control={control}
+                  render={({ field }) => (
+                    <TimePicker
+                      placeholder="Select Time"
+                      format="HH:mm"
+                      value={field.value ? dayjs(field.value, "HH:mm") : null}
+                      onChange={(_time, timeString) => field.onChange(timeString)}
+                      className="w-full !border-2 !border-gray-100 !bg-gray-50/50 !rounded-2xl !px-4 !py-3.5 sm:!px-5 sm:!py-4 focus:!outline-none focus:!ring-4 focus:!ring-[#002b55]/5 focus:!border-[#002b55]/30 focus:!bg-white !transition-all !text-gray-800 !font-medium"
+                      style={{ height: "auto" }}
+                      popupStyle={{ zIndex: 300000000 }}
+                      needConfirm={false}
+                    />
+                  )}
                 />
               </div>
             </div>

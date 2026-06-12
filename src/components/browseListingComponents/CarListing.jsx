@@ -15,14 +15,14 @@ import NoVehicleFound from "./NoVehicleFound";
 
 const CarListing = ({
   items,
-  
+
   onFilterChange,
   filters,
   type,
   isLoading,
   onAddFavorite,
 }) => {
-  console.log(items)
+  console.log(items);
   const [isGrid, setIsGrid] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchText, setSearchText] = useState(filters?.search || "");
@@ -199,8 +199,8 @@ const CarListing = ({
                       isGrid ? "w-full mx-auto" : ""
                     }`}
                   >
-                    <Link 
-      // onClick={handleCardClick}
+                    <Link
+                      // onClick={handleCardClick}
                       to={`/details/${item?.id}/${item?.slug}`}
                       layout
                       className={`${
@@ -227,11 +227,11 @@ const CarListing = ({
                           }`}
                         />
                         <button
-                       onClick={(e) => {
-    e.preventDefault(); 
-    e.stopPropagation(); 
-    onAddFavorite(item.id);
-  }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onAddFavorite(item.id);
+                          }}
                           className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-all duration-300 group z-10"
                         >
                           {/* {console.log(item)} */}
@@ -273,17 +273,14 @@ const CarListing = ({
                             {item.location}
                           </span>
                         </motion.p>
+                        <motion.div layout className=" my-2 "></motion.div>
                         <motion.div
                           layout
-                          className=" my-2 "
-                        ></motion.div>
-                        <motion.div
-                          layout
-                          className="py-2 flex justify-between items-center gap-4 w-full"
+                          className="bg-gray-50 rounded-md p-2 flex justify-between items-center gap-2  "
                         >
                           {item?.mileage && (
                             <div className="flex flex-col items-center ">
-                              <CustomMileage className="bg-gray-50 p-2 rounded-full"/>
+                              <CustomMileage className="bg-gray-50 p-2 rounded-full" />
                               <p className="capitalize">{item?.mileage}</p>
                             </div>
                           )}
@@ -300,10 +297,7 @@ const CarListing = ({
                             </div>
                           )}
                         </motion.div>
-                        <motion.div
-                          layout
-                          className="my-2 "
-                        ></motion.div>
+                        <motion.div layout className="my-2 "></motion.div>
                         <motion.div
                           layout
                           className="flex justify-between mt-auto pt-2"

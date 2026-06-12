@@ -75,7 +75,7 @@ const SideBar = ({ sidebar, open, setOpen }) => {
 
       {/* Sidebar */}
       <div
-        className={`h-full py-6 transition-all duration-300 ease-in-out overflow-x-hidden custom-scrollbar ${
+        className={`h-full py-6 transition-all duration-300 ease-in-out overflow-x-hidden custom-scrollbar  ${
           open
             ? "w-[300px] left-0 shadow-lg"
             : "xlg:w-[85px] w-[300px] -left-full xlg:left-0"

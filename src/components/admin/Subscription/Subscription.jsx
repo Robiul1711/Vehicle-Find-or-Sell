@@ -21,7 +21,8 @@ const AnimatedPrice = ({ price }) => {
 
 const Subscription = () => {
   const {user} = useAuth();
-  const [isMonthly, setIsMonthly] = useState(user?.profile?.user?.account_type === "vehicle" ? true : false); // true = Vehicle, false = Spare Parts
+  console.log(user)
+  const [isMonthly, setIsMonthly] = useState(true); // true = Vehicle, false = Spare Parts
   const monthlyButtonRef = useRef(null);
   const yearlyButtonRef = useRef(null);
   const [activeButtonLeft, setActiveButtonLeft] = useState(0);

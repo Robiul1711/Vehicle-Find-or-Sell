@@ -351,7 +351,7 @@ const CreateAds = () => {
           errorData.is_subscribed === false ||
           (errorData.message &&
             (errorData.message.includes("No active subscription package found. Please purchase a package to post ads.") ||
-            errorData.message.includes("No active subscription package found. Please purchase a package to post ads.")))
+            errorData.message.includes("No active package found. Please purchase a package before publishing ads.")))
         ) {
           // Save form data to localStorage
           const formData = methods.getValues();
@@ -620,6 +620,9 @@ const CreateAds = () => {
     }
     if (data.scheduled_time) {
       append("scheduled_time", data.scheduled_time);
+    }
+    if (data.utc_offset_minutes !== undefined && data.utc_offset_minutes !== null) {
+      append("utc_offset_minutes", data.utc_offset_minutes);
     }
 
     // console.log("FormData created.");

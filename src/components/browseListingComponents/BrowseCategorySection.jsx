@@ -114,7 +114,7 @@ const BrowseCategorySection = () => {
   const onAddFavorite = (id, type) => {
     mutate({ id, type });
   };
-console.log(data?.data)
+// console.log(data?.data)
   // Define categories data
   const categories = [
     {

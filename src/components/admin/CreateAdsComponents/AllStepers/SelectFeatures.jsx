@@ -70,7 +70,8 @@ export const SelectFeatures = () => {
   }
 
   return (
-    <div className="overflow-y-auto">
+    <>
+    <div className="">
       <h1 className="text-2xl font-semibold text-gray-800 mb-8">
         Select Features
       </h1>
@@ -177,5 +178,6 @@ export const SelectFeatures = () => {
         </div>
       ))}
     </div>
+    </>
   );
 };

@@ -333,7 +333,7 @@ const PartListing = ({
                         <motion.div layout className=" my-2 "></motion.div>
                         <motion.div
                           layout
-                          className="px-4 py-2 flex justify-between items-center gap-4 w-full rounded-lg"
+                          className="bg-gray-50 rounded-md p-2 flex justify-between items-center gap-2  "
                         >
                           {item?.mileage && (
                             <div className="flex flex-col items-center">

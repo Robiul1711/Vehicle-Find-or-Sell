@@ -71,10 +71,8 @@ const Banner = () => {
       <div className="hidden md:flex flex-row md:gap-6 justify-between items-center section-padding-x section-padding-y">
         {/* Left Content */}
         <div className="w-1/2 flex flex-col justify-center space-y-6 text-left">
-          <p className="text-lg font-medium text-gray-600 dark:text-gray-300">
-            {BannerData?.subtitle || "Buy or sell vehicles today – fast, simple, trusted."}
-          </p>
-
+          <p className="text-lg font-medium text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{__html:BannerData?.subtitle || "Buy or sell vehicles today – fast, simple, trusted."}}/>
+        
           <div>
             <Title level="title70" className="max-w-[750px]">
               {BannerData?.title || "Find or Sell Your Vehicle Fast & Easy!"}

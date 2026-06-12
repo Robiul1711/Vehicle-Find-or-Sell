@@ -90,7 +90,7 @@ export default function BasicDetails() {
         {/* Brand */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Brand <span className="text-gray-500 text-xs">(Required)</span>
+            Brand <span className="text-gray-500 text-xs"></span>
           </label>
           <select
             {...register("brand", {
@@ -117,7 +117,7 @@ export default function BasicDetails() {
         {/* Model */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Model <span className="text-gray-500 text-xs">(Required)</span>
+            Model <span className="text-red-500 text-xs ">(Required)</span>
           </label>
           <select
             {...register("model", {
@@ -157,9 +157,10 @@ export default function BasicDetails() {
                   {tv.version}
                 </option>
               ))}
-              {currentVersion && !trimVersions.some((tv) => tv.version === currentVersion) && (
-                <option value={currentVersion}>{currentVersion}</option>
-              )}
+              {currentVersion &&
+                !trimVersions.some((tv) => tv.version === currentVersion) && (
+                  <option value={currentVersion}>{currentVersion}</option>
+                )}
             </select>
           ) : (
             <>
@@ -195,9 +196,10 @@ export default function BasicDetails() {
                   {body?.name}
                 </option>
               ))}
-              {currentBody && !bodyTypes?.some((b) => b?.name == currentBody) && (
-                <option value={currentBody}>{currentBody}</option>
-              )}
+              {currentBody &&
+                !bodyTypes?.some((b) => b?.name == currentBody) && (
+                  <option value={currentBody}>{currentBody}</option>
+                )}
             </select>
           </div>
         )}
@@ -233,7 +235,8 @@ export default function BasicDetails() {
         {/* Original Price */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Original Price <span className="text-gray-500 text-xs">(Required)</span>
+            Original Price{" "}
+            <span className="text-red-500 text-xs">(Required)</span>
           </label>
           <input
             {...register("originalPrice")}
@@ -333,7 +336,7 @@ export default function BasicDetails() {
         {/* Exact date */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Exact date <span className="text-gray-500 text-xs">(Required)</span>
+            Exact date <span className="text-red-500 text-xs">(Required)</span>
           </label>
           <Controller
             name="exactDate"
@@ -355,8 +358,8 @@ export default function BasicDetails() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Condition
           </label>
-            <select
-              {...register("condition")}
+          <select
+            {...register("condition")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none  focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm bg-white"
           >
             <option value="">Select Condition</option>
@@ -453,7 +456,7 @@ export default function BasicDetails() {
         {/* Color */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Color <span className="text-gray-500 text-xs">(Required)</span>
+            Color <span className="text-red-500 text-xs">(Required)</span>
           </label>
           <input
             {...register("color")}

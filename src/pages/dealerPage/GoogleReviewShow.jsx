@@ -152,21 +152,23 @@ const GoogleReviewShow = () => {
         )}
 
         {/* Simplified End of Records - removed intersection observer logic since this isn't an infinite query */}
-
-        <div className="py-4 flex justify-center items-center gap-3 text-gray-200">
+{
+  reviewData?.data?.google_maps_url && (
+    <div className="py-4 flex justify-center items-center gap-3 text-gray-200">
     
         <Link to={`${reviewData?.data?.google_maps_url}`} target="_blank">
           <Button
             variant="outline"
             size="sm"
             className="text-xs"
-          >
+            >
          
             View All Reviews
           </Button>
         </Link>
         
         </div>
+         ) }
       </div>
 
       {/* Footer Branding */}

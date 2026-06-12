@@ -179,7 +179,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
                 className="rounded accent-custom-primary"
               />
               <span className="text-sm">
-                I agree to the <Link to="/term-and-conditions" className="text-custom-primary">Terms & Conditions</Link> and <Link to="/legal-notice" className="text-custom-primary">Privacy Policy</Link>.
+                I agree to the <Link to="/term-and-conditions" className="text-custom-primary">Terms & Conditions</Link> and <Link to="/term-and-conditions" className="text-custom-primary">Privacy Policy</Link>.
               </span>
             </label>
           </div>

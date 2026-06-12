@@ -49,7 +49,7 @@ const Navbar = () => {
   }, [isMenuOpen]);
 
   const navLinks = [
-    { to: "/", text: "Home" },
+    { to: "/", text: "Welcome" },
     { to: "/listings", text: "Browse Listings" },
     { to: "/blog", text: "Blog" },
     { to: "/dealers", text: "Dealers" },

@@ -15,7 +15,11 @@ const BlogPage = () => {
     queryKey: ["blog"],
     url: "/blog/",
   });
-
+  const { data:blogBanner , isLoading:blogLoading } = useApiQuery({
+    queryKey: ["blog-cms"],
+    url: "/cms/blog/",
+  });
+console.log(blogBanner?.data)
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -44,7 +48,7 @@ const BlogPage = () => {
         keywords={["auto blog", "car advice", "vehicle tips", "maintenance guides", "automotive news"]}
       />
       <ScrollRestoration />
-      <BlogBanner />
+      <BlogBanner blogBanner={blogBanner?.data} />
       <CommonPageWrapper>
         <BlogGrid data={data} isLoading={isLoading} />
       </CommonPageWrapper>
