@@ -134,7 +134,7 @@ export default function CarRightSideDetails({ details }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
         {/* Left Column */}
         <div className="space-y-4">
-          {specs.map((spec, index) => (
+          {specs.filter((spec) => spec.value).map((spec, index) => (
             <div
               key={index}
               className="flex items-center space-x-3 text-sm sm:text-base"
@@ -154,7 +154,7 @@ export default function CarRightSideDetails({ details }) {
 
         {/* Right Column */}
         <div className="space-y-4">
-          {rightSpecs.map((spec, index) => (
+          {rightSpecs.filter((spec) => spec.value).map((spec, index) => (
             <div
               key={index}
               className="flex items-center space-x-3 text-sm sm:text-base"
@@ -174,24 +174,26 @@ export default function CarRightSideDetails({ details }) {
       </div>
 
       {/* Engine & Transmission Specs Section */}
-      <div className="mt-8">
-        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-6">
-          Engine & Transmission Specs
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-          {engineSpecs.map((spec, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-center text-sm sm:text-base"
-            >
-              <span className="text-gray-700">{spec.label}</span>
-              <span className="text-gray-900 font-medium capitalize">
-                {spec.value}
-              </span>
-            </div>
-          ))}
+      {engineSpecs.some((spec) => spec.value) && (
+        <div className="mt-8">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-6">
+            Engine & Transmission Specs
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+            {engineSpecs.filter((spec) => spec.value).map((spec, index) => (
+              <div
+                key={index}
+                className="flex justify-between items-center text-sm sm:text-base"
+              >
+                <span className="text-gray-700">{spec.label}</span>
+                <span className="text-gray-900 font-medium capitalize">
+                  {spec.value}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

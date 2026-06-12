@@ -88,22 +88,24 @@ const CarOverView = ({ details, data }) => {
           ))}
         </div>
       </div>
-      <div>
-        <Title level="title40" className=" !font-bold">
-          Description
-        </Title>
-        <div
-          className="
-          mt-4
-    text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed 
-    prose prose-slate dark:prose-invert max-w-none
-    
-    prose-p:leading-relaxed prose-strong:text-slate-900 dark:prose-strong:text-white
-    prose-ul:list-disc prose-li:marker:text-blue-400
-  "
-          dangerouslySetInnerHTML={{ __html: data?.description || "" }}
-        />
-      </div>
+      {data?.description && (
+        <div>
+          <Title level="title40" className=" !font-bold">
+            Description
+          </Title>
+          <div
+            className="
+            mt-4
+      text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed 
+      prose prose-slate dark:prose-invert max-w-none
+      
+      prose-p:leading-relaxed prose-strong:text-slate-900 dark:prose-strong:text-white
+      prose-ul:list-disc prose-li:marker:text-blue-400
+    "
+            dangerouslySetInnerHTML={{ __html: data?.description }}
+          />
+        </div>
+      )}
       {/* Documents Section */}
       {data?.documents && data.documents.length > 0 && (
         <div>

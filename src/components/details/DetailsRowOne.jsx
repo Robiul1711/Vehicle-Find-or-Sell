@@ -167,7 +167,7 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
         />
       </div>
 
-      <div className="xmd:w-[40%] w-full">
+      <div className="xmd:w-[40%] w-full sticky top-6 xl:top-8 self-start">
         <VehiclePriceDealer
           data={data}
           isLoading={isLoading}

@@ -84,19 +84,21 @@ const CarBottomFeatures = ({ details }) => {
       )}
 
       {/* === Seller Address === */}
-      <div className="">
-          <Title level="title20" className="!font-bold mb-3">
-          Seller Address
-        </Title>
-        <div>
-          <Title level="title14" className="text-gray-500">
-            Address
+      {fullAddress && (
+        <div className="">
+            <Title level="title20" className="!font-bold mb-3">
+            Seller Address
           </Title>
-          <Title level="title16" className="capitalize">
-            {fullAddress || "No address provided"}
-          </Title>
+          <div>
+            <Title level="title14" className="text-gray-500">
+              Address
+            </Title>
+            <Title level="title16" className="capitalize">
+              {fullAddress}
+            </Title>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* === Contact Info === */}
       {(details?.contact?.name || details?.contact?.email || details?.contact?.phone || details?.contact?.whatsapp) && (

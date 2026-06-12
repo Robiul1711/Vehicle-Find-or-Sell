@@ -3,9 +3,10 @@ import Title from "../common/Title";
 
 const Location = ({ data }) => {
   const { city, country, street, zip_code } = data?.seller_address || {};
-  const fullAddress = `${street || ""}, ${city || ""}, ${country || ""} ${
-    zip_code || ""
-  }`;
+  const addressParts = [street, city, zip_code, country].filter(Boolean);
+  const fullAddress = addressParts.join(", ");
+
+  if (!fullAddress) return null;
 
   return (
     <>
