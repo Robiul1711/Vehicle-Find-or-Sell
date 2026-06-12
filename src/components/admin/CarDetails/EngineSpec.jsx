@@ -9,6 +9,10 @@ const EngineSpec = ({data}) => {
     { label: "Turning Circle (m)", value: data?.engine_transmission?.turningCircle },
   ];
   return (
+    <>
+    {
+      data?.engine_transmission && (
+        
     <div className="mt-8">
       <h3 className="text-lg font-semibold text-gray-900 mb-6">
         Engine & Transmission Specs
@@ -24,6 +28,9 @@ const EngineSpec = ({data}) => {
         ))}
       </div>
     </div>
+      )
+    }
+    </>
   );
 };
 

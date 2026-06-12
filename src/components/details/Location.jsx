@@ -8,7 +8,9 @@ const Location = ({ data }) => {
   }`;
 
   return (
-    <div className="flex flex-col gap-6 mt-10">
+    <>
+    
+    <div className="flex flex-col gap-6 mt-6">
       <Title level="title40" className="!font-bold">
         Location
       </Title>
@@ -31,6 +33,7 @@ const Location = ({ data }) => {
         ></iframe>
       </div>
     </div>
+    </>
   );
 };
 
