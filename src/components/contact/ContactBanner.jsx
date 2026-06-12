@@ -7,7 +7,7 @@ const ContactBanner = () => {
     queryKey: ["contact"],
     url: "/cms/contact/",
   });
-  console.log(data?.data)
+
     const titleRef = useRef(null);
     const subTextRef = useRef(null);
     useEffect(() => {
