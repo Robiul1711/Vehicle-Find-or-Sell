@@ -81,6 +81,8 @@ const BrowseCategorySection = () => {
       image: item.first_image, // Handle null/default image in component
       price: item.discount_price || item.original_price,
       isFavorite: item.is_favourite,
+      isVideo: item.is_video,
+      isBumped: item.is_bumped,
     }));
   };
 
@@ -98,6 +100,8 @@ const BrowseCategorySection = () => {
       image: item.first_image,
       price: item.discount_price || item.original_price,
       isFavorite: item.is_favourite,
+      isVideo: item.is_video,
+      isBumped: item.is_bumped,
     }));
   };
 

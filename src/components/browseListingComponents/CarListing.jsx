@@ -9,6 +9,7 @@ import {
   CustomPetrol,
   CustomTransmission,
 } from "@/utils/IconProvider";
+import { Bumpcon, VideoIcon } from "@/components/common/SVGicons/MySvg";
 import FilterSection from "./FilterSection";
 import { Link } from "react-router-dom";
 import NoVehicleFound from "./NoVehicleFound";
@@ -226,6 +227,19 @@ const CarListing = ({
                               : "w-44 h-44 mr-4 flex-shrink-0"
                           }`}
                         />
+                        {/* Badge Overlays */}
+                        <div className="absolute top-4 left-4 flex flex-col gap-2">
+                          {item.isBumped && (
+                            <span className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md" title="Boosted">
+                              <Bumpcon className="w-5 h-5" />
+                            </span>
+                          )}
+                          {item.isVideo && (
+                            <span className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md" title="Has Video">
+                              <VideoIcon className="w-5 h-5" />
+                            </span>
+                          )}
+                        </div>
                         <button
                           onClick={(e) => {
                             e.preventDefault();

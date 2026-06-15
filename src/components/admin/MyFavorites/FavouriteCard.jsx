@@ -15,7 +15,7 @@ import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const FavouriteCard = ({ car }) => {
-  // console.log(car);
+  // console.log(car?.content_object);
 
   // Determine if it's a part or a vehicle for the correct path
   const isPart =
@@ -58,10 +58,17 @@ const FavouriteCard = ({ car }) => {
                   car?.content_object?.part_name ||
                   "N/A"}
               </h2>
+              {console.log(car?.content_object)}
               <div className="flex items-center gap-2">
-                <Bumpcon />
-                <VideoIcon />
-                <ProfetionalIcon />
+                  {car?.content_object?.is_bumped === true && (
+                  <Bumpcon />
+                )}
+                  {car?.content_object?.is_video === true && (
+                    <VideoIcon />
+                  )}
+                  {car?.content_object?.is_featured === true && (
+                    <ProfetionalIcon />
+                  )}
               </div>
             </div>
             <p className="text-gray-500 text-sm truncate line-clamp-2">

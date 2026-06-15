@@ -7,6 +7,7 @@ import {
   PetrolIcon,
   WarrentiesIcon,
 } from "../common/SVGicons/CarSvg";
+import { Bumpcon, VideoIcon } from "../common/SVGicons/MySvg";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import { useApiMutation } from "@/hooks/useApiMutation";
@@ -67,6 +68,22 @@ const PartsDetailsRowOne = ({ details, data, refetch }) => {
           <Title level="title40" className="!font-bold">
             {data?.part_name}
           </Title>
+
+          {/* Status Badges */}
+          <div className="flex gap-2 mb-2">
+            {data?.is_bumped && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#012853]/10 text-[#012853] text-xs font-medium rounded-full" title="Boosted">
+                <Bumpcon className="w-4 h-4" />
+                Boosted
+              </span>
+            )}
+            {data?.is_video && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-orange-50 to-yellow-50 text-orange-600 text-xs font-medium rounded-full" title="Has Video">
+                <VideoIcon className="w-4 h-4" />
+                Video
+              </span>
+            )}
+          </div>
 
           <div className="flex w-full gap-6 justify-end">
             {/* Car Info Badges */}

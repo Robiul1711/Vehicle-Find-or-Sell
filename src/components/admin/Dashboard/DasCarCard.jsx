@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const DasCarCard = ({ car }) => {
+  // console.log(car)
   const { mutate, isPending } = useApiMutation({
     url: `${car?.ad_type === "parts" ? `/ads/parts/${car?.id}/` : `/ads/vehicles/${car?.id}/`}`,
     method: "DELETE",
@@ -64,9 +65,9 @@ const DasCarCard = ({ car }) => {
             </h2>
 
             <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-              {car?.is_bump && <Bumpcon />}
-              {car?.is_video && <VideoIcon />}
-              {car?.is_featured && <ProfetionalIcon />}
+              {car?.is_bumped == true && <Bumpcon />}
+              {car?.is_video == true && <VideoIcon />}
+              {car?.is_featured == true && <ProfetionalIcon />}
             </div>
           </div>
           <p className="text-gray-500 text-sm line-clamp-1">{car?.subtitle}</p>

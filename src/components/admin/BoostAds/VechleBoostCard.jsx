@@ -27,10 +27,10 @@ const VechleBoostCard = ({ car }) => {
         <div>
           <div className="flex  justify-between">
             <h2 className="text-lg font-semibold text-gray-900 line-clamp-1">{car.title}</h2>
-            <div className="flex items-center gap-2 ">
-              {car?.is_bump && <Bumpcon />}
-              {car?.is_video && <VideoIcon />}
-              {car?.is_featured && <ProfetionalIcon />}
+          <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+              {car?.is_bumped == true && <Bumpcon />}
+              {car?.is_video == true && <VideoIcon />}
+              {car?.is_featured == true && <ProfetionalIcon />}
             </div>
           </div>
           <p className="text-gray-500 text-sm truncate">{car.subtitle}</p>

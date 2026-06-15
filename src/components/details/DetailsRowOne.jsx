@@ -7,6 +7,7 @@ import {
   PetrolIcon,
   WarrentiesIcon,
 } from "../common/SVGicons/CarSvg";
+import { Bumpcon, VideoIcon } from "../common/SVGicons/MySvg";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import VehiclePriceDealer from "./VehiclePriceDealer";
@@ -116,6 +117,8 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
             {data?.brand_name} {data?.model}
           </Title>
 
+ 
+
           <div className="flex w-full gap-6 justify-between">
             {/* Car Info Badges */}
             <div className="flex flex-wrap gap-3">
@@ -133,7 +136,7 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
             </div>
 
             {/* Buttons Section */}
-            <div className="flex gap-3 flex-wrap items-center">
+            <div className="flex gap-2 flex-wrap items-center">
               {/* Favorite Button */}
               <button
                 onClick={onAddFavorite}
@@ -156,6 +159,21 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
               >
                 <FaRegShareFromSquare size={20} />
               </button>
+                       {/* Status Badges */}
+          <div className="flex gap-2">
+            {data?.is_bumped && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#012853]/10 text-[#012853] text-xs font-medium rounded-full" title="Boosted">
+                <Bumpcon className="w-4 h-4" />
+                Boosted
+              </span>
+            )}
+            {data?.is_video && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-orange-50 to-yellow-50 text-orange-600 text-xs font-medium rounded-full" title="Has Video">
+                <VideoIcon className="w-4 h-4" />
+                Video
+              </span>
+            )}
+          </div>
             </div>
           </div>
         </div>
