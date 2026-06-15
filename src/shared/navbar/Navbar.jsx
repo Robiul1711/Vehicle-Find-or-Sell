@@ -18,7 +18,7 @@ const Navbar = () => {
   const location = useLocation();
   const { user, loading } = useAuth();
 
-
+  const selectedLanguage = localStorage.getItem("selectedLanguage") || "fr";
 
     const { data } = useApiQuery({
       queryKey: ["footer"],
@@ -49,7 +49,7 @@ const Navbar = () => {
   }, [isMenuOpen]);
 
   const navLinks = [
-    { to: "/", text: "Welcome" },
+    { to: "/", text: selectedLanguage === "fr" ? "Accueil" : "Home" },
     { to: "/listings", text: "Browse Listings" },
     { to: "/blog", text: "Blog" },
     { to: "/dealers", text: "Dealers" },
