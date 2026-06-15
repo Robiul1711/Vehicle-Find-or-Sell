@@ -57,7 +57,7 @@ const BlogGrid = ({ data, isLoading }) => {
   const currentBlogs = blogList.slice(startIndex, startIndex + blogsPerPage);
 
   return (
-    <div className="" ref={blogGridRef}>
+    <div id="blog-grid" className="" ref={blogGridRef}>
       {/* Blog Grid */}
       <div className="grid md:grid-cols-3 gap-6">
         {currentBlogs.length > 0 ? (
@@ -107,7 +107,10 @@ const BlogGrid = ({ data, isLoading }) => {
           <ul className="flex items-center gap-2">
             <li>
               <button
-                onClick={() => setCurrentPage(1)}
+                onClick={() => {
+                  setCurrentPage(1);
+                  document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
                 disabled={currentPage === 1}
                 className="w-10 h-10 flex items-center justify-center border rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
               >
@@ -116,7 +119,10 @@ const BlogGrid = ({ data, isLoading }) => {
             </li>
             <li>
               <button
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                onClick={() => {
+                  setCurrentPage((p) => Math.max(p - 1, 1));
+                  document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
                 disabled={currentPage === 1}
                 className="w-10 h-10 flex items-center justify-center border rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
               >
@@ -127,7 +133,10 @@ const BlogGrid = ({ data, isLoading }) => {
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
               <li key={num}>
                 <button
-                  onClick={() => setCurrentPage(num)}
+                  onClick={() => {
+                    setCurrentPage(num);
+                    document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
                   className={`w-10 h-10 flex items-center justify-center border rounded-lg transition-all ${
                     num === currentPage
                       ? "bg-custom-primary text-white border-custom-primary shadow-md"
@@ -141,9 +150,10 @@ const BlogGrid = ({ data, isLoading }) => {
 
             <li>
               <button
-                onClick={() =>
-                  setCurrentPage((p) => Math.min(p + 1, totalPages))
-                }
+                onClick={() => {
+                  setCurrentPage((p) => Math.min(p + 1, totalPages));
+                  document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 flex items-center justify-center border rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
               >
@@ -152,7 +162,10 @@ const BlogGrid = ({ data, isLoading }) => {
             </li>
             <li>
               <button
-                onClick={() => setCurrentPage(totalPages)}
+                onClick={() => {
+                  setCurrentPage(totalPages);
+                  document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 flex items-center justify-center border rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
               >

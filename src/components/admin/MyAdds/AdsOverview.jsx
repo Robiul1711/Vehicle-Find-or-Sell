@@ -75,7 +75,7 @@ export default function AdsOverview() {
   }, []);
 
   return (
-    <div className="space-y-6 md:space-y-9">
+    <div id="ads-overview" className="space-y-6 md:space-y-9">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <div>
@@ -279,6 +279,7 @@ export default function AdsOverview() {
                 pageCount={Math.ceil((data?.count || 0) / 8)}
                 setPageCount={setCurrentPage}
                 forcePage={currentPage}
+                scrollContainerId="ads-overview"
               />
             </div>
           )}

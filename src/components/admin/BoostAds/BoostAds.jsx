@@ -75,7 +75,7 @@ export default function BoostAds() {
   }, []);
 
   return (
-    <div className="space-y-6 md:space-y-9">
+    <div id="boost-ads" className="space-y-6 md:space-y-9">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <div>
@@ -279,6 +279,7 @@ export default function BoostAds() {
                 pageCount={Math.ceil((data?.count || 0) / 8)}
                 setPageCount={setCurrentPage}
                 forcePage={currentPage}
+                scrollContainerId="boost-ads"
               />
             </div>
           )}

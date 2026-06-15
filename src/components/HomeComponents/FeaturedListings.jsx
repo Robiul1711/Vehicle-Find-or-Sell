@@ -24,7 +24,7 @@ const FeaturedListings = () => {
     },
     secure: true,
   });
-  // console.log(data)
+  console.log(data?.data)
   // add favorite
   const { mutate, isPending } = useApiMutation({
     url: "/account/favorites/toggle/",
@@ -57,6 +57,8 @@ const FeaturedListings = () => {
         discountPrice: item.discount_price,
         isNew: false,
         isFavorite: item.is_favourite,
+        isVideo: item.is_video,
+        isBumped: item.is_bumped,
       }));
     } else {
       return data.data.map((item) => ({
@@ -72,6 +74,8 @@ const FeaturedListings = () => {
         discountPrice: item.discount_price,
         isNew: false,
         isFavorite: item.is_favourite,
+        isVideo: item.is_video,
+        isBumped: item.is_bumped,
       }));
     }
   };
@@ -172,7 +176,7 @@ const FeaturedListings = () => {
   };
 
   return (
-    <section className="section-padding-x section-padding-y bg-[#F9FAFB] overflow-hidden">
+    <section id="featured-listings" className="section-padding-x section-padding-y bg-[#F9FAFB] overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -214,6 +218,7 @@ const FeaturedListings = () => {
             pageCount={Math.ceil((data?.count || 0) / 12)}
             setPageCount={setCurrentPage}
             forcePage={currentPage}
+            scrollContainerId="featured-listings"
           />
         </div>
       )}

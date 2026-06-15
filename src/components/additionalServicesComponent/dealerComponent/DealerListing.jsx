@@ -80,7 +80,7 @@ const DealerListing = () => {
   };
 
   return (
-    <div>
+    <div id="dealer-listing">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         {/* Professional Search Bar */}
         <div className="w-full max-w-2xl relative group">
@@ -350,6 +350,7 @@ const DealerListing = () => {
                 pageCount={Math.ceil(data.count / 9)}
                 setPageCount={setCurrentPage}
                 forcePage={currentPage}
+                scrollContainerId="dealer-listing"
               />
             </div>
           )}

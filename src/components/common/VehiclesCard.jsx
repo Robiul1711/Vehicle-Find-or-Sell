@@ -6,6 +6,7 @@ import {
   FireIcon,
   FuelIcon,
   MilageIcon,
+  VideoIcon,
 } from "./SVGicons/MySvg";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -26,7 +27,10 @@ const VehiclesCard = ({
   onFavorite,
   path,
   isFavorite,
+  isVideo,
+  isBumped,
 }) => {
+
 const navigate = useNavigate();
   const detailPath = `/${path || "details"}/${id}/${slug}`;
   const handleCardClick = (e) => {
@@ -38,6 +42,21 @@ const navigate = useNavigate();
       {/* Image */}
       <div className="relative">
         <img src={imageUrl} alt={title} className="w-full h-58 object-cover" />
+
+        {/* Badge Overlays */}
+        <div className="absolute top-4 left-4 flex flex-col gap-2">
+          {isBumped && (
+            <span className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md" title="Boosted">
+              <Bumpcon className="w-5 h-5" />
+            </span>
+          )}
+          {isVideo && (
+            <span className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md" title="Has Video">
+              <VideoIcon className="w-5 h-5" />
+            </span>
+          )}
+        </div>
+
         {/* Favorite Button */}
         <button
           onClick={(e) => {

@@ -201,7 +201,7 @@ const BrowseCategorySection = () => {
   };
 
   return (
-    <div className="">
+    <div id="browse-category" className="">
       {/* Header */}
       <h2 className="text-2xl font-semibold mb-6 text-gray-900">
         Browse Categories
@@ -250,6 +250,7 @@ const BrowseCategorySection = () => {
       pageCount={Math.ceil(data.count / 12)}
       setPageCount={setCurrentPage}
       forcePage={currentPage}
+      scrollContainerId="browse-category"
     />
   </div>
 )}

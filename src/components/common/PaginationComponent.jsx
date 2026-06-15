@@ -1,7 +1,17 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-const PaginationComponent = ({ pageCount, setPageCount, forcePage }) => {
+const PaginationComponent = ({ pageCount, setPageCount, forcePage, scrollContainerId }) => {
+  const handlePageChange = (event) => {
+    setPageCount(event.selected + 1);
+    if (scrollContainerId) {
+      const element = document.getElementById(scrollContainerId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
   return (
     <div>
       <ReactPaginate
@@ -9,9 +19,7 @@ const PaginationComponent = ({ pageCount, setPageCount, forcePage }) => {
         pageCount={pageCount || 1}
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
-        onPageChange={(event) => {
-          setPageCount(event.selected + 1);
-        }}
+        onPageChange={handlePageChange}
         containerClassName="flex items-center md:gap-3 gap-1 flex-wrap"
         previousLabel="Previous"
         nextLabel="Next"

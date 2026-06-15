@@ -29,7 +29,7 @@ export default function MyFavorites() {
   // console.log(data)
   // console.log(data?.results);
   return (
-    <div className="space-y-6 md:space-y-9 ">
+    <div id="my-favorites" className="space-y-6 md:space-y-9 ">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
         <div>
@@ -136,6 +136,7 @@ export default function MyFavorites() {
                 pageCount={Math.ceil(data.count / 12)}
                 setPageCount={setCurrentPage}
                 forcePage={currentPage}
+                scrollContainerId="my-favorites"
               />
             </div>
           )}
