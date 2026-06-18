@@ -10,42 +10,34 @@ import {
 import { Bumpcon, VideoIcon } from "../common/SVGicons/MySvg";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { FaRegShareFromSquare } from "react-icons/fa6";
-import VehiclePriceDealer from "./VehiclePriceDealer";
 import { useApiMutation } from "@/hooks/useApiMutation";
 
 const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
   console.log(data);
   if (isLoading) {
     return (
-      <div className="flex w-full xmd:flex-row flex-col gap-5 mt-6 ">
-        <div className="xmd:w-[60%] w-full flex flex-col gap-6">
-          <div className="flex flex-col gap-4 animate-pulse">
-            {/* Title Skeleton */}
-            <div className="h-10 w-3/4 bg-gray-300 rounded-lg" />
+      <div className="w-full flex flex-col gap-6">
+        <div className="flex flex-col gap-4 animate-pulse">
+          {/* Title Skeleton */}
+          <div className="h-10 w-3/4 bg-gray-300 rounded-lg" />
 
-            <div className="flex w-full gap-6 justify-between items-center">
-              {/* Car Info Badges Skeleton */}
-              <div className="flex flex-wrap gap-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-9 w-28 bg-gray-200 rounded-lg" />
-                ))}
-              </div>
+          <div className="flex w-full gap-6 justify-between items-center">
+            {/* Car Info Badges Skeleton */}
+            <div className="flex flex-wrap gap-3">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-9 w-28 bg-gray-200 rounded-lg" />
+              ))}
+            </div>
 
-              {/* Buttons Skeleton */}
-              <div className="flex gap-3">
-                <div className="h-10 w-12 bg-gray-200 rounded-lg" />
-                <div className="h-10 w-12 bg-gray-200 rounded-lg" />
-              </div>
+            {/* Buttons Skeleton */}
+            <div className="flex gap-3">
+              <div className="h-10 w-12 bg-gray-200 rounded-lg" />
+              <div className="h-10 w-12 bg-gray-200 rounded-lg" />
             </div>
           </div>
-
-          <CarLeftSideImages isLoading={true} />
         </div>
 
-        {/* Sidebar Skeleton (Price & Dealer) */}
-        <div className="xmd:w-[40%] w-full">
-          <VehiclePriceDealer isLoading={true} />
-        </div>
+        <CarLeftSideImages isLoading={true} />
       </div>
     );
   }
@@ -110,88 +102,77 @@ const DetailsRowOne = ({ details, data, refetch, isLoading }) => {
   };
 
   return (
-    <div className="flex w-full xmd:flex-row flex-col gap-5 mt-6">
-      <div className="xmd:w-[60%] w-full flex flex-col gap-5">
-        <div className="flex flex-col gap-4">
-          <Title level="title40" className="!font-bold">
-            {data?.brand_name} {data?.model}
-          </Title>
+    <div className="w-full flex flex-col gap-5">
+      <div className="flex flex-col gap-4">
+        <Title level="title40" className="!font-bold">
+          {data?.brand_name} {data?.model}
+        </Title>
 
- 
-
-          <div className="flex w-full gap-6 justify-between">
-            {/* Car Info Badges */}
-            <div className="flex flex-wrap gap-3">
-              {carInfo
-                .filter((info) => info.value)
-                .map((info) => (
-                  <div
-                    key={info.id}
-                    className="flex items-center bg-[rgba(248,142,8,0.10)] gap-2 border px-3 py-1 rounded-lg"
-                  >
-                    <info.icon />
-                    <span className="text-[#F88E08]">{info.value}</span>
-                  </div>
-                ))}
-            </div>
-
-            {/* Buttons Section */}
-            <div className="flex gap-2 flex-wrap items-center">
-              {/* Favorite Button */}
-              <button
-                onClick={onAddFavorite}
-                disabled={isPending}
-                className={`flex items-center gap-2 border px-3 py-1 rounded-lg transition hover:scale-[1.1] ${
-                  data?.is_favourite ? "bg-red-100 border-red-400" : ""
-                }`}
-              >
-                {data?.is_favourite ? (
-                  <MdFavorite size={22} className="text-red-500" />
-                ) : (
-                  <MdFavoriteBorder size={22} />
-                )}
-              </button>
-
-              {/* Share Button */}
-              <button
-                onClick={handleShare}
-                className="flex items-center gap-2 border px-3 py-1 rounded-lg hover:bg-gray-100 transition"
-              >
-                <FaRegShareFromSquare size={20} />
-              </button>
-                       {/* Status Badges */}
-          <div className="flex gap-2">
-            {data?.is_bumped && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#012853]/10 text-[#012853] text-xs font-medium rounded-full" title="Boosted">
-                <Bumpcon className="w-4 h-4" />
-                Boosted
-              </span>
-            )}
-            {data?.is_video && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-orange-50 to-yellow-50 text-orange-600 text-xs font-medium rounded-full" title="Has Video">
-                <VideoIcon className="w-4 h-4" />
-                Video
-              </span>
-            )}
+        <div className="flex w-full gap-6 justify-between">
+          {/* Car Info Badges */}
+          <div className="flex flex-wrap gap-3">
+            {carInfo
+              .filter((info) => info.value)
+              .map((info) => (
+                <div
+                  key={info.id}
+                  className="flex items-center bg-[rgba(248,142,8,0.10)] gap-2 border px-3 py-1 rounded-lg"
+                >
+                  <info.icon />
+                  <span className="text-[#F88E08]">{info.value}</span>
+                </div>
+              ))}
           </div>
+
+          {/* Buttons Section */}
+          <div className="flex gap-2 flex-wrap items-center">
+            {/* Favorite Button */}
+            <button
+              onClick={onAddFavorite}
+              disabled={isPending}
+              className={`flex items-center gap-2 border px-3 py-1 rounded-lg transition hover:scale-[1.1] ${
+                data?.is_favourite ? "bg-red-100 border-red-400" : ""
+              }`}
+            >
+              {data?.is_favourite ? (
+                <MdFavorite size={22} className="text-red-500" />
+              ) : (
+                <MdFavoriteBorder size={22} />
+              )}
+            </button>
+
+            {/* Share Button */}
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-2 border px-3 py-1 rounded-lg hover:bg-gray-100 transition"
+            >
+              <FaRegShareFromSquare size={20} />
+            </button>
+
+            {/* Status Badges */}
+            <div className="flex gap-2">
+              {data?.is_bumped && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#012853]/10 text-[#012853] text-xs font-medium rounded-full" title="Boosted">
+                  <Bumpcon className="w-4 h-4" />
+                  Boosted
+                </span>
+              )}
+              {data?.is_video && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-orange-50 to-yellow-50 text-orange-600 text-xs font-medium rounded-full" title="Has Video">
+                  <VideoIcon className="w-4 h-4" />
+                  Video
+                </span>
+              )}
             </div>
           </div>
         </div>
-
-        <CarLeftSideImages
-          details={details}
-          data={data}
-          isLoading={isLoading}
-        />
       </div>
 
-      <div className="xmd:w-[40%] w-full sticky top-6 xl:top-8 self-start">
-        <VehiclePriceDealer
-          data={data}
-          isLoading={isLoading}
-          details={details}
-        />
-      </div>
+      <CarLeftSideImages
+        details={details}
+        data={data}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

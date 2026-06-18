@@ -75,7 +75,7 @@ const Banner = () => {
         
           <div>
             <Title level="title70" className="max-w-[750px]">
-              {BannerData?.title || "Find or Sell Your Vehicle Fast & Easy!"}
+              <span dangerouslySetInnerHTML={{__html:BannerData?.title || "Find or Sell Your Vehicle Fast & Easy!"}}/>
             </Title>
           </div>
 

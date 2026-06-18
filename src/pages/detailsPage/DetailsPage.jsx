@@ -4,6 +4,7 @@ import CarOverView from "@/components/details/CarOverView";
 import DetailsRowOne from "@/components/details/DetailsRowOne";
 import Location from "@/components/details/Location";
 import RealatedCars from "@/components/details/RealatedCars";
+import VehiclePriceDealer from "@/components/details/VehiclePriceDealer";
 import React from "react";
 import { bikes, cars, Parts, Scoter, trucks } from "@/lib/cardata";
 import PartOverview from "@/components/details/PartOverview";
@@ -23,7 +24,7 @@ const DetailsPage = () => {
   const vehicle = data?.data;
 
   return (
-    <div className="section-padding-x md:pb-20 pb-10 flex flex-col gap-10 ">
+    <div className="section-padding-x md:pb-20 pb-10">
       {vehicle ? (
         <SEO
           title={`${vehicle.brand_name} ${vehicle.model} ${vehicle.exact_date ? `(${vehicle.exact_date})` : ""}`}
@@ -34,18 +35,29 @@ const DetailsPage = () => {
       ) : (
         <SEO title="Loading Vehicle Details..." />
       )}
-      <DetailsRowOne details={details} data={data?.data} refetch={refetch} isLoading={isLoading} />
-      <div className=" max-w-[950px]">
-        {details === "parts" ? (
-          <PartOverview />
-        ) : (
-          <CarOverView details={details} data={data?.data} />
-        )}
-        {details !== "parts" && <FeaturesComponent data={data?.data} />}
-        {details !== "parts" && <EngineSpec data={data?.data} />}
-        <Location data={data?.data} />
+
+      {/* Two-column layout: left = all content, right = sticky sidebar */}
+      <div className="flex xmd:flex-row flex-col gap-5 mt-6 items-start">
+        {/* LEFT COLUMN – all main content */}
+        <div className="xmd:w-[60%] w-full flex flex-col gap-10">
+          <DetailsRowOne details={details} data={data?.data} refetch={refetch} isLoading={isLoading} />
+          <div>
+            {details === "parts" ? (
+              <PartOverview />
+            ) : (
+              <CarOverView details={details} data={data?.data} />
+            )}
+            {details !== "parts" && <FeaturesComponent data={data?.data} />}
+            {details !== "parts" && <EngineSpec data={data?.data} />}
+            <Location data={data?.data} />
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN – sticky sidebar */}
+        <div className="xmd:w-[40%] w-full sticky  md:top-28 self-start">
+          <VehiclePriceDealer data={data?.data} isLoading={isLoading} details={details} />
+        </div>
       </div>
-    
     </div>
   );
 };

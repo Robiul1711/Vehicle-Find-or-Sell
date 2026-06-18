@@ -46,7 +46,7 @@ const LegalNotice = () => {
         {/* Main Title */}
         {pageData?.title && (
           <div className="space-y-2">
-            <Title level="title32">{pageData.title}</Title>
+            <Title level="title32"><span dangerouslySetInnerHTML={{__html:pageData.title}}/></Title>
           </div>
         )}
 
@@ -57,10 +57,10 @@ const LegalNotice = () => {
               level={index === 0 ? "title24" : "title24"}
               className="font-semibold!"
             >
-              {section.title}
+              <span dangerouslySetInnerHTML={{__html:section.title}}/>
             </Title>
-             <p className="lg:text-lg font-medium! text-black">
-              {renderDescription(section.description)}
+             <p className="lg:text-lg font-medium! text-black !py-2">
+              <span dangerouslySetInnerHTML={{__html:section.description}}/>
             </p>
           </div>
         ))}

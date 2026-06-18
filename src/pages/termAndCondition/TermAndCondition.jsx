@@ -10,25 +10,7 @@ const TermAndCondition = () => {
     queryKey: ["terms-and-conditions"],
     url: "/cms/terms-and-conditions/",
   });
-
-  // Helper function to render description with line breaks
-  const renderDescription = (description) => {
-    if (!description) return null;
-
-    // Split by newlines and render each line
-    const lines = description.split("\n");
-    return lines.map((line, index) => (
-      <React.Fragment key={index}>
-        {line}
-        {index < lines.length - 1 && (
-          <>
-            <br />
-            <br />
-          </>
-        )}
-      </React.Fragment>
-    ));
-  };
+console.log(data)
 
   if (isLoading) {
     return (
@@ -52,9 +34,9 @@ const TermAndCondition = () => {
         {/* Header Section */}
         {pageData && (
           <div className="space-y-2">
-            <Title level="title32">{pageData.title}</Title>
+            <Title level="title32"><span dangerouslySetInnerHTML={{__html:pageData.title}}/></Title>
             {pageData.subtitle && (
-              <p className="lg:text-lg">{pageData.subtitle}</p>
+              <p className="lg:text-lg"> <span dangerouslySetInnerHTML={{__html:pageData.subtitle}}/> </p>
             )}
           </div>
         )}
@@ -62,10 +44,8 @@ const TermAndCondition = () => {
         {/* Dynamic Sections */}
         {pageData?.sections?.map((section) => (
           <div key={section.section_id} className="space-y-2">
-            <Title level="title32" className="font-semibold! text-black">{section.title}</Title>
-           <p className="lg:text-lg font-medium! text-black">
-              {renderDescription(section.description)}
-            </p>
+            <Title level="title32" className="font-semibold! text-black"> <span dangerouslySetInnerHTML={{__html:section.title}}/></Title>
+           <p className="lg:text-lg font-medium! text-black !py-2"  dangerouslySetInnerHTML={{__html:section.description}}/>
           </div>
         ))}
       </div>

@@ -46,16 +46,16 @@ const CookiePolicy = () => {
         {/* Main Title */}
         {pageData?.title && (
           <div className="space-y-2">
-            <Title level="title32">{pageData.title}</Title>
+            <Title level="title32"><span dangerouslySetInnerHTML={{__html:pageData.title}}/></Title>
           </div>
         )}
 
         {/* Dynamic Sections */}
         {pageData?.sections?.map((section) => (
           <div key={section.section_id} className="space-y-2">
-            <Title level="title24" className="font-semibold! text-black">{section.title}</Title>
-            <p className="lg:text-lg font-medium! text-black">
-              {renderDescription(section.description)}
+            <Title level="title24" className="font-semibold! text-black"><span dangerouslySetInnerHTML={{__html:section.title}}/></Title>
+            <p className="lg:text-lg font-medium! text-black !py-2">
+              <span dangerouslySetInnerHTML={{__html:section.description}}/>
             </p>
           </div>
         ))}

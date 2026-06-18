@@ -22,8 +22,7 @@ import {
 } from "lucide-react";
 
 const CarOverView = ({ details, data }) => {
-
-  console.log(data)
+  console.log(data);
   const specs = [
     { icon: Car, label: "Body", value: data?.body },
     { icon: Shield, label: "Model", value: data?.model },
@@ -56,36 +55,40 @@ const CarOverView = ({ details, data }) => {
       <div className=" grid md:grid-cols-2 gap-x-8 gap-y-4">
         {/* Left Column */}
         <div className="space-y-4">
-          {specs.filter(spec => spec.value).map((spec, index) => (
-            <div key={index} className="flex items-center space-x-3">
-              <div className="w-5 h-5 text-gray-600">
-                <spec.icon size={20} />
+          {specs
+            .filter((spec) => spec.value)
+            .map((spec, index) => (
+              <div key={index} className="flex items-center space-x-3">
+                <div className="w-5 h-5 text-gray-600">
+                  <spec.icon size={20} />
+                </div>
+                <span className="text-gray-700 text-sm font-medium min-w-[120px]">
+                  {spec.label}
+                </span>
+                <span className="text-gray-900 text-sm font-semibold capitalize">
+                  {spec.value}
+                </span>
               </div>
-              <span className="text-gray-700 text-sm font-medium min-w-[120px]">
-                {spec.label}
-              </span>
-              <span className="text-gray-900 text-sm font-semibold capitalize">
-                {spec.value}
-              </span>
-            </div>
-          ))}
+            ))}
         </div>
 
         {/* Right Column */}
         <div className="space-y-4">
-          {rightSpecs.filter(spec => spec.value).map((spec, index) => (
-            <div key={index} className="flex items-center space-x-3">
-              <div className="w-5 h-5 text-gray-600">
-                <spec.icon size={20} />
+          {rightSpecs
+            .filter((spec) => spec.value)
+            .map((spec, index) => (
+              <div key={index} className="flex items-center space-x-3">
+                <div className="w-5 h-5 text-gray-600">
+                  <spec.icon size={20} />
+                </div>
+                <span className="text-gray-700 text-sm font-medium min-w-[120px]">
+                  {spec.label}
+                </span>
+                <span className="text-gray-900 text-sm font-semibold capitalize">
+                  {spec.value}
+                </span>
               </div>
-              <span className="text-gray-700 text-sm font-medium min-w-[120px]">
-                {spec.label}
-              </span>
-              <span className="text-gray-900 text-sm font-semibold capitalize">
-                {spec.value}
-              </span>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
       {data?.description && (
@@ -95,15 +98,47 @@ const CarOverView = ({ details, data }) => {
           </Title>
           <div
             className="
-            mt-4
-      text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed 
-      prose prose-slate dark:prose-invert max-w-none
-      
-      prose-p:leading-relaxed prose-strong:text-slate-900 dark:prose-strong:text-white
-      prose-ul:list-disc prose-li:marker:text-blue-400
-    "
-            dangerouslySetInnerHTML={{ __html: data?.description }}
-          />
+    mt-4
+    text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed 
+    prose prose-slate dark:prose-invert max-w-none
+    prose-p:leading-relaxed prose-strong:text-slate-900 dark:prose-strong:text-white
+    whitespace-pre-line
+  "
+          >
+            {data?.description?.split("\r\n").map((line, index) => {
+              // If the line starts with a title/header emoji, make it stand out a bit more
+              const isHeader = /^[🏆🔑🏁🛋️🛡️🎵📑✅📍]/.test(line.trim());
+
+              if (isHeader) {
+                return (
+                  <span
+                    key={index}
+                    className="block font-bold text-slate-900 dark:text-white text-base md:text-lg mt-6 mb-2"
+                  >
+                    {line}
+                  </span>
+                );
+              }
+
+              // Hide or dim hashtags if needed, or render regular line
+              if (line.trim().startsWith("#")) {
+                return (
+                  <span
+                    key={index}
+                    className="text-xs text-blue-500/80 inline-block mr-2 select-none"
+                  >
+                    {line}
+                  </span>
+                );
+              }
+
+              return (
+                <span key={index} className="block">
+                  {line}
+                </span>
+              );
+            })}
+          </div>
         </div>
       )}
       {/* Documents Section */}
