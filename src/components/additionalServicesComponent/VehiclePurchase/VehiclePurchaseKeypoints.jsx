@@ -14,8 +14,8 @@ const VehiclePurchaseKeypoints = ({ data }) => {
       {cashPurchase && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
           <div className="space-y-4 lg:space-y-10">
-            <p className="lg:text-3xl font-bold">{cashPurchase.title}</p>
-            <p className="lg:text-xl">{cashPurchase.description}</p>
+            <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{__html: cashPurchase.title}}></p>
+            <p className="lg:text-xl" dangerouslySetInnerHTML={{__html: cashPurchase.description}}></p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-[#92cc14]  rounded p-5 text-white space-y-4">
                 <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
@@ -44,11 +44,7 @@ const VehiclePurchaseKeypoints = ({ data }) => {
             </div>
           </div>
           <div className="">
-            <img
-              className="w-full"
-              src={cashPurchase.image_url || ImageProvider.purchase1}
-              alt=""
-            />
+
           </div>
         </div>
       )}

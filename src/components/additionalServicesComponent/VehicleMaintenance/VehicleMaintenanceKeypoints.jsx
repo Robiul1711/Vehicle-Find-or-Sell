@@ -33,13 +33,13 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
 
             {/* Content Rendering Logic */}
             <div className={`space-y-4 ${section.layout_type === "text_only" ? "text-center" : ""}`}>
-              <h2 className="lg:text-4xl font-bold text-gray-900">
-                {section.title}
+              <h2 className="lg:text-4xl font-bold text-gray-900" dangerouslySetInnerHTML={{__html: section.title}}>
+                
               </h2>
               
               {section.description && (
-                <p className="lg:text-xl text-gray-700 leading-relaxed">
-                  {section.description}
+                <p className="lg:text-xl text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{__html: section.description}}>
+                  
                 </p>
               )}
 

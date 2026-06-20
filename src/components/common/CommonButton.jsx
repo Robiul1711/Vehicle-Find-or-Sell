@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const variants = {
   primary:
-    "px-4 py-2 sm:px-5 sm:py-2 md:px-7 border border-custom-primary rounded-md hover:bg-custom-primary/10 hover:text-black text-white text-sm sm:text-base  bg-custom-primary ",
+    "px-2 py-2 sm:px-5 sm:py-2 md:px-7 border border-custom-primary rounded-md hover:bg-custom-primary/10 hover:text-black text-white text-sm sm:text-base  bg-custom-primary ",
   secondary:
     "bg-Secondary-light hover:bg-Secondary/80 hover:text-white hover:border hover:bg-transparent bg-white text-black  border rounded-md px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base md:px-7 md:py-3 md:text-base",
   danger: "bg-red-500 hover:bg-red-600 text-white",
@@ -24,7 +24,7 @@ const CommonButton = ({
   ...props
 }) => {
   const buttonClasses = cn(
-    "py-3 px-6 rounded-lg font-semibold transition duration-300 flex items-center justify-center gap-2",
+    "py-2 md:py-3 px-3 md:px-6 rounded-lg font-semibold transition duration-300 flex items-center justify-center gap-2",
     variants[variant] || variants.primary,
     (disabled || isLoading) && "opacity-60 cursor-not-allowed",
     fullWidth && "w-full",

@@ -341,15 +341,44 @@ export default function BasicDetails() {
           <Controller
             name="exactDate"
             control={control}
-            render={({ field }) => (
-              <DatePicker
-                placeholderText="DD/MM/YYYY"
-                dateFormat="dd/MM/yyyy"
-                selected={field.value ? new Date(field.value) : null}
-                onChange={(date) => field.onChange(date)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
-              />
-            )}
+            render={({ field }) => {
+              // Safely parse whatever the API returns into a valid Date or null
+              const parseDate = (val) => {
+                if (!val) return null;
+                if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
+                const str = String(val).trim();
+                // Year only: "2020" → Jan 1 of that year
+                if (/^\d{4}$/.test(str)) {
+                  const d = new Date(`${str}-01-01`);
+                  return isNaN(d.getTime()) ? null : d;
+                }
+                // MM/YYYY or M/YYYY
+                if (/^\d{1,2}\/\d{4}$/.test(str)) {
+                  const [m, y] = str.split("/");
+                  const d = new Date(`${y}-${m.padStart(2, "0")}-01`);
+                  return isNaN(d.getTime()) ? null : d;
+                }
+                // DD/MM/YYYY
+                if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(str)) {
+                  const [dd, mm, yyyy] = str.split("/");
+                  const d = new Date(`${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`);
+                  return isNaN(d.getTime()) ? null : d;
+                }
+                // Fallback: try native parse (ISO strings etc.)
+                const d = new Date(str);
+                return isNaN(d.getTime()) ? null : d;
+              };
+
+              return (
+                <DatePicker
+                  placeholderText="DD/MM/YYYY"
+                  dateFormat="dd/MM/yyyy"
+                  selected={parseDate(field.value)}
+                  onChange={(date) => field.onChange(date)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
+                />
+              );
+            }}
           />
         </div>
 

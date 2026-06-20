@@ -33,11 +33,11 @@ const ServiceBanner = ({ image, title, subText }) => {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-4">
-        <p ref={titleRef} className="text-2xl md:text-5xl font-bold">
-          {title}
+        <p ref={titleRef} className="text-2xl md:text-5xl font-bold" dangerouslySetInnerHTML={{__html: title}}>
+          
         </p>
-        <p ref={subTextRef} className="text-lg md:text-xl max-w-[800px]">
-          {subText}
+        <p ref={subTextRef} className="text-lg md:text-xl max-w-[800px]" dangerouslySetInnerHTML={{__html: subText}}>
+          
         </p>
       </div>
     </div>

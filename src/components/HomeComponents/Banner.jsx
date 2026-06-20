@@ -209,25 +209,23 @@ const Banner = () => {
 
         {/* Text content */}
         <div className="relative z-10 text-center px-4">
-          <p className="text-white text-lg font-medium mb-2">
-            {BannerData?.subtitle || "Buy or sell vehicles today – fast, simple, trusted."}
-          </p>
+          <p className="text-white text-lg font-medium mb-2" dangerouslySetInnerHTML={{__html:BannerData?.subtitle || "Buy or sell vehicles today – fast, simple, trusted."}}/>
           <div>
             <Title level="title40" className="text-white mb-4">
-              {BannerData?.title || "Find or Sell Your Vehicle Fast & Easy!"}
+              <span dangerouslySetInnerHTML={{__html:BannerData?.title || "Find or Sell Your Vehicle Fast & Easy!"}} />
             </Title>
           </div>
-          <div className="flex gap-3 sm:flex-row justify-center">
+          <div className="flex gap-2 sm:flex-row justify-center">
             <CommonButton
               link="/dashboard/create-ads"
               variant="primary"
-              className="flex items-center gap-2 justify-center border border-white text-white"
+              className="flex items-center gap-1 justify-center border border-white text-white"
             >
               Post Your Ad <MdOutlineArrowOutward />
             </CommonButton>
             <CommonButton
               link="/listings"
-              className="flex items-center gap-2 justify-center border-white text-white"
+              className="flex items-center gap-1 justify-center border-white text-white"
             >
               Browse Listings <MdOutlineArrowOutward />
             </CommonButton>
