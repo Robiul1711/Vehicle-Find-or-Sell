@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader, Search, MessageSquare, Inbox, Paperclip } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import MessageInbox from "./MessageInbox";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useAuth } from "@/hooks/useAuth";
@@ -12,6 +13,8 @@ const Message = () => {
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const queryClient = useQueryClient();
+  const location = useLocation();
+  const stateConversationId = location.state?.conversationId;
 
   // Fetch conversations list
   const { data: conversationsList, isLoading: conversationsLoading } =
@@ -81,6 +84,18 @@ const Message = () => {
   const totalUnread = useMemo(() => {
     return processedConversations.reduce((sum, c) => sum + c.unread, 0);
   }, [processedConversations]);
+
+  // Auto-select conversation from location state
+  useEffect(() => {
+    if (processedConversations.length > 0 && stateConversationId) {
+      const found = processedConversations.find(
+        (conv) => conv.id === stateConversationId
+      );
+      if (found) {
+        setSelectedConversation(found);
+      }
+    }
+  }, [processedConversations, stateConversationId]);
 
   // Handle conversation selection
   const handleConversationSelect = (conversation) => {

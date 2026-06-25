@@ -9,6 +9,7 @@ import MyFavorites from "@/components/admin/MyFavorites/MyFavorites";
 import Settings from "@/components/admin/Settings/Settings";
 import Subscription from "@/components/admin/Subscription/Subscription";
 import SupportAndHelp from "@/components/admin/SupportAndHelp/SupportAndHelp";
+import ImportExport from "@/components/admin/ImportExport/ImportExport";
 import { SubscriptionIcon } from "@/components/common/SVGicons/DashboardIcon";
 import AdminLayout from "@/layout/AdminLayout";
 import AuthLayout from "@/layout/AuthLayout";
@@ -266,6 +267,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/settings",
         element: <Settings />,
+      },
+      {
+        path: "/dashboard/import-export",
+        element: <ImportExport />,
       },
     ],
   },

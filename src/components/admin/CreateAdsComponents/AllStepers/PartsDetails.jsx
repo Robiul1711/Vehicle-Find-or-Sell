@@ -1,11 +1,14 @@
+import { useState, useEffect } from "react";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { useState, useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 export default function PartsDetails() {
   const {
     watch,
+    control,
     register,
     setValue,
   } = useFormContext();
@@ -91,7 +94,7 @@ export default function PartsDetails() {
           {/* Vehicle Type */}
           <div>
             <label className="block text-xs text-gray-600 mb-1.5">
-              Vehicle Type
+            PartsDetails
             </label>
             <select
               {...register("vehicle_type")}
@@ -416,11 +419,27 @@ export default function PartsDetails() {
         <label className="block text-xs text-gray-600 mb-1.5">
           Description
         </label>
-        <textarea
-          {...register("description")}
-          rows={4}
-          placeholder="Type something about your vehicle"
-          className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 bg-white focus:ring-blue-500 focus:border-blue-500 resize-vertical"
+        <Controller
+          name="description"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <div className="quill-editor-wrapper">
+              <style>{`
+                .quill-editor-wrapper .ql-editor {
+                  min-height: 250px;
+                  font-size: 0.95rem;
+                }
+              `}</style>
+              <ReactQuill
+                theme="snow"
+                value={field.value || ""}
+                onChange={field.onChange}
+                placeholder="Type something about your part..."
+                className="bg-white rounded-md"
+              />
+            </div>
+          )}
         />
       </div>
       {/* Brand Creation Modal */}

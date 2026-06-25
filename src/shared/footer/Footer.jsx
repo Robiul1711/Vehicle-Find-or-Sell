@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
 const Footer = () => {
+  
+  const selectedLanguage = localStorage.getItem("selectedLanguage") || "fr";
   const { data } = useApiQuery({
     queryKey: ["footer"],
     url: "/cms/footer/",
@@ -31,7 +33,9 @@ const Footer = () => {
 
         {/* Navigation Links */}
         <ul className="flex flex-wrap justify-center gap-6 text-sm font-medium">
-          <Link to={"/"} className="hover:text-gray-300 cursor-pointer">Home</Link>
+          <Link to={"/"} className="hover:text-gray-300 cursor-pointer">
+
+         {selectedLanguage === "fr" ? "Accueil" : "Home" }</Link>
           <Link to={"/listings"} className="hover:text-gray-300 cursor-pointer">Browse Listings</Link>
           <Link to={"/blog"} className="hover:text-gray-300 cursor-pointer">Blog</Link>
           <Link to={"/contact"} className="hover:text-gray-300 cursor-pointer">Contact Us</Link>

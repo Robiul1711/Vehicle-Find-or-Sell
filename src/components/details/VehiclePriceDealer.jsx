@@ -2,12 +2,13 @@ import React from "react";
 import { MessageCircle, ExternalLink, Bell } from "lucide-react";
 import { OfferIcon } from "../common/SVGicons/CarSvg";
 import ImageAvatar from "@/assets/images/dummy.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useAuth } from "@/hooks/useAuth";
 import toast from "react-hot-toast";
 
 const VehiclePriceDealer = ({ data, isLoading, details }) => {
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   const { mutate: mutatePriceDrop, isPending: isPendingPriceDrop } =
@@ -54,6 +55,10 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
     url: "/message/conversations/get-or-create/",
     method: "POST",
     secure: true,
+    invalidateKeys: ["conversations-list"],
+    onSuccess: (response) => {
+      navigate("/dashboard/message", { state: { conversationId: response?.data?.id || response?.id } });
+    },
   });
 
   if (isLoading) {
@@ -173,28 +178,28 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
             alt="Katie Sims"
             className="w-12 h-12 rounded-full object-cover"
           />
-    <div className="w-full flex flex-col gap-1">
-  {(data?.seller_details?.name || data?.seller_details?.seller_type) && (
-    <p className="text-sm text-gray-500 font-bold">
-      {[data?.seller_details?.name, data?.seller_details?.seller_type]
-        .filter(Boolean)
-        .join(", ")}
-    </p>
-  )}
+          <div className="w-full flex flex-col gap-1">
+            {(data?.seller_details?.name ||
+              data?.seller_details?.seller_type) && (
+              <p className="text-sm text-gray-500 font-bold">
+                {[data?.seller_details?.name, data?.seller_details?.seller_type]
+                  .filter(Boolean)
+                  .join(", ")}
+              </p>
+            )}
 
-  {data?.seller_details?.phone && (
-    <p className="text-sm text-gray-500 font-bold">
-      {data?.seller_details?.phone}
-    </p>
-  )}
-</div>
+            {data?.seller_details?.phone && (
+              <p className="text-sm text-gray-500 font-bold">
+                {data?.seller_details?.phone}
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Contact Buttons */}
         <div className="space-y-3 mb-4">
           {console.log(data)}
-          <Link
-            to="/dashboard/message"
+          <button
             onClick={() =>
               mutate({
                 user_id: data?.user,
@@ -202,11 +207,12 @@ const VehiclePriceDealer = ({ data, isLoading, details }) => {
                 ad_type: data?.vehicle_type,
               })
             }
+            disabled={isPending}
             className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
           >
             <MessageCircle size={18} />
             Message Dealer
-          </Link>
+          </button>
           {/* {console.log(data)} */}
           <button
             onClick={() =>

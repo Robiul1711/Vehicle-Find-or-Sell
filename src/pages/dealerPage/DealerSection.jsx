@@ -23,7 +23,7 @@ import {
   CustomRightUp,
   CustomUsedVehicle,
 } from "@/utils/IconProvider";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
 import { useApiMutation } from "@/hooks/useApiMutation";
@@ -35,6 +35,7 @@ import { BsWhatsapp } from "react-icons/bs";
 import SEO from "@/components/common/SEO";
 
 const DealerSection = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { id } = useParams();
   const { data, isLoading } = useApiQuery({
@@ -50,6 +51,10 @@ const DealerSection = () => {
     url: "/message/conversations/get-or-create/",
     method: "POST",
     secure: true,
+    invalidateKeys: ["conversations-list"],
+    onSuccess: (response) => {
+      navigate("/dashboard/message", { state: { conversationId: response?.data?.id || response?.id } });
+    },
   });
 
   if (isLoading) {
@@ -220,9 +225,9 @@ const DealerSection = () => {
         </div>
       </div>
       <div className="lg:w-1/4 flex flex-col gap-5">
-        {console.log(profileData)}
+        {/* {console.log(profileData)} */}
         <div className="border shadow-lg rounded-xl p-3 flex sm:flex-row lg:flex-col xl:flex-row gap-3">
-          <Link
+          <button
             onClick={() =>
               mutate({
                 user_id: profileData?.user_id,
@@ -230,11 +235,11 @@ const DealerSection = () => {
                 // ad_type: "dealer",
               })
             }
-            to="/dashboard/message"
+            disabled={isPending}
             className="flex w-full py-2    text-sm   items-center justify-center gap-2 bg-blue-100 text-custom-primary px-4 rounded-lg  font-medium border-2 border-custom-primary transition-colors "
           >
             Message Dealer <MessageCircleIcon className="w-5 h-5" />{" "}
-          </Link>
+          </button>
 
           <button
             onClick={() =>

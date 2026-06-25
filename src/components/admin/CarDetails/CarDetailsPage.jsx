@@ -3,15 +3,19 @@ import CarLeftSideImages from "./CarLeftSideImages";
 import CarRightSideDetails from "./CarRightSideDetails";
 import CarBottomFeatures from "./CarBottomFeatures";
 import { useApiQuery } from "@/hooks/useApiQuery";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const CarDetailsPage = () => {
-  const { id,slug } = useParams();
+  const { id, slug } = useParams();
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type") || "vehicle";
+
   const { data, isLoading, isError } = useApiQuery({
-    queryKey: ["profile", id,slug],
-    url: `/ads/vehicles/${id}/${slug}`,
+    queryKey: ["profile", id, slug, type],
+    url: type === "parts" ? `/ads/parts/${id}/${slug}` : `/ads/vehicles/${id}/${slug}`,
     secure: true,
   });
+  
 
   if (isLoading) {
     return (

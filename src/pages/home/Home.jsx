@@ -17,9 +17,9 @@ const Home = () => {
       <SEO />
       <Banner/>
       <Hero/>
+      <FeaturedListings/>
       <HomeAds/>
       <WhyChooseUs/>
-      <FeaturedListings/>
       <UserReviews/>
       <AutoInsightsAdvice/>
       <LookingFor/>

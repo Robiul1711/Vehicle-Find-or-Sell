@@ -14,9 +14,9 @@ const BrouseListing = () => {
         keywords={["browse vehicles", "car listings", "used cars for sale", "motorcycles for sale", "spare parts"]}
       />
       <CommonPageWrapper>
+        <BrowseCategorySection />
         <AdsPlaceholder />
         <BrowseListingBanner />
-        <BrowseCategorySection />
       </CommonPageWrapper>
     </div>
   )

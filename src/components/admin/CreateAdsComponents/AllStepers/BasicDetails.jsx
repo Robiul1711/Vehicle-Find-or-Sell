@@ -4,6 +4,8 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 import { Controller, useFormContext } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 export default function BasicDetails() {
   const {
@@ -541,11 +543,27 @@ export default function BasicDetails() {
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Description
         </label>
-        <textarea
-          {...register("description")}
-          rows={4}
-          placeholder="Type something about your vehicle"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm resize-vertical"
+        <Controller
+          name="description"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <div className="quill-editor-wrapper">
+              <style>{`
+                .quill-editor-wrapper .ql-editor {
+                  min-height: 250px;
+                  font-size: 0.95rem;
+                }
+              `}</style>
+              <ReactQuill
+                theme="snow"
+                value={field.value || ""}
+                onChange={field.onChange}
+                placeholder="Type something about your vehicle..."
+                className="bg-white rounded-md"
+              />
+            </div>
+          )}
         />
       </div>
     </div>

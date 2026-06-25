@@ -46,17 +46,54 @@ const PartOverview = ({ data }) => {
         <Title level="title40" className=" !font-bold">
           Description
         </Title>
-        <div
-          className="
-          mt-4
-    text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed 
-    prose prose-slate dark:prose-invert max-w-none
-    
-    prose-p:leading-relaxed prose-strong:text-slate-900 dark:prose-strong:text-white
-    prose-ul:list-disc prose-li:marker:text-blue-400
-  "
-          dangerouslySetInnerHTML={{ __html: data?.description || "" }}
-        />
+        <div className="text-gray-700 mt-4 overview-description">
+          <style>{`
+            .overview-description h1 {
+              font-size: 2rem;
+              font-weight: 800;
+              color: #111827;
+           
+            }
+            .overview-description h2 {
+              font-size: 1.5rem;
+              font-weight: 700;
+              color: #1f2937;
+           
+            }
+            .overview-description h3 {
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: #374151;
+       
+            }
+            .overview-description p {
+           
+      
+            }
+            .overview-description strong {
+              font-weight: 700;
+              color: #111827;
+            }
+            .overview-description ul {
+              list-style-type: disc;
+              padding-left: 1.25rem;
+           
+            }
+            .overview-description ol {
+              list-style-type: decimal;
+              padding-left: 1.25rem;
+            
+            }
+            .overview-description blockquote {
+              border-left: 4px solid #E2E8F0;
+              padding-left: 1rem;
+              font-style: italic;
+              color: #4B5563;
+              margin: 1rem 0;
+            }
+          `}</style>
+          <div dangerouslySetInnerHTML={{ __html: data?.description || "" }} />
+        </div>
       </div>
       {data?.registration?.document && <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-700">
         <Title level="title40" className="!font-bold mb-4">

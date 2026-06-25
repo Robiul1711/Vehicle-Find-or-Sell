@@ -9,18 +9,18 @@ import React from "react";
 
 const VehicleValuationKeypoints = ({ data }) => {
   const sections = data?.sections || [];
-  const valuationTips = sections.find((s) => s.section_id === "valuation-tips");
+  const valuationTips = sections.find((s) => s.section_id === "valuation-tips" || s.section_id === "conseils-estimation");
   const privateVsProfessional = sections.find(
-    (s) => s.section_id === "private-vs-professional"
+    (s) => s.section_id === "private-vs-professional" || s.section_id === "Plateformes d’estimation en ligne"
   );
   const onlinePlatforms = sections.find(
-    (s) => s.section_id === "online-platforms"
+    (s) => s.section_id === "online-platforms" || s.section_id === "Entretien et estimation"
   );
   const maintenanceAndValue = sections.find(
-    (s) => s.section_id === "maintenance-and-value"
+    (s) => s.section_id === "maintenance-and-value" || s.section_id === "entretien-et-valeur"
   );
   const valuationSummary = sections.find(
-    (s) => s.section_id === "valuation-summary"
+    (s) => s.section_id === "valuation-summary" || s.section_id === "resume-estimation"
   );
 
   return (
@@ -28,12 +28,11 @@ const VehicleValuationKeypoints = ({ data }) => {
       {/* Practical Valuation Tips */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  lg:py-10 ">
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {valuationTips?.title || "Practical Valuation Tips"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: valuationTips?.title || "Practical Valuation Tips" }}>
+
           </p>
-          <p className="lg:text-xl">
-            {valuationTips?.description ||
-              "Check terms, transfer options, exclusions, and compare providers before committing."}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: valuationTips?.description || "Check terms, transfer options, exclusions, and compare providers before committing." }}>
+
           </p>
           <div className="space-y-3">
             {(
@@ -55,6 +54,7 @@ const VehicleValuationKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={valuationTips?.image_url || ImageProvider.valuation1}
             alt=""
           />
@@ -65,29 +65,30 @@ const VehicleValuationKeypoints = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
         <div className="">
           <img
-            className="w-full"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={privateVsProfessional?.image_url || ImageProvider.valuation2}
             alt=""
           />
         </div>
         <div className="space-y-4 lg:space-y-10">
-          <p className="lg:text-3xl font-bold">
-            {privateVsProfessional?.title || "Private vs Professional Sellers"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: privateVsProfessional?.title || "Private vs Professional Sellers" }}>
+
           </p>
-          <p className="lg:text-xl">
-            {privateVsProfessional?.description ||
-              "Understand how seller type impacts car valuation."}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: privateVsProfessional?.description || "Understand how seller type impacts car valuation." }}>
+
           </p>
+       
           <div className="grid grid-cols-1  gap-4">
             <div className="bg-custom-primary  rounded p-5 text-white space-y-4">
               <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
                 <CustomVerified />
               </div>
 
-              <p className="lg:text-2xl font-medium">Professionals Sellers</p>
-              <p className="text-base">
-                {privateVsProfessional?.bullets?.[0] ||
-                  "A professional sells a car including margin, warranty, preparation, and sometimes financing. This means the trade-in value will be lower, and the resale price higher"}
+              <p className="lg:text-2xl font-medium" dangerouslySetInnerHTML={{ __html: privateVsProfessional?.bullets?.[0] || "Professionals Sellers" }}>
+
+              </p>
+              <p className="text-base" dangerouslySetInnerHTML={{ __html: privateVsProfessional?.bullets?.[0] || "A professional sells a car including margin, warranty, preparation, and sometimes financing. This means the trade-in value will be lower, and the resale price higher" }}>
+
               </p>
             </div>
 
@@ -97,9 +98,8 @@ const VehicleValuationKeypoints = ({ data }) => {
               </div>
 
               <p className="lg:text-2xl font-medium">Private Sellers</p>
-              <p className="text-base">
-                {privateVsProfessional?.bullets?.[1] ||
-                  "A private seller can offer a more attractive price but usually without warranty or preparation"}
+              <p className="text-base" dangerouslySetInnerHTML={{ __html: privateVsProfessional?.bullets?.[1] || "A private seller can offer a more attractive price but usually without warranty or preparation" }} >
+           
               </p>
             </div>
           </div>
@@ -109,12 +109,11 @@ const VehicleValuationKeypoints = ({ data }) => {
       {/* Online Valuation Platforms */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {onlinePlatforms?.title || "Online Valuation Platforms"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: onlinePlatforms?.title || "Online Valuation Platforms" }}>
+        
           </p>
-          <p className="lg:text-xl">
-            {onlinePlatforms?.description ||
-              "Quick estimates, but handle with care."}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: onlinePlatforms?.description || "Quick estimates, but handle with care." }}>
+     
           </p>
           <div className="space-y-3">
             {(
@@ -132,6 +131,7 @@ const VehicleValuationKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={onlinePlatforms?.image_url || ImageProvider.valuation3}
             alt=""
           />
@@ -142,7 +142,7 @@ const VehicleValuationKeypoints = ({ data }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
         <div className="">
-          <img className="w-full" src={ImageProvider.valuation4} alt="" />
+          <img className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm" src={ImageProvider.valuation4} alt="" />
         </div>
         <div className="space-y-4 lg:space-y-10">
           <p className="lg:text-3xl font-bold">
@@ -180,12 +180,11 @@ const VehicleValuationKeypoints = ({ data }) => {
       {/* Maintenance and Valuation */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
         <div className="space-y-4 lg:space-y-10">
-          <p className="lg:text-3xl font-bold">
-            {maintenanceAndValue?.title || "Maintenance and Valuation"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: maintenanceAndValue?.title || "Maintenance and Valuation" }}>
+       
           </p>
-          <p className="lg:text-xl">
-            {maintenanceAndValue?.description ||
-              "How repairs and upcoming service affect price."}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: maintenanceAndValue?.description || "How repairs and upcoming service affect price." }}>
+    
           </p>
           <div className="grid grid-cols-1  gap-4">
             {(
@@ -207,7 +206,7 @@ const VehicleValuationKeypoints = ({ data }) => {
 
         <div className="">
           <img
-            className="w-full"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={maintenanceAndValue?.image_url || ImageProvider.valuation5}
             alt=""
           />
@@ -219,7 +218,7 @@ const VehicleValuationKeypoints = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
         <div className="">
           <img
-            className="w-full"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={
               valuationSummary?.image_url ||
               valuationSummary?.image_url ||
@@ -230,12 +229,10 @@ const VehicleValuationKeypoints = ({ data }) => {
         </div>
 
         <div className="space-y-4 lg:space-y-10">
-          <p className="lg:text-3xl font-bold">
-            {valuationSummary?.title || "Vehicle Valuation Summary"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: valuationSummary?.title || "Vehicle Valuation Summary" }}>
+
           </p>
-          <p className="lg:text-xl">
-            {valuationSummary?.description ||
-              "Key takeaways to accurately assess your car's worth."}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: valuationSummary?.description || "Key takeaways to accurately assess your car's worth." }}>
           </p>
           <div className="grid grid-cols-1  gap-4">
             {(

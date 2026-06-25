@@ -141,50 +141,7 @@ const PartListing = ({
         </div>
       </div>
 
-      {/* Sort Dropdown */}
-      {/* <div className="w-full sm:w-auto">
-            <div className="relative">
-              <div
-                onClick={() => setIsFeatureModal((prev) => !prev)}
-                className="flex justify-between items-center px-4 py-2 border border-[#E5E5E5] rounded-lg cursor-pointer whitespace-nowrap"
-              >
-                <p className="font-light text-sm sm:text-base">
-                  Sort by:{" "}
-                  <span className="text-[#1B1B1B] font-medium">
-                    {selectedOption}
-                  </span>
-                </p>
-                {isFeatureModal ? (
-                  <ChevronUp size={18} />
-                ) : (
-                  <ChevronDown size={18} />
-                )}
-              </div>
-
-              {isFeatureModal && (
-                <div className="absolute left-0 right-0 sm:left-auto sm:right-0 w-full sm:w-48 bg-[#FFFFFF] px-5 py-4 mt-2 rounded-lg shadow-md text-[14px] font-light space-y-3 z-50">
-                  {options.map((option, index) => (
-                    <div key={index}>
-                      <p
-                        onClick={() => handleSelect(option)}
-                        className={`hover:text-[#1B1B1B] cursor-pointer ${
-                          selectedOption === option
-                            ? "text-Primary font-medium"
-                            : ""
-                        }`}
-                      >
-                        {option}
-                      </p>
-                      {index !== options.length - 1 && (
-                        <hr className="text-[#E5E5E5]" />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div> */}
-
+  
       <div className="flex gap-5">
         <div className="hidden md:block w-1/4 flex-shrink-0">
           <FilterSection onFilterChange={onFilterChange} filters={filters} />
@@ -279,7 +236,7 @@ const PartListing = ({
                         delay: waveDelay + 0.3,
                       }}
                     >
-                      {console.log(item)}
+                      {/* {console.log(item)} */}
                       <div className="relative">
                         <motion.img
                           layout
@@ -306,6 +263,7 @@ const PartListing = ({
                         </div>
                         <button
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
                             onAddFavorite(item.id);
                           }}
@@ -332,18 +290,18 @@ const PartListing = ({
                         </motion.h3>
                         <motion.p
                           layout
-                          className="text-black mt-1 line-clamp-2"
-                        >
-                          {item.description}
-                        </motion.p>
+                          className="text-black mt-1 line-clamp-1"
+                         dangerouslySetInnerHTML={{__html:item.description}}/>
 
-                        <motion.p
-                          layout
-                          className="text-black mt-1 flex items-center gap-1 text-sm"
-                        >
-                          <CustomLocation />
-                          {item.location}
-                        </motion.p>
+                        {item.location && item.location.replace(/[,\s]+/g, "") !== "" && (
+                          <motion.p
+                            layout
+                            className="text-black mt-1 flex items-center gap-1 text-sm"
+                          >
+                            <CustomLocation />
+                            {item.location}
+                          </motion.p>
+                        )}
                         <motion.div layout className=" my-2 "></motion.div>
                         <motion.div
                           layout

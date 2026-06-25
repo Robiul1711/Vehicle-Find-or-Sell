@@ -11,6 +11,7 @@ import {
 import { ImageProvider } from "@/utils/ImageProvider";
 import React from "react";
 import { TbArrowWaveRightUp } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 const InsuranceData = [
   {
@@ -41,14 +42,14 @@ const InsuranceData = [
 
 const VirtualShowroomKeyPoints = ({ data }) => {
   const sections = data?.sections || [];
-  const hdPhotos = sections.find((s) => s.section_id === "hd-photos");
-  const videos360 = sections.find((s) => s.section_id === "360-videos");
-  const virtualSpace = sections.find((s) => s.section_id === "virtual-space");
+  const hdPhotos = sections.find((s) => s.section_id === "hd-photos" || s.section_id === "photos-hd");
+  const videos360 = sections.find((s) => s.section_id === "360-videos" || s.section_id === "videos-360");
+  const virtualSpace = sections.find((s) => s.section_id === "virtual-space" || s.section_id === "espace-virtuel");
   const saleAdvantages = sections.find(
-    (s) => s.section_id === "sale-advantages"
+    (s) => s.section_id === "sale-advantages" || s.section_id === "avantages-de-la-vente"
   );
   const maximizeImpact = sections.find(
-    (s) => s.section_id === "maximize-impact"
+    (s) => s.section_id === "maximize-impact" || s.section_id === "maximiser-impact"
   );
 
   const insuranceDataMapped = (saleAdvantages?.bullets || []).map(
@@ -72,12 +73,11 @@ const VirtualShowroomKeyPoints = ({ data }) => {
       {/* HD Professional Photos */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {hdPhotos?.title || "HD Professional Photos"}
+          <p className="lg:text-3xl font-bold"  dangerouslySetInnerHTML={{ __html: hdPhotos?.title }}>
+        
           </p>
-          <p className="lg:text-xl">
-            {hdPhotos?.description ||
-              "Capture every detail with high-resolution images"}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: hdPhotos?.description }}>
+        
           </p>
           <div className="space-y-3">
             {(
@@ -91,29 +91,27 @@ const VirtualShowroomKeyPoints = ({ data }) => {
                 <CustomCheck /> {bullet}
               </p>
             ))}
-            <p className=" flex items-center gap-2 lg:text-xl">
-              {virtualSpace?.description ||
-                "Ads with HD photos get up to 3x more contacts than standard listings."}
+            <p className=" flex items-center gap-2 lg:text-lg" dangerouslySetInnerHTML={{ __html: hdPhotos?.description}}>
+         
             </p>
           </div>
         </div>
         <div className="">
-          <img src={hdPhotos?.image_url || ImageProvider.showroom1} alt="" />
+          <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={hdPhotos?.image_url || ImageProvider.showroom1} alt="" />
         </div>
       </div>
 
       {/* 360° Immersive Videos */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
         <div className="">
-          <img src={videos360?.image_url || ImageProvider.showroom2} alt="" />
+          <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={videos360?.image_url || ImageProvider.showroom2} alt="" />
         </div>
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {videos360?.title || "360° Immersive Videos"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: videos360?.title}}>
+        
           </p>
-          <p className="lg:text-xl">
-            {videos360?.description ||
-              "Explore every angle of the car virtually."}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: videos360?.description}}>
+        
           </p>
           <div className="space-y-3">
             {(
@@ -134,11 +132,11 @@ const VirtualShowroomKeyPoints = ({ data }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {virtualSpace?.title || "Virtual Showroom"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: virtualSpace?.title}}>
+        
           </p>
-          <p className="lg:text-xl">
-            Present your car in a premium online space.
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: virtualSpace?.description}}>
+        
           </p>
           <div className="space-y-3">
             {(
@@ -157,6 +155,7 @@ const VirtualShowroomKeyPoints = ({ data }) => {
 
         <div className="">
           <img
+            className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm'
             src={virtualSpace?.image_url || ImageProvider.showroom3}
             alt=""
           />
@@ -166,12 +165,11 @@ const VirtualShowroomKeyPoints = ({ data }) => {
       {/* Sale Advantages */}
       <div className=" mx-auto">
         <div className="space-y-4 lg:space-y-5">
-          <p className="lg:text-3xl font-bold">
-            {saleAdvantages?.title || "Sale Advantages"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: saleAdvantages?.title}}>
+        
           </p>
-          <p className="lg:text-xl">
-            {saleAdvantages?.description ||
-              "Boost your chances to sell faster and smarter."}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: saleAdvantages?.description}}>
+        
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {displayInsuranceData?.map((item, index) => (
@@ -180,8 +178,10 @@ const VirtualShowroomKeyPoints = ({ data }) => {
                   {item?.icon}
                 </div>
 
-                <p className="lg:text-2xl font-medium">{item?.title}</p>
-                <p>{item?.desc}</p>
+                <p className="lg:text-2xl font-medium" dangerouslySetInnerHTML={{ __html: item?.title}}>
+                
+                </p>
+                <p dangerouslySetInnerHTML={{ __html: item?.desc}}></p>
               </div>
             ))}
           </div>
@@ -191,13 +191,26 @@ const VirtualShowroomKeyPoints = ({ data }) => {
       {/* Maximize Your Listing Impact */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {maximizeImpact?.title || "Maximize Your Listing Impact"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: maximizeImpact?.title}}>
+        
           </p>
-          <p className="lg:text-xl">
-            {maximizeImpact?.description ||
-              "Turn your car ad into a professional showroom experience."}
+          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: maximizeImpact?.description}}>
+        
           </p>
+          <div className="space-y-3">
+            {(
+              maximizeImpact?.bullets || [
+                "HD photos for maximum visual impact",
+                "360° videos for complete transparency",
+                "Virtual showroom experience",
+                "Professional presentation that sells",
+              ]
+            ).map((bullet, idx) => (
+              <p key={idx} className=" flex items-center gap-2">
+                <CustomCheck /> {bullet}
+              </p>
+            ))}
+          </div>
           <div className="space-y-3">
             {(
               maximizeImpact?.bullets || [
@@ -216,13 +229,14 @@ const VirtualShowroomKeyPoints = ({ data }) => {
             <p className="lg:text-xl">{maximizeImpact.description}</p>
           )}
 
-          <button className="bg-custom-primary text-white py-4 font-semibold px-4 rounded flex items-center gap-2 ">
-            Showcase Your Ad Now <CustomRightUp />
-          </button>
+          <Link to="/dashboard" className="bg-custom-primary inline-block flex hover:bg-custom-primary/80 transition-all duration-300 text-white py-4 font-semibold px-4 rounded flex items-center gap-2 ">
+            Showcase Your Ad Now
+          </Link>
         </div>
 
         <div className="">
           <img
+            className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm'
             src={maximizeImpact?.image_url || ImageProvider.showroom4}
             alt=""
           />

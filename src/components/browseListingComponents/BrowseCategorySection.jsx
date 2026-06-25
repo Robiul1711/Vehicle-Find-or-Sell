@@ -192,7 +192,7 @@ const BrowseCategorySection = () => {
           filters={filterParams}
           type={activeTab}
           isLoading={isLoading}
-          onAddFavorite={(id) => onAddFavorite(id, "parts")}
+          onAddFavorite={(id) => onAddFavorite(id, "part")}
         />
       ),
     },

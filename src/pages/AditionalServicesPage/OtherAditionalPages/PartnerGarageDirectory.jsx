@@ -35,13 +35,11 @@ const PartnerGarageDirectory = () => {
             >
               {/* Text Content */}
               <div className={`space-y-4 ${!section.image_url ? 'md:col-span-2' : ''}`}>
-                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
-                  {section.title}
+                <h2 className="text-2xl lg:text-3xl font-bold text-gray-900" dangerouslySetInnerHTML={{ __html: section.title }}>
                 </h2>
                 
                 {section.description && (
-                  <p className="text-gray-600 text-lg">
-                    {section.description}
+                  <p className="text-gray-600 text-lg" dangerouslySetInnerHTML={{ __html: section.description }}>
                   </p>
                 )}
 

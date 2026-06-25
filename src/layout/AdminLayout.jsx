@@ -11,7 +11,7 @@ import {
 
 import CommonNavbar from "@/pages/admin/CommonNavbar";
 import SideBar from "@/pages/admin/SideBar";
-import { Plus } from "lucide-react";
+import { Plus, ArrowUpDown } from "lucide-react";
 
 import React, { useEffect, useState } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
@@ -97,6 +97,14 @@ const AdminLayout = () => {
       text: "Settings",
       path: "/dashboard/settings",
       activePaths: ["/dashboard/settings"],
+      sublink: false,
+    },
+    {
+      id: 10,
+      icon: <ArrowUpDown size={22} className=" hover:text-primaryColor" />,
+      text: "Import & Export",
+      path: "/dashboard/import-export",
+      activePaths: ["/dashboard/import-export"],
       sublink: false,
     },
   ];

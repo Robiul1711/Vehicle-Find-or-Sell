@@ -39,11 +39,56 @@ const CarBottomFeatures = ({ details }) => {
       {/* description */}
       {
         details?.description && (
-          <div>
+          <div className="mt-4">
             <Title level="title20" className="!font-bold">Description</Title>
-            <Title level="title16" className="text-gray-500 mt-2 sm:mt-4">
-              {details?.description}
-            </Title>
+            <div className="text-gray-700 mt-4 description-content">
+              <style>{`
+                .description-content h1 {
+                  font-size: 2rem;
+                  font-weight: 800;
+                  color: #111827;
+              
+                }
+                .description-content h2 {
+                  font-size: 1.5rem;
+                  font-weight: 700;
+                  color: #1f2937;
+                
+               
+                }
+                .description-content h3 {
+                  font-size: 1.25rem;
+                  font-weight: 600;
+                  color: #374151;
+              
+                }
+                .description-content p {
+              
+                  line-height: 1.6;
+                }
+                .description-content strong {
+                  font-weight: 700;
+                  color: #111827;
+                }
+                .description-content ul {
+                  list-style-type: disc;
+                  padding-left: 1.25rem;
+              
+                }
+                .description-content ol {
+                  list-style-type: decimal;
+             
+                }
+                .description-content blockquote {
+                  border-left: 4px solid #E2E8F0;
+                  padding-left: 1rem;
+                  font-style: italic;
+                  color: #4B5563;
+                  margin: 1rem 0;
+                }
+              `}</style>
+              <div dangerouslySetInnerHTML={{ __html: details?.description }} />
+            </div>
           </div>
         )
       }

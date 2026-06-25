@@ -74,7 +74,7 @@ const VechleBoostCard = ({ car }) => {
           {/* Buttons */}
           <div className="grid grid-cols-2 gap-2 mt-3">
             <Link
-              to={`/dashboard/car-details/${car.id}/${car.slug}`}
+              to={`/dashboard/car-details/${car.id}/${car.slug}?type=${car.ad_type || "vehicle"}`}
               className="bg-gray-900 text-center text-white text-sm font-medium rounded-lg py-2 hover:bg-gray-800"
             >
               View Details

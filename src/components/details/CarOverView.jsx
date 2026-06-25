@@ -96,48 +96,53 @@ const CarOverView = ({ details, data }) => {
           <Title level="title40" className=" !font-bold">
             Description
           </Title>
-          <div
-            className="
-    mt-4
-    text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed 
-    prose prose-slate dark:prose-invert max-w-none
-    prose-p:leading-relaxed prose-strong:text-slate-900 dark:prose-strong:text-white
-    whitespace-pre-line
-  "
-          >
-            {data?.description?.split("\r\n").map((line, index) => {
-              // If the line starts with a title/header emoji, make it stand out a bit more
-              const isHeader = /^[🏆🔑🏁🛋️🛡️🎵📑✅📍]/.test(line.trim());
-
-              if (isHeader) {
-                return (
-                  <span
-                    key={index}
-                    className="block font-bold text-slate-900 dark:text-white text-base md:text-lg mt-6 mb-2"
-                  >
-                    {line}
-                  </span>
-                );
+          <div className="text-gray-700 mt-4 overview-description">
+            <style>{`
+              .overview-description h1 {
+                font-size: 2rem;
+                font-weight: 800;
+                color: #111827;
+          
               }
-
-              // Hide or dim hashtags if needed, or render regular line
-              if (line.trim().startsWith("#")) {
-                return (
-                  <span
-                    key={index}
-                    className="text-xs text-blue-500/80 inline-block mr-2 select-none"
-                  >
-                    {line}
-                  </span>
-                );
+              .overview-description h2 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #1f2937;
+           
               }
-
-              return (
-                <span key={index} className="block">
-                  {line}
-                </span>
-              );
-            })}
+              .overview-description h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: #374151;
+             
+              }
+              .overview-description p {
+               
+                line-height: 1.6;
+              }
+              .overview-description strong {
+                font-weight: 700;
+                color: #111827;
+              }
+              .overview-description ul {
+                list-style-type: disc;
+                padding-left: 1.25rem;
+           
+              }
+              .overview-description ol {
+                list-style-type: decimal;
+                padding-left: 1.25rem;
+               
+              }
+              .overview-description blockquote {
+                border-left: 4px solid #E2E8F0;
+                padding-left: 1rem;
+                font-style: italic;
+                color: #4B5563;
+                margin: 1rem 0;
+              }
+            `}</style>
+            <div dangerouslySetInnerHTML={{ __html: data?.description }} />
           </div>
         </div>
       )}

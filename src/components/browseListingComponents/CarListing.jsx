@@ -277,16 +277,17 @@ const CarListing = ({
                           </span>
                         </motion.p>
 
-                        <motion.p
-                          layout
-                          className="text-black mt-1 flex text-sm items-start gap-1 "
-                        >
-                          {item.location && <CustomLocation />}
-
-                          <span className="flex-1 line-clamp-1">
-                            {item.location}
-                          </span>
-                        </motion.p>
+                        {item.location && item.location.replace(/[,\s]+/g, "") !== "" && (
+                          <motion.p
+                            layout
+                            className="text-black mt-1 flex text-sm items-start gap-1 "
+                          >
+                            <CustomLocation />
+                            <span className="flex-1 line-clamp-1">
+                              {item.location}
+                            </span>
+                          </motion.p>
+                        )}
                         <motion.div layout className=" my-2 "></motion.div>
                         <motion.div
                           layout

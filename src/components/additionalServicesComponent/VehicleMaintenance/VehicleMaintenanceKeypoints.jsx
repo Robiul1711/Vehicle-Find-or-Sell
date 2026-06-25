@@ -12,27 +12,28 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
       {sections.map((section, index) => {
         // Determine if image should be on the left or right for visual variety
         const isEven = index % 2 === 0;
+        const showImage = !!section.image_url;
 
         return (
           <div
             key={section.section_id}
             className={`grid grid-cols-1 md:grid-cols-2 gap-8 items-center lg:py-10 ${
-              section.layout_type === "text_only" ? "max-w-4xl mx-auto block" : ""
+              !showImage ? "max-w-4xl mx-auto block" : ""
             }`}
           >
             {/* Image Rendering Logic */}
-            {section.layout_type === "image_with_text" && isEven && (
+            {showImage && isEven && (
               <div className="order-last md:order-first">
                 <img 
                    src={section.image_url} 
                    alt={section.title} 
-                   className="rounded-2xl shadow-lg w-full object-cover"
+                   className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
                 />
               </div>
             )}
 
             {/* Content Rendering Logic */}
-            <div className={`space-y-4 ${section.layout_type === "text_only" ? "text-center" : ""}`}>
+            <div className={`space-y-4 ${!showImage ? "text-center" : ""}`}>
               <h2 className="lg:text-4xl font-bold text-gray-900" dangerouslySetInnerHTML={{__html: section.title}}>
                 
               </h2>
@@ -44,7 +45,7 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
               )}
 
               {section.bullets && (
-                <div className={`space-y-3 ${section.layout_type === "text_only" ? "inline-block text-left" : ""}`}>
+                <div className={`space-y-3 ${!showImage ? "inline-block text-left" : ""}`}>
                   {section.bullets.map((bullet, idx) => (
                     <div key={idx} className="flex items-start gap-3">
                       <div className="mt-1">
@@ -58,12 +59,12 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
             </div>
 
             {/* Image Rendering for Odd Items (Right Side) */}
-            {section.layout_type === "image_with_text" && !isEven && (
+            {showImage && !isEven && (
               <div>
                 <img 
                   src={section.image_url} 
                   alt={section.title} 
-                  className="rounded-2xl shadow-lg w-full object-cover"
+                  className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
                 />
               </div>
             )}

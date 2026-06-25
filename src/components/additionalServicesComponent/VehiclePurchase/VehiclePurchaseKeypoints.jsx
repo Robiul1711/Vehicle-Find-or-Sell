@@ -53,14 +53,14 @@ const VehiclePurchaseKeypoints = ({ data }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
           <div className="">
             <img
-              className="w-full"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
               src={autoLoan.image_url || ImageProvider.purchase2}
               alt=""
             />
           </div>
           <div className="space-y-4 lg:space-y-10">
-            <p className="lg:text-3xl font-bold">{autoLoan.title}</p>
-            <p className="lg:text-xl">{autoLoan.description}</p>
+            <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: autoLoan.title }} ></p>
+            <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: autoLoan.description }}></p>
             <div className="">
               <p className="lg:text-2xl font-medium">Features</p>
               <ul className="list-disc pl-4 ">
@@ -103,8 +103,8 @@ const VehiclePurchaseKeypoints = ({ data }) => {
       {loa && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
           <div className="space-y-4 lg:space-y-10">
-            <p className="lg:text-3xl font-bold">{loa.title}</p>
-            <p className="lg:text-xl">{loa.description}</p>
+            <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: loa.title }} ></p>
+            <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: loa.description }}></p>
             <div className="">
               <p className="lg:text-2xl font-medium">Features</p>
               <ul className="list-disc pl-4 ">
@@ -143,7 +143,7 @@ const VehiclePurchaseKeypoints = ({ data }) => {
           </div>
           <div className="">
             <img
-              className="w-full"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
               src={loa.image_url || ImageProvider.purchase3}
               alt=""
             />
@@ -155,14 +155,14 @@ const VehiclePurchaseKeypoints = ({ data }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
           <div className="">
             <img
-              className="w-full"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
               src={lld.image_url || ImageProvider.purchase2}
               alt=""
             />
           </div>
           <div className="space-y-4 lg:space-y-10">
-            <p className="lg:text-3xl font-bold">{lld.title}</p>
-            <p className="lg:text-xl">{lld.description}</p>
+            <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: lld.title }} ></p>
+            <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: lld.description }}></p>
             <div className="">
               <p className="lg:text-2xl font-medium">Features</p>
               <ul className="list-disc pl-4 ">

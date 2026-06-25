@@ -98,30 +98,29 @@ const InsuranceEssentials = [
 
 const CarwarrantiesKeypoints = ({ data }) => {
   const sections = data?.sections || [];
-  const legalWarranty = sections.find((s) => s.section_id === "legal-warranty");
+  const legalWarranty = sections.find((s) => s.section_id === "legal-warranty" || s.section_id === "garantie-legale");
   const contractualWarranty = sections.find(
-    (s) => s.section_id === "contractual-warranty"
+    (s) => s.section_id === "contractual-warranty" || s.section_id === "garantie-contractuelle"
   );
   const externalProviders = sections.find(
-    (s) => s.section_id === "external-providers"
+    (s) => s.section_id === "external-providers" || s.section_id === "prestataires-externes"
   );
   const dealerWarranties = sections.find(
-    (s) => s.section_id === "dealer-warranties"
+    (s) => s.section_id === "dealer-warranties" || s.section_id === "garanties-concessionnaire"
   );
-  const practicalTips = sections.find((s) => s.section_id === "practical-tips");
-  const summary = sections.find((s) => s.section_id === "summary");
+  const practicalTips = sections.find((s) => s.section_id === "practical-tips" || s.section_id === "conseils-pratiques");
+  const summary = sections.find((s) => s.section_id === "summary" || s.section_id === "résumé");
 
   return (
     <div className="space-y-20 mx-auto">
       {/* Legal Warranty (Mandatory Protection) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {legalWarranty?.title || "Legal Warranty (Mandatory Protection)"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: legalWarranty?.title }} >
+
           </p>
-          <p className="lg:text-xl font-medium">
-            {legalWarranty?.description ||
-              "Covers hidden faults or non-conformities, valid for 2 years when buying from a professional."}
+          <p className="lg:text-xl font-medium" dangerouslySetInnerHTML={{ __html: legalWarranty?.description }}>
+
           </p>
           <ul className="list-disc pl-4">
             {(
@@ -144,8 +143,8 @@ const CarwarrantiesKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={legalWarranty?.image_url || ImageProvider.warrenty1}
-            className="w-full"
             alt=""
           />
         </div>
@@ -155,19 +154,16 @@ const CarwarrantiesKeypoints = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
         <div className="">
           <img
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={contractualWarranty?.image_url || ImageProvider.warrenty2}
-            className="w-full"
             alt=""
           />
         </div>
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {contractualWarranty?.title ||
-              "Contractual Warranty (Extra Seller/Manufacturer Coverage)"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: contractualWarranty?.title }}>
+
           </p>
-          <p className="lg:text-xl font-medium">
-            {contractualWarranty?.description ||
-              "Additional coverage included or purchased at the time of sale, with variable duration and terms."}
+          <p className="lg:text-xl font-medium" dangerouslySetInnerHTML={{ __html: contractualWarranty?.description }}>
           </p>
           <ul className="list-disc pl-4">
             {(
@@ -194,12 +190,10 @@ const CarwarrantiesKeypoints = ({ data }) => {
       {/* External Warranty Providers */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
         <div className="space-y-4 lg:space-y-10">
-          <p className="lg:text-3xl font-bold">
-            {externalProviders?.title || "External Warranty Providers"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: externalProviders?.title }}>
+
           </p>
-          <p className="lg:text-lg font-medium">
-            {externalProviders?.description ||
-              "Specialized companies offering mechanical breakdown coverage and roadside assistance beyond the manufacturer's warranty."}
+          <p className="lg:text-lg font-medium" dangerouslySetInnerHTML={{ __html: externalProviders?.description }}>
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -208,8 +202,8 @@ const CarwarrantiesKeypoints = ({ data }) => {
                 key={item.id}
                 className="bg-custom-primary  rounded p-5 text-white space-y-4"
               >
-                <p className="lg:text-2xl font-medium">{item.title}</p>
-                <p className="text-base ">{item.desc}</p>
+                <p className="lg:text-2xl font-medium" dangerouslySetInnerHTML={{ __html: item?.title }}></p>
+                <p className="text-base " dangerouslySetInnerHTML={{ __html: item?.desc }}></p>
               </div>
             ))}
           </div>
@@ -250,7 +244,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
-            className="w-full"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={externalProviders?.image_url || ImageProvider.warrenty3}
             alt=""
           />
@@ -261,18 +255,16 @@ const CarwarrantiesKeypoints = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
         <div className="">
           <img
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={dealerWarranties?.image_url || ImageProvider.warrenty4}
-            className="w-full"
             alt=""
           />
         </div>
         <div className="space-y-4">
-          <p className="lg:text-3xl font-bold">
-            {dealerWarranties?.title || "Warranties from Dealers & Garages"}
+          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: dealerWarranties?.title }}>
+
           </p>
-          <p className="lg:text-xl font-medium">
-            {dealerWarranties?.description ||
-              "Professional sellers always include legal warranty and may add contractual or partner coverage."}
+          <p className="lg:text-xl font-medium" dangerouslySetInnerHTML={{ __html: dealerWarranties?.description }}>
           </p>
           <ul className="list-disc pl-4">
             {(
@@ -318,19 +310,17 @@ const CarwarrantiesKeypoints = ({ data }) => {
           </p>
         </div>
         <div className="">
-          <img src={ImageProvider.warrenty5} className="w-full" alt="" />
+          <img src={ImageProvider.warrenty5} className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm" alt="" />
         </div>
       </div>
 
       {/* Practical Warranty Tips */}
       <div>
         <div className="mb-5">
-          <p className="lg:text-3xl font-bold mb-5">
-            {practicalTips?.title || "Practical Warranty Tips"}
+          <p className="lg:text-3xl font-bold mb-5" dangerouslySetInnerHTML={{ __html: practicalTips?.title }}>
+
           </p>
-          <p className="lg:text-xl font-medium">
-            {practicalTips?.description ||
-              "Check terms, transfer options, exclusions, and compare providers before committing."}
+          <p className="lg:text-xl font-medium" dangerouslySetInnerHTML={{ __html: practicalTips?.description }}>
           </p>
         </div>
 
@@ -361,8 +351,8 @@ const CarwarrantiesKeypoints = ({ data }) => {
           </div>
           <div className="">
             <img
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
               src={practicalTips?.image_url || ImageProvider.warrenty6}
-              className="w-full"
               alt=""
             />
           </div>
@@ -415,7 +405,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
                     : item?.icon}
                 </div>
 
-                <p className="lg:text-2xl font-medium">
+                <p className="lg:text-2xl font-medium" >
                   {typeof item === "string" ? item : item?.title}
                 </p>
                 <p className="text-base">
@@ -427,7 +417,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
-            className="w-full"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
             src={summary?.image_url || ImageProvider.warrenty7}
             alt=""
           />

@@ -9,7 +9,7 @@ const CommonNavbar = ({ open, setOpen }) => {
   const { user } = useAuth();
   // console.log(user)
   return (
-    <div className="flex items-center gap-5 justify-between w-full py-3 md:py-6 px-4 sm:px-8 bg-white ">
+    <div className="flex items-center gap-5 justify-between w-full py-3 md:py-4 px-4 sm:px-8 bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200/50">
       <div className="flex items-center gap-4">
        <span
   onClick={() => setOpen(!open)}
@@ -42,7 +42,7 @@ const CommonNavbar = ({ open, setOpen }) => {
   </div>
 </span>
         <div className=" items-center gap-4 hidden md:flex">
-          <p className=" text-black sm:text-xl xl:text-3xl font-bold">
+          <p className=" text-black sm:text-xl xl:text-2xl font-bold">
             {user?.profile?.first_name} {user?.profile?.last_name}
           </p>
         </div>

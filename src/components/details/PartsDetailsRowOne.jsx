@@ -25,7 +25,7 @@ const PartsDetailsRowOne = ({ details, data, refetch }) => {
     },
   });
 
-  const isFavorite = data?.is_favorite || false;
+  const isFavorite = data?.is_favourite || data?.is_favorite || false;
   const favType = details === "parts" ? "part" : "vehicle";
 
   const onAddFavorite = () => {

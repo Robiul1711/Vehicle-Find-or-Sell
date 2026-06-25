@@ -4,6 +4,7 @@ import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";
+import { Link } from "react-router-dom";
 
 const NotificationDropdown = () => {
   const [open, setOpen] = useState(false);
@@ -204,16 +205,12 @@ const NotificationDropdown = () => {
                   </div>
 
                   {specificNotification?.data?.target_id && (
-                    <button
-                      onClick={() => {
-                        setIsModalOpen(false);
-                        // Optional: navigate to the item
-                        // window.location.href = `/dashboard/car-details/${specificNotification.data.target_id}`;
-                      }}
-                      className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-orange-600/20"
+                    <Link to={specificNotification?.data?.redirect_url}
+                    
+                      className="flex items-center justify-center w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors shadow-lg shadow-orange-600/20"
                     >
                       View Related Item
-                    </button>
+                    </Link>
                   )}
                 </div>
               )}

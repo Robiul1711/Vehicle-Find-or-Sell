@@ -1,12 +1,13 @@
 import React from "react";
 import { MessageCircle, MoveUpRight } from "lucide-react";
 import { CommonPageWrapper } from "@/components/common/CommonPageWrapper";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import SEO from "@/components/common/SEO";
 
 const ProductComparison = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const id1 = searchParams.get("id1");
   const id2 = searchParams.get("id2");
@@ -29,6 +30,10 @@ const ProductComparison = () => {
       url: "/message/conversations/get-or-create/",
       method: "POST",
       secure: true,
+      invalidateKeys: ["conversations-list"],
+      onSuccess: (response) => {
+        navigate("/dashboard/message", { state: { conversationId: response?.data?.id || response?.id } });
+      },
     });
     return (
       <div className="bg-white rounded-lg shadow-sm flex flex-col justify-between border">
@@ -124,16 +129,14 @@ const ProductComparison = () => {
             <h3 className="text-base font-bold text-gray-900 mb-2">
               Description
             </h3>
-            <p className="text-sm text-gray-600 line-clamp-4">
-              {product.description}
-            </p>
+            <p className="text-sm text-gray-600 line-clamp-4" dangerouslySetInnerHTML={{ __html: product.description }} />
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="px-6 pb-6 mt-auto flex flex-col sm:flex-row gap-3">
           {/* {console.log(product)} */}
-          <Link
+          <button
             onClick={() =>
               mutate({
                 user_id: product?.user,
@@ -141,11 +144,11 @@ const ProductComparison = () => {
                 ad_type: product?.vehicle_type,
               })
             }
-            to="/dashboard/message"
+            disabled={isPending}
             className="flex-1 py-3 flex items-center justify-center gap-2 bg-blue-100 text-custom-primary rounded-lg  font-medium border-2 border-custom-primary transition-colors "
           >
             <MessageCircle className="w-4 h-4" /> Message Seller
-          </Link>
+          </button>
           {/* {console.log(product)} */}
           <button
             onClick={() =>
