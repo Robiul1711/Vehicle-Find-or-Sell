@@ -33,7 +33,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
   });
 
   const onSubmit = (data) => {
-    const { terms, ...payload } = data;
+    const payload = { ...data };
     if (payload.account_type === "private") {
       delete payload.siren_number;
     }
@@ -175,7 +175,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
             <label className="flex items-center space-x-2 r py-2">
               <input
                 type="checkbox"
-                {...register("terms", { required: true })}
+                {...register("accept_terms", { required: true })}
                 className="rounded accent-custom-primary"
               />
               <span className="text-sm">
@@ -183,7 +183,7 @@ const RegisterForm = ({ onSuccessSignup }) => {
               </span>
             </label>
           </div>
-          {errors.terms && (
+          {errors.accept_terms && (
             <span className="text-red-500 text-sm block">
               You must agree to the terms
             </span>

@@ -2,35 +2,29 @@ import { useState, useEffect } from "react";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { Controller, useFormContext } from "react-hook-form";
-import ReactQuill from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
+
 
 export default function PartsDetails() {
-  const {
-    watch,
-    control,
-    register,
-    setValue,
-  } = useFormContext();
+  const { watch, control, register, setValue } = useFormContext();
   const vehicleType = watch("vehicle_type");
   const { data: partsCategories } = useApiQuery({
     queryKey: ["part-categories"],
     url: `/core/part-categories/`,
     secure: true,
   });
-  console.log(partsCategories?.data)
+  console.log(partsCategories?.data);
 
   const selectedMainSystemId = watch("main_system");
   const selectedSubSystemId = watch("sub_system");
 
   const selectedCategory = partsCategories?.data?.find(
-    (category) => String(category.id) === String(selectedMainSystemId)
+    (category) => String(category.id) === String(selectedMainSystemId),
   );
 
   useEffect(() => {
     if (selectedCategory && selectedSubSystemId) {
       const hasPart = selectedCategory.parts?.some(
-        (part) => String(part.id) === String(selectedSubSystemId)
+        (part) => String(part.id) === String(selectedSubSystemId),
       );
       if (!hasPart) {
         setValue("sub_system", "");
@@ -94,7 +88,7 @@ export default function PartsDetails() {
           {/* Vehicle Type */}
           <div>
             <label className="block text-xs text-gray-600 mb-1.5">
-            PartsDetails
+              PartsDetails
             </label>
             <select
               {...register("vehicle_type")}
@@ -419,27 +413,11 @@ export default function PartsDetails() {
         <label className="block text-xs text-gray-600 mb-1.5">
           Description
         </label>
-        <Controller
-          name="description"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <div className="quill-editor-wrapper">
-              <style>{`
-                .quill-editor-wrapper .ql-editor {
-                  min-height: 250px;
-                  font-size: 0.95rem;
-                }
-              `}</style>
-              <ReactQuill
-                theme="snow"
-                value={field.value || ""}
-                onChange={field.onChange}
-                placeholder="Type something about your part..."
-                className="bg-white rounded-md"
-              />
-            </div>
-          )}
+        <textarea
+          {...register("description")}
+          placeholder="Type something about your part..."
+          rows={6}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
         />
       </div>
       {/* Brand Creation Modal */}

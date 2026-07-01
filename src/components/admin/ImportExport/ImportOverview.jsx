@@ -141,7 +141,7 @@ export default function ImportOverview({ onStartImport, onStartExport }) {
                   <th className="py-4 px-3 sm:px-6">Success</th>
                   <th className="py-4 px-3 sm:px-6">Failed</th>
                   <th className="py-4 px-3 sm:px-6">Status</th>
-                  <th className="py-4 px-3 sm:px-6 text-center">Actions</th>
+                  {/* <th className="py-4 px-3 sm:px-6 text-center">Actions</th> */}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 text-sm">
@@ -177,7 +177,7 @@ export default function ImportOverview({ onStartImport, onStartExport }) {
                           {job.status}
                         </span>
                       </td>
-                      <td className="py-4 px-3 sm:px-6 text-center">
+                      {/* <td className="py-4 px-3 sm:px-6 text-center">
                         <div className="flex items-center justify-center gap-2">
                           <button className="p-1.5 hover:bg-gray-100 rounded-md text-gray-500 hover:text-slate-900 transition" title="Edit template">
                             <Sliders size={16} />
@@ -186,7 +186,7 @@ export default function ImportOverview({ onStartImport, onStartExport }) {
                             <Trash2 size={16} />
                           </button>
                         </div>
-                      </td>
+                      </td> */}
                     </tr>
                   );
                 })}

@@ -4,8 +4,6 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 import { Controller, useFormContext } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ReactQuill from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
 
 export default function BasicDetails() {
   const {
@@ -347,7 +345,8 @@ export default function BasicDetails() {
               // Safely parse whatever the API returns into a valid Date or null
               const parseDate = (val) => {
                 if (!val) return null;
-                if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
+                if (val instanceof Date)
+                  return isNaN(val.getTime()) ? null : val;
                 const str = String(val).trim();
                 // Year only: "2020" → Jan 1 of that year
                 if (/^\d{4}$/.test(str)) {
@@ -363,7 +362,9 @@ export default function BasicDetails() {
                 // DD/MM/YYYY
                 if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(str)) {
                   const [dd, mm, yyyy] = str.split("/");
-                  const d = new Date(`${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`);
+                  const d = new Date(
+                    `${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`,
+                  );
                   return isNaN(d.getTime()) ? null : d;
                 }
                 // Fallback: try native parse (ISO strings etc.)
@@ -543,27 +544,11 @@ export default function BasicDetails() {
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Description
         </label>
-        <Controller
-          name="description"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <div className="quill-editor-wrapper">
-              <style>{`
-                .quill-editor-wrapper .ql-editor {
-                  min-height: 250px;
-                  font-size: 0.95rem;
-                }
-              `}</style>
-              <ReactQuill
-                theme="snow"
-                value={field.value || ""}
-                onChange={field.onChange}
-                placeholder="Type something about your vehicle..."
-                className="bg-white rounded-md"
-              />
-            </div>
-          )}
+        <textarea
+          {...register("description")}
+          placeholder="Type something about your vehicle..."
+          rows={6}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
         />
       </div>
     </div>

@@ -176,7 +176,7 @@ const FeaturedListings = () => {
   };
 
   return (
-    <section id="featured-listings" className="section-padding-x section-padding-y bg-[#F9FAFB] overflow-hidden">
+    <section id="featured-listings" className="section-padding-x  bg-[#F9FAFB] overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}

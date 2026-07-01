@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { FiBell } from "react-icons/fi";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
@@ -166,8 +167,8 @@ const NotificationDropdown = () => {
         </div>
       )}
       {/* Notification Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4">
+      {isModalOpen && createPortal(
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000] p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
@@ -216,7 +217,8 @@ const NotificationDropdown = () => {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

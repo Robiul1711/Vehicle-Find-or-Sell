@@ -24,7 +24,7 @@ const CommonButton = ({
   ...props
 }) => {
   const buttonClasses = cn(
-    "py-2 md:py-3 px-3 md:px-6 rounded-lg font-semibold transition duration-300 flex items-center justify-center gap-2",
+    "py-2  px-3 md:px-6 rounded-lg font-semibold transition duration-300 flex items-center justify-center gap-2",
     variants[variant] || variants.primary,
     (disabled || isLoading) && "opacity-60 cursor-not-allowed",
     fullWidth && "w-full",

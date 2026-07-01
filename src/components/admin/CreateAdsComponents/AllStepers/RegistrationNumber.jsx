@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { Upload, X, Search, Loader2 } from "lucide-react";
+import { Upload, X, Search, Loader2, Lock } from "lucide-react";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import toast from "react-hot-toast";
 
@@ -195,7 +195,7 @@ export default function RegistrationNumber({ goToStep }) {
           </div>
         </div>
 
-        {showRequiredMessage && (
+        {/* {showRequiredMessage && (
           <div className="flex items-start space-x-3 bg-red-50 p-4 rounded-lg border-l-4 border-red-400">
             <div className="flex-shrink-0 w-5 h-5 bg-red-400 rounded-full flex items-center justify-center mt-0.5">
               <span className="text-white text-xs font-bold">!</span>
@@ -204,44 +204,50 @@ export default function RegistrationNumber({ goToStep }) {
               <span>Registration number or VIN number is required.</span>
             </p>
           </div>
-        )}
+        )} */}
         {/* Document Upload Section */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-900">
+          <label className="block text-sm font-semibold text-gray-900">
             Document
           </label>
 
           {/* Upload Area */}
           <div
-            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+            className={`group border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 cursor-pointer relative ${
               isDragOver
-                ? "border-blue-400 bg-blue-50"
-                : "border-gray-300 bg-gray-50"
+                ? "border-custom-primary bg-custom-primary/5 shadow-inner"
+                : "border-gray-200 bg-gray-50/50 hover:border-custom-primary/50 hover:bg-custom-primary/[0.02]"
             }`}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
           >
-            <div className="flex flex-col items-center space-y-4">
-              <Upload className="w-8 h-8 text-gray-400" />
-              <div className="space-y-1">
-                <p className="text-sm text-gray-600">
-                  <span>
-                    Attach important documents (e.g., registration papers) or
-                  </span>
+            <div className="flex flex-col items-center space-y-3">
+              <div className={`p-4 rounded-full transition-all duration-300 ${
+                isDragOver ? "bg-custom-primary/20 text-custom-primary scale-110" : "bg-gray-100 text-gray-400 group-hover:bg-custom-primary/10 group-hover:text-custom-primary group-hover:scale-110"
+              }`}>
+                <Upload className="w-7 h-7" />
+              </div>
+              <div className="space-y-1.5">
+                <p className="text-sm font-medium text-gray-700">
+                  <span>Drag & drop or </span>
+                  <label className="inline-block">
+                    <span className="text-custom-secondary hover:underline cursor-pointer font-bold">
+                      browse
+                    </span>
+                    <input
+                      type="file"
+                      multiple
+                      onChange={handleFileInput}
+                      className="hidden"
+                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    />
+                  </label>
+                  <span> your files here</span>
                 </p>
-                <label className="inline-block">
-                  <span className="text-blue-600 hover:text-blue-700 cursor-pointer font-medium">
-                    click to browse
-                  </span>
-                  <input
-                    type="file"
-                    multiple
-                    onChange={handleFileInput}
-                    className="hidden"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                  />
-                </label>
+                <p className="text-xs text-gray-400">
+                  Supports PDF, DOC, DOCX, JPG, PNG (Max 10MB)
+                </p>
               </div>
             </div>
           </div>
@@ -252,17 +258,17 @@ export default function RegistrationNumber({ goToStep }) {
               {uploadedFiles.map((file) => (
                 <div
                   key={file.id}
-                  className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
+                  className="flex items-center justify-between bg-white border border-gray-100 p-3.5 rounded-xl shadow-xs hover:shadow-sm transition-all duration-200"
                 >
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
-                      <Upload className="w-4 h-4 text-blue-600" />
+                    <div className="w-9 h-9 bg-custom-primary/5 rounded-lg flex items-center justify-center text-custom-primary">
+                      <Upload className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-semibold text-gray-900">
                         <span>{file.name}</span>
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 font-medium">
                         <span>{formatFileSize(file.size)}</span>
                       </p>
                     </div>
@@ -270,7 +276,7 @@ export default function RegistrationNumber({ goToStep }) {
                   <button
                     type="button"
                     onClick={() => removeFile(file.id)}
-                    className="text-gray-400 hover:text-red-500 transition-colors"
+                    className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all duration-200"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -280,18 +286,28 @@ export default function RegistrationNumber({ goToStep }) {
           )}
         </div>
 
-        {/* Security Notice */}
-        <div className="flex items-start space-x-3 bg-orange-50 p-4 rounded-lg border-l-4 border-orange-400">
-          <div className="flex-shrink-0 w-5 h-5 bg-orange-400 rounded-full flex items-center justify-center mt-0.5">
-            <span className="text-white text-xs font-bold">!</span>
+        {/* Data Protection / Security Notice */}
+        <div className="flex items-start space-x-4 bg-amber-50/60 dark:bg-amber-950/20 p-5 rounded-xl border border-amber-100 dark:border-amber-900/50 shadow-sm relative overflow-hidden">
+          {/* Left accent bar */}
+          <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-custom-secondary" />
+          
+          <div className="flex-shrink-0 p-2 bg-custom-secondary/10 text-custom-secondary rounded-lg mt-0.5">
+            <Lock className="w-5 h-5" />
           </div>
-          <p className="text-sm text-orange-800">
-            <span className="font-semibold">100% confidential data:</span>{" "}
-            <span>
-              This data will never be visible to buyers. It only helps us
-              accurately identify your vehicle.
-            </span>
-          </p>
+          
+          <div className="space-y-2">
+            <h4 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+              <span>Data Protection</span>
+            </h4>
+            <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed space-y-2">
+              <p>
+                The documents you publish may be visible to buyers interested in your vehicle. To protect your privacy, make sure to hide any personal or confidential information before posting.
+              </p>
+              <p className="font-semibold text-gray-800 dark:text-gray-200">
+                Keep only the information relevant to the vehicle's history and maintenance. Ronpoin recommends never sharing banking details, signatures, or complete identity documents.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
