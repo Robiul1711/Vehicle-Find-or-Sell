@@ -16,8 +16,8 @@ const Home = () => {
     <div className=''>
       <SEO />
       <Banner/>
-      <Hero/>
       <FeaturedListings/>
+      <Hero/>
       <HomeAds/>
       <WhyChooseUs/>
       <UserReviews/>

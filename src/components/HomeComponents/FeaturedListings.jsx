@@ -176,7 +176,7 @@ const FeaturedListings = () => {
   };
 
   return (
-    <section id="featured-listings" className="section-padding-x  bg-[#F9FAFB] overflow-hidden">
+    <section id="featured-listings" className="section-padding-x  bg-[#F9FAFB] py-10 md:py-14 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -213,7 +213,7 @@ const FeaturedListings = () => {
         />
       </motion.div>
       {data?.count > 12 && (
-        <div className="mt-8 flex justify-center pb-12">
+        <div className="mt-8 flex justify-center ">
           <PaginationComponent
             pageCount={Math.ceil((data?.count || 0) / 12)}
             setPageCount={setCurrentPage}

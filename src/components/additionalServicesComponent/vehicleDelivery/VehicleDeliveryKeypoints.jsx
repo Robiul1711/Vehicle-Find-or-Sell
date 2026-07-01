@@ -157,7 +157,7 @@ const VehicleDeliveryKeypoints = ({ data }) => {
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: deliveryByPro?.title || "Delivery Services by Professionals" }}>
                     </p>
-                    <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: deliveryByPro?.description || "Get your car delivered directly by the selling garage or dealership." }}>
+                    <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: deliveryByPro?.description || "Get your car delivered directly by the selling garage or Dealership." }}>
                     </p>
 
                     <div className="space-y-5">

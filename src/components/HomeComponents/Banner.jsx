@@ -82,15 +82,14 @@ const Banner = () => {
           <div className="flex gap-4">
             <CommonButton
               link="/dashboard/create-ads"
-              variant="primary"
-              className="flex items-center gap-2 transition-transform hover:scale-105 active:scale-95"
-            >
+              // variant="primary"
+className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA500] text-white transition-all duration-300 hover:bg-[#E69500] hover:border-[#CC8400] hover:text-white hover:scale-105 active:scale-95"            >
               Post Your Ads <MdOutlineArrowOutward />
             </CommonButton>
             <CommonButton
               link={"/listings"}
-              variant="primary"
-              className="flex items-center gap-2 transition-transform hover:scale-105 active:scale-95"
+              // variant="primary"
+              className="flex items-center gap-2 transition-transform hover:scale-105 active:scale-95 bg-transparent border-[1px] border-primary text-primary "
             >
               Browse Listings <MdOutlineArrowOutward />
             </CommonButton>

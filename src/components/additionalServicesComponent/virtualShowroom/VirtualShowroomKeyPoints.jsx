@@ -143,7 +143,7 @@ const VirtualShowroomKeyPoints = ({ data }) => {
               virtualSpace?.bullets || [
                 "Combines HD photos, 360° videos, and technical sheets.",
                 "Offers an immersive, interactive online visit.",
-                "Makes your listing look professional, like a major dealership.",
+                "Makes your listing look professional, like a major Dealerships.",
               ]
             ).map((bullet, idx) => (
               <p key={idx} className=" flex items-center gap-2">

@@ -10,7 +10,7 @@ const DealerPage = () => {
             <SEO 
               title="Professional Dealers" 
               description="Find and connect with top-rated professional vehicle dealers and sellers on Ronpoin."
-              keywords={["dealers", "professional sellers", "car dealers", "motorcycle sellers", "dealerships"]}
+              keywords={["dealers", "professional sellers", "car dealers", "motorcycle sellers", "Dealership"]}
             />
             <DealerBanner />
             <CommonPageWrapper>

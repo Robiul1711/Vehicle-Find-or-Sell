@@ -52,8 +52,8 @@ const Navbar = () => {
     { to: "/", text: selectedLanguage === "fr" ? "Accueil" : "Home" },
     { to: "/listings", text: "Browse Listings" },
     { to: "/blog", text: "Blog" },
-    { to: "/dealers", text: "Dealers" },
-    { to: "/services", text: "Additional Services" },
+    { to: "/dealers", text: selectedLanguage === "fr" ? "Concessionnaires" : "Dealers" },
+    { to: "/services", text: selectedLanguage === "fr" ? "Conseils" : "Advice" },
     { to: "/contact", text: "Contact Us" },
   ];
 
@@ -137,7 +137,7 @@ const Navbar = () => {
                   <Link
                     key={link.text}
                     to={link.to}
-                    className={`text-sm lg:text-base font-medium transition-colors relative group ${
+                    className={`text-sm lg:text-base font-medium transition-colors relative group capitalize ${
                       isActive
                         ? "text-gray-900 font-semibold"
                         : "text-gray-800 hover:text-gray-900"

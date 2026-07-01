@@ -596,13 +596,22 @@ const CreateAds = () => {
     }
 
     // Media Uploads
+  
 
+// Media Uploads
     if (Array.isArray(data.images)) {
       data.images.forEach((file) => {
         if (file instanceof File) {
           append("uploaded_images", file);
         }
       });
+      // Retained existing image IDs  // sourov vai extra added 
+      const retainedImageIds = data.images
+        .filter((file) => !(file instanceof File) && file.id)
+        .map((file) => file.id);
+      append("image", retainedImageIds.join(","));
+    } else {
+      append("image", "");
     }
 
     // Videos
@@ -612,6 +621,13 @@ const CreateAds = () => {
           append("uploaded_videos", file);
         }
       });
+      // Retained existing video IDs // sourov vai extra added 
+      const retainedVideoIds = data.videos
+        .filter((file) => !(file instanceof File) && file.id)
+        .map((file) => file.id);
+      append("video", retainedVideoIds.join(","));
+    } else {
+      append("video", "");
     }
 
     // Schedule keys
