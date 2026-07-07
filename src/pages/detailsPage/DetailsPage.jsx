@@ -39,7 +39,7 @@ const DetailsPage = () => {
       {/* Two-column layout: left = all content, right = sticky sidebar */}
       <div className="flex xmd:flex-row flex-col gap-5 mt-6 items-start">
         {/* LEFT COLUMN – all main content */}
-        <div className="xmd:w-[60%] w-full flex flex-col gap-10">
+        <div className="xmd:w-[60%] w-full flex flex-col gap-10 min-w-0">
           <DetailsRowOne details={details} data={data?.data} refetch={refetch} isLoading={isLoading} />
           <div>
             {details === "parts" ? (

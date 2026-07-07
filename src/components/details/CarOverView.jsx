@@ -98,27 +98,36 @@ const CarOverView = ({ details, data }) => {
           </Title>
           <div className="text-gray-700 mt-4 overview-description">
             <style>{`
+              .overview-description {
+                word-break: break-word;
+                overflow-wrap: break-word;
+              }
               .overview-description h1 {
                 font-size: 2rem;
                 font-weight: 800;
                 color: #111827;
-          
+            
               }
               .overview-description h2 {
                 font-size: 1.5rem;
                 font-weight: 700;
                 color: #1f2937;
-           
+                margin-top: 0.2rem;
+                margin-bottom: 0.05rem;
               }
               .overview-description h3 {
                 font-size: 1.25rem;
                 font-weight: 600;
                 color: #374151;
-             
+                margin-top: 0.2rem;
+                margin-bottom: 0.05rem;
               }
               .overview-description p {
-               
                 line-height: 1.6;
+                margin-bottom: 0.5rem;
+              }
+              .overview-description p:empty {
+                min-height: 1.2em;
               }
               .overview-description strong {
                 font-weight: 700;
@@ -127,12 +136,14 @@ const CarOverView = ({ details, data }) => {
               .overview-description ul {
                 list-style-type: disc;
                 padding-left: 1.25rem;
-           
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
               }
               .overview-description ol {
                 list-style-type: decimal;
                 padding-left: 1.25rem;
-               
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
               }
               .overview-description blockquote {
                 border-left: 4px solid #E2E8F0;
@@ -142,7 +153,7 @@ const CarOverView = ({ details, data }) => {
                 margin: 1rem 0;
               }
             `}</style>
-            <div dangerouslySetInnerHTML={{ __html: data?.description }} />
+            <div dangerouslySetInnerHTML={{ __html: data?.description ? data.description.replace(/&nbsp;/g, " ") : "" }} />
           </div>
         </div>
       )}

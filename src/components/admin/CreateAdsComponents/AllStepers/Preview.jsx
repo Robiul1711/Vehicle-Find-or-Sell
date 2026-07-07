@@ -135,7 +135,8 @@ const Preview = ({ goToStep }) => {
               {formData.deductiblePercentage}
             </div>
             <div className="col-span-2">
-              <strong>Description:</strong> {formData.description}
+              <strong>Description:</strong>
+              <div className="mt-1 text-gray-700 overview-description" dangerouslySetInnerHTML={{ __html: formData.description ? formData.description.replace(/&nbsp;/g, " ") : "" }} />
             </div>
           </div>
         }

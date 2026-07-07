@@ -129,7 +129,7 @@ const ProductComparison = () => {
             <h3 className="text-base font-bold text-gray-900 mb-2">
               Description
             </h3>
-            <p className="text-sm text-gray-600 line-clamp-4" dangerouslySetInnerHTML={{ __html: product.description }} />
+            <p className="text-sm text-gray-600 line-clamp-4" dangerouslySetInnerHTML={{ __html: product.description ? product.description.replace(/&nbsp;/g, " ") : "" }} />
           </div>
         </div>
 

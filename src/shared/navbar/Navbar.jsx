@@ -20,13 +20,13 @@ const Navbar = () => {
 
   const selectedLanguage = localStorage.getItem("selectedLanguage") || "fr";
 
-    const { data } = useApiQuery({
-      queryKey: ["footer"],
-      url: "/cms/footer/",
-    });
-  
-    const footerData = data?.data;
-    // console.log(footerData)
+  const { data } = useApiQuery({
+    queryKey: ["footer"],
+    url: "/cms/footer/",
+  });
+
+  const footerData = data?.data;
+  // console.log(footerData)
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -52,8 +52,14 @@ const Navbar = () => {
     { to: "/", text: selectedLanguage === "fr" ? "Accueil" : "Home" },
     { to: "/listings", text: "Browse Listings" },
     { to: "/blog", text: "Blog" },
-    { to: "/dealers", text: selectedLanguage === "fr" ? "Concessionnaires" : "Dealers" },
-    { to: "/services", text: selectedLanguage === "fr" ? "Conseils" : "Advice" },
+    {
+      to: "/dealers",
+      text: selectedLanguage === "fr" ? "Concessionnaires" : "Dealers",
+    },
+    {
+      to: "/services",
+      text: selectedLanguage === "fr" ? "Conseils" : "Advice",
+    },
     { to: "/contact", text: "Contact Us" },
   ];
 
@@ -98,7 +104,10 @@ const Navbar = () => {
             </span>
             <span className="text-white/40">•</span>
           </div>
-          <div className="animate-marquee whitespace-nowrap flex gap-10 items-center pr-10" aria-hidden="true">
+          <div
+            className="animate-marquee whitespace-nowrap flex gap-10 items-center pr-10"
+            aria-hidden="true"
+          >
             <span className="flex items-center gap-2">
               <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
               Please be patient, Ronpoin.fr is coming soon to your screens!
@@ -126,7 +135,11 @@ const Navbar = () => {
           <div className="flex h-16 lg:h-20 items-center justify-between">
             {/* Logo */}
             <Link to="/">
-              <img src={footerData?.logo_url || logo} alt="Logo" className="sm:w-32 w-24 md:w-36 lg:w-40 xl:w-48" />
+              <img
+                src={footerData?.logo_url || logo}
+                alt="Logo"
+                className="sm:w-32 w-24 md:w-36 lg:w-40 xl:w-48"
+              />
             </Link>
 
             {/* Desktop Navigation */}

@@ -164,7 +164,7 @@ const Banner = () => {
                 autoPlay
                 playsInline
                 muted={isMuted}
-                className="w-full h-auto max-h-[300px] lg:max-h-[500px] xl:max-h-[600px] object-fill rounded-xl cursor-pointer"
+                className="w-full h-auto max-h-[300px] lg:max-h-[500px] xl:max-h-[600px] object-cover rounded-xl cursor-pointer"
                 onClick={togglePlay}
               />
               <div className="absolute bottom-4 right-4 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-md p-2 rounded-full">

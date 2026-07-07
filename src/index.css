@@ -421,3 +421,95 @@ iframe.goog-te-banner-frame {
   max-width: 95vw !important;
   object-fit: contain;
 }
+
+/* Quill Rich Text Editor Custom Premium Styles */
+.quill-editor-wrapper {
+  background-color: #ffffff;
+}
+
+.quill-editor-wrapper .ql-toolbar.ql-snow {
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  border-color: #d1d5db;
+  background-color: #f9fafb;
+}
+
+.quill-editor-wrapper .ql-container.ql-snow {
+  border-bottom-left-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  border-color: #d1d5db;
+  font-family: inherit;
+}
+
+.quill-editor-wrapper .ql-editor {
+  min-height: 200px;
+  font-size: 0.875rem; /* text-sm */
+  color: #374151; /* text-gray-700 */
+}
+
+.quill-editor-wrapper .ql-editor.ql-blank::before {
+  color: #9ca3af; /* text-gray-400 */
+  font-style: normal;
+}
+
+.quill-editor-wrapper .ql-container.ql-snow:focus-within {
+  border-color: #012853; /* custom-primary */
+}
+
+/* Global styles for rendering Rich Text content (e.g. via dangerouslySetInnerHTML) */
+.overview-description table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.overview-description table td,
+.overview-description table th {
+  border: 1px solid #d1d5db;
+  padding: 8px 12px;
+}
+
+.overview-description table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+}
+
+.overview-description .ql-align-center {
+  text-align: center;
+}
+
+.overview-description .ql-align-right {
+  text-align: right;
+}
+
+.overview-description .ql-align-justify {
+  text-align: justify;
+}
+
+.overview-description blockquote {
+  border-left: 4px solid #E2E8F0;
+  padding-left: 1rem;
+  font-style: italic;
+  color: #4B5563;
+  margin: 1rem 0;
+}
+
+.overview-description p {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.overview-description p:empty {
+  min-height: 1.2em;
+}
+
+.overview-description h1,
+.overview-description h2,
+.overview-description h3,
+.overview-description h4,
+.overview-description h5,
+.overview-description h6 {
+  margin-top: 0.2rem;
+  margin-bottom: 0.05rem;
+  font-weight: bold;
+}

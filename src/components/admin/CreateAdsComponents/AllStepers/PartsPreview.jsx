@@ -38,7 +38,7 @@ const PartsPreview = ({ goToStep }) => {
   const DetailRow = ({ label, value, cols = 1 }) => (
     <div className={`${cols === 2 ? "col-span-2" : ""}`}>
       <div className="text-sm text-gray-600 mb-1">{label}</div>
-      <div className="text-base text-gray-900 font-medium" dangerouslySetInnerHTML={{__html:value}}/>
+      <div className="text-base text-gray-900 font-medium" dangerouslySetInnerHTML={{ __html: typeof value === "string" ? value.replace(/&nbsp;/g, " ") : (value || "") }} />
     </div>
   );
 

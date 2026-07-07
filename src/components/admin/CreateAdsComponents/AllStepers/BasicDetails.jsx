@@ -4,6 +4,37 @@ import { useApiQuery } from "@/hooks/useApiQuery";
 import { Controller, useFormContext } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
+
+const modules = {
+  toolbar: [
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ font: [] }],
+    [{ size: ["small", false, "large", "huge"] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ align: [] }],
+    ["link"],
+  ],
+};
+
+const formats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "color",
+  "background",
+  "list",
+  "bullet",
+  "align",
+  "link",
+];
 
 export default function BasicDetails() {
   const {
@@ -544,12 +575,22 @@ export default function BasicDetails() {
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Description
         </label>
-        <textarea
-          {...register("description")}
-          placeholder="Type something about your vehicle..."
-          rows={6}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-white focus:ring-1 focus:ring-custom-primary focus:border-custom-primary text-sm"
-        />
+        <div className="quill-editor-wrapper notranslate" translate="no">
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <ReactQuill
+                theme="snow"
+                value={field.value || ""}
+                onChange={field.onChange}
+                modules={modules}
+                formats={formats}
+                placeholder="Type something about your vehicle..."
+              />
+            )}
+          />
+        </div>
       </div>
     </div>
   );
