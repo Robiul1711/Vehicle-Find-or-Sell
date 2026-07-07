@@ -21,7 +21,7 @@ const HomePageSpecialOffer = () => {
   }, []);
 
   if (!isOpen) return null;
-
+  if (!isLoading && !popdata) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -34,22 +34,39 @@ const HomePageSpecialOffer = () => {
           ✕
         </button>
 
-        {/* Modal Content */}
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-        {popdata?.title}
-        </h2>
-        <p className="text-gray-700 mb-6">
-        {popdata?.description}
-        </p>
-        <button
-          onClick={() => {
-        
-            setIsOpen(false);
-          }}
-          className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
-        >
-        {popdata?.button_text}
-        </button>
+        {isLoading ? (
+          <div className="animate-pulse">
+            {/* Title Skeleton */}
+            <div className="h-7 bg-gray-200 rounded-md w-3/4 mb-4"></div>
+            
+            {/* Description Skeleton */}
+            <div className="space-y-2 mb-6">
+              <div className="h-4 bg-gray-200 rounded-md w-full"></div>
+              <div className="h-4 bg-gray-200 rounded-md w-5/6"></div>
+              <div className="h-4 bg-gray-200 rounded-md w-4/5"></div>
+            </div>
+            
+            {/* Button Skeleton */}
+            <div className="h-12 bg-gray-200 rounded-lg w-full"></div>
+          </div>
+        ) : (
+          <>
+            {/* Modal Content */}
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              {popdata?.title}
+            </h2>
+            <p className="text-gray-700 mb-6" dangerouslySetInnerHTML={{ __html: popdata?.description }}>
+            </p>
+            <button
+              onClick={() => {
+                setIsOpen(false);
+              }}
+              className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+            >
+              {popdata?.button_text}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
