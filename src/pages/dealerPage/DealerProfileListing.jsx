@@ -10,7 +10,7 @@ import {
   CustomPetrol,
   CustomTransmission,
 } from "@/utils/IconProvider";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useApiQuery } from "@/hooks/useApiQuery";
 
 
@@ -18,6 +18,7 @@ const options = ["car", "motorcycle", "truck", "scooter", "parts"];
 
 const DealerProfileListing = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [type, setType] = useState("car");
   const [search, setSearch] = useState("");
   const [isGrid, setIsGrid] = useState(true);
@@ -143,13 +144,17 @@ const DealerProfileListing = () => {
         >
           {items.map((item, i) => {
             const isPartItem = item.itemType === "part";
+            const targetUrl = isPartItem
+              ? `/parts-details/${item.id}/${item.slug}`
+              : `/details/${item.id}/${item.slug}`;
             return (
               <motion.div
                 key={item.id + item.itemType}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className={`group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden ${
+                onClick={() => navigate(targetUrl)}
+                className={`group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-pointer ${
                   !isGrid ? "flex flex-col sm:flex-row" : ""
                 }`}
               >
@@ -233,16 +238,11 @@ const DealerProfileListing = () => {
                     <span className="text-xl font-black text-gray-950">
                       €{item.discount_price || item.original_price || "0"}
                     </span>
-                    <Link
-                      to={
-                        isPartItem
-                          ? `/parts-details/${item.id}/${item.slug}`
-                          : `/details/${item.id}/${item.slug}`
-                      }
+                    <div
                       className="inline-flex items-center gap-2 px-4 py-2 bg-custom-primary text-white rounded-lg text-sm font-bold hover:bg-custom-primary/90 transition-all active:scale-95 shadow-lg shadow-custom-primary/20"
                     >
                       View <ArrowUpRight size={16} />
-                    </Link>
+                    </div>
                   </div>
                 </div>
               </motion.div>
