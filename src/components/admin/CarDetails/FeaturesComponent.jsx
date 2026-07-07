@@ -5,6 +5,15 @@ const FeaturesComponent = ({ data }) => {
   // console.log(data?.features_grouped);
   const features = data?.features_grouped || {};
 
+  // Check if features object is empty or all its categories are empty lists
+  const hasFeatures = Object.values(features).some(
+    (items) => Array.isArray(items) && items.length > 0
+  );
+
+  if (!hasFeatures) {
+    return null;
+  }
+
   return (
     <div className=" max-w-4xl  py-6 bg-white">
       <h2 className="text-2xl font-bold text-gray-800 mb-8">Features</h2>

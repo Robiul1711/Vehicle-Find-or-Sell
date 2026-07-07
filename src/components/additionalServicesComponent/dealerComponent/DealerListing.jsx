@@ -277,16 +277,14 @@ const DealerListing = () => {
                     >
                       <motion.img
                         layout
-                          src={
-                                        item?.profile_image
-                                          ? item.profile_image
-                                          : ImageAvatar
-                                      }
+                        src={
+                          item?.profile_image ? item.profile_image : ImageAvatar
+                        }
                         // src={item?.profile_image || ImageProvider.ImageAvatar}
                         alt={item.name}
-                        className={`rounded-lg object-cover ${
-                          isGrid  
-                            ? "w-full h-[200px] mb-5"
+                        className={`rounded-lg object-fill ${
+                          isGrid
+                            ? "w-full aspect-[4/3] mb-5"
                             : "w-44 h-44 mr-4 flex-shrink-0"
                         }`}
                       />
@@ -305,19 +303,29 @@ const DealerListing = () => {
                           {item?.title}
                         </motion.p>
 
-                        {(item?.city || item?.country || item?.street || item?.zip_code) && (
+                        {(item?.city ||
+                          item?.country ||
+                          item?.street ||
+                          item?.zip_code) && (
                           <motion.p
                             layout
                             className="text-black mt-1 flex items-center gap-2 text-sm"
                           >
                             <CustomLocation />
-                            {[item?.street, item?.city, item?.country, item?.zip_code]
+                            {[
+                              item?.street,
+                              item?.city,
+                              item?.country,
+                              item?.zip_code,
+                            ]
                               .filter(Boolean)
                               .join(", ")}
                           </motion.p>
                         )}
                         <motion.div layout className="mt-auto pt-2">
-                          <Link to={`/dealer-profile/${item?.id}/${item?.slug}`}>
+                          <Link
+                            to={`/dealer-profile/${item?.id}/${item?.slug}`}
+                          >
                             <button className=" py-2  border border-black rounded-lg w-full">
                               View Dealer Profile
                             </button>

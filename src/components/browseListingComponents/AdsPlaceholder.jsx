@@ -20,9 +20,9 @@ const AdsPlaceholder = () => {
     return (
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {[1, 2, 3].map((i) => (
-          <div 
-            key={i} 
-            className="w-full h-[300px] sm:h-[400px] md:h-[500px] bg-gray-200 animate-pulse rounded-2xl"
+          <div
+            key={i}
+            className="w-full h-[300px] sm:h-[400px]  lg:h-[450px] xl:h-[500px] bg-gray-200 animate-pulse rounded-2xl"
           />
         ))}
       </div>
@@ -30,7 +30,9 @@ const AdsPlaceholder = () => {
   }
 
   return (
-    <div className="w-full pb-10"> {/* Added padding bottom for pagination dots */}
+    <div className="w-full pb-10">
+      {" "}
+      {/* Added padding bottom for pagination dots */}
       <Swiper
         modules={[Autoplay, Pagination]}
         autoplay={{ delay: 3000 }}
@@ -54,12 +56,11 @@ const AdsPlaceholder = () => {
           slider?.images?.map((item) => (
             <SwiperSlide key={item.id}>
               <Link to={item.link} target="_blank">
-
-              <img
-                src={item.image_url || homeads}
-                alt={item.alt_text || "Advertisement"}
-                className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover rounded-2xl"
-              />
+                <img
+                  src={item.image_url || homeads}
+                  alt={item.alt_text || "Advertisement"}
+                  className="w-full h-[250px] sm:h-[250px] md:h-[300px] lg:h-[350px] object-fit rounded-lg md:rounded-2xl"
+                />
               </Link>
             </SwiperSlide>
           )),

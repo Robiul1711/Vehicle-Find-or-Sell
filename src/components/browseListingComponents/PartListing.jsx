@@ -141,7 +141,6 @@ const PartListing = ({
         </div>
       </div>
 
-  
       <div className="flex gap-5">
         <div className="hidden md:block w-1/4 flex-shrink-0">
           <FilterSection onFilterChange={onFilterChange} filters={filters} />
@@ -221,7 +220,7 @@ const PartListing = ({
                       isGrid ? "w-full mx-auto" : ""
                     }`}
                   >
-                    <Link 
+                    <Link
                       to={`/parts-details/${item.id}/${item.slug}`}
                       layout
                       className={`${
@@ -242,21 +241,27 @@ const PartListing = ({
                           layout
                           src={item.image}
                           alt={item.name}
-                          className={`rounded-lg object-cover ${
+                          className={`rounded-lg object-fill ${
                             isGrid
-                              ? "w-full h-[200px] mb-5"
+                              ? "w-full aspect-[4/3] mb-5"
                               : "w-44 h-44 mr-4 flex-shrink-0"
                           }`}
                         />
                         {/* Badge Overlays */}
                         <div className="absolute top-4 left-4 flex flex-col gap-2">
                           {item.isBumped && (
-                            <span className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md" title="Boosted">
+                            <span
+                              className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md"
+                              title="Boosted"
+                            >
                               <Bumpcon className="w-5 h-5" />
                             </span>
                           )}
                           {item.isVideo && (
-                            <span className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md" title="Has Video">
+                            <span
+                              className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md"
+                              title="Has Video"
+                            >
                               <VideoIcon className="w-5 h-5" />
                             </span>
                           )}
@@ -291,17 +296,19 @@ const PartListing = ({
                         <motion.p
                           layout
                           className="text-black mt-1 line-clamp-1"
-                         dangerouslySetInnerHTML={{__html:item.description}}/>
+                          dangerouslySetInnerHTML={{ __html: item.description }}
+                        />
 
-                        {item.location && item.location.replace(/[,\s]+/g, "") !== "" && (
-                          <motion.p
-                            layout
-                            className="text-black mt-1 flex items-center gap-1 text-sm"
-                          >
-                            <CustomLocation />
-                            {item.location}
-                          </motion.p>
-                        )}
+                        {item.location &&
+                          item.location.replace(/[,\s]+/g, "") !== "" && (
+                            <motion.p
+                              layout
+                              className="text-black mt-1 flex items-center gap-1 text-sm"
+                            >
+                              <CustomLocation />
+                              {item.location}
+                            </motion.p>
+                          )}
                         <motion.div layout className=" my-2 "></motion.div>
                         <motion.div
                           layout

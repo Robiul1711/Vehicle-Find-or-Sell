@@ -30,28 +30,35 @@ const VehiclesCard = ({
   isVideo,
   isBumped,
 }) => {
-
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const detailPath = `/${path || "details"}/${id}/${slug}`;
   const handleCardClick = (e) => {
     navigate(detailPath);
   };
   return (
-    <div 
-      onClick={handleCardClick} className="rounded-2xl shadow-lg overflow-hidden h-full flex flex-col cursor-pointer">
+    <div
+      onClick={handleCardClick}
+      className="rounded-2xl shadow-lg overflow-hidden h-full flex flex-col cursor-pointer"
+    >
       {/* Image */}
-      <div className="relative">
-        <img src={imageUrl} alt={title} className="w-full h-58 object-cover" />
+      <div className="relative w-full aspect-[4/3] overflow-hidden">
+        <img src={imageUrl} alt={title} className="w-full h-full object-fill" />
 
         {/* Badge Overlays */}
         <div className="absolute top-4 left-4 flex flex-col gap-2">
           {isBumped && (
-            <span className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md" title="Boosted">
+            <span
+              className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md"
+              title="Boosted"
+            >
               <Bumpcon className="w-5 h-5" />
             </span>
           )}
           {isVideo && (
-            <span className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md" title="Has Video">
+            <span
+              className="size-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md"
+              title="Has Video"
+            >
               <VideoIcon className="w-5 h-5" />
             </span>
           )}
@@ -75,53 +82,50 @@ const navigate = useNavigate();
       {/* Content */}
       <div className="p-6 flex flex-col flex-grow justify-between">
         <div>
-        {/* Title & Badge */}
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-xl font-semibold text-gray-900 line-clamp-1">{title}</h3>
-          {isNew && (
-            <span className="size-8 bg-gray-100 rounded-full flex items-center justify-center">
-              {" "}
-              <Bumpcon className="w-5 h-5" />
-            </span>
-          )}
-        </div>
-         
-        {/* Subtitle */}
-        {
-          subtitle && (
+          {/* Title & Badge */}
+          <div className="flex items-start justify-between mb-2">
+            <h3 className="text-xl font-semibold text-gray-900 line-clamp-1">
+              {title}
+            </h3>
+            {isNew && (
+              <span className="size-8 bg-gray-100 rounded-full flex items-center justify-center">
+                {" "}
+                <Bumpcon className="w-5 h-5" />
+              </span>
+            )}
+          </div>
+
+          {/* Subtitle */}
+          {subtitle && subtitle.replace(/[,\s]+/g, "") !== "" && (
             <p className="text-gray-600 text-sm  leading-relaxed line-clamp-1">
               {subtitle}
             </p>
-          )
-        }
+          )}
 
-        {/* Features */}
-        <div className={` flex justify-between items-center my-3 py-3 `} >
-          
-          <Feature icon={<MilageIcon />} label={mileage} />
-          <Feature icon={<FuelIcon />} label={fuelType} />
-          <Feature icon={<AutomaticIcon />} label={transmission} />
-        </div>
-
+          {/* Features */}
+          <div className={` flex justify-between items-center my-3 py-3 `}>
+            <Feature icon={<MilageIcon />} label={mileage} />
+            <Feature icon={<FuelIcon />} label={fuelType} />
+            <Feature icon={<AutomaticIcon />} label={transmission} />
+          </div>
         </div>
 
         {/* Price & Button */}
         <div className="flex items-center justify-between">
           {/* Price Section */}
 
-        <div className="flex items-baseline gap-2 mb-2">
- 
-          {discountPrice ? (
-            <span className="text-xl sm:text-2xl font-bold text-gray-900">
-              €{discountPrice}
-            </span>
-          ) : (
-            <span className="text-xl sm:text-2xl font-bold text-gray-900">
-              €{originalPrice}
-            </span>
-          )}
-        </div>
-    
+          <div className="flex items-baseline gap-2 mb-2">
+            {discountPrice ? (
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">
+                €{discountPrice}
+              </span>
+            ) : (
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">
+                €{originalPrice}
+              </span>
+            )}
+          </div>
+
           <Link
             to={`/${path || "details"}/${id}/${slug}`}
             onClick={onViewDetails}
@@ -139,18 +143,14 @@ const navigate = useNavigate();
 // small reusable feature component
 const Feature = ({ icon, label }) => (
   <>
-  {
-    label && (
-        <div className="flex flex-col items-center">
-  
+    {label && (
+      <div className="flex flex-col items-center">
         <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-2">
           {React.cloneElement(icon, { className: "w-5 h-5 text-gray-600" })}
         </div>
         <span className="text-sm text-gray-700 font-medium">{label}</span>
-   </div>
-   
-      )
-    }
+      </div>
+    )}
   </>
 );
 

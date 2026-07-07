@@ -6,7 +6,11 @@ import Title from "@/components/common/Title";
 import { PdfIcon } from "@/components/common/SVGicons/DashboardIcon";
 import { useLocation } from "react-router-dom";
 import { Image, Modal } from "antd";
-import { LeftOutlined, RightOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import {
+  LeftOutlined,
+  RightOutlined,
+  PlayCircleOutlined,
+} from "@ant-design/icons";
 
 const CarLeftSideImages = ({ data, isLoading }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -26,6 +30,28 @@ const CarLeftSideImages = ({ data, isLoading }) => {
 
   const currentMedia = mediaList[selectedIndex];
   const isVideo = currentMedia?.file_type === "video";
+
+  // Filter only images for Ant Design Image.PreviewGroup
+  const imageMediaList = useMemo(() => {
+    return mediaList.filter((item) => item.file_type === "image");
+  }, [mediaList]);
+
+  // Find current index in image list
+  const currentImageIndex = useMemo(() => {
+    if (!currentMedia || currentMedia.file_type !== "image") return 0;
+    const index = imageMediaList.findIndex((img) => img.file === currentMedia.file);
+    return index !== -1 ? index : 0;
+  }, [currentMedia, imageMediaList]);
+
+  const handlePreviewChange = (newImageIndex) => {
+    const targetImage = imageMediaList[newImageIndex];
+    if (targetImage) {
+      const mainIndex = mediaList.findIndex((item) => item.file === targetImage.file);
+      if (mainIndex !== -1) {
+        setSelectedIndex(mainIndex);
+      }
+    }
+  };
 
   // Pause video when modal opens/closes or index changes
   useEffect(() => {
@@ -74,92 +100,53 @@ const CarLeftSideImages = ({ data, isLoading }) => {
     <div className="w-full flex flex-col justify-between h-full">
       <div>
         {/* Main Media Display */}
-        <div
-          className="rounded-xl overflow-hidden relative group bg-black/5"
-          onClick={isVideo ? undefined : openPreview}
-        >
+        <div className="rounded-xl overflow-hidden relative">
           {isVideo ? (
             <video
               ref={videoRef}
               src={currentMedia?.file}
               controls
               playsInline
-              className="w-full !h-[300px] sm:!h-[400px] md:!h-[500px] lg:!h-[550px] object-contain rounded-xl bg-black"
+              className="w-full aspect-[16/10] object-contain rounded-xl bg-black"
             >
               Your browser does not support the video tag.
             </video>
           ) : (
-            <>
-              <Image
-                width="100%"
-                preview={false}
-                src={currentMedia?.file}
-                alt="Car"
-                className="w-full !h-[300px] sm:!h-[400px] md:!h-[500px] lg:!h-[550px] object-cover rounded-xl"
-              />
-              <div
-                className="absolute inset-0 flex items-center justify-center text-white bg-black/25 opacity-0 group-hover:opacity-100 transition"
-                onClick={openPreview}
+            <div className="relative group overflow-hidden rounded-xl">
+              <Image.PreviewGroup
+                preview={{
+                  visible: isPreviewOpen,
+                  onVisibleChange: (visible) => setIsPreviewOpen(visible),
+                  current: currentImageIndex,
+                  onChange: (newIndex) => handlePreviewChange(newIndex),
+                }}
               >
-                <span className="px-4 py-2 bg-black/50 rounded">
-                  Click to preview
-                </span>
-              </div>
-            </>
+                {imageMediaList.map((item, idx) => (
+                  <div key={idx} className={idx === currentImageIndex ? "block" : "hidden"}>
+                    <Image
+                      src={item.file}
+                      alt={`Car ${idx + 1}`}
+                      className="w-full aspect-[16/10] object-fit rounded-xl"
+                      preview={{
+                        mask: (
+                          <div className="absolute inset-0 flex items-center justify-center text-white bg-black/25 opacity-0 group-hover:opacity-100 transition duration-300 cursor-pointer">
+                            <span className="px-4 py-2 bg-black/70 rounded-xl text-sm font-semibold tracking-wide backdrop-blur-sm">
+                              Click to Zoom & View
+                            </span>
+                          </div>
+                        ),
+                      }}
+                    />
+                  </div>
+                ))}
+              </Image.PreviewGroup>
+            </div>
           )}
         </div>
 
-        <Modal
-          open={isPreviewOpen}
-          onCancel={closePreview}
-          footer={null}
-          centered
-          width="80%"
-        >
-          <div className="relative flex items-center justify-center h-[80vh]">
-            <button
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all"
-              onClick={goPrev}
-              aria-label="Previous"
-            >
-              <LeftOutlined className="text-xl sm:text-3xl" />
-            </button>
-
-            {mediaList[selectedIndex]?.file_type === "video" ? (
-              <video
-                src={mediaList[selectedIndex]?.file}
-                controls
-                playsInline
-                autoPlay
-                className="max-h-[80vh] max-w-full object-contain rounded-lg"
-              >
-                Your browser does not support the video tag.
-              </video>
-            ) : (
-              <img
-                src={mediaList[selectedIndex]?.file}
-                alt={`Preview ${selectedIndex + 1}`}
-                className="max-h-[80vh] max-w-full object-contain"
-              />
-            )}
-
-            <button
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all"
-              onClick={goNext}
-              aria-label="Next"
-            >
-              <RightOutlined className="text-xl sm:text-3xl" />
-            </button>
-          </div>
-        </Modal>
-
         {/* Thumbnails Swiper */}
         <div className="mt-5">
-          <Swiper
-            spaceBetween={12}
-            slidesPerView={"auto"}
-            className="pb-2"
-          >
+          <Swiper spaceBetween={12} slidesPerView={"auto"} className="pb-2">
             {mediaList.map((item, idx) => (
               <SwiperSlide key={idx} className="!w-auto">
                 <div

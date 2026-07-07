@@ -50,7 +50,7 @@ const RelatedPostsSection = ({data}) => {
                 <div className="grid md:grid-cols-3 gap-6">
                     {data?.data?.related_blogs?.map((blog) => (
                         <div key={blog.id} className="rounded-xl overflow-hidden  hover:shadow-lg transition ">
-                            <img src={blog.image} alt={blog.title} className="w-full rounded-xl h-80 object-cover" />
+                            <img src={blog.image} alt={blog.title} className="w-full rounded-xl aspect-[16/9] object-fill" />
                             <div className="p-4">
                                 <div className="flex items-center gap-3  mb-2">
                                     <span className="flex items-center gap-2"><CustomAdmin /> {blog.author}</span>

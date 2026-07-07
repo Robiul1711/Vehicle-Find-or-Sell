@@ -33,7 +33,7 @@ const BlogDetailsBanner = ({ data, isLoading }) => {
                 ? data.data.image
                 : ImageProvider.blogDetails
             }
-            className="w-full lg:h-[70vh] object-cover rounded-xl"
+            className="w-full lg:h-[70vh]  rounded-xl"
             alt={data?.data?.title || "Blog detail"}
           />
         </div>

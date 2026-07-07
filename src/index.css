@@ -406,3 +406,18 @@ iframe.goog-te-banner-frame {
 .marquee-container:hover .animate-marquee {
   animation-play-state: paused;
 }
+
+/* Ant Design Image Preview Custom Dark Backdrop */
+.ant-image-preview-mask {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(6px) !important;
+}
+.ant-image-preview-wrap {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(6px) !important;
+}
+.ant-image-preview-img {
+  max-height: 90vh !important;
+  max-width: 95vw !important;
+  object-fit: contain;
+}

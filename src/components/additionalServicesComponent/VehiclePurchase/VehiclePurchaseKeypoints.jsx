@@ -4,15 +4,19 @@ import React from "react";
 
 const VehiclePurchaseKeypoints = ({ data }) => {
   const sections = data?.sections || [];
-  const cashPurchase = sections.find((s) => s.section_id === "cash-purchase");
-  const autoLoan = sections.find((s) => s.section_id === "auto-loan");
+  const cashPurchase = sections.find(
+    (s) => s.section_id === "cash-purchase" || s.section_id === "achat-comptant"
+  );
+  const autoLoan = sections.find(
+    (s) => s.section_id === "auto-loan" || s.section_id === "credit-auto"
+  );
   const loa = sections.find((s) => s.section_id === "loa");
   const lld = sections.find((s) => s.section_id === "lld");
 
   return (
-    <div className="lg:space-y-20 mx-auto">
+    <div className="lg:space-y-20 w-full">
       {cashPurchase && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
           <div className="space-y-4 lg:space-y-10">
             <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{__html: cashPurchase.title}}></p>
             <p className="lg:text-xl" dangerouslySetInnerHTML={{__html: cashPurchase.description}}></p>
@@ -44,13 +48,17 @@ const VehiclePurchaseKeypoints = ({ data }) => {
             </div>
           </div>
           <div className="">
-
+            <img
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+              src={cashPurchase.image_url || ImageProvider.purchase1}
+              alt=""
+            />
           </div>
         </div>
       )}
 
       {autoLoan && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
           <div className="">
             <img
               className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
@@ -101,7 +109,7 @@ const VehiclePurchaseKeypoints = ({ data }) => {
       )}
 
       {loa && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
           <div className="space-y-4 lg:space-y-10">
             <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: loa.title }} ></p>
             <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: loa.description }}></p>
@@ -152,7 +160,7 @@ const VehiclePurchaseKeypoints = ({ data }) => {
       )}
 
       {lld && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
           <div className="">
             <img
               className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"

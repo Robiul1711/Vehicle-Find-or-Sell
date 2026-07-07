@@ -47,7 +47,7 @@ const HomeAds = () => {
       <img
         src={item.image_url || homeads}
         alt={item.alt_text || "Advertisement"}
-        className="w-full h-[300px] sm:h-[400px] md:h-[500px] xl:h-[600px] object-fill rounded-2xl"
+        className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[450px] xl:h-[550px] object-fit rounded-lg md:rounded-2xl"
       />
         
       </Link>

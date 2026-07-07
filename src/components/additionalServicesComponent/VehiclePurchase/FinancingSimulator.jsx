@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form";
 
 const FinancingSimulator = ({ data }) => {
   const section = data?.sections?.find(
-    (s) => s.section_id === "financing-simulator"
+    (s) => s.section_id === "financing-simulator" || s.section_id === "simulateur-de-financement"
   );
+  const isFrench = section?.section_id === "simulateur-de-financement";
+  
   const fields = section?.extra_data?.fields || [
     "Car Price",
     "Down Payment",
@@ -14,6 +16,30 @@ const FinancingSimulator = ({ data }) => {
     "Annual Interest Rate (%)",
   ];
   const ctaLabel = section?.extra_data?.cta_label || "Calculate";
+
+  const placeholders = isFrench ? [
+    "Entrez le prix total du véhicule",
+    "Entrez l'apport initial",
+    "Entrez la durée en mois",
+    "Entrez le taux d'intérêt annuel"
+  ] : [
+    "Enter total vehicle price",
+    "Enter initial payment",
+    "Enter duration in months",
+    "Enter interest rate"
+  ];
+
+  const resultsLabels = isFrench ? {
+    interest: "Intérêt total",
+    total: "Total à payer",
+    monthly: "Mensualité"
+  } : {
+    interest: "Total Interest",
+    total: "Total to Pay",
+    monthly: "Monthly Payment"
+  };
+
+  const labelReset = isFrench ? "Réinitialiser" : "Reset";
 
   const [results, setResults] = useState(null);
 
@@ -96,13 +122,24 @@ const FinancingSimulator = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
         {/* Left Side: Description */}
         <div className="space-y-4 lg:space-y-10">
-          <p className="lg:text-3xl font-bold">
-            {section?.title || "Financing Simulator"}
-          </p>
-          <p className="lg:text-xl text-gray-600">
-            {section?.description ||
-              "Estimate your monthly payments and total loan cost in seconds."}
-          </p>
+          {section?.title ? (
+            <div
+              className="lg:text-3xl font-bold"
+              dangerouslySetInnerHTML={{ __html: section.title }}
+            />
+          ) : (
+            <p className="lg:text-3xl font-bold">Financing Simulator</p>
+          )}
+          {section?.description ? (
+            <div
+              className="lg:text-xl text-gray-600"
+              dangerouslySetInnerHTML={{ __html: section.description }}
+            />
+          ) : (
+            <p className="lg:text-xl text-gray-600">
+              Estimate your monthly payments and total loan cost in seconds.
+            </p>
+          )}
         </div>
 
         {/* Right Side: Inputs */}
@@ -115,7 +152,7 @@ const FinancingSimulator = ({ data }) => {
                   type="number"
                   step="any"
                   {...register("price")}
-                  placeholder="Enter total vehicle price"
+                  placeholder={placeholders[0]}
                   className="w-full border-none outline-none bg-transparent"
                 />
               </div>
@@ -128,7 +165,7 @@ const FinancingSimulator = ({ data }) => {
                   type="number"
                   step="any"
                   {...register("down_payment")}
-                  placeholder="Enter initial payment"
+                  placeholder={placeholders[1]}
                   className="w-full border-none outline-none bg-transparent"
                 />
               </div>
@@ -140,7 +177,7 @@ const FinancingSimulator = ({ data }) => {
                 <input
                   type="number"
                   {...register("duration")}
-                  placeholder="Enter duration in months"
+                  placeholder={placeholders[2]}
                   className="w-full border-none outline-none bg-transparent"
                 />
               </div>
@@ -155,7 +192,7 @@ const FinancingSimulator = ({ data }) => {
                   type="number"
                   step="0.01"
                   {...register("interest")}
-                  placeholder="Enter interest rate"
+                  placeholder={placeholders[3]}
                   className="w-full border-none outline-none bg-transparent"
                 />
               </div>
@@ -163,14 +200,14 @@ const FinancingSimulator = ({ data }) => {
 
             {results && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <button type="button" className="w-full bg-[#EBF4FF] text-black py-3 rounded-[10px]">
-                  Total Interest {results?.totalInterest} €
+                <button type="button" className="w-full bg-[#EBF4FF] text-black py-3 rounded-[10px] text-sm">
+                  {resultsLabels.interest} {results?.totalInterest} €
                 </button>
-                <button type="button" className="w-full bg-[#EBF4FF] text-black py-3 rounded-[10px]">
-                  Total to Pay {results?.totalToPay} €
+                <button type="button" className="w-full bg-[#EBF4FF] text-black py-3 rounded-[10px] text-sm">
+                  {resultsLabels.total} {results?.totalToPay} €
                 </button>
-                <button type="button" className="w-full bg-[#EBF4FF] text-black py-3 rounded-[10px]">
-                  Monthly Payment {results?.monthlyPayment} €
+                <button type="button" className="w-full bg-[#EBF4FF] text-black py-3 rounded-[10px] text-sm">
+                  {resultsLabels.monthly} {results?.monthlyPayment} €
                 </button>
               </div>
             )}
@@ -181,7 +218,7 @@ const FinancingSimulator = ({ data }) => {
                 onClick={resetForm}
                 className="w-full bg-[#f8313a] text-white py-3 rounded-[10px] font-semibold"
               >
-                Reset
+                {labelReset}
               </button>
               <button
                 type="submit"

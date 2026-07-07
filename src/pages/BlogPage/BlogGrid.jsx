@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
 
-
 const BlogGrid = ({ data, isLoading }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 9;
@@ -62,24 +61,27 @@ const BlogGrid = ({ data, isLoading }) => {
       <div className="grid md:grid-cols-3 gap-6">
         {currentBlogs.length > 0 ? (
           currentBlogs.map((blog) => (
-            <Link to={`/blogdetails/${blog.id}/${blog.slug}`} key={blog.id} className="rounded-xl overflow-hidden hover:shadow-lg transition flex flex-col h-full border border-gray-100"
+            <Link
+              to={`/blogdetails/${blog.id}/${blog.slug}`}
+              key={blog.id}
+              className="rounded-xl overflow-hidden hover:shadow-lg transition flex flex-col h-full border border-gray-100"
             >
               {/* {console.log(blog)} */}
               <img
                 src={blog.image}
                 alt={blog.title}
-                className="w-full h-64 object-cover"
+                className="w-full aspect-[16/9] object-fit"
               />
               <div className="p-5 flex flex-col flex-grow">
                 <div className="flex items-center gap-3 mb-3 text-sm text-gray-500">
                   <span className="flex items-center gap-2">
-                    <CustomCalendar />{" "}
-                    {blog.created_at}
+                    <CustomCalendar /> {blog.created_at}
                   </span>
                 </div>
-                <h3 className="font-bold text-xl mb-4 line-clamp-2 hover:text-custom-primary transition-colors cursor-pointer" dangerouslySetInnerHTML={{ __html: blog.title }} >
-                 
-                </h3>
+                <h3
+                  className="font-bold text-xl mb-4 line-clamp-2 hover:text-custom-primary transition-colors cursor-pointer"
+                  dangerouslySetInnerHTML={{ __html: blog.title }}
+                ></h3>
                 <div className="mt-auto">
                   <Link
                     to={`/blogdetails/${blog.id}/${blog.slug}`}
@@ -109,7 +111,9 @@ const BlogGrid = ({ data, isLoading }) => {
               <button
                 onClick={() => {
                   setCurrentPage(1);
-                  document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  document
+                    .getElementById("blog-grid")
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
                 disabled={currentPage === 1}
                 className="w-10 h-10 flex items-center justify-center border rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
@@ -121,7 +125,9 @@ const BlogGrid = ({ data, isLoading }) => {
               <button
                 onClick={() => {
                   setCurrentPage((p) => Math.max(p - 1, 1));
-                  document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  document
+                    .getElementById("blog-grid")
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
                 disabled={currentPage === 1}
                 className="w-10 h-10 flex items-center justify-center border rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
@@ -135,7 +141,9 @@ const BlogGrid = ({ data, isLoading }) => {
                 <button
                   onClick={() => {
                     setCurrentPage(num);
-                    document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    document
+                      .getElementById("blog-grid")
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
                   className={`w-10 h-10 flex items-center justify-center border rounded-lg transition-all ${
                     num === currentPage
@@ -152,7 +160,9 @@ const BlogGrid = ({ data, isLoading }) => {
               <button
                 onClick={() => {
                   setCurrentPage((p) => Math.min(p + 1, totalPages));
-                  document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  document
+                    .getElementById("blog-grid")
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 flex items-center justify-center border rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
@@ -164,7 +174,9 @@ const BlogGrid = ({ data, isLoading }) => {
               <button
                 onClick={() => {
                   setCurrentPage(totalPages);
-                  document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  document
+                    .getElementById("blog-grid")
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
                 disabled={currentPage === totalPages}
                 className="w-10 h-10 flex items-center justify-center border rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"

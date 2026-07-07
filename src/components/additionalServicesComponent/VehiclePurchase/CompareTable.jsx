@@ -10,7 +10,7 @@ import {
 
 const CompareTable = ({ data }) => {
   const section = data?.sections?.find(
-    (s) => s.section_id === "comparison-table"
+    (s) => s.section_id === "comparison-table" || s.section_id === "tableau-comparatif"
   );
   const headers = section?.table_headers || [
     "Option",
@@ -24,13 +24,24 @@ const CompareTable = ({ data }) => {
   return (
     <div className="lg:space-y-10">
       <div className="mx-auto space-y-5">
-        <p className="lg:text-3xl font-bold">
-          {section?.title || "Compare Purchase Options"}
-        </p>
-        <p className="lg:text-xl">
-          {section?.description ||
-            "See ownership, flexibility, and best use at a glance."}
-        </p>
+        {section?.title ? (
+          <div
+            className="lg:text-3xl font-bold"
+            dangerouslySetInnerHTML={{ __html: section.title }}
+          />
+        ) : (
+          <p className="lg:text-3xl font-bold">Compare Purchase Options</p>
+        )}
+        {section?.description ? (
+          <div
+            className="lg:text-xl"
+            dangerouslySetInnerHTML={{ __html: section.description }}
+          />
+        ) : (
+          <p className="lg:text-xl">
+            See ownership, flexibility, and best use at a glance.
+          </p>
+        )}
       </div>
 
       <div className="overflow-x-auto  ">

@@ -155,7 +155,7 @@ const DealerProfileListing = () => {
               >
                 {/* Image Container */}
                 <div
-                  className={`relative overflow-hidden ${!isGrid ? "sm:w-56" : "w-full h-52 text-center"}`}
+                  className={`relative overflow-hidden ${!isGrid ? "sm:w-56" : "w-full aspect-[4/3] text-center"}`}
                 >
                   <img
                     src={
@@ -170,7 +170,7 @@ const DealerProfileListing = () => {
                         ? item.part_name
                         : `${item.brand_name} ${item.model}`
                     }
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-fit group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3 flex gap-2">
                     <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-wider text-custom-primary shadow-sm border border-white">

@@ -24,7 +24,7 @@ const FeaturedListings = () => {
     },
     secure: true,
   });
-  console.log(data?.data)
+  // console.log(data?.data)
   // add favorite
   const { mutate, isPending } = useApiMutation({
     url: "/account/favorites/toggle/",
@@ -66,7 +66,7 @@ const FeaturedListings = () => {
         slug:item.slug,
         imageUrl: item.first_image,
         title: `${item.brand_name} ${item.model}`,
-        subtitle: item.seller_address,
+        subtitle: item.seller_address && item.seller_address.replace(/[,\s]+/g, "") !== "" ? item.seller_address : "",
         mileage: item.mileage,
         fuelType: item.fuel_type,
         transmission: item.transmission,

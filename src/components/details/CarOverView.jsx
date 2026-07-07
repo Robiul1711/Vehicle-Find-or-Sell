@@ -177,9 +177,6 @@ const CarOverView = ({ details, data }) => {
                   <Title level="title16" className="truncate">
                     {doc.name || `Document ${index + 1}`}
                   </Title>
-                  <Title level="title14" className="text-gray-500 line-clamp-1">
-                    {doc.document}
-                  </Title>
                 </div>
                 <a
                   href={doc.document}

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { UploadCloud, File as FileIcon, X, GripVertical } from "lucide-react";
+import ImageCropperModal from "@/components/common/ImageCropperModal";
 // DND Kit Imports
 import {
   DndContext,
@@ -81,11 +82,14 @@ const SortablePhoto = ({ file, idx, onRemove }) => {
   );
 };
 
+
+
 // --- Main Component ---
 const UploadMedia = () => {
   const { setValue, watch } = useFormContext();
   const images = watch("images") || [];
   const videos = watch("videos") || [];
+  const [cropQueue, setCropQueue] = useState([]);
 
   // Sensors for Drag and Drop
   const sensors = useSensors(
@@ -97,13 +101,20 @@ const UploadMedia = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    // Add a unique ID to each file to help DND-kit track them
-    const filesWithId = files.map(file => {
-        file.id = Math.random().toString(36).substr(2, 9);
-        return file;
-    });
-    const updated = [...images, ...filesWithId];
-    setValue("images", updated, { shouldValidate: true });
+    if (files.length > 0) {
+      setCropQueue((prev) => [...prev, ...files]);
+    }
+    e.target.value = null; // Clear to allow selecting same image
+  };
+
+  const handleCropComplete = (croppedFile) => {
+    croppedFile.id = Math.random().toString(36).substr(2, 9);
+    setValue("images", [...images, croppedFile], { shouldValidate: true });
+    setCropQueue((prev) => prev.slice(1));
+  };
+
+  const handleCropCancel = () => {
+    setCropQueue((prev) => prev.slice(1));
   };
 
   const removeImage = (index) => {
@@ -209,6 +220,15 @@ const UploadMedia = () => {
           <FileIcon size={12} /> Uploaded videos appear after ad-on purchase.
         </p>
       </div>
+
+      {cropQueue.length > 0 && (
+        <ImageCropperModal
+          open={true}
+          file={cropQueue[0]}
+          onCrop={handleCropComplete}
+          onCancel={handleCropCancel}
+        />
+      )}
     </div>
   );
 };

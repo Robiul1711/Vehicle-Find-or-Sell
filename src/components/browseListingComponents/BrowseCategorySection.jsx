@@ -7,13 +7,13 @@ import {
 } from "@/utils/IconProvider";
 import React, { useState } from "react";
 import CarListing from "./CarListing";
-import {
-  bikeData,
-  carData,
-  partData,
-  scooterData,
-  truckData,
-} from "@/utils/data";
+// import {
+//   bikeData,
+//   carData,
+//   partData,
+//   scooterData,
+//   truckData,
+// } from "@/utils/data";
 import PartListing from "./PartListing";
 import { useApiQuery } from "@/hooks/useApiQuery";
 import { useApiMutation } from "@/hooks/useApiMutation";

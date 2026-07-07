@@ -21,16 +21,26 @@ const PaginationComponent = ({ pageCount, setPageCount, forcePage, scrollContain
         marginPagesDisplayed={2}
         onPageChange={handlePageChange}
         containerClassName="flex items-center md:gap-3 gap-1 flex-wrap"
-        previousLabel="Previous"
-        nextLabel="Next"
-        previousClassName="md:px-4 px-2 py-2 text-sm font-medium text-gray-700 bg-white border rounded-md cursor-pointer"
-        nextClassName="md:px-4 px-2 py-2 text-sm font-medium text-gray-700 bg-white border rounded-md cursor-pointer"
+        previousLabel={
+          <>
+            <span className="hidden md:inline">Previous</span>
+            <span className="md:hidden">&lt;</span>
+          </>
+        }
+        nextLabel={
+          <>
+            <span className="hidden md:inline">Next</span>
+            <span className="md:hidden">&gt;</span>
+          </>
+        }
+        previousClassName="px-2 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-gray-700 bg-white border rounded-md cursor-pointer"
+        nextClassName="px-2 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium text-gray-700 bg-white border rounded-md cursor-pointer"
         activeClassName="font-[700] bg-primary rounded-lg border-none"
         activeLinkClassName="text-white"
         disabledClassName="opacity-50 cursor-not-allowed"
-        breakClassName="md:px-4 px-2 py-2 text-sm font-medium"
+        breakClassName="px-2 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium"
         pageClassName="mx-1 cursor-pointer"
-        pageLinkClassName="w-[42px] h-[36px] border border-primary flex justify-center items-center text-black rounded-md hover:bg-primary hover:text-white transition-colors"
+        pageLinkClassName="w-8 h-8 md:w-[42px] md:h-[36px] border border-primary flex justify-center items-center text-xs md:text-sm text-black rounded-md hover:bg-primary hover:text-white transition-colors"
         forcePage={forcePage - 1}
       />
     </div>

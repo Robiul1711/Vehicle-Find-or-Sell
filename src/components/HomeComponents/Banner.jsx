@@ -64,18 +64,74 @@ const Banner = () => {
   });
 
   const BannerData = data?.data;
-// console.log(BannerData)
+  // console.log(BannerData)
+
+  if (isLoading) {
+    return (
+      <section className="w-full relative bg-white overflow-hidden h-screen">
+        {/* Desktop layout skeleton */}
+        <div className="hidden md:flex flex-row md:gap-6 justify-between items-center section-padding-x section-padding-y">
+          {/* Left Content Skeleton */}
+          <div className="w-1/2 flex flex-col justify-center space-y-6 text-left animate-pulse">
+            <div className="h-5 bg-gray-200 rounded w-2/3"></div>
+            <div className="space-y-3">
+              <div className="h-14 bg-gray-200 rounded w-full"></div>
+              <div className="h-14 bg-gray-200 rounded w-4/5"></div>
+            </div>
+            <div className="flex gap-4 pt-2">
+              <div className="h-12 bg-gray-200 rounded w-36"></div>
+              <div className="h-12 bg-gray-200 rounded w-36"></div>
+            </div>
+          </div>
+
+          {/* Right Content Skeleton */}
+          <div className="w-1/2 flex justify-end">
+            <div className="w-full h-64 lg:h-96 xl:h-[450px] bg-gray-200 animate-pulse rounded-xl"></div>
+          </div>
+        </div>
+
+        {/* Mobile layout skeleton */}
+        <div className="md:hidden relative w-full h-[400px] flex items-center justify-center p-6 bg-gray-100 animate-pulse">
+          <div className="w-full max-w-sm space-y-6 text-center">
+            <div className="h-5 bg-gray-200 rounded w-1/2 mx-auto"></div>
+            <div className="space-y-3">
+              <div className="h-10 bg-gray-200 rounded w-full"></div>
+              <div className="h-10 bg-gray-200 rounded w-3/4 mx-auto"></div>
+            </div>
+            <div className="flex gap-3 justify-center pt-2">
+              <div className="h-11 bg-gray-200 rounded w-28"></div>
+              <div className="h-11 bg-gray-200 rounded w-28"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="w-full relative bg-white overflow-hidden">
+    <section className="w-full relative bg-white overflow-hidden ">
       {/* Desktop layout */}
       <div className="hidden md:flex flex-row md:gap-6 justify-between items-center section-padding-x section-padding-y">
         {/* Left Content */}
-        <div className="w-1/2 flex flex-col justify-center space-y-6 text-left">
-          <p className="text-lg font-medium text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{__html:BannerData?.subtitle || "Buy or sell vehicles today – fast, simple, trusted."}}/>
-        
+        <div className="w-1/2 flex flex-col justify-center space-y-4 text-left">
+          <p
+            className="text-lg font-medium text-gray-600 dark:text-gray-300"
+            dangerouslySetInnerHTML={{
+              __html:
+                BannerData?.subtitle ||
+                "Buy or sell vehicles today – fast, simple, trusted.",
+            }}
+          />
+
           <div>
             <Title level="title70" className="max-w-[750px]">
-              <span dangerouslySetInnerHTML={{__html:BannerData?.title || "Find or Sell Your Vehicle Fast & Easy!"}}/>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html:
+                    BannerData?.title ||
+                    "Find or Sell Your Vehicle Fast & Easy!",
+                }}
+              />
             </Title>
           </div>
 
@@ -83,7 +139,8 @@ const Banner = () => {
             <CommonButton
               link="/dashboard/create-ads"
               // variant="primary"
-className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA500] text-white transition-all duration-300 hover:bg-[#E69500] hover:border-[#CC8400] hover:text-white hover:scale-105 active:scale-95"            >
+              className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA500] text-white transition-all duration-300 hover:bg-[#E69500] hover:border-[#CC8400] hover:text-white hover:scale-105 active:scale-95"
+            >
               Post Your Ads <MdOutlineArrowOutward />
             </CommonButton>
             <CommonButton
@@ -96,11 +153,9 @@ className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA50
           </div>
         </div>
 
-        {/* Right Content - Media with Loading State */}
+        {/* Right Content - Media */}
         <div className="w-1/2 flex justify-end min-h-[300px]">
-          {isLoading ? (
-            <div className="w-full h-64 lg:h-96 xl:h-130 bg-gray-200 animate-pulse rounded-xl"></div>
-          ) : BannerData?.hero_media_type === "video" && !isMobile ? (
+          {BannerData?.hero_media_type === "video" && !isMobile ? (
             <div className="relative group w-full flex justify-end">
               <video
                 ref={videoRef}
@@ -118,7 +173,11 @@ className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA50
                     onClick={toggleMute}
                     className="text-white hover:text-primary transition-colors"
                   >
-                    {isMuted || volume === 0 ? <FaVolumeMute /> : <FaVolumeUp />}
+                    {isMuted || volume === 0 ? (
+                      <FaVolumeMute />
+                    ) : (
+                      <FaVolumeUp />
+                    )}
                   </button>
                   <input
                     type="range"
@@ -151,10 +210,8 @@ className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA50
 
       {/* Mobile layout */}
       <div className="md:hidden relative w-full h-[400px] flex items-center justify-center">
-        {/* Blurred Background with Loading State */}
-        {isLoading ? (
-          <div className="absolute inset-0 bg-gray-300"></div>
-        ) : BannerData?.hero_media_type === "video" && isMobile ? (
+        {/* Blurred Background */}
+        {BannerData?.hero_media_type === "video" && isMobile ? (
           <div className="absolute inset-0 w-full h-full">
             <video
               ref={mobileVideoRef}
@@ -168,11 +225,12 @@ className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA50
               onClick={togglePlay}
             />
             <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md p-1.5 rounded-full">
-              <button
-                onClick={toggleMute}
-                className="text-white p-1"
-              >
-                {isMuted || volume === 0 ? <FaVolumeMute size={14} /> : <FaVolumeUp size={14} />}
+              <button onClick={toggleMute} className="text-white p-1">
+                {isMuted || volume === 0 ? (
+                  <FaVolumeMute size={14} />
+                ) : (
+                  <FaVolumeUp size={14} />
+                )}
               </button>
               <input
                 type="range"
@@ -184,10 +242,7 @@ className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA50
                 className="w-16 h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-white"
               />
               <div className="w-[1px] h-3 bg-white/20"></div>
-              <button
-                onClick={togglePlay}
-                className="text-white p-1"
-              >
+              <button onClick={togglePlay} className="text-white p-1">
                 {isPlaying ? <FaPause size={14} /> : <FaPlay size={14} />}
               </button>
             </div>
@@ -208,10 +263,23 @@ className="flex items-center gap-2 rounded-lg border border-[#E69500] bg-[#FFA50
 
         {/* Text content */}
         <div className="relative z-10 text-center px-4">
-          <p className="text-white text-lg font-medium mb-2" dangerouslySetInnerHTML={{__html:BannerData?.subtitle || "Buy or sell vehicles today – fast, simple, trusted."}}/>
+          <p
+            className="text-white text-lg font-medium mb-2"
+            dangerouslySetInnerHTML={{
+              __html:
+                BannerData?.subtitle ||
+                "Buy or sell vehicles today – fast, simple, trusted.",
+            }}
+          />
           <div>
             <Title level="title40" className="text-white mb-4">
-              <span dangerouslySetInnerHTML={{__html:BannerData?.title || "Find or Sell Your Vehicle Fast & Easy!"}} />
+              <span
+                dangerouslySetInnerHTML={{
+                  __html:
+                    BannerData?.title ||
+                    "Find or Sell Your Vehicle Fast & Easy!",
+                }}
+              />
             </Title>
           </div>
           <div className="flex gap-2 sm:flex-row justify-center">
