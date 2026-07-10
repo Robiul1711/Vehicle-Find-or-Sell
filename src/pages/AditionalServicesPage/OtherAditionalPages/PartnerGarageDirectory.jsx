@@ -69,7 +69,7 @@ const PartnerGarageDirectory = () => {
                   <img
                     src={section.image_url}
                     alt={section.title}
-                    className="rounded-2xl shadow-md w-full object-cover max-h-[400px]"
+                    className="rounded-2xl shadow-md w-full object-fill max-h-[400px]"
                   />
                 </div>
               )}

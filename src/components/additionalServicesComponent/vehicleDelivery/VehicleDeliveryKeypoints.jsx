@@ -200,14 +200,14 @@ const VehicleDeliveryKeypoints = ({ data }) => {
                     </div>
                 </div>
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={deliveryByPro?.image_url || ImageProvider.delivery1} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={deliveryByPro?.image_url || ImageProvider.delivery1} alt="" />
                 </div>
             </div>
 
             {/* Specialized Transport Companies */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={transportSpecialised?.image_url || ImageProvider.delivery2} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={transportSpecialised?.image_url || ImageProvider.delivery2} alt="" />
                 </div>
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: transportSpecialised?.title || "Specialized Transport Companies" }}>
@@ -311,7 +311,7 @@ const VehicleDeliveryKeypoints = ({ data }) => {
                     </div>
                 </div>
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={driverDelivery?.image_url || ImageProvider.delivery1} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={driverDelivery?.image_url || ImageProvider.delivery1} alt="" />
                 </div>
             </div>
 
@@ -344,7 +344,7 @@ const VehicleDeliveryKeypoints = ({ data }) => {
                         }
                     </div>
                     <div className="">
-                        <img src={keyFactors?.image_url || ImageProvider.delivery3} className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' alt="" />
+                        <img src={keyFactors?.image_url || ImageProvider.delivery3} className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' alt="" />
                     </div>
                     <div className="space-y-4 lg:space-y-10">
                         {
@@ -371,7 +371,7 @@ const VehicleDeliveryKeypoints = ({ data }) => {
             {/* Other Possible Solutions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={possibleSolutions?.image_url || ImageProvider.delivery4} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={possibleSolutions?.image_url || ImageProvider.delivery4} alt="" />
                 </div>
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: possibleSolutions?.title || "Other Possible Solutions" }}>
@@ -428,7 +428,7 @@ const VehicleDeliveryKeypoints = ({ data }) => {
                     </div>
                 </div>
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={summary?.image_url || ImageProvider.delivery5} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={summary?.image_url || ImageProvider.delivery5} alt="" />
                 </div>
             </div>
 

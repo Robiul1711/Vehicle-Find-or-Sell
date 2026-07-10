@@ -143,7 +143,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={legalWarranty?.image_url || ImageProvider.warrenty1}
             alt=""
           />
@@ -154,7 +154,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={contractualWarranty?.image_url || ImageProvider.warrenty2}
             alt=""
           />
@@ -244,7 +244,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={externalProviders?.image_url || ImageProvider.warrenty3}
             alt=""
           />
@@ -255,7 +255,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={dealerWarranties?.image_url || ImageProvider.warrenty4}
             alt=""
           />
@@ -310,7 +310,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
           </p>
         </div>
         <div className="">
-          <img src={ImageProvider.warrenty5} className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm" alt="" />
+          <img src={ImageProvider.warrenty5} className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm" alt="" />
         </div>
       </div>
 
@@ -351,7 +351,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
           </div>
           <div className="">
             <img
-              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
               src={practicalTips?.image_url || ImageProvider.warrenty6}
               alt=""
             />
@@ -417,7 +417,7 @@ const CarwarrantiesKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={summary?.image_url || ImageProvider.warrenty7}
             alt=""
           />

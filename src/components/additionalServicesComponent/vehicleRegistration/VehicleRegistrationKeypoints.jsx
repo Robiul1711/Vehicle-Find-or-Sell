@@ -68,7 +68,7 @@ const VehicleRegistrationKeypoints = ({ data }) => {
             {/* Services Available for Vehicle Registration */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={servicesAvailable?.image_url || ImageProvider.registration1} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={servicesAvailable?.image_url || ImageProvider.registration1} alt="" />
                 </div>
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: servicesAvailable?.title || "Services Available for Vehicle Registration" }}>
@@ -133,7 +133,7 @@ const VehicleRegistrationKeypoints = ({ data }) => {
             {/* Buying from a Private Seller vs. a Professional */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={privateVsProfessional?.image_url || ImageProvider.registration2} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={privateVsProfessional?.image_url || ImageProvider.registration2} alt="" />
                 </div>
                 <div className="space-y-4 lg:space-y-10">
                     <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: privateVsProfessional?.title || "Buying from a Private Seller vs. a Professional" }}>

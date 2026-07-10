@@ -97,14 +97,14 @@ const VirtualShowroomKeyPoints = ({ data }) => {
           </div>
         </div>
         <div className="">
-          <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={hdPhotos?.image_url || ImageProvider.showroom1} alt="" />
+          <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={hdPhotos?.image_url || ImageProvider.showroom1} alt="" />
         </div>
       </div>
 
       {/* 360° Immersive Videos */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
         <div className="">
-          <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={videos360?.image_url || ImageProvider.showroom2} alt="" />
+          <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={videos360?.image_url || ImageProvider.showroom2} alt="" />
         </div>
         <div className="space-y-4">
           <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: videos360?.title}}>
@@ -155,7 +155,7 @@ const VirtualShowroomKeyPoints = ({ data }) => {
 
         <div className="">
           <img
-            className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm'
+            className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm'
             src={virtualSpace?.image_url || ImageProvider.showroom3}
             alt=""
           />
@@ -236,7 +236,7 @@ const VirtualShowroomKeyPoints = ({ data }) => {
 
         <div className="">
           <img
-            className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm'
+            className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm'
             src={maximizeImpact?.image_url || ImageProvider.showroom4}
             alt=""
           />

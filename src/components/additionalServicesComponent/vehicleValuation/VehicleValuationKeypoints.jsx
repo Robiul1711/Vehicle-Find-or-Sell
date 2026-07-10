@@ -54,7 +54,7 @@ const VehicleValuationKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={valuationTips?.image_url || ImageProvider.valuation1}
             alt=""
           />
@@ -65,7 +65,7 @@ const VehicleValuationKeypoints = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={privateVsProfessional?.image_url || ImageProvider.valuation2}
             alt=""
           />
@@ -131,7 +131,7 @@ const VehicleValuationKeypoints = ({ data }) => {
         </div>
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={onlinePlatforms?.image_url || ImageProvider.valuation3}
             alt=""
           />
@@ -142,7 +142,7 @@ const VehicleValuationKeypoints = ({ data }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
         <div className="">
-          <img className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm" src={ImageProvider.valuation4} alt="" />
+          <img className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm" src={ImageProvider.valuation4} alt="" />
         </div>
         <div className="space-y-4 lg:space-y-10">
           <p className="lg:text-3xl font-bold">
@@ -206,7 +206,7 @@ const VehicleValuationKeypoints = ({ data }) => {
 
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={maintenanceAndValue?.image_url || ImageProvider.valuation5}
             alt=""
           />
@@ -218,7 +218,7 @@ const VehicleValuationKeypoints = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
         <div className="">
           <img
-            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+            className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
             src={
               valuationSummary?.image_url ||
               valuationSummary?.image_url ||
