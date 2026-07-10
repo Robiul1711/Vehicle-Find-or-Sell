@@ -187,7 +187,8 @@ const FeaturedListings = () => {
         <div>
           <Title level="title40">Featured Listings</Title>
           <Title level="title18" className="mt-4 text-gray-500">
-            Showcasing the latest and most popular ads on the platform.
+            Presentation of the most recent and popular advertisements on the platform.
+            {/* Showcasing the latest and most popular ads on the platform. */}
           </Title>
         </div>
         <Link

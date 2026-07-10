@@ -27,7 +27,7 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
                 <img 
                    src={section.image_url} 
                    alt={section.title} 
-                   className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+                   className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
                 />
               </div>
             )}
@@ -64,7 +64,7 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
                 <img 
                   src={section.image_url} 
                   alt={section.title} 
-                  className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+                  className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
                 />
               </div>
             )}

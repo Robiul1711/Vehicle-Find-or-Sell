@@ -171,7 +171,7 @@ const CarInsuranceBannerKeypoints = ({ data }) => {
                     </div>
                 </div>
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={pourquoiAssurance?.image_url || ImageProvider.carInsurance1} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={pourquoiAssurance?.image_url || ImageProvider.carInsurance1} alt="" />
                 </div>
             </div>
 
@@ -312,7 +312,7 @@ const CarInsuranceBannerKeypoints = ({ data }) => {
                     </div>
                 </div>
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={prestataires?.image_url || ImageProvider.carInsurance2} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={prestataires?.image_url || ImageProvider.carInsurance2} alt="" />
                 </div>
             </div>
 
@@ -367,7 +367,7 @@ const CarInsuranceBannerKeypoints = ({ data }) => {
                     </div>
                 </div>
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={ImageProvider.carInsurance3} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={ImageProvider.carInsurance3} alt="" />
                 </div>
             </div>
 
@@ -380,7 +380,7 @@ const CarInsuranceBannerKeypoints = ({ data }) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
                     <div className="">
-                        <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={detailsContrat?.image_url || ImageProvider.carInsurance4} alt="" />
+                        <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={detailsContrat?.image_url || ImageProvider.carInsurance4} alt="" />
                     </div>
                     <div className="space-y-4 lg:space-y-10">
 
@@ -461,7 +461,7 @@ const CarInsuranceBannerKeypoints = ({ data }) => {
                     </div>
                 </div>
                 <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm' src={essentials?.image_url || ImageProvider.carInsurance5} alt="" />
+                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={essentials?.image_url || ImageProvider.carInsurance5} alt="" />
                 </div>
             </div>
 

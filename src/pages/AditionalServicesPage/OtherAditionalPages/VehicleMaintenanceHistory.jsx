@@ -14,7 +14,7 @@ const { data, isLoading } = useApiQuery({
   // console.log(data?.data)
   return (
     <div >
-      <ServiceBanner image={data?.data?.hero_background_image_url || s1} title={data?.data?.title} subText={data?.data?.subtitle} />
+      <ServiceBanner image={data?.data?.hero_background_image_url || s1} title={data?.data?.title} subText={data?.data?.subtitle} isLoading={isLoading} />
       <CommonPageWrapper>
         <VehicleMaintenanceKeypoints data={data?.data}   />
       </CommonPageWrapper>

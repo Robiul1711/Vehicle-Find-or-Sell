@@ -16,7 +16,7 @@ const VirtualShowroom = () => {
   return (
     <div >
       <ScrollRestoration />
-      <ServiceBanner image={data?.data?.hero_background_image_url || s7} title={data?.data?.title} subText={data?.data?.subtitle} />
+      <ServiceBanner image={data?.data?.hero_background_image_url || s7} title={data?.data?.title} subText={data?.data?.subtitle} isLoading={isLoading} />
       <CommonPageWrapper>
         <VirtualShowroomKeyPoints data={data?.data}/>
       </CommonPageWrapper>

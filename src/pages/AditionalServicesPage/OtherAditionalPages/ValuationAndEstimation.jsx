@@ -16,7 +16,7 @@ const ValuationAndEstimation = () => {
   return (
     <div >
       <ScrollRestoration />
-      <ServiceBanner image={data?.data?.hero_background_image_url || s5} title={data?.data?.title} subText={data?.data?.subtitle} />
+      <ServiceBanner image={data?.data?.hero_background_image_url || s5} title={data?.data?.title} subText={data?.data?.subtitle} isLoading={isLoading} />
       <CommonPageWrapper>
         <VehicleValuationKeypoints data={data?.data}/>
       </CommonPageWrapper>

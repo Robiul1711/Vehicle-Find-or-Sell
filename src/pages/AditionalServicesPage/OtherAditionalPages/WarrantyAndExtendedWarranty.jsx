@@ -16,7 +16,7 @@ const WarrantyAndExtendedWarranty = () => {
   return (
     <div >
       <ScrollRestoration />
-      <ServiceBanner image={data?.data?.hero_background_image_url} title={data?.data?.title} subText={data?.data?.subtitle} />
+      <ServiceBanner image={data?.data?.hero_background_image_url} title={data?.data?.title} subText={data?.data?.subtitle} isLoading={isLoading} />
       <CommonPageWrapper>
         <CarwarrantiesKeypoints data={data?.data} />
       </CommonPageWrapper>

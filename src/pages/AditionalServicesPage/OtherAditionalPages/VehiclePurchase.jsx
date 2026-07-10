@@ -36,6 +36,7 @@ const VehiclePurchase = () => {
         image={data?.data?.hero_background_image_url || s2}
         title={data?.data?.title}
         subText={data?.data?.subtitle}
+        isLoading={isLoading}
       />
       <CommonPageWrapper>
         <VehiclePurchaseKeypoints data={data?.data} />
@@ -48,7 +49,7 @@ const VehiclePurchase = () => {
                 <img
                   src={expertTips.image_url || ImageProvider.purchase4}
                   alt=""
-                  className="w-full h-auto object-cover rounded-xl shadow-sm"
+                  className="w-full h-auto object-fill rounded-xl shadow-sm"
                 />
               </div>
 
@@ -137,7 +138,7 @@ const VehiclePurchase = () => {
               </div>
               <div>
                 <img
-                  className="w-full h-auto object-cover rounded-xl shadow-sm"
+                  className="w-full h-auto object-fill rounded-xl shadow-sm"
                   src={warrantySummary.image_url || ImageProvider.purchase5}
                   alt=""
                 />

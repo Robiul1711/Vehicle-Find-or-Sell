@@ -49,7 +49,7 @@ const VehiclePurchaseKeypoints = ({ data }) => {
           </div>
           <div className="">
             <img
-              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
               src={cashPurchase.image_url || ImageProvider.purchase1}
               alt=""
             />
@@ -61,7 +61,7 @@ const VehiclePurchaseKeypoints = ({ data }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
           <div className="">
             <img
-              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
               src={autoLoan.image_url || ImageProvider.purchase2}
               alt=""
             />
@@ -151,7 +151,7 @@ const VehiclePurchaseKeypoints = ({ data }) => {
           </div>
           <div className="">
             <img
-              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
               src={loa.image_url || ImageProvider.purchase3}
               alt=""
             />
@@ -163,7 +163,7 @@ const VehiclePurchaseKeypoints = ({ data }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 ">
           <div className="">
             <img
-              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-cover rounded-xl shadow-sm"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
               src={lld.image_url || ImageProvider.purchase2}
               alt=""
             />
