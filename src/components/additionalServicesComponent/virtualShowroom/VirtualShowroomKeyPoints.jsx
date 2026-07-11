@@ -8,9 +8,7 @@ import {
   CustomStandout,
   CustomValue,
 } from "@/utils/IconProvider";
-import { ImageProvider } from "@/utils/ImageProvider";
 import React from "react";
-import { TbArrowWaveRightUp } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
 const InsuranceData = [
@@ -41,207 +39,313 @@ const InsuranceData = [
 ];
 
 const VirtualShowroomKeyPoints = ({ data }) => {
+  const parseBullet = (bullet) => {
+    let title = "";
+    let desc = bullet;
+
+    if (bullet.includes(":")) {
+      const parts = bullet.split(":");
+      title = parts[0].trim();
+      desc = parts.slice(1).join(":").trim();
+    } else if (bullet.includes("(")) {
+      const openParenIdx = bullet.indexOf("(");
+      const closeParenIdx = bullet.indexOf(")");
+      title = bullet.substring(0, openParenIdx).trim();
+      if (closeParenIdx > openParenIdx) {
+        desc = bullet.substring(openParenIdx + 1, closeParenIdx).trim();
+      } else {
+        desc = bullet.substring(openParenIdx + 1).trim();
+      }
+    } else {
+      const separators = [
+        " avec ",
+        " proposant ",
+        " qui ",
+        " que ",
+        " pour ",
+        " afin de ",
+        " et ",
+        " retenue ",
+      ];
+      let foundSeparator = false;
+      for (const sep of separators) {
+        if (bullet.includes(sep)) {
+          const parts = bullet.split(sep);
+          title = parts[0].trim();
+          desc = bullet;
+          foundSeparator = true;
+          break;
+        }
+      }
+      if (!foundSeparator) {
+        const words = bullet.split(" ");
+        title = words.slice(0, Math.min(3, words.length)).join(" ");
+        desc = bullet;
+      }
+    }
+
+    if (title) {
+      title = title.charAt(0).toUpperCase() + title.slice(1);
+    }
+    return { title, desc };
+  };
+
   const sections = data?.sections || [];
-  const hdPhotos = sections.find((s) => s.section_id === "hd-photos" || s.section_id === "photos-hd");
-  const videos360 = sections.find((s) => s.section_id === "360-videos" || s.section_id === "videos-360");
-  const virtualSpace = sections.find((s) => s.section_id === "virtual-space" || s.section_id === "espace-virtuel");
+  const hdPhotos = sections.find(
+    (s) => s.section_id === "hd-photos" || s.section_id === "photos-hd",
+  );
+  const videos360 = sections.find(
+    (s) => s.section_id === "360-videos" || s.section_id === "videos-360",
+  );
+  const virtualSpace = sections.find(
+    (s) =>
+      s.section_id === "virtual-space" || s.section_id === "espace-virtuel",
+  );
   const saleAdvantages = sections.find(
-    (s) => s.section_id === "sale-advantages" || s.section_id === "avantages-de-la-vente"
+    (s) =>
+      s.section_id === "sale-advantages" ||
+      s.section_id === "avantages-de-la-vente",
   );
   const maximizeImpact = sections.find(
-    (s) => s.section_id === "maximize-impact" || s.section_id === "maximiser-impact"
+    (s) =>
+      s.section_id === "maximize-impact" || s.section_id === "maximiser-impact",
   );
 
-  const insuranceDataMapped = (saleAdvantages?.bullets || []).map(
+  const displaySaleAdvantages = (saleAdvantages?.bullets || []).map(
     (bullet, index) => {
-      const original =
-        InsuranceData[index] || InsuranceData[InsuranceData.length - 1];
+      const original = InsuranceData[index];
+      const parsed = parseBullet(bullet);
       return {
-        ...original,
-        title: bullet.split(" ").slice(0, 3).join(" "), // Heuristic to get a title if none
-        desc: bullet,
+        icon: original?.icon || <CustomBuyers />,
+        title: parsed.title,
+        desc: parsed.desc,
       };
-    }
+    },
   );
-
-  // If no mapped data, use original InsuranceData
-  const displayInsuranceData =
-    insuranceDataMapped.length > 0 ? insuranceDataMapped : InsuranceData;
 
   return (
     <div className="space-y-10 mx-auto">
       {/* HD Professional Photos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
-        <div className="space-y-4">
-          <p className="lg:text-3xl font-bold"  dangerouslySetInnerHTML={{ __html: hdPhotos?.title }}>
-        
-          </p>
-          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: hdPhotos?.description }}>
-        
-          </p>
-          <div className="space-y-3">
-            {(
-              hdPhotos?.bullets || [
-                "High-resolution pictures taken from the best angles.",
-                "Highlight key details like interior, equipment, and body condition.",
-                "Gives a professional look to your listing.",
-              ]
-            ).map((bullet, idx) => (
-              <p key={idx} className=" flex items-center gap-2">
-                <CustomCheck /> {bullet}
-              </p>
-            ))}
-            <p className=" flex items-center gap-2 lg:text-lg" dangerouslySetInnerHTML={{ __html: hdPhotos?.description}}>
-         
-            </p>
+      {hdPhotos && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center py-10 lg:py-20">
+          <div className="space-y-4">
+            {hdPhotos.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: hdPhotos.title }}
+              ></p>
+            )}
+            {hdPhotos.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{ __html: hdPhotos.description }}
+              ></p>
+            )}
+            {hdPhotos.bullets && hdPhotos.bullets.length > 0 && (
+              <div className="space-y-3">
+                {hdPhotos.bullets.map((bullet, idx) => {
+                  const parsed = parseBullet(bullet);
+                  return (
+                    <p key={idx} className=" flex items-center gap-2">
+                      <CustomCheck />{" "}
+                      <span
+                        dangerouslySetInnerHTML={{ __html: parsed.desc }}
+                      ></span>
+                    </p>
+                  );
+                })}
+              </div>
+            )}
           </div>
+          {hdPhotos.image_url && (
+            <div className="">
+              <img
+                className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
+                src={hdPhotos.image_url}
+                alt=""
+              />
+            </div>
+          )}
         </div>
-        <div className="">
-          <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={hdPhotos?.image_url || ImageProvider.showroom1} alt="" />
-        </div>
-      </div>
+      )}
 
       {/* 360° Immersive Videos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
-        <div className="">
-          <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={videos360?.image_url || ImageProvider.showroom2} alt="" />
-        </div>
-        <div className="space-y-4">
-          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: videos360?.title}}>
-        
-          </p>
-          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: videos360?.description}}>
-        
-          </p>
-          <div className="space-y-3">
-            {(
-              videos360?.bullets || [
-                "Buyers can rotate and zoom to inspect every part of the vehicle.",
-                "Total transparency builds trust and aids decision-making.",
-              ]
-            ).map((bullet, idx) => (
-              <p key={idx} className=" flex items-center gap-2">
-                <CustomCheck /> {bullet}
-              </p>
-            ))}
+      {videos360 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center py-10 lg:py-20">
+          {videos360.image_url && (
+            <div className="">
+              <img
+                className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
+                src={videos360.image_url}
+                alt=""
+              />
+            </div>
+          )}
+          <div className="space-y-4">
+            {videos360.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: videos360.title }}
+              ></p>
+            )}
+            {videos360.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{ __html: videos360.description }}
+              ></p>
+            )}
+            {videos360.bullets && videos360.bullets.length > 0 && (
+              <div className="space-y-3">
+                {videos360.bullets.map((bullet, idx) => {
+                  const parsed = parseBullet(bullet);
+                  return (
+                    <p key={idx} className=" flex items-center gap-2">
+                      <CustomCheck />{" "}
+                      <span
+                        dangerouslySetInnerHTML={{ __html: parsed.desc }}
+                      ></span>
+                    </p>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
 
       {/* Virtual Showroom */}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
-        <div className="space-y-4">
-          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: virtualSpace?.title}}>
-        
-          </p>
-          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: virtualSpace?.description}}>
-        
-          </p>
-          <div className="space-y-3">
-            {(
-              virtualSpace?.bullets || [
-                "Combines HD photos, 360° videos, and technical sheets.",
-                "Offers an immersive, interactive online visit.",
-                "Makes your listing look professional, like a major Dealerships.",
-              ]
-            ).map((bullet, idx) => (
-              <p key={idx} className=" flex items-center gap-2">
-                <CustomCheck /> {bullet}
-              </p>
-            ))}
+      {virtualSpace && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center py-10 lg:py-20">
+          <div className="space-y-4">
+            {virtualSpace.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: virtualSpace.title }}
+              ></p>
+            )}
+            {virtualSpace.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{ __html: virtualSpace.description }}
+              ></p>
+            )}
+            {virtualSpace.bullets && virtualSpace.bullets.length > 0 && (
+              <div className="space-y-3">
+                {virtualSpace.bullets.map((bullet, idx) => {
+                  const parsed = parseBullet(bullet);
+                  return (
+                    <p key={idx} className=" flex items-center gap-2">
+                      <CustomCheck />{" "}
+                      <span
+                        dangerouslySetInnerHTML={{ __html: parsed.desc }}
+                      ></span>
+                    </p>
+                  );
+                })}
+              </div>
+            )}
           </div>
+          {virtualSpace.image_url && (
+            <div className="">
+              <img
+                className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
+                src={virtualSpace.image_url}
+                alt=""
+              />
+            </div>
+          )}
         </div>
-
-        <div className="">
-          <img
-            className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm'
-            src={virtualSpace?.image_url || ImageProvider.showroom3}
-            alt=""
-          />
-        </div>
-      </div>
+      )}
 
       {/* Sale Advantages */}
-      <div className=" mx-auto">
-        <div className="space-y-4 lg:space-y-5">
-          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: saleAdvantages?.title}}>
-        
-          </p>
-          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: saleAdvantages?.description}}>
-        
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {displayInsuranceData?.map((item, index) => (
-              <div key={index} className="bg-gray-100 rounded p-5  space-y-4">
-                <div className="w-12 h-12 font-semibold bg-custom-primary text-white  rounded flex items-center justify-center mr-4">
-                  {item?.icon}
+      {saleAdvantages && displaySaleAdvantages.length > 0 && (
+        <div className=" mx-auto">
+          <div className="space-y-4 lg:space-y-5">
+            {saleAdvantages.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: saleAdvantages.title }}
+              ></p>
+            )}
+            {saleAdvantages.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{ __html: saleAdvantages.description }}
+              ></p>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {displaySaleAdvantages.map((item, index) => (
+                <div key={index} className="bg-gray-100 rounded p-5  space-y-4">
+                  {item.icon && (
+                    <div className="w-12 h-12 font-semibold bg-custom-primary text-white  rounded flex items-center justify-center mr-4">
+                      {item.icon}
+                    </div>
+                  )}
+                  {item.title && (
+                    <p
+                      className="lg:text-2xl font-medium"
+                      dangerouslySetInnerHTML={{ __html: item.title }}
+                    ></p>
+                  )}
+                  <p dangerouslySetInnerHTML={{ __html: item.desc }}></p>
                 </div>
-
-                <p className="lg:text-2xl font-medium" dangerouslySetInnerHTML={{ __html: item?.title}}>
-                
-                </p>
-                <p dangerouslySetInnerHTML={{ __html: item?.desc}}></p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Maximize Your Listing Impact */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10  py-10 lg:py-20">
-        <div className="space-y-4">
-          <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: maximizeImpact?.title}}>
-        
-          </p>
-          <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: maximizeImpact?.description}}>
-        
-          </p>
-          <div className="space-y-3">
-            {(
-              maximizeImpact?.bullets || [
-                "HD photos for maximum visual impact",
-                "360° videos for complete transparency",
-                "Virtual showroom experience",
-                "Professional presentation that sells",
-              ]
-            ).map((bullet, idx) => (
-              <p key={idx} className=" flex items-center gap-2">
-                <CustomCheck /> {bullet}
-              </p>
-            ))}
+      {maximizeImpact && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center py-10 lg:py-20">
+          <div className="space-y-4">
+            {maximizeImpact.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: maximizeImpact.title }}
+              ></p>
+            )}
+            {maximizeImpact.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{ __html: maximizeImpact.description }}
+              ></p>
+            )}
+            {maximizeImpact.bullets && maximizeImpact.bullets.length > 0 && (
+              <div className="space-y-3">
+                {maximizeImpact.bullets.map((bullet, idx) => {
+                  const parsed = parseBullet(bullet);
+                  return (
+                    <p key={idx} className=" flex items-center gap-2">
+                      <CustomCheck />{" "}
+                      <span
+                        dangerouslySetInnerHTML={{ __html: parsed.desc }}
+                      ></span>
+                    </p>
+                  );
+                })}
+              </div>
+            )}
+            <div className="pt-4">
+              <Link
+                to="/dashboard"
+                className="bg-custom-primary inline-flex hover:bg-custom-primary/80 transition-all duration-300 text-white py-4 font-semibold px-4 rounded items-center gap-2 "
+              >
+                Showcase Your Ad Now
+              </Link>
+            </div>
           </div>
-          <div className="space-y-3">
-            {(
-              maximizeImpact?.bullets || [
-                "HD photos for maximum visual impact",
-                "360° videos for complete transparency",
-                "Virtual showroom experience",
-                "Professional presentation that sells",
-              ]
-            ).map((bullet, idx) => (
-              <p key={idx} className=" flex items-center gap-2">
-                <CustomCheck /> {bullet}
-              </p>
-            ))}
-          </div>
-          {maximizeImpact?.description && (
-            <p className="lg:text-xl">{maximizeImpact.description}</p>
+          {maximizeImpact.image_url && (
+            <div className="">
+              <img
+                className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
+                src={maximizeImpact.image_url}
+                alt=""
+              />
+            </div>
           )}
-
-          <Link to="/dashboard" className="bg-custom-primary inline-block flex hover:bg-custom-primary/80 transition-all duration-300 text-white py-4 font-semibold px-4 rounded flex items-center gap-2 ">
-            Showcase Your Ad Now
-          </Link>
         </div>
-
-        <div className="">
-          <img
-            className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm'
-            src={maximizeImpact?.image_url || ImageProvider.showroom4}
-            alt=""
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -81,7 +81,7 @@ const AutoInsightsAdvice = () => {
                 transition={{ duration: 0.4 }}
                 src={article?.image} 
                 alt={article.title} 
-                className='w-full h-64 object-cover' 
+                className='w-full h-64 object-fit' 
               />
             </div>
 

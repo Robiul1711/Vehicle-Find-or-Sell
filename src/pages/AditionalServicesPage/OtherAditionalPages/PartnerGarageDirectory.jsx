@@ -13,6 +13,17 @@ const PartnerGarageDirectory = () => {
   const pageData = data?.data;
   const sections = pageData?.sections || [];
 
+  const parseBullet = (bullet) => {
+    if (bullet.includes(":")) {
+      const parts = bullet.split(":");
+      return {
+        title: parts[0].trim(),
+        desc: parts.slice(1).join(":").trim()
+      };
+    }
+    return { title: "", desc: bullet };
+  };
+
   if (isLoading) return <div className="py-20 text-center">Loading...</div>;
 
   return (
@@ -30,13 +41,13 @@ const PartnerGarageDirectory = () => {
           {sections.map((section, index) => (
             <div
               key={section.section_id || index}
-              className={`grid grid-cols-1 md:grid-cols-2 gap-10 items-center ${
-                index % 2 !== 0 ? "md:flex-row-reverse" : ""
-              }`}
+              className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center"
             >
               {/* Text Content */}
               <div
-                className={`space-y-4 ${!section.image_url ? "md:col-span-2" : ""}`}
+                className={`space-y-4 ${!section.image_url ? "md:col-span-2" : ""} ${
+                  section.image_url && index % 2 !== 0 ? "md:order-last" : ""
+                }`}
               >
                 <h2
                   className="text-2xl lg:text-3xl font-bold text-gray-900"
@@ -52,11 +63,20 @@ const PartnerGarageDirectory = () => {
 
                 {section.bullets && section.bullets.length > 0 && (
                   <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                    {section.bullets.map((bullet, idx) => (
-                      <li key={idx} className="pl-2">
-                        {bullet.trim()}
-                      </li>
-                    ))}
+                    {section.bullets.map((bullet, idx) => {
+                      const parsed = parseBullet(bullet);
+                      return (
+                        <li key={idx} className="pl-2">
+                          {parsed.title ? (
+                            <>
+                              <strong>{parsed.title}</strong>: <span dangerouslySetInnerHTML={{ __html: parsed.desc }}></span>
+                            </>
+                          ) : (
+                            <span dangerouslySetInnerHTML={{ __html: bullet }}></span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </div>

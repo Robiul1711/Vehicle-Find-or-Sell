@@ -35,7 +35,7 @@ const ServiceBanner = ({ image, title, subText, isLoading }) => {
       )}
 
       {/* Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-black/50" />
+      <div className="absolute top-0 left-0 w-full h-full bg-black/60" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-4 w-full">

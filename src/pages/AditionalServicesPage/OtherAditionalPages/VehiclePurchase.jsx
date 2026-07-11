@@ -44,7 +44,7 @@ const VehiclePurchase = () => {
         <FinancingSimulator data={data?.data} />
         <div className="space-y-10 lg:space-y-20">
           {expertTips && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-10 lg:py-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center py-10 lg:py-20">
               <div>
                 <img
                   src={expertTips.image_url || ImageProvider.purchase4}
@@ -56,31 +56,23 @@ const VehiclePurchase = () => {
               <div className="space-y-4">
                 <div
                   className="lg:text-3xl font-bold"
-                  dangerouslySetInnerHTML={{ __html: expertTips.title || "<p>Expert Tips</p>" }}
+                  dangerouslySetInnerHTML={{ __html: expertTips.title || "" }}
                 />
-                {expertTips.description ? (
+                {expertTips.description && (
                   <div
                     className="lg:text-xl"
                     dangerouslySetInnerHTML={{ __html: expertTips.description }}
                   />
-                ) : (
-                  <p className="lg:text-xl">
-                    Choose the best option based on budget and preferences.
-                  </p>
                 )}
-                <div className="space-y-3">
-                  {(expertTips.bullets || [
-                    "Evaluate your monthly budget before choosing.",
-                    "Long-term car holders → Cash or Auto Loan.",
-                    "Frequent changers → LOA or LLD.",
-                    "Always compare rates and conditions (Cetelem, Cofidis, Sofinco, banks).",
-                    "Watch for additional fees (insurance, excess mileage).",
-                  ]).map((bullet, index) => (
-                    <p key={index} className="flex items-center gap-2">
-                      <CustomCheck /> {bullet}
-                    </p>
-                  ))}
-                </div>
+                {expertTips.bullets && expertTips.bullets.length > 0 && (
+                  <div className="space-y-3">
+                    {expertTips.bullets.map((bullet, index) => (
+                      <p key={index} className="flex items-center gap-2">
+                        <CustomCheck /> {bullet}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -90,51 +82,40 @@ const VehiclePurchase = () => {
               <div className="space-y-4 lg:space-y-10">
                 <div
                   className="lg:text-3xl font-bold"
-                  dangerouslySetInnerHTML={{ __html: warrantySummary.title || "<p>Summary of Warranty Options</p>" }}
+                  dangerouslySetInnerHTML={{ __html: warrantySummary.title || "" }}
                 />
                 <div
                   className="lg:text-xl"
                   dangerouslySetInnerHTML={{
-                    __html: warrantySummary.description ||
-                      "<p>Legal, contractual, and external warranties ensure better protection for your car purchase.</p>"
+                    __html: warrantySummary.description || ""
                   }}
                 />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-custom-primary rounded p-5 text-white space-y-4">
-                    <div className="w-12 h-12 bg-white text-white rounded flex items-center justify-center mr-4">
-                      <CustomCash />
-                    </div>
-
-                    <p className="lg:text-2xl font-medium">Cash</p>
-                    <p>full independence.</p>
+                {warrantySummary.bullets && warrantySummary.bullets.length > 0 && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {warrantySummary.bullets.map((bullet, idx) => {
+                      const hasColon = bullet.includes(":");
+                      const titleText = hasColon ? bullet.split(":")[0] : "";
+                      const descText = hasColon ? bullet.split(":").slice(1).join(":") : bullet;
+                      const icons = [
+                        <CustomCash />,
+                        <CustomAutoLoan />,
+                        <CustomLOA />,
+                        <CustomCompare />
+                      ];
+                      return (
+                        <div key={idx} className="bg-custom-primary rounded p-5 text-white space-y-4">
+                          <div className="w-12 h-12 bg-white text-white rounded flex items-center justify-center mr-4">
+                            {icons[idx] || <CustomCash />}
+                          </div>
+                          {titleText && (
+                            <p className="lg:text-2xl font-medium" dangerouslySetInnerHTML={{ __html: titleText }}></p>
+                          )}
+                          <p dangerouslySetInnerHTML={{ __html: descText }}></p>
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div className="bg-custom-primary rounded p-5 text-white space-y-4">
-                    <div className="w-12 h-12 bg-white text-white rounded flex items-center justify-center mr-4">
-                      <CustomAutoLoan />
-                    </div>
-
-                    <p className="lg:text-2xl font-medium">Auto Loan</p>
-                    <p>Spread payments, immediate ownership.</p>
-                  </div>
-                  <div className="bg-custom-primary rounded p-5 text-white space-y-4">
-                    <div className="w-12 h-12 bg-white text-white rounded flex items-center justify-center mr-4">
-                      <CustomLOA />
-                    </div>
-
-                    <p className="lg:text-2xl font-medium">LOA & LLD</p>
-                    <p>Flexibility with controlled monthly budget.</p>
-                  </div>
-                  <div className="bg-custom-primary rounded p-5 text-white space-y-4">
-                    <div className="w-12 h-12 bg-white text-white rounded flex items-center justify-center mr-4">
-                      <CustomCompare />
-                    </div>
-
-                    <p className="lg:text-2xl font-medium">
-                      Compare Partner Offers
-                    </p>
-                    <p>Find the best financing options quickly.</p>
-                  </div>
-                </div>
+                )}
               </div>
               <div>
                 <img

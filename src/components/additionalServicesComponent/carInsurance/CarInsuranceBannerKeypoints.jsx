@@ -1,472 +1,568 @@
-import { CustomCheck2, CustomConsequences, CustomCoverage, CustomDeductible, CustomExclusion, CustomImportant, CustomInsurance2, CustomLevel, CustomOnline, CustomPassenger, CustomProtection, CustomReimbursement, CustomReplacement, CustomRoadSide, CustomTraditional } from '@/utils/IconProvider';
-import { ImageProvider } from '@/utils/ImageProvider';
-import React from 'react';
+import {
+  CustomCheck2,
+  CustomConsequences,
+  CustomCoverage,
+  CustomDeductible,
+  CustomExclusion,
+  CustomImportant,
+  CustomInsurance2,
+  CustomLevel,
+  CustomOnline,
+  CustomPassenger,
+  CustomProtection,
+  CustomReimbursement,
+  CustomReplacement,
+  CustomRoadSide,
+  CustomTraditional,
+} from "@/utils/IconProvider";
+import { ImageProvider } from "@/utils/ImageProvider";
+import React from "react";
 
 const PolicyDetails = [
-    {
-        id: 1,
-        icon: <CustomDeductible />,
-        title: "Deductible",
-        desc: "Amount you pay first"
-    },
-    {
-        id: 2,
-        icon: <CustomExclusion />,
-        title: "Exclusions",
-        desc: "Cases not covered"
-    },
-    {
-        id: 3,
-        icon: <CustomRoadSide />,
-        title: "Roadside Assistance",
-        desc: "Towing & breakdown"
-    },
-    {
-        id: 4,
-        icon: <CustomPassenger />,
-        title: "Passenger Coverage",
-        desc: "Protection for riders"
-    },
-    {
-        id: 5,
-        icon: <CustomReimbursement />,
-        title: "Reimbursement Value",
-        desc: "How much you get back"
-    },
-    {
-        id: 6,
-        icon: <CustomReplacement />,
-        title: "Replacement Car",
-        desc: "Temporary vehicle"
-    }
-]
+  {
+    id: 1,
+    icon: <CustomDeductible />,
+    title: "Deductible",
+    desc: "Amount you pay first",
+  },
+  {
+    id: 2,
+    icon: <CustomExclusion />,
+    title: "Exclusions",
+    desc: "Cases not covered",
+  },
+  {
+    id: 3,
+    icon: <CustomRoadSide />,
+    title: "Roadside Assistance",
+    desc: "Towing & breakdown",
+  },
+  {
+    id: 4,
+    icon: <CustomPassenger />,
+    title: "Passenger Coverage",
+    desc: "Protection for riders",
+  },
+  {
+    id: 5,
+    icon: <CustomReimbursement />,
+    title: "Reimbursement Value",
+    desc: "How much you get back",
+  },
+  {
+    id: 6,
+    icon: <CustomReplacement />,
+    title: "Replacement Car",
+    desc: "Temporary vehicle",
+  },
+];
 
 const InsuranceData = [
-    {
-        id: 1,
-        title: "Define Your Needs",
-        desc: "Consider vehicle value, usage, and budget"
-    },
-    {
-        id: 2,
-        title: "Compare Coverage Options",
-        desc: "Review third-party, intermediate, and comprehensive plans"
-    },
-    {
-        id: 3,
-        title: "Examine Deductibles & Exclusions",
-        desc: "Check what is not covered and how much you’ll pay in case of a claim"
-    },
-    {
-        id: 4,
-        title: "Check Included Services",
-        desc: "Look for roadside assistance, replacement vehicles, and other extras"
-    },
-    {
-        id: 5,
-        title: "Compare Multiple Quotes",
-        desc: "Evaluate several insurers before committing"
-    }
-]
+  {
+    id: 1,
+    title: "Define Your Needs",
+    desc: "Consider vehicle value, usage, and budget",
+  },
+  {
+    id: 2,
+    title: "Compare Coverage Options",
+    desc: "Review third-party, intermediate, and comprehensive plans",
+  },
+  {
+    id: 3,
+    title: "Examine Deductibles & Exclusions",
+    desc: "Check what is not covered and how much you’ll pay in case of a claim",
+  },
+  {
+    id: 4,
+    title: "Check Included Services",
+    desc: "Look for roadside assistance, replacement vehicles, and other extras",
+  },
+  {
+    id: 5,
+    title: "Compare Multiple Quotes",
+    desc: "Evaluate several insurers before committing",
+  },
+];
 
 const InsuranceEssentials = [
-    {
-        id: 1,
-        icon: <CustomInsurance2 />,
-        title: "Insurance",
-        desc: "Mandatory"
-    },
-    {
-        id: 2,
-        icon: <CustomLevel />,
-        title: "3 levels",
-        desc: "Third-party, Intermediate, Comprehensive"
-    },
-    {
-        id: 3,
-        icon: <CustomPassenger />,
-        title: "Players",
-        desc: "Traditional, Banks, Online, Brokers"
-    },
-    {
-        id: 4,
-        icon: <CustomImportant />,
-        title: "Important",
-        desc: "Deductible, Exclusions, Eervices"
+  {
+    id: 1,
+    icon: <CustomInsurance2 />,
+    title: "Insurance",
+    desc: "Mandatory",
+  },
+  {
+    id: 2,
+    icon: <CustomLevel />,
+    title: "3 levels",
+    desc: "Third-party, Intermediate, Comprehensive",
+  },
+  {
+    id: 3,
+    icon: <CustomPassenger />,
+    title: "Players",
+    desc: "Traditional, Banks, Online, Brokers",
+  },
+  {
+    id: 4,
+    icon: <CustomImportant />,
+    title: "Important",
+    desc: "Deductible, Exclusions, Eervices",
+  },
+];
+const CarInsuranceBannerKeypoints = ({ data }) => {
+  const parseBullet = (bullet) => {
+    let title = "";
+    let desc = bullet;
+
+    if (bullet.includes(":")) {
+      const parts = bullet.split(":");
+      title = parts[0].trim();
+      desc = parts.slice(1).join(":").trim();
+    } else if (bullet.includes("(")) {
+      const openParenIdx = bullet.indexOf("(");
+      const closeParenIdx = bullet.indexOf(")");
+      title = bullet.substring(0, openParenIdx).trim();
+      if (closeParenIdx > openParenIdx) {
+        desc = bullet.substring(openParenIdx + 1, closeParenIdx).trim();
+      } else {
+        desc = bullet.substring(openParenIdx + 1).trim();
+      }
+    } else {
+      const separators = [
+        " avec ",
+        " proposant ",
+        " qui ",
+        " que ",
+        " pour ",
+        " afin de ",
+        " et ",
+        " retenue ",
+      ];
+      let foundSeparator = false;
+      for (const sep of separators) {
+        if (bullet.includes(sep)) {
+          const parts = bullet.split(sep);
+          title = parts[0].trim();
+          desc = bullet;
+          foundSeparator = true;
+          break;
+        }
+      }
+      if (!foundSeparator) {
+        const words = bullet.split(" ");
+        title = words.slice(0, Math.min(3, words.length)).join(" ");
+        desc = bullet;
+      }
     }
 
-]
-const CarInsuranceBannerKeypoints = ({ data }) => {
-    const sections = data?.sections || [];
-    const essentials = sections.find((s) => s.section_id === "essentiels-assurance");
-    const detailsContrat = sections.find((s) => s.section_id === "details-contrat");
-    const choisirAssurance = sections.find((s) => s.section_id === "choisir-assurance");
-    const prestataires = sections.find((s) => s.section_id === "prestataires");
-    const niveauxCouverture = sections.find((s) => s.section_id === "niveaux-de-couverture");
-    const pourquoiAssurance = sections.find((s) => s.section_id === "pourquoi-assurance");
+    if (title) {
+      title = title.charAt(0).toUpperCase() + title.slice(1);
+    }
+    return { title, desc };
+  };
 
-    // Dynamic Policy Details Mapping
-    const detailsContratMapped = (detailsContrat?.bullets || []).map((bullet, index) => {
-        const original = PolicyDetails[index] || PolicyDetails[PolicyDetails.length - 1];
-        return {
-            ...original,
-            title: bullet.split(" ").slice(0, 3).join(" "),
-            desc: bullet
-        };
-    });
-    const displayPolicyDetails = detailsContratMapped.length > 0 ? detailsContratMapped : PolicyDetails;
+  const sections = data?.sections || [];
+  const essentials = sections.find(
+    (s) => s.section_id === "essentiels-assurance",
+  );
+  const detailsContrat = sections.find(
+    (s) => s.section_id === "details-contrat",
+  );
+  const choisirAssurance = sections.find(
+    (s) => s.section_id === "choisir-assurance",
+  );
+  const prestataires = sections.find((s) => s.section_id === "prestataires");
+  const niveauxCouverture = sections.find(
+    (s) => s.section_id === "niveaux-de-couverture",
+  );
+  const pourquoiAssurance = sections.find(
+    (s) => s.section_id === "pourquoi-assurance",
+  );
 
-    // Dynamic Selecting the Right Insurance Mapping
-    const choosingMapped = (choisirAssurance?.bullets || []).map((bullet, index) => {
-        const original = InsuranceData[index] || InsuranceData[InsuranceData.length - 1];
-        return {
-            ...original,
-            title: bullet.split(" ").slice(0, 3).join(" "),
-            desc: bullet
-        };
-    });
-    const displayInsuranceData = choosingMapped.length > 0 ? choosingMapped : InsuranceData;
+  // Dynamic Policy Details Mapping
+  const displayPolicyDetails = (detailsContrat?.bullets || []).map(
+    (bullet, index) => {
+      const original = PolicyDetails[index];
+      const parsed = parseBullet(bullet);
+      return {
+        icon: original?.icon || <CustomDeductible />,
+        title: parsed.title,
+        desc: parsed.desc,
+      };
+    },
+  );
 
-    // Dynamic Insurance Essentials Mapping
-    const essentialsMapped = (essentials?.bullets || []).map((bullet, index) => {
-        const original = InsuranceEssentials[index] || InsuranceEssentials[InsuranceEssentials.length - 1];
-        return {
-            ...original,
-            title: bullet.split(" ").slice(0, 3).join(" "),
-            desc: bullet
-        };
-    });
-    const displayInsuranceEssentials = essentialsMapped.length > 0 ? essentialsMapped : InsuranceEssentials;
+  // Dynamic Selecting the Right Insurance Mapping
+  const displayInsuranceData = (choisirAssurance?.bullets || []).map(
+    (bullet, index) => {
+      const parsed = parseBullet(bullet);
+      return {
+        id: index + 1,
+        title: parsed.title,
+        desc: parsed.desc,
+      };
+    },
+  );
 
-    return (
-        <div className='lg:space-y-20 mx-auto'>
-            {/* Car Insurance: A Legal Requirement */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 container">
-                <div className="space-y-4 lg:space-y-10">
-                    <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: pourquoiAssurance?.title || "Car Insurance: A Legal Requirement" }}>
-                    </p>
-                    <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: pourquoiAssurance?.description || "In France, all motor vehicles must be insured with at least third-party liability (RC)." }}>
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-[#92cc14]  rounded p-5 text-white space-y-4">
-                            <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                <CustomProtection />
-                            </div>
+  // Dynamic Insurance Essentials Mapping
+  const displayInsuranceEssentials = (essentials?.bullets || []).map(
+    (bullet, index) => {
+      const original = InsuranceEssentials[index];
+      const parsed = parseBullet(bullet);
+      return {
+        icon: original?.icon || <CustomInsurance2 />,
+        title: parsed.title,
+        desc: parsed.desc,
+      };
+    },
+  );
 
-                            <p className="lg:text-2xl font-medium">
-                                Third-Party Protection
-                            </p>
-                            <p dangerouslySetInnerHTML={{ __html: pourquoiAssurance?.bullets?.[0] || "Covers injuries and damage caused to other people, vehicles, or property." }}></p>
+  return (
+    <div className="lg:space-y-20 mx-auto">
+      {/* Car Insurance: A Legal Requirement */}
+      {pourquoiAssurance && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center container">
+          <div className="space-y-4 lg:space-y-10">
+            {pourquoiAssurance.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: pourquoiAssurance.title }}
+              ></p>
+            )}
+            {pourquoiAssurance.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{
+                  __html: pourquoiAssurance.description,
+                }}
+              ></p>
+            )}
+            {pourquoiAssurance.bullets &&
+              pourquoiAssurance.bullets.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {pourquoiAssurance.bullets.map((bullet, idx) => {
+                    const parsed = parseBullet(bullet);
+                    return (
+                      <div
+                        key={idx}
+                        className={`rounded p-5 text-white space-y-4 ${idx % 2 === 0 ? "bg-[#92cc14]" : "bg-[#f5b330]"}`}
+                      >
+                        <div className="w-12 h-12 bg-white text-white rounded flex items-center justify-center mr-4">
+                          {idx % 2 === 0 ? (
+                            <CustomProtection />
+                          ) : (
+                            <CustomConsequences />
+                          )}
                         </div>
-                        <div className="bg-[#f5b330]  rounded p-5 text-white space-y-4">
-                            <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                <CustomConsequences />
-                            </div>
-
-                            <p className="lg:text-2xl font-medium">
-                                Legal Consequences
-                            </p>
-                            <p dangerouslySetInnerHTML={{ __html: pourquoiAssurance?.bullets?.[1] || "Driving without insurance can lead to fines, license suspension, or vehicle seizure." }}></p>
-                        </div>
-                    </div>
-                </div>
-                <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={pourquoiAssurance?.image_url || ImageProvider.carInsurance1} alt="" />
-                </div>
-            </div>
-
-            {/* Levels of Coverage */}
-            <div className=" mx-auto">
-                <div className="space-y-4 lg:space-y-5">
-                    <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: niveauxCouverture?.title || "Levels of Coverage" }}>
-                    </p>
-                    <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: niveauxCouverture?.description || "Choose the right protection for your needs" }}>
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {niveauxCouverture?.extra_data?.cards ? (
-                            niveauxCouverture.extra_data.cards.map((card, idx) => (
-                                <div key={idx} className="bg-[#f5b330]  rounded p-5 text-white space-y-4">
-                                    <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                        <CustomCoverage />
-                                    </div>
-
-                                    <p className="lg:text-2xl font-medium">{card.name}</p>
-                                    {card.items?.map((item, subIdx) => (
-                                        <p key={subIdx} className="flex items-center gap-1">
-                                            <CustomCheck2 /> {item}
-                                        </p>
-                                    ))}
-                                </div>
-                            ))
-                        ) : (
-                            <>
-                                <div className="bg-[#f5b330]  rounded p-5 text-white space-y-4">
-                                    <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                        <CustomCoverage />
-                                    </div>
-
-                                    <p className="lg:text-2xl font-medium">
-                                        Third-Party Insurance (Liability Only)
-                                    </p>
-                                    <p>Minimum required coverage for legal compliance.</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Minimum required coverage</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Covers only damage to others</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Best for old/low-value cars</p>
-                                </div>
-
-                                <div className="bg-[#f5b330]  rounded p-5 text-white space-y-4">
-                                    <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                        <CustomCoverage />
-                                    </div>
-
-                                    <p className="lg:text-2xl font-medium">
-                                        Intermediate Insurance
-                                    </p>
-                                    <p>Balanced coverage with additional  protections.</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Includes liability + theft, fire, glass breakage</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Balanced coverage</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Good middle-ground option</p>
-                                </div>
-
-                                <div className="bg-[#f5b330]  rounded p-5 text-white space-y-4">
-                                    <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                        <CustomCoverage />
-                                    </div>
-
-                                    <p className="lg:text-2xl font-medium">
-                                        Comprehensive Insurance
-                                    </p>
-                                    <p>Most complete coverage for maximum protection.</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Minimum required coverage</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Covers only damage to others</p>
-                                    <p className="flex items-center gap-1"><CustomCheck2 />Best for old/low-value cars</p>
-                                </div>
-                            </>
+                        {parsed.title && (
+                          <p
+                            className="lg:text-2xl font-medium"
+                            dangerouslySetInnerHTML={{ __html: parsed.title }}
+                          ></p>
                         )}
-                    </div>
+                        <p
+                          dangerouslySetInnerHTML={{ __html: parsed.desc }}
+                        ></p>
+                      </div>
+                    );
+                  })}
                 </div>
-
+              )}
+          </div>
+          {pourquoiAssurance.image_url && (
+            <div className="">
+              <img
+                className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
+                src={pourquoiAssurance.image_url}
+                alt=""
+              />
             </div>
-
-            {/* Who Provides Car Insurance? */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
-                <div className="space-y-4 lg:space-y-10">
-                    <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: prestataires?.title || "Who Provides Car Insurance?" }}>
-                    </p>
-                    <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: prestataires?.description || "Explore different types of insurers to find the best fit for your vehicle." }}>
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-custom-primary  rounded p-5 text-white space-y-4">
-                            <p className="lg:text-2xl font-medium">
-                                Traditional companies
-                            </p>
-                            <div className="grid grid-cols-3 gap-2">
-                                <p className="flex items-center gap-1"><CustomCheck2 />AXA</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />GMF</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />MAAF</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Allianz</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Maif</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Groupama</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Macif</p>
-                            </div>
-
-                        </div>
-                        <div className="bg-custom-primary  rounded p-5 text-white space-y-4">
-
-                            <p className="lg:text-2xl font-medium">
-                                Bank insurers
-                            </p>
-                            <div className="grid grid-cols-2 gap-2">
-                                <p className="flex items-center gap-1"><CustomCheck2 />Crédit Agricole</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />BNP Paribas.</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />CIC</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Crédit Mutuel</p>
-
-                            </div>
-                        </div>
-
-                        <div className="bg-custom-primary  rounded p-5 text-white space-y-4">
-                            <p className="lg:text-2xl font-medium">
-                                Online insurers
-                            </p>
-                            <div className="grid grid-cols-1 gap-2">
-                                <p className="flex items-center gap-1"><CustomCheck2 />Direct Assurance</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />L’Olivier Assurance</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Lovys</p>
-
-                            </div>
-
-                        </div>
-                        <div className="bg-custom-primary  rounded p-5 text-white space-y-4">
-
-                            <p className="lg:text-2xl font-medium">
-                                Brokers
-                            </p>
-                            <div className="">
-                                <p className="flex items-center gap-1">compare multiple offers on your behalf to find the best deal</p>
-
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={prestataires?.image_url || ImageProvider.carInsurance2} alt="" />
-                </div>
-            </div>
-
-            {/* Choosing the Right Insurance Type */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
-                <div className="space-y-4 lg:space-y-10">
-                    <p className="lg:text-3xl font-bold">
-                        Choosing the Right Insurance Type
-                    </p>
-                    <p className="lg:text-xl">
-                        Compare online and traditional options based on your priorities.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-custom-primary  rounded p-5 text-white space-y-4">
-                            <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                <CustomOnline />
-                            </div>
-
-                            <p className="lg:text-2xl font-medium">
-                                Online Insurance
-                            </p>
-                            <p className="text-base">
-                                Fast quotes, app-based management, and competitive pricing.
-                            </p>
-                            <div className="grid grid-cols-1 gap-2">
-                                <p className="flex items-center gap-1"><CustomCheck2 />Fast quotes</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Easy management via mobile app</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Competitive pricing</p>
-
-                            </div>
-                        </div>
-
-                        <div className="bg-custom-primary  rounded p-5 text-white space-y-4">
-                            <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                <CustomTraditional />
-                            </div>
-
-                            <p className="lg:text-2xl font-medium">
-                                Traditional Insurance
-                            </p>
-                            <p className="text-base">
-                                Personalized advice and local agency support for your coverage needs
-                            </p>
-                            <div className="grid grid-cols-1 gap-2">
-                                <p className="flex items-center gap-1"><CustomCheck2 />Local agencies</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Personalized advice</p>
-                                <p className="flex items-center gap-1"><CustomCheck2 />Dedicated insurance advisor</p>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={ImageProvider.carInsurance3} alt="" />
-                </div>
-            </div>
-
-            {/* Important Policy Details */}
-            <div className="lg:space-y-5">
-                <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: detailsContrat?.title || "Important Policy Details" }}>
-                </p>
-                <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: detailsContrat?.description || "Ensure your insurance covers the essentials for full protection." }}>
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
-                    <div className="">
-                        <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={detailsContrat?.image_url || ImageProvider.carInsurance4} alt="" />
-                    </div>
-                    <div className="space-y-4 lg:space-y-10">
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                            {
-                                displayPolicyDetails?.map((item, idx) => (
-                                    <div key={idx} className="bg-custom-primary  rounded p-5 text-white space-y-4">
-                                        <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                            {item?.icon}
-                                        </div>
-
-                                        <p className="lg:text-2xl font-medium" dangerouslySetInnerHTML={{ __html: item?.title }}></p>
-                                        <p className="text-base" dangerouslySetInnerHTML={{ __html: item?.desc }}></p>
-
-                                    </div>
-                                ))
-                            }
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            {/* Selecting the Right Insurance */}
-            <div className=" mx-auto">
-                <div className="space-y-4 lg:space-y-5">
-                    <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: choisirAssurance?.title || "Selecting the Right Insurance" }}>
-                    </p>
-                    <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: choisirAssurance?.description || "Follow these steps to find the best coverage for your vehicle." }}>
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-
-                        {
-                            displayInsuranceData?.map((item, idx) => (
-                                <div key={idx} className="bg-gray-100 rounded p-5  space-y-4">
-                                    <div className="w-12 h-12 font-semibold bg-custom-primary text-white  rounded flex items-center justify-center mr-4">
-                                        0{item?.id}
-                                    </div>
-
-                                    <p className="lg:text-2xl font-medium" dangerouslySetInnerHTML={{ __html: item?.title }}></p>
-                                    <p dangerouslySetInnerHTML={{ __html: item?.desc }}></p>
-                                </div>
-                            ))
-                        }
-
-                    </div>
-                </div>
-
-            </div>
-
-            {/* Car Insurance Essentials */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
-                <div className="space-y-4 lg:space-y-10">
-                    <p className="lg:text-3xl font-bold" dangerouslySetInnerHTML={{ __html: essentials?.title || "Car Insurance Essentials" }}>
-                    </p>
-                    <p className="lg:text-xl" dangerouslySetInnerHTML={{ __html: essentials?.description || "Important points to remember when choosing coverage." }}>
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                        {
-                            displayInsuranceEssentials?.map((item, idx) => (
-                                <div key={idx} className="bg-custom-primary  rounded p-5 text-white space-y-4">
-                                    <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
-                                        {item?.icon}
-                                    </div>
-
-                                    <p className="lg:text-2xl font-medium" dangerouslySetInnerHTML={{ __html: item?.title }}>
-
-                                    </p>
-                                    <p className="text-base" dangerouslySetInnerHTML={{ __html: item?.desc }}>
-
-                                    </p>
-
-                                </div>
-                            ))
-                        }
-                    </div>
-                </div>
-                <div className="">
-                    <img className='w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm' src={essentials?.image_url || ImageProvider.carInsurance5} alt="" />
-                </div>
-            </div>
-
+          )}
         </div>
-    );
+      )}
+
+      {/* Levels of Coverage */}
+      {niveauxCouverture && (
+        <div className=" mx-auto">
+          <div className="space-y-4 lg:space-y-5">
+            {niveauxCouverture.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: niveauxCouverture.title }}
+              ></p>
+            )}
+            {niveauxCouverture.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{
+                  __html: niveauxCouverture.description,
+                }}
+              ></p>
+            )}
+            {niveauxCouverture.extra_data?.cards ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {niveauxCouverture.extra_data.cards.map((card, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-[#f5b330]  rounded p-5 text-white space-y-4"
+                  >
+                    <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
+                      <CustomCoverage />
+                    </div>
+
+                    <p className="lg:text-2xl font-medium">{card.name}</p>
+                    {card.items?.map((item, subIdx) => (
+                      <p key={subIdx} className="flex items-center gap-1">
+                        <CustomCheck2 /> {item}
+                      </p>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              niveauxCouverture.bullets && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {niveauxCouverture.bullets.map((bullet, idx) => {
+                    const parsed = parseBullet(bullet);
+                    return (
+                      <div
+                        key={idx}
+                        className="bg-[#f5b330] rounded p-5 text-white space-y-4"
+                      >
+                        <div className="w-12 h-12 bg-white text-white rounded flex items-center justify-center mr-4">
+                          <CustomCoverage />
+                        </div>
+                        {parsed.title && (
+                          <p
+                            className="lg:text-2xl font-medium"
+                            dangerouslySetInnerHTML={{ __html: parsed.title }}
+                          ></p>
+                        )}
+                        <p
+                          className="text-base"
+                          dangerouslySetInnerHTML={{ __html: parsed.desc }}
+                        ></p>
+                      </div>
+                    );
+                  })}
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Who Provides Car Insurance? */}
+      {prestataires && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
+          <div className="space-y-4 lg:space-y-10">
+            {prestataires.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: prestataires.title }}
+              ></p>
+            )}
+            {prestataires.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{ __html: prestataires.description }}
+              ></p>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {prestataires.extra_data?.categories
+                ? prestataires.extra_data.categories.map((cat, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-custom-primary  rounded p-5 text-white space-y-4"
+                    >
+                      <p className="lg:text-2xl font-medium">{cat.title}</p>
+                      <div className="grid grid-cols-2 gap-2">
+                        {cat.items?.map((item, itemIdx) => (
+                          <p key={itemIdx} className="flex items-center gap-1">
+                            <CustomCheck2 /> {item}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  ))
+                : prestataires.bullets?.map((bullet, idx) => {
+                    const parsed = parseBullet(bullet);
+                    return (
+                      <div
+                        key={idx}
+                        className="bg-custom-primary  rounded p-5 text-white space-y-4"
+                      >
+                        {parsed.title && (
+                          <p
+                            className="lg:text-2xl font-medium"
+                            dangerouslySetInnerHTML={{ __html: parsed.title }}
+                          ></p>
+                        )}
+                        <p
+                          className="text-base flex items-center gap-2"
+                          dangerouslySetInnerHTML={{ __html: parsed.desc }}
+                        ></p>
+                      </div>
+                    );
+                  })}
+            </div>
+          </div>
+          {prestataires.image_url && (
+            <div className="">
+              <img
+                className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
+                src={prestataires.image_url}
+                alt=""
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Important Policy Details */}
+      {detailsContrat && displayPolicyDetails.length > 0 && (
+        <div className="lg:space-y-5">
+          {detailsContrat.title && (
+            <p
+              className="lg:text-3xl font-bold"
+              dangerouslySetInnerHTML={{ __html: detailsContrat.title }}
+            ></p>
+          )}
+          {detailsContrat.description && (
+            <p
+              className="lg:text-xl"
+              dangerouslySetInnerHTML={{ __html: detailsContrat.description }}
+            ></p>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
+            {detailsContrat.image_url && (
+              <div className="">
+                <img
+                  className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
+                  src={detailsContrat.image_url}
+                  alt=""
+                />
+              </div>
+            )}
+            <div className="space-y-4 lg:space-y-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {displayPolicyDetails.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-custom-primary  rounded p-5 text-white space-y-4"
+                  >
+                    {item.icon && (
+                      <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
+                        {item.icon}
+                      </div>
+                    )}
+                    <p
+                      className="lg:text-2xl font-medium"
+                      dangerouslySetInnerHTML={{ __html: item.title }}
+                    ></p>
+                    <p
+                      className="text-base"
+                      dangerouslySetInnerHTML={{ __html: item.desc }}
+                    ></p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Selecting the Right Insurance */}
+      {choisirAssurance && displayInsuranceData.length > 0 && (
+        <div className=" mx-auto">
+          <div className="space-y-4 lg:space-y-5">
+            {choisirAssurance.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: choisirAssurance.title }}
+              ></p>
+            )}
+            {choisirAssurance.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{
+                  __html: choisirAssurance.description,
+                }}
+              ></p>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              {displayInsuranceData.map((item, idx) => (
+                <div key={idx} className="bg-gray-100 rounded p-5  space-y-4">
+                  <div className="w-12 h-12 font-semibold bg-custom-primary text-white  rounded flex items-center justify-center mr-4">
+                    0{item.id}
+                  </div>
+                  <p
+                    className="lg:text-2xl font-medium"
+                    dangerouslySetInnerHTML={{ __html: item.title }}
+                  ></p>
+                  <p dangerouslySetInnerHTML={{ __html: item.desc }}></p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Car Insurance Essentials */}
+      {essentials && displayInsuranceEssentials.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-10 items-center">
+          <div className="space-y-4 lg:space-y-10">
+            {essentials.title && (
+              <p
+                className="lg:text-3xl font-bold"
+                dangerouslySetInnerHTML={{ __html: essentials.title }}
+              ></p>
+            )}
+            {essentials.description && (
+              <p
+                className="lg:text-xl"
+                dangerouslySetInnerHTML={{ __html: essentials.description }}
+              ></p>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              {displayInsuranceEssentials.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-custom-primary  rounded p-5 text-white space-y-4"
+                >
+                  {item.icon && (
+                    <div className="w-12 h-12 bg-white text-white  rounded flex items-center justify-center mr-4">
+                      {item.icon}
+                    </div>
+                  )}
+                  <p
+                    className="lg:text-2xl font-medium"
+                    dangerouslySetInnerHTML={{ __html: item.title }}
+                  ></p>
+                  <p
+                    className="text-base"
+                    dangerouslySetInnerHTML={{ __html: item.desc }}
+                  ></p>
+                </div>
+              ))}
+            </div>
+          </div>
+          {essentials.image_url && (
+            <div className="">
+              <img
+                className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
+                src={essentials.image_url}
+                alt=""
+              />
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default CarInsuranceBannerKeypoints;

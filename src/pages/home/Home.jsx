@@ -9,6 +9,7 @@ import WhyChooseUs from '@/components/HomeComponents/WhyChooseUs'
 import React from 'react'
 import SEO from '@/components/common/SEO'
 import AutoInsightsAdvice from '@/components/HomeComponents/AutoInsightsAdvice'
+import HomeFaq from '@/components/HomeComponents/HomeFaq'
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
       <WhyChooseUs/>
       <UserReviews/>
       <AutoInsightsAdvice/>
+      <HomeFaq />
       <LookingFor/>
     </div>
   )

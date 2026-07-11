@@ -24,28 +24,32 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
             {/* Image Rendering Logic */}
             {showImage && isEven && (
               <div className="order-last md:order-first">
-                <img 
-                   src={section.image_url} 
-                   alt={section.title} 
-                   className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
+                <img
+                  src={section.image_url}
+                  alt={section.title}
+                  className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
                 />
               </div>
             )}
 
             {/* Content Rendering Logic */}
             <div className={`space-y-4 ${!showImage ? "text-center" : ""}`}>
-              <h2 className="lg:text-4xl font-bold text-gray-900" dangerouslySetInnerHTML={{__html: section.title}}>
-                
-              </h2>
-              
+              <h2
+                className="lg:text-4xl font-bold text-gray-900"
+                dangerouslySetInnerHTML={{ __html: section.title }}
+              ></h2>
+
               {section.description && (
-                <p className="lg:text-xl text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{__html: section.description}}>
-                  
-                </p>
+                <p
+                  className="lg:text-xl text-gray-700 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: section.description }}
+                ></p>
               )}
 
               {section.bullets && (
-                <div className={`space-y-3 ${!showImage ? "inline-block text-left" : ""}`}>
+                <div
+                  className={`space-y-3 ${!showImage ? "inline-block text-left" : ""}`}
+                >
                   {section.bullets.map((bullet, idx) => (
                     <div key={idx} className="flex items-start gap-3">
                       <div className="mt-1">
@@ -61,10 +65,10 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
             {/* Image Rendering for Odd Items (Right Side) */}
             {showImage && !isEven && (
               <div>
-                <img 
-                  src={section.image_url} 
-                  alt={section.title} 
-                  className="w-full h-[300px] sm:h-[400px] lg:h-[480px] object-fill rounded-xl shadow-sm"
+                <img
+                  src={section.image_url}
+                  alt={section.title}
+                  className="w-full h-[250px] sm:h-[400px] lg:h-[480px] object-fill "
                 />
               </div>
             )}
@@ -87,7 +91,10 @@ const VehicleMaintenanceKeypoints = ({ data }) => {
             { name: "Carfax", url: "https://www.carfax.eu/" },
             { name: "CarVertical", url: "https://www.carvertical.com/" },
             { name: "Auto Origin", url: "https://autorigin.com/" },
-            { name: "Histovec", url: "https://histovec.interieur.gouv.fr/histovec/accueil" },
+            {
+              name: "Histovec",
+              url: "https://histovec.interieur.gouv.fr/histovec/accueil",
+            },
             { name: "Almmotors", url: "https://almmotors.fr/" },
           ].map((item, i) => (
             <Link

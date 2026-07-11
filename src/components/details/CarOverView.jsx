@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 const CarOverView = ({ details, data }) => {
-  console.log(data);
+  // console.log(data);
   const specs = [
     { icon: Car, label: "Body", value: data?.body },
     { icon: Shield, label: "Model", value: data?.model },

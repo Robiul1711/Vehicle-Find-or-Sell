@@ -83,7 +83,7 @@ const CarLeftSideImages = ({ data, isLoading }) => {
   if (isLoading) {
     return (
       <div className="w-full flex flex-col h-full animate-pulse">
-        <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px] bg-gray-200 rounded-xl" />
+        <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px] xl:h-[700px] bg-gray-200 rounded-xl" />
         <div className="flex gap-3 mt-5">
           {[1, 2, 3, 4, 5].map((i) => (
             <div
@@ -107,7 +107,7 @@ const CarLeftSideImages = ({ data, isLoading }) => {
               src={currentMedia?.file}
               controls
               playsInline
-              className="w-full aspect-[16/10] object-contain rounded-xl bg-black"
+              className="w-full  rounded-xl bg-black"
             >
               Your browser does not support the video tag.
             </video>
@@ -126,7 +126,7 @@ const CarLeftSideImages = ({ data, isLoading }) => {
                     <Image
                       src={item.file}
                       alt={`Car ${idx + 1}`}
-                      className="w-full aspect-[16/10] object-fit rounded-xl"
+                      className="w-full  rounded-xl"
                       preview={{
                         mask: (
                           <div className="absolute inset-0 flex items-center justify-center text-white bg-black/25 opacity-0 group-hover:opacity-100 transition duration-300 cursor-pointer">

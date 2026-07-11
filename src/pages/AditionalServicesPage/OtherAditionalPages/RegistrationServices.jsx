@@ -14,10 +14,10 @@ const RegistrationServices = () => {
        });
    return (
     <div >
-      <ServiceBanner image={data?.data?.hero_background_image_url || s8} title="Vehicle Registration" subText="Simple, safe, and 100% online procedures. Get your vehicle registered quickly and efficiently."  isLoading={isLoading} />
+      <ServiceBanner image={data?.data?.hero_background_image_url || s8} title={data?.data?.title} subText={data?.data?.subtitle}  isLoading={isLoading} />
       <CommonPageWrapper>
 
-        <VehicleRegistrationFAQ />
+        {/* <VehicleRegistrationFAQ /> */}
         <VehicleRegistrationKeypoints  data={data?.data}/>
 
       </CommonPageWrapper>
