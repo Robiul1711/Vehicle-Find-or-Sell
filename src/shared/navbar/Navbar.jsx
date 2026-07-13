@@ -49,17 +49,20 @@ const Navbar = () => {
   }, [isMenuOpen]);
 
   const navLinks = [
-    { to: "/", text: selectedLanguage === "fr" ? "Accueil" : "Home" },
+    { to: "/", text: selectedLanguage === "fr" ? "Accueil" : "Home", notranslate: true },
     { to: "/listings", text: "Browse Listings" },
     { to: "/blog", text: "Blog" },
     {
       to: "/dealers",
       text: selectedLanguage === "fr" ? "Concessionnaires" : "Dealers",
+      notranslate: true,
     },
     {
       to: "/services",
       text: selectedLanguage === "fr" ? "Conseils" : "Advice",
+      notranslate: true,
     },
+    { to: "/faq", text: "FAQ", notranslate: true },
     { to: "/contact", text: "Contact Us" },
   ];
 
@@ -151,6 +154,8 @@ const Navbar = () => {
                     key={link.text}
                     to={link.to}
                     className={`text-sm lg:text-base font-medium transition-colors relative group capitalize ${
+                      link.notranslate ? "notranslate" : ""
+                    } ${
                       isActive
                         ? "text-gray-900 font-semibold"
                         : "text-gray-800 hover:text-gray-900"
@@ -246,6 +251,8 @@ const Navbar = () => {
                       to={link.to}
                       onClick={() => setIsMenuOpen(false)}
                       className={`block py-3 px-4 text-lg font-medium rounded-lg transition-colors duration-200 ${
+                        link.notranslate ? "notranslate" : ""
+                      } ${
                         isActive
                           ? "bg-gray-100 text-gray-900 font-semibold"
                           : "text-gray-700 hover:bg-gray-100"
