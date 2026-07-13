@@ -43,11 +43,12 @@ import ContactPage from "@/pages/contactPage/ContactPage";
 import TermAndCondition from "@/pages/termAndCondition/TermAndCondition";
 import LegalNotice from "@/pages/legalNotice/LegalNotice";
 import CookiePolicy from "@/pages/cookiePolicy/CookiePolicy";
-import PersonalData from "@/pages/personalData/PersonalData";
 import TermOfUse from "@/pages/tou/TermOfUse";
 import ProductComparison from "@/pages/comparePage/ProductComparison";
 import PartsDetails from "@/pages/detailsPage/PartsDetails";
 import PrivateRoute from "@/providers/PrivateRoute";
+import FaqPage from "@/pages/faqPage/FaqPage";
+import PersonalData from "@/pages/personalData/PersonalData";
 import PublicRoute from "@/providers/PublicRoute";
 import NotFoundPage from "@/pages/notFoundPage/NotFoundPage";
 import PaymentSuccess from "@/pages/payment/PaymentSuccess";
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactPage />,
+      },
+      {
+        path: "/faq",
+        element: <FaqPage />,
       },
       {
         path: "/term-and-conditions",

@@ -15,7 +15,6 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
   useSortable,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
@@ -54,7 +53,7 @@ const SortablePhoto = ({ file, idx, onRemove }) => {
       style={style}
       className="relative group border rounded-md overflow-hidden bg-white"
     >
-      <img src={src} alt="preview" className="w-full h-24 object-cover" />
+      <img src={src} alt="preview" className="w-full h-28 sm:h-36 md:h-40 lg:h-44 xl:h-58 object-fit" />
       
       {/* Drag Handle */}
       <div
@@ -174,7 +173,7 @@ const UploadMedia = () => {
             items={images.map((img, idx) => img.id || idx)}
             strategy={rectSortingStrategy}
           >
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {images.map((file, idx) => (
                 <SortablePhoto
                   key={file.id || idx}
